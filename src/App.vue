@@ -7,11 +7,6 @@
 </template>
 
 <script>
-import { envValue } from "./utils/envValue.js";
-import { globalValue } from "./utils/globalValue.js";
-import { globalTool } from "./utils/tool.js";
-import { recordService } from "./utils/record.js";
-import { tokenService } from "./utils/token.js";
 export default {
   data: () => ({
     loginShow: false,
@@ -61,11 +56,6 @@ export default {
   },
 
   async mounted() {
-    // this.systemENV = envValue();
-    console.log(envValue());
-    console.log(456);
-    console.log(123);
-    console.log(this.systemENV);
     const currentUrl = window.location.pathname;
 
     if (
