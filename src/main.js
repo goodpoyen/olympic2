@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+import store from "./store";
 import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
 import router from "./router";
@@ -46,4 +47,4 @@ app.config.globalProperties.axios = axios;
 
 axios.defaults.withCredentials = true;
 
-app.use(router).use(vuetify).mount("#app");
+app.use(router).use(vuetify).use(store).mount("#app");
