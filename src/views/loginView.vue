@@ -8,7 +8,7 @@
     }"
   >
     <v-card
-      style="margin: 40px auto"
+      style="position: relative; top: 7%; left: 25%"
       :max-width="device === 'PC' ? '50%' : '80%'"
     >
       <v-card-title
@@ -29,6 +29,7 @@
                   inputmode="email"
                   prepend-icon="mdi-account-circle-outline"
                   :rules="emailRules"
+                  variant="underlined"
                   required
                   @keyup.enter="login"
                 ></v-text-field>
@@ -41,6 +42,7 @@
                   :type="show1 ? 'text' : 'password'"
                   prepend-icon="mdi-key"
                   autocomplete="new-password"
+                  variant="underlined"
                   :rules="[(v) => !!v || '密碼不能為空']"
                   required
                   @click:append="show1 = !show1"
@@ -54,6 +56,7 @@
                   label="驗證碼"
                   :type="'verifycode'"
                   prepend-icon="mdi-keyboard-outline"
+                  variant="underlined"
                   :rules="[
                     (v) => !!v || '驗證碼不能為空',
                     (v) => v.length <= 4 || '超過規定字數',
@@ -70,12 +73,13 @@
                 ></v-progress-circular>
                 <img :src="imgaesCode" v-show="!imgaesCodeLoading" />
                 <v-btn
-                  icon
+                  icon="mdi-cached"
+                  size="small"
+                  variant="text"
                   color="green"
                   v-show="!imgaesCodeLoading"
                   @click="refreshCode"
                 >
-                  <v-icon>mdi-cached</v-icon>
                 </v-btn>
               </v-col>
             </v-row>
@@ -102,9 +106,9 @@
         </v-card-text>
         <v-card-actions>
           <v-btn
+            variant="flat"
             block
             depressed
-            class="mr-4 white--text"
             color="#2D5BFF"
             :disabled="invalid"
             @click="login()"
@@ -115,10 +119,11 @@
       </v-form>
     </v-card>
     <div
-      class="py-8 white--text text-center"
+      class="py-8 text-center"
       style="
         font-size: 10px;
         position: absolute;
+        color: white;
         bottom: 0;
         width: 100%;
         height: 60px;
@@ -152,7 +157,7 @@ export default {
       (v) => !!v || "帳號不能為空",
       (v) =>
         /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/.test(
-          v
+          v,
         ) || "帳號錯誤",
     ],
   }),
@@ -227,27 +232,27 @@ export default {
             this.tokenService.store(
               "act",
               response.data.resultData.act,
-              "1800000"
+              "1800000",
             );
             this.tokenService.store(
               "ret",
               response.data.resultData.ret,
-              "1800000"
+              "1800000",
             );
             this.tokenService.store(
               "level",
               response.data.resultData.level,
-              "1800000"
+              "1800000",
             );
             this.tokenService.store(
               "olympic",
               response.data.resultData.olympic,
-              "1800000"
+              "1800000",
             );
             this.tokenService.store(
               "system",
               response.data.resultData.system,
-              "1800000"
+              "1800000",
             );
             location.href = "/manage/optionMenu";
           } else if (response.data.code === 201 || response.data.code === 501) {
@@ -260,7 +265,7 @@ export default {
               this.tokenService.store("Lcount", 1, "900000");
             } else {
               this.loginCount = JSON.parse(
-                localStorage.getItem("Lcount")
+                localStorage.getItem("Lcount"),
               ).value;
               this.tokenService.store("Lcount", this.loginCount + 1, "900000");
             }
@@ -269,27 +274,27 @@ export default {
             this.tokenService.store(
               "act",
               response.data.resultData.act,
-              "1800000"
+              "1800000",
             );
             this.tokenService.store(
               "ret",
               response.data.resultData.ret,
-              "1800000"
+              "1800000",
             );
             this.tokenService.store(
               "level",
               response.data.resultData.level,
-              "1800000"
+              "1800000",
             );
             this.tokenService.store(
               "olympic",
               response.data.resultData.olympic,
-              "1800000"
+              "1800000",
             );
             this.tokenService.store(
               "system",
               response.data.resultData.system,
-              "1800000"
+              "1800000",
             );
             if (this.system === "science") {
               location.href = "/science/change";
@@ -304,7 +309,7 @@ export default {
               this.tokenService.store("Lcount", 1, "900000");
             } else {
               this.loginCount = JSON.parse(
-                localStorage.getItem("Lcount")
+                localStorage.getItem("Lcount"),
               ).value;
               this.tokenService.store("Lcount", this.loginCount + 1, "900000");
             }

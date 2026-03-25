@@ -65,7 +65,9 @@ export default {
       currentUrl.includes("/science/checkback/") ||
       currentUrl.includes("/science/signup") ||
       currentUrl.includes("/science/signup/") ||
-      currentUrl.includes("/science/scoreload/")
+      currentUrl.includes("/science/scoreload/") ||
+      currentUrl.includes("/applySignup") ||
+      currentUrl.includes("/applyScore")
     ) {
       if (
         this.systemENV.MOD === "sit" &&
