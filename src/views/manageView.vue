@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer absolute permanent v-model="drawer">
+    <v-navigation-drawer v-model="drawer" app>
       <v-list>
         <v-list-item
           :prepend-avatar="logoPath"
@@ -10,7 +10,7 @@
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
-      <v-list :lines="false" nav>
+      <v-list>
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
