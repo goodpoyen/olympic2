@@ -1,13 +1,19 @@
 <template>
   <div>
     <v-card>
-      <v-tabs color="blue accent-4" left>
-        <v-tab style="color: black; font-weight: bolder">人員資料</v-tab>
-        <v-tab v-if="type == 3" style="color: black; font-weight: bolder"
+      <v-tabs v-model="tab" color="blue accent-4" left>
+        <v-tab :value="1" style="color: black; font-weight: bolder"
+          >人員資料</v-tab
+        >
+        <v-tab
+          v-if="type == 3"
+          :value="2"
+          style="color: black; font-weight: bolder"
           >CMS資料</v-tab
         >
-
-        <v-tab-item v-for="n in 2" :key="n">
+      </v-tabs>
+      <v-tabs-window v-model="tab">
+        <v-tabs-window-item v-for="n in 2" :key="n">
           <v-container v-if="n == 1" fluid>
             <personnel-info
               :loadList="loadList"
@@ -28,15 +34,16 @@
           <v-container v-if="n == 2" fluid>
             <online-Contestants></online-Contestants>
           </v-container>
-        </v-tab-item>
-      </v-tabs>
+        </v-tabs-window-item>
+      </v-tabs-window>
     </v-card>
   </div>
 </template>
 
 <script>
-import PersonnelInfo from "./personnelInfo.vue";
-import onlineContestants from "./onlineContestants.vue";
+// import PersonnelInfo from "./personnelInfo.vue";
+// import onlineContestants from "./onlineContestants.vue";
+
 export default {
   data: () => ({
     type: 0,
@@ -54,11 +61,12 @@ export default {
     passCount: 0,
     nopassCount: 0,
     failCount: 0,
+    tab: null,
   }),
 
   components: {
-    PersonnelInfo,
-    onlineContestants,
+    // PersonnelInfo,
+    // onlineContestants,
   },
 
   computed: {

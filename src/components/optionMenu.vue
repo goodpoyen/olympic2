@@ -254,7 +254,7 @@
                     <v-btn
                       v-if="item.type === 6"
                       icon="mdi-rotate-orbit"
-                      color="f3ebff"
+                      color="#f3ebff"
                       size="x-large"
                       style="margin-left: 20px; margin-top: 7px"
                     ></v-btn>
@@ -283,7 +283,7 @@
                 <v-row>
                   <v-col cols="12" sm="3" md="3">
                     <div style="margin-left: -10px; margin-top: -3px">
-                      <v-btn
+                      <v-icon
                         v-if="
                           item.type === 5 && (level === '3' || level === '1')
                         "
@@ -304,8 +304,8 @@
                         :color="item.testTime === '' ? 'gray' : 'red'"
                         @click="testAction(item)"
                       >
-                        <v-icon>mdi-bug-play-outline</v-icon>
-                      </v-btn>
+                        mdi-bug-play-outline
+                      </v-icon>
                     </div>
                   </v-col>
                   <v-col cols="12" sm="3" md="3">
@@ -764,9 +764,7 @@
                             style="margin-left: 11px; margin-top: -2px"
                           >
                             <v-icon small left> mdi-cash-multiple </v-icon>
-                            <p style="font-size: 14px; margin-top: 13px">
-                              學校自行收費
-                            </p>
+                            <p style="font-size: 14px">學校自行收費</p>
                           </v-btn>
                         </div>
                       </template>
@@ -780,9 +778,7 @@
                           style="margin-left: 11px; margin-top: -2px"
                         >
                           <v-icon small left> mdi-cast-connected </v-icon>
-                          <p style="font-size: 14px; margin-top: 13px">
-                            系統線上繳費
-                          </p>
+                          <p style="font-size: 14px">系統線上繳費</p>
                         </v-btn>
                       </template>
                     </v-radio>

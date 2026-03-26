@@ -11,11 +11,11 @@ const routes = [
     name: "login",
     component: () => import("../views/loginView.vue"),
   },
-  // {
-  //   path: "/science/scilogin",
-  //   name: "scienceScilogin",
-  //   component: () => import("../views/loginView.vue"),
-  // },
+  {
+    path: "/science/scilogin",
+    name: "scienceScilogin",
+    component: () => import("../views/loginView.vue"),
+  },
   // {
   //   path: "/change",
   //   name: "change",
@@ -86,30 +86,30 @@ const routes = [
         name: "optionMenu",
         component: () => import("../components/optionMenu.vue"),
       },
-      // {
-      //   path: "optionExam/:id",
-      //   name: "optionExam",
-      //   props: true,
-      //   component: () => import("../components/optionExam.vue"),
-      // },
-      // {
-      //   path: "optionCamp/:id",
-      //   name: "optionCamp",
-      //   props: true,
-      //   component: () => import("../components/optionCamp.vue"),
-      // },
+      {
+        path: "optionExam/:id",
+        name: "optionExam",
+        props: true,
+        component: () => import("../components/optionExam.vue"),
+      },
+      {
+        path: "optionCamp/:id",
+        name: "optionCamp",
+        props: true,
+        component: () => import("../components/optionCamp.vue"),
+      },
       {
         path: "optionOnlineExam/:id",
         name: "optionOnlineExam",
         props: true,
         component: () => import("../components/optionOnlineExam.vue"),
       },
-      // {
-      //   path: "optionScienceExam/:id",
-      //   name: "optionScienceExam",
-      //   props: true,
-      //   component: () => import("../components/optionScienceExam.vue"),
-      // },
+      {
+        path: "optionScienceExam/:id",
+        name: "optionScienceExam",
+        props: true,
+        component: () => import("../components/optionScienceExam.vue"),
+      },
       // {
       //   path: "personnelInfo/:id",
       //   name: "personnelInfo",

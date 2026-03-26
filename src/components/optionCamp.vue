@@ -1,20 +1,23 @@
 <template>
   <div>
     <v-card>
-      <v-tabs color="blue accent-4" left>
+      <v-tabs v-model="tab" color="blue accent-4" left>
         <v-tab
+          :value="1"
           style="color: black; font-weight: bolder"
           @click="getPersonnelInfo"
           >人員資料</v-tab
         >
         <v-tab
+          :value="2"
           style="color: black; font-weight: bolder"
           :disabled="contestantShow"
           @click="getContestantsInfo"
           >選訓成績</v-tab
         >
-
-        <v-tab-item v-for="n in 2" :key="n">
+      </v-tabs>
+      <v-tabs-window v-model="tab">
+        <v-tabs-window-item v-for="n in 2" :key="n">
           <v-container v-if="n == 1" fluid>
             <personnel-info
               :loadList="loadList"
@@ -43,15 +46,15 @@
               :sendExamScoreNoice="sendExamScoreNoice"
             ></contestants>
           </v-container>
-        </v-tab-item>
-      </v-tabs>
+        </v-tabs-window-item>
+      </v-tabs-window>
     </v-card>
   </div>
 </template>
 
 <script>
-import PersonnelInfo from "./personnelInfo.vue";
-import Contestants from "./contestants.vue";
+// import PersonnelInfo from "./personnelInfo.vue";
+// import Contestants from "./contestants.vue";
 export default {
   data: () => ({
     type: 0,
@@ -73,11 +76,12 @@ export default {
     scoreSend: 0,
     sendExamNotice: false,
     sendExamScoreNoice: false,
+    tab: null,
   }),
 
   components: {
-    PersonnelInfo,
-    Contestants,
+    // PersonnelInfo,
+    // Contestants,
   },
 
   computed: {
