@@ -81,11 +81,11 @@ const routes = [
     name: "manage",
     component: () => import("../views/manageView.vue"),
     children: [
-      // {
-      //   path: "optionMenu",
-      //   name: "optionMenu",
-      //   component: () => import("../components/optionMenu.vue"),
-      // },
+      {
+        path: "optionMenu",
+        name: "optionMenu",
+        component: () => import("../components/optionMenu.vue"),
+      },
       // {
       //   path: "optionExam/:id",
       //   name: "optionExam",
@@ -98,12 +98,12 @@ const routes = [
       //   props: true,
       //   component: () => import("../components/optionCamp.vue"),
       // },
-      // {
-      //   path: "optionOnlineExam/:id",
-      //   name: "optionOnlineExam",
-      //   props: true,
-      //   component: () => import("../components/optionOnlineExam.vue"),
-      // },
+      {
+        path: "optionOnlineExam/:id",
+        name: "optionOnlineExam",
+        props: true,
+        component: () => import("../components/optionOnlineExam.vue"),
+      },
       // {
       //   path: "optionScienceExam/:id",
       //   name: "optionScienceExam",

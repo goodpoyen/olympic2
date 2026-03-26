@@ -7,14 +7,14 @@
             <v-icon small left> mdi-plus </v-icon>
             <p
               v-if="system !== 'science'"
-              style="font-size: 13px; margin-top: 16px"
+              style="font-size: 13px"
               @click="editItem(editedItem)"
             >
               新增選拔賽
             </p>
             <p
               v-if="system === 'science'"
-              style="font-size: 13px; margin-top: 16px"
+              style="font-size: 13px"
               @click="editItem(editedItem)"
             >
               新增甄選考試
@@ -28,9 +28,10 @@
             v-model="selectOlympic"
             label="更換奧林匹亞"
             :items="olympicItem"
-            item-text="olympic"
+            item-title="olympic"
             item-value="value"
-            @change="changeOlympic"
+            variant="underlined"
+            @update:modelValue="changeOlympic"
           ></v-select>
           <v-select
             v-if="level === '1' && system === 'science'"
@@ -38,9 +39,10 @@
             v-model="selectOlympic"
             label="更換學校"
             :items="scienceItem"
-            item-text="olympic"
+            item-title="olympic"
             item-value="value"
-            @change="changeOlympic"
+            variant="underlined"
+            @update:modelValue="changeOlympic"
           ></v-select>
         </v-col>
       </v-row>
@@ -48,7 +50,6 @@
     <div v-for="item in desserts" :key="item.oly_id">
       <v-card
         class="mx-auto"
-        color="rgb(255 255 255);"
         max-width="80%"
         height="100%"
         style="margin-bottom: 2%"
@@ -74,42 +75,13 @@
               >
                 <v-row>
                   <v-col cols="12" sm="2" md="2">
-                    <v-list-item-avatar
-                      style="
-                        margin-left: 20px;
-                        height: 62px;
-                        min-width: 40px;
-                        width: 67px;
-                        background-color: #e9f8ff;
-                        border-color: rgb(243, 235, 255);
-                      "
-                    >
-                      <div v-if="item.signupWarning">
-                        <router-link
-                          v-if="item.type === 1"
-                          :to="'/manage/schoolUser?olyId=' + item.olyId"
-                        >
-                          <v-badge
-                            bordered
-                            color="error"
-                            icon="mdi-account-alert"
-                            overlap
-                          >
-                            <v-icon
-                              large
-                              style="margin-left: 3px; font-size: 28px"
-                            >
-                              mdi-notebook-edit-outline
-                            </v-icon>
-                          </v-badge>
-                        </router-link>
-                      </div>
-                      <div v-else>
-                        <v-icon large style="margin-left: 3px; font-size: 28px">
-                          mdi-notebook-edit-outline
-                        </v-icon>
-                      </div>
-                    </v-list-item-avatar>
+                    <v-btn
+                      v-if="item.type === 1"
+                      icon="mdi-notebook-edit-outline"
+                      color="#e9f8ff"
+                      size="x-large"
+                      style="margin-left: 20px; margin-top: 7px"
+                    ></v-btn>
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
@@ -141,20 +113,13 @@
               >
                 <v-row>
                   <v-col cols="12" sm="2" md="2">
-                    <v-list-item-avatar
-                      style="
-                        margin-left: 20px;
-                        height: 62px;
-                        min-width: 40px;
-                        width: 67px;
-                        background-color: #f3ebff;
-                        border-color: rgb(243, 235, 255);
-                      "
-                    >
-                      <v-icon large style="margin-left: 3px; font-size: 28px">
-                        mdi-town-hall
-                      </v-icon>
-                    </v-list-item-avatar>
+                    <v-btn
+                      v-if="item.type === 2"
+                      icon="mdi-town-hall"
+                      color="#f3ebff"
+                      size="x-large"
+                      style="margin-left: 20px; margin-top: 7px"
+                    ></v-btn>
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
@@ -183,51 +148,27 @@
               >
                 <v-row>
                   <v-col cols="12" sm="2" md="2">
-                    <v-list-item-avatar
+                    <v-btn
                       v-if="item.type === 3"
-                      style="
-                        margin-left: 20px;
-                        height: 62px;
-                        min-width: 40px;
-                        width: 67px;
-                        background-color: #e4ffe5;
-                        border-color: rgb(243, 235, 255);
-                      "
-                    >
-                      <v-icon large style="margin-left: 3px; font-size: 28px">
-                        mdi-cast-education
-                      </v-icon>
-                    </v-list-item-avatar>
-                    <v-list-item-avatar
+                      icon="mdi-cast-education"
+                      color="#e4ffe5"
+                      size="x-large"
+                      style="margin-left: 20px; margin-top: 7px"
+                    ></v-btn>
+                    <v-btn
                       v-if="item.type === 4"
-                      style="
-                        margin-left: 20px;
-                        height: 62px;
-                        min-width: 40px;
-                        width: 67px;
-                        background-color: #fad2a0;
-                        border-color: rgb(243, 235, 255);
-                      "
-                    >
-                      <v-icon large style="margin-left: 3px; font-size: 28px">
-                        mdi-party-popper
-                      </v-icon>
-                    </v-list-item-avatar>
-                    <v-list-item-avatar
+                      icon="mdi-party-popper"
+                      color="#fad2a0"
+                      size="x-large"
+                      style="margin-left: 20px; margin-top: 7px"
+                    ></v-btn>
+                    <v-btn
                       v-if="item.type === 7"
-                      style="
-                        margin-left: 20px;
-                        height: 62px;
-                        min-width: 40px;
-                        width: 67px;
-                        background-color: #ff525278;
-                        border-color: rgb(243, 235, 255);
-                      "
-                    >
-                      <v-icon large style="margin-left: 3px; font-size: 28px">
-                        mdi-account-group
-                      </v-icon>
-                    </v-list-item-avatar>
+                      icon="mdi-account-group"
+                      color="#ff525278"
+                      size="x-large"
+                      style="margin-left: 20px; margin-top: 7px"
+                    ></v-btn>
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
@@ -260,20 +201,13 @@
               >
                 <v-row>
                   <v-col cols="12" sm="2" md="2">
-                    <v-list-item-avatar
-                      style="
-                        margin-left: 20px;
-                        height: 62px;
-                        min-width: 40px;
-                        width: 67px;
-                        background-color: #e9f8ff;
-                        border-color: rgb(243, 235, 255);
-                      "
-                    >
-                      <v-icon large style="font-size: 28px">
-                        mdi-notebook-edit-outline
-                      </v-icon>
-                    </v-list-item-avatar>
+                    <v-btn
+                      v-if="item.type === 5"
+                      icon="mdi-notebook-edit-outline"
+                      color="#e9f8ff"
+                      size="x-large"
+                      style="margin-left: 20px; margin-top: 7px"
+                    ></v-btn>
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
@@ -317,20 +251,13 @@
               >
                 <v-row>
                   <v-col cols="12" sm="2" md="2">
-                    <v-list-item-avatar
-                      style="
-                        margin-left: 20px;
-                        height: 62px;
-                        min-width: 40px;
-                        width: 67px;
-                        background-color: #f3ebff;
-                        border-color: rgb(243, 235, 255);
-                      "
-                    >
-                      <v-icon large style="margin-left: 3px; font-size: 28px">
-                        mdi-rotate-orbit
-                      </v-icon>
-                    </v-list-item-avatar>
+                    <v-btn
+                      v-if="item.type === 6"
+                      icon="mdi-rotate-orbit"
+                      color="f3ebff"
+                      size="x-large"
+                      style="margin-left: 20px; margin-top: 7px"
+                    ></v-btn>
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
@@ -448,7 +375,7 @@
     </div>
     <v-dialog v-model="dialog" max-width="600px">
       <v-card>
-        <v-card-title style="background-color: #0046fe; height: 57px">
+        <v-card-title style="background-color: #0046fe; height: 48px">
           <v-icon
             large
             style="
@@ -488,7 +415,7 @@
                   <v-radio-group
                     :disabled="editedItem.type === 5 && level === '4'"
                     v-model="editedItem.type"
-                    row
+                    inline
                     :rules="[(v) => !!v || '選拔代碼不能為空']"
                     required
                   >
@@ -507,7 +434,7 @@
                           <v-icon small left>
                             mdi-notebook-edit-outline
                           </v-icon>
-                          <p style="font-size: 14px; margin-top: 13px">測驗</p>
+                          <p style="font-size: 14px">測驗</p>
                         </v-btn>
                       </template>
                     </v-radio>
@@ -526,9 +453,7 @@
                           <v-icon small left>
                             mdi-notebook-edit-outline
                           </v-icon>
-                          <p style="font-size: 14px; margin-top: 13px">
-                            甄選考試
-                          </p>
+                          <p style="font-size: 14px">甄選考試</p>
                         </v-btn>
                       </template>
                     </v-radio>
@@ -545,9 +470,7 @@
                           style="margin-left: 11px; margin-top: -2px"
                         >
                           <v-icon small left> mdi-rotate-orbit </v-icon>
-                          <p style="font-size: 14px; margin-top: 13px">
-                            實驗實作
-                          </p>
+                          <p style="font-size: 14px">實驗實作</p>
                         </v-btn>
                       </template>
                     </v-radio>
@@ -564,9 +487,7 @@
                           style="margin-left: 11px; margin-top: -2px"
                         >
                           <v-icon small left> mdi-town-hall </v-icon>
-                          <p style="font-size: 14px; margin-top: 13px">
-                            選訓營
-                          </p>
+                          <p style="font-size: 14px">選訓營</p>
                         </v-btn>
                       </template>
                     </v-radio>
@@ -583,9 +504,7 @@
                           style="margin-left: 11px; margin-top: -2px"
                         >
                           <v-icon small left> mdi-cast-education </v-icon>
-                          <p style="font-size: 14px; margin-top: 13px">
-                            線上賽
-                          </p>
+                          <p style="font-size: 14px">線上賽</p>
                         </v-btn>
                       </template>
                     </v-radio>
@@ -602,9 +521,7 @@
                           style="margin-left: 11px; margin-top: -2px"
                         >
                           <v-icon small left> mdi-account-group </v-icon>
-                          <p style="font-size: 14px; margin-top: 16px">
-                            資訊營
-                          </p>
+                          <p style="font-size: 14px">資訊營</p>
                         </v-btn>
                       </template>
                     </v-radio>
@@ -627,6 +544,7 @@
                       (v) => !!v || '選拔代碼不能為空',
                       (v) => v.length <= 10 || '超過規定字數',
                     ]"
+                    variant="underlined"
                     required
                   ></v-text-field>
                   <v-text-field
@@ -638,6 +556,7 @@
                       (v) => !!v || '甄選代碼不能為空',
                       (v) => v.length <= 10 || '超過規定字數',
                     ]"
+                    variant="underlined"
                     required
                   ></v-text-field>
                 </v-col>
@@ -661,6 +580,7 @@
                     :items="yearList"
                     label="參賽年份"
                     :rules="[(v) => !!v || '參賽年份不能為空']"
+                    variant="underlined"
                     required
                   ></v-select>
                   <v-select
@@ -671,6 +591,7 @@
                     :items="yearList"
                     label="甄選年份"
                     :rules="[(v) => !!v || '甄選年份不能為空']"
+                    variant="underlined"
                     required
                   ></v-select>
                 </v-col>
@@ -684,6 +605,7 @@
                       (v) => !!v || '選拔名稱不能為空',
                       (v) => v.length <= 30 || '超過規定字數',
                     ]"
+                    variant="underlined"
                     required
                   ></v-text-field>
                 </v-col>
@@ -701,7 +623,7 @@
                 >
                   <v-radio-group
                     v-model="editedItem.partnerGender"
-                    row
+                    inline
                     :rules="[(v) => !!v || '參加者身理性別不能為空']"
                     required
                   >
@@ -810,6 +732,7 @@
                     v-model="editedItem.web"
                     label="公告網址"
                     :rules="[(v) => !!v || '公告網址不能為空']"
+                    variant="underlined"
                     required
                   ></v-text-field>
                 </v-col>
@@ -827,7 +750,7 @@
                 >
                   <v-radio-group
                     v-model="editedItem.paymentType"
-                    row
+                    inline
                     :rules="[(v) => !!v || '繳費方式不能為空']"
                     required
                   >
@@ -877,6 +800,7 @@
                     v-model="editedItem.price"
                     label="報名費用"
                     :rules="[(v) => !!v || '報名費用不能為空']"
+                    variant="underlined"
                   ></v-text-field>
                 </v-col>
                 <v-col
@@ -886,7 +810,7 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <v-datetime-picker
+                  <!-- <v-datetime-picker
                     :disabled="editedItem.type === 5 && level === '4'"
                     :key="editedItem.olyId"
                     v-model="editedItem.signupStart"
@@ -895,7 +819,7 @@
                     :label="timeWording + '開始時間'"
                     style="width: 191px"
                     locale="zh-cn"
-                  ></v-datetime-picker>
+                  ></v-datetime-picker> -->
                 </v-col>
                 <v-col
                   v-show="editedItem.type !== 2"
@@ -904,14 +828,14 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <v-datetime-picker
+                  <!-- <v-datetime-picker
                     :disabled="editedItem.type === 5 && level === '4'"
                     :key="editedItem.olyId"
                     v-model="editedItem.signupEnd"
                     :text-field-props="textFieldProps"
                     :label="timeWording + '結束時間'"
                     style="width: 191px"
-                  ></v-datetime-picker>
+                  ></v-datetime-picker> -->
                 </v-col>
                 <v-col
                   v-show="
@@ -925,7 +849,7 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <template>
+                  <!-- <template>
                     <v-datetime-picker
                       :key="editedItem.olyId"
                       v-model="editedItem.examStart"
@@ -933,7 +857,7 @@
                       :label="timeWording2 + '開始時間'"
                       style="width: 191px"
                     ></v-datetime-picker>
-                  </template>
+                  </template> -->
                 </v-col>
                 <v-col
                   v-show="
@@ -947,13 +871,13 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <v-datetime-picker
+                  <!-- <v-datetime-picker
                     :key="editedItem.olyId"
                     v-model="editedItem.examEnd"
                     :text-field-props="textFieldProps"
                     :label="timeWording2 + '結束時間'"
                     style="width: 191px"
-                  ></v-datetime-picker>
+                  ></v-datetime-picker> -->
                 </v-col>
                 <v-col
                   v-show="editedItem.type === 1"
@@ -969,9 +893,9 @@
                   cols="12"
                   sm="3"
                   md="4"
-                  style="margin-top: -51px"
+                  style="margin-top: -39px"
                 >
-                  <v-radio-group v-model="editedItem.queryScore" row>
+                  <v-radio-group v-model="editedItem.queryScore" inline>
                     <v-radio label="否" value="0"></v-radio>
                     <v-radio label="是" value="1"></v-radio>
                   </v-radio-group>
@@ -983,7 +907,7 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <template>
+                  <!-- <template>
                     <v-datetime-picker
                       :key="editedItem.olyId"
                       v-model="editedItem.queryStart"
@@ -991,7 +915,7 @@
                       label="成績查詢開始時間"
                       style="width: 191px"
                     ></v-datetime-picker>
-                  </template>
+                  </template> -->
                 </v-col>
                 <v-col
                   v-show="editedItem.queryScore === '1'"
@@ -1000,13 +924,13 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <v-datetime-picker
+                  <!-- <v-datetime-picker
                     :key="editedItem.olyId"
                     v-model="editedItem.queryEnd"
                     :text-field-props="textFieldProps"
                     label="成績查詢結束時間"
                     style="width: 191px"
-                  ></v-datetime-picker>
+                  ></v-datetime-picker> -->
                 </v-col>
                 <v-col
                   v-show="editedItem.type === 1"
@@ -1704,6 +1628,7 @@ export default {
     },
 
     async changeOlympic() {
+      console.log(5555);
       await this.tokenService.renewLT();
 
       this.tokenService.store("olympic", this.selectOlympic, "1800000");
@@ -1717,12 +1642,12 @@ export default {
       this.tokenService.store(
         this.globalSystemValue.olympic + item.olyId + "T",
         item.signupStart,
-        "1800000"
+        "1800000",
       );
       this.tokenService.store(
         this.globalSystemValue.olympic + item.olyId + "E",
         item.signupEnd,
-        "1800000"
+        "1800000",
       );
     },
 
@@ -1740,17 +1665,17 @@ export default {
         ) {
           this.editedItem.partnerGroup = this.editedItem.partnerGroup.replace(
             "," + type,
-            ""
+            "",
           );
           this.editedItem.partnerGroup = this.editedItem.partnerGroup.replace(
             type,
-            ""
+            "",
           );
 
           if (this.editedItem.partnerGroup.substr(0, 1) === ",") {
             this.editedItem.partnerGroup = this.editedItem.partnerGroup.substr(
               1,
-              this.editedItem.partnerGroup.length
+              this.editedItem.partnerGroup.length,
             );
           }
         } else {
@@ -1962,24 +1887,24 @@ export default {
         this.editedItem.type === 6
       ) {
         this.editedItem.examStart = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.examStart
+          this.editedItem.examStart,
         );
         this.editedItem.examEnd = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.examEnd
+          this.editedItem.examEnd,
         );
         this.editedItem.signupEnd = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.signupEnd
+          this.editedItem.signupEnd,
         );
         this.editedItem.signupStart = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.signupStart
+          this.editedItem.signupStart,
         );
 
         if (this.editedItem.queryScore === "1") {
           this.editedItem.queryStart = this.globalSystemTool.GMTdateTimeFormat(
-            this.editedItem.queryStart
+            this.editedItem.queryStart,
           );
           this.editedItem.queryEnd = this.globalSystemTool.GMTdateTimeFormat(
-            this.editedItem.queryEnd
+            this.editedItem.queryEnd,
           );
         } else {
           this.editedItem.queryStart = null;
@@ -1987,10 +1912,10 @@ export default {
         }
       } else if (this.editedItem.type === 2) {
         this.editedItem.examStart = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.examStart
+          this.editedItem.examStart,
         );
         this.editedItem.examEnd = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.examEnd
+          this.editedItem.examEnd,
         );
         this.editedItem.signupEnd = null;
         this.editedItem.signupStart = null;
@@ -1998,10 +1923,10 @@ export default {
         this.editedItem.examStart = null;
         this.editedItem.examEnd = null;
         this.editedItem.signupEnd = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.signupEnd
+          this.editedItem.signupEnd,
         );
         this.editedItem.signupStart = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.signupStart
+          this.editedItem.signupStart,
         );
       }
 
