@@ -10,83 +10,40 @@
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
-      <v-list>
+      <v-list v-model:opened="open">
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
           :value="item"
+          :prepend-icon="item.icon"
+          :title="item.text"
           color="primary"
           @click="iconClick(item.text)"
         >
-          <template v-slot:prepend>
-            <v-icon :icon="item.icon"></v-icon>
-          </template>
-          <v-list-item-title>
-            {{ systemWord }}{{ item.text }}</v-list-item-title
-          >
-          <v-list-group
-            v-if="item.text == '系統管理'"
-            style="margin-left: -17px"
-            :value="true"
-          >
-            <template v-slot:prependIcon>
-              <v-icon
-                v-text="item.icon"
-                :style="{ color: groupColor }"
-              ></v-icon>
-            </template>
-            <template v-slot:activator>
-              <v-list-item-title
-                style="
-                  font-size: 15px;
-                  font-weight: bold;
-                  color: black;
-                  width: 100px;
-                "
-                >系統管理</v-list-item-title
-              >
-            </template>
-
-            <v-list-item
-              class="listItem"
-              :style="{
-                cursor: 'pointer',
-                backgroundColor:
-                  $store.state.title === item.title ? '#d6e3f0' : '',
-              }"
-              v-for="(item, index) in sysSetingGroup"
-              :key="index"
-              @click="groupClick(item)"
-            >
-              <div v-if="item.title == '成績單設定'">
-                <!-- <v-list-item-icon>
-                  <v-icon
-                    dense
-                    v-text="item.icon"
-                    :style="{ color: groupScroeColor, marginLeft: '50px' }"
-                  ></v-icon>
-                </v-list-item-icon> -->
-                <v-list-item-title
-                  v-text="item.title"
-                  style="font-size: 13px; font-weight: bold; display: inline"
-                ></v-list-item-title>
-              </div>
-              <!-- <div v-if="item.title == '專案設定'">
-                <v-list-item-icon>
-                  <v-icon
-                    dense
-                    v-text="item.icon"
-                    :style="{ color: groupProjectColor, marginLeft: '50px' }"
-                  ></v-icon>
-                </v-list-item-icon>
-                <v-list-item-title
-                  v-text="item.title"
-                  style="font-size: 13px; font-weight: bold; display: inline"
-                ></v-list-item-title>
-              </div>-->
-            </v-list-item>
-          </v-list-group>
         </v-list-item>
+        <v-list-group
+          value="setting"
+          v-for="(item, i) in groupItems"
+          :key="i"
+          :value="item"
+        >
+          <template v-slot:activator="{ props }">
+            <v-list-item
+              v-bind="props"
+              :prepend-icon="item.icon"
+              :title="item.text"
+            ></v-list-item>
+          </template>
+
+          <v-list-item
+            v-for="(group, i) in item.subItem"
+            :key="i"
+            :prepend-icon="group.icon"
+            :title="group.text"
+            :value="group.text"
+            @click="groupClick(group)"
+          ></v-list-item>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
 
@@ -111,37 +68,17 @@
 <script>
 export default {
   data: () => ({
-    sysSetingGroup: [
-      {
-        title: "成績單設定",
-        icon: "mdi-license",
-      },
-      // {
-      //   title: "專案設定",
-      //   icon: "mdi-sign-text",
-      // }
-    ],
     olympicTitle: "",
     olympicMsg: "",
     logoPath: "",
     selectedItem: 0,
     levelStatus: false,
     items: [],
+    groupItems: [],
+    open: ["setting"],
     datetime: new Date(),
     systemColor: "",
     systemWord: "",
-    accountColor: "gray",
-    olympicColor: "gray",
-    scienceColor: "gray",
-    schoolUserColor: "gray",
-    groupColor: "gray",
-    groupScroeColor: "gray",
-    groupProjectColor: "gray",
-    groupUploadColor: "gray",
-    accountBackgroundColor: "",
-    olympicBackgroundColor: "",
-    scienceBackgroundColor: "",
-    schoolUserBackgroundColor: "",
     drawer: true,
     groupSelect: "",
   }),
@@ -172,7 +109,6 @@ export default {
     },
 
     groupClick(item) {
-      this.groupColor = "blue";
       if (item.title === "成績單設定") {
         location.href = "/manage/defaultscore/0";
       }
@@ -237,7 +173,19 @@ export default {
             text: "甄選管理",
             icon: "mdi-calendar-text-outline",
           },
-          { text: "系統管理", icon: "mdi-cog-outline" },
+        ];
+
+        this.groupItems = [
+          {
+            text: "系統管理",
+            icon: "mdi-cog-outline",
+            subItem: [
+              {
+                text: "成績單設定",
+                icon: "mdi-license",
+              },
+            ],
+          },
         ];
       }
     } else if (
@@ -267,6 +215,19 @@ export default {
         },
         { text: "系統管理", icon: "mdi-cog-outline" },
       ];
+
+      this.groupItems = [
+        {
+          text: "系統管理",
+          icon: "mdi-cog-outline",
+          subItem: [
+            {
+              text: "成績單設定",
+              icon: "mdi-license",
+            },
+          ],
+        },
+      ];
     } else if (
       this.globalSystemValue.level === "4" ||
       (this.globalSystemValue.level === "99" &&
@@ -278,6 +239,19 @@ export default {
           icon: "mdi-calendar-text-outline",
         },
         { text: "系統管理", icon: "mdi-cog-outline" },
+      ];
+
+      this.groupItems = [
+        {
+          text: "系統管理",
+          icon: "mdi-cog-outline",
+          subItem: [
+            {
+              text: "成績單設定",
+              icon: "mdi-license",
+            },
+          ],
+        },
       ];
     }
 
@@ -358,27 +332,8 @@ export default {
     this.olympicMsg = await this.globalSystemTool.changeSubtitleMsg(
       this.globalSystemValue.level,
     );
-    await this.tokenService.renewLT();
 
-    if (this.$store.state.title === "帳號管理") {
-      this.accountColor = "blue";
-      this.accountBackgroundColor = "#d6e3f0";
-    } else if (this.$store.state.title === "選拔管理") {
-      this.olympicColor = "blue";
-      this.olympicBackgroundColor = "#d6e3f0";
-    } else if (this.$store.state.title === "甄選管理") {
-      this.scienceColor = "blue";
-      this.scienceBackgroundColor = "#d6e3f0";
-    } else if (this.$store.state.title === "聯絡人管理") {
-      this.schoolUserColor = "blue";
-      this.schoolUserBackgroundColor = "#d6e3f0";
-    } else if (this.$store.state.title === "成績單設定") {
-      this.groupColor = "blue";
-      this.groupScroeColor = "blue";
-    } else if (this.$store.state.title === "專案設定") {
-      this.groupColor = "blue";
-      this.groupProjectColor = "blue";
-    }
+    await this.tokenService.renewLT();
 
     if (this.systemENV.MOD === "prod" || this.systemENV.MOD === "dev") {
       this.systemColor = "#0046FE";
