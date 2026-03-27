@@ -41,7 +41,7 @@
 </template>
 
 <script>
-// import PersonnelInfo from "./personnelInfo.vue";
+import PersonnelInfo from "./personnelInfo.vue";
 // import onlineContestants from "./onlineContestants.vue";
 
 export default {
@@ -65,7 +65,7 @@ export default {
   }),
 
   components: {
-    // PersonnelInfo,
+    PersonnelInfo,
     // onlineContestants,
   },
 
