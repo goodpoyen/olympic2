@@ -1144,24 +1144,14 @@
             >設定報名欄位</span
           >
         </v-card-title>
-        <v-card-text
-          ><v-data-table
+        <v-card-text>
+          <v-data-table
             :headers="rulesHeaders"
             :items="rulesList"
+            item-key="columnName"
             loading-text="資料處理中...."
             class="elevation-1"
           >
-            <template
-              v-for="(header, index) in headers"
-              v-slot:[`header.${header.value}`]="{ header }"
-            >
-              <thead>
-                <span>{{ header.text }} </span>
-              </thead>
-            </template>
-            <template v-slot:items="props">
-              <td>{{ props.item.name }}</td>
-            </template>
             <template v-slot:item.required="{ item }">
               <v-switch
                 :disabled="item.sysRequired === true"
@@ -1609,13 +1599,13 @@ export default {
       });
 
       this.rulesHeaders = [
-        { text: "欄位名稱", value: "columnName" },
+        { title: "欄位名稱", value: "columnName" },
         {
-          text: "使用欄位",
+          title: "使用欄位",
           value: "required",
         },
         {
-          text: "是否必填",
+          title: "是否必填",
           value: "isNull",
         },
       ];
