@@ -17,7 +17,7 @@
         >
       </v-tabs>
       <v-tabs-window v-model="tab">
-        <v-tabs-window-item v-for="n in 2" :key="n">
+        <v-tabs-window-item v-for="n in 2" :key="n" :value="n">
           <v-container v-if="n == 1" fluid>
             <personnel-info
               :loadList="loadList"

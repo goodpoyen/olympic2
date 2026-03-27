@@ -29,7 +29,7 @@
         >
       </v-tabs>
       <v-tabs-window v-model="tab">
-        <v-tabs-window-item v-for="n in 4" :key="n">
+        <v-tabs-window-item v-for="n in 4" :key="n" :value="n">
           <!-- <v-container v-if="n == 1" fluid>
             <personnel-info
               :loadList="loadList"
@@ -60,7 +60,7 @@
               :fixCodeName="fixCodeName"
             >
             </class-room>
-          </v-container>
+          </v-container>-->
           <v-container v-if="n == 4" fluid>
             <contestants
               :loadList="loadList"
@@ -71,7 +71,7 @@
               :sendExamNotice="sendExamNotice"
               :sendExamScoreNoice="sendExamScoreNoice"
             ></contestants>
-          </v-container> -->
+          </v-container>
         </v-tabs-window-item>
       </v-tabs-window>
     </v-card>
@@ -82,7 +82,7 @@
 // import PersonnelInfo from "./personnelInfo.vue";
 // import ExamArea from "./examArea.vue";
 // import ClassRoom from "./classRoom.vue";
-// import Contestants from "./contestants.vue";
+import Contestants from "./contestants.vue";
 
 export default {
   data: () => ({
@@ -112,7 +112,7 @@ export default {
     // PersonnelInfo,
     // ExamArea,
     // ClassRoom,
-    // Contestants,
+    Contestants,
   },
 
   computed: {

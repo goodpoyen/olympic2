@@ -17,7 +17,7 @@
       <div v-for="header in mailTypeHeader" :key="header.value">
         <v-checkbox
           v-if="header.show"
-          v-model="sendMailtype"
+          v-model="mailType"
           :label="header.level"
           :value="header.value"
           :disabled="header.disabled"
@@ -30,8 +30,8 @@
         ></v-checkbox>
         <div v-if="header.targetGroup">
           <v-radio-group
-            v-if="sendMailtype === 'exam'"
-            v-model="sendMailSelected"
+            v-if="mailType === 'exam'"
+            v-model="mailSelect"
             style="margin-top: -18px; margin-left: 55px; margin-bottom: -16px"
             row
           >
@@ -160,10 +160,10 @@
       </v-btn>
       <v-btn
         :disabled="
-          sendMailtype === '' ||
-          sendMailtype === null ||
+          mailType === '' ||
+          mailType === null ||
           ((scheduleType === 5 || scheduleType === 6) &&
-            sendMailtype === 'score' &&
+            mailType === 'score' &&
             scoreSubject === '')
         "
         color="darken-1"
@@ -194,6 +194,8 @@ export default {
     testMailOpen: false,
     testMailCheck: true,
     testMail: "",
+    mailType: "",
+    mailSelect: "student",
     snedmailWordingBTN: "寄送抽測信",
     sendResult: false,
     bntLoad: false,
@@ -223,15 +225,15 @@ export default {
 
   methods: {
     async controllerSnedTypeConfirm() {
-      if (this.sendMailtype === "reviewExam") {
+      if (this.mailType === "reviewExam") {
         await this.reviewExam();
-      } else if (this.sendMailtype === "reviewScore") {
+      } else if (this.mailType === "reviewScore") {
         await this.reviewScore();
-      } else if (this.sendMailtype === "exam") {
+      } else if (this.mailType === "exam") {
         await this.sendAllMail("exam");
-      } else if (this.sendMailtype === "score") {
+      } else if (this.mailType === "score") {
         await this.sendAllMail("score");
-      } else if (this.sendMailtype === "testScore") {
+      } else if (this.mailType === "testScore") {
         this.$emit("sendTestMail", "");
       }
     },
@@ -312,8 +314,8 @@ export default {
       const data = {};
       data.AT = await this.tokenService.getFastAT();
       data.olyId = this.id;
-      data.sendMailType = this.sendMailtype;
-      data.sendMailSelected = this.sendMailSelected;
+      data.sendMailType = this.mailType;
+      data.sendMailSelected = this.mailSelect;
       data.olympic = this.globalSystemValue.olympic;
       data.scheduleType = this.scheduleType;
       data.subject = this.scoreSubject;
