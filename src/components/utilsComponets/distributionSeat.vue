@@ -73,7 +73,7 @@
               @click="getEnoughArea()"
             >
               <v-icon small left> mdi-auto-mode </v-icon>
-              <p style="font-size: 13px; margin-top: 16px">自動分配</p>
+              <p style="font-size: 13px">自動分配</p>
             </v-btn>
             <v-btn
               small
@@ -83,7 +83,7 @@
               style="margin-top: 10px; color: #ededf3"
             >
               <v-icon small left> mdi-swap-horizontal </v-icon>
-              <p style="font-size: 13px; margin-top: 16px">指定分配</p>
+              <p style="font-size: 13px">指定分配</p>
             </v-btn>
             <span
               v-show="studentExamCode.sendExamNotice"
@@ -370,7 +370,10 @@ export default {
     examCodeExist: false,
     studentExamCode: {},
     editedItem: {},
-    desserts: [],
+    desserts: {
+      type: Array,
+      default: () => [],
+    },
     editedIndex: null,
     id: "",
   },

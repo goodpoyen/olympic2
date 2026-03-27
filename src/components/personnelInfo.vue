@@ -10,7 +10,7 @@
         style="margin-left: 11px; margin-top: -2px"
       >
         <v-icon small left> mdi-notebook-edit-outline </v-icon>
-        <p style="font-size: 14px; margin-top: 13px">測驗</p>
+        <p style="font-size: 14px; margin-top: -4px">測驗</p>
       </v-btn>
       <v-btn
         v-if="menuType === 2"
@@ -20,7 +20,7 @@
         style="margin-left: 11px; margin-top: -2px"
       >
         <v-icon small left> mdi-town-hall </v-icon>
-        <p style="font-size: 14px; margin-top: 13px">選拔營</p>
+        <p style="font-size: 14px; margin-top: -4px">選拔營</p>
       </v-btn>
       <v-btn
         v-if="menuType === 3"
@@ -30,7 +30,7 @@
         style="margin-left: 11px; margin-top: -2px"
       >
         <v-icon small left> mdi-cast-education </v-icon>
-        <p style="font-size: 14px; margin-top: 13px">線上賽</p>
+        <p style="font-size: 14px; margin-top: -4px">線上賽</p>
       </v-btn>
       <v-btn
         v-if="menuType === 4"
@@ -40,7 +40,7 @@
         style="margin-left: 11px; margin-top: -2px"
       >
         <v-icon small left> mdi-party-popper </v-icon>
-        <p style="font-size: 14px; margin-top: 13px">新手同樂會</p>
+        <p style="font-size: 14px; margin-top: -4px">新手同樂會</p>
       </v-btn>
       <v-btn
         v-if="menuType === 7"
@@ -50,7 +50,7 @@
         style="margin-left: 11px; margin-top: -2px"
       >
         <v-icon small left> mdi-account-group </v-icon>
-        <p style="font-size: 14px; margin-top: 13px">資訊營</p>
+        <p style="font-size: 14px; margin-top: -4px">資訊營</p>
       </v-btn>
       <div style="display: inline; margin: 52px">
         選拔名稱:
@@ -92,46 +92,120 @@
       :footer-props="{ 'items-per-page-options': [50, 100, 150, 200, 250, -1] }"
       :loading="loadList"
       loading-text="資料處理中...."
-      multi-sort
       Dense
       class="elevation-1"
     >
-      <template
-        v-for="(header, index) in headers"
-        v-slot:[`header.${header.value}`]="{ header }"
-      >
-        <span>{{ header.text }} </span>
-        <br />
-        <v-menu offset-y :close-on-content-click="false">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-if="header.text === '功能'"
-              icon
-              v-bind="attrs"
-              v-on="on"
-              style="visibility: hidden"
-            >
-              <v-icon small :color="header[header.filterName + '_C']">
-                mdi-filter
-              </v-icon>
-            </v-btn>
-            <v-btn v-else icon v-bind="attrs" v-on="on">
-              <v-icon small :color="header[header.filterName + '_C']">
-                mdi-filter
-              </v-icon>
-            </v-btn>
-          </template>
-          <table-filter
-            :desserts="desserts"
-            :dessertsTemp="dessertsTemp"
-            :header="header"
-            @updateTable="updateTable"
+      <template v-slot:top>
+        <v-toolbar flat style="background-color: white">
+          <v-btn
+            small
+            color="#635BFF"
+            variant="flat"
+            dark
+            class="mb-2"
+            @click="editItem(editedItem)"
           >
-          </table-filter>
-        </v-menu>
-      </template>
-      <template v-slot:items="props">
-        <td>{{ props.item.name }}</td>
+            <v-icon small left> mdi-account-plus-outline </v-icon>
+            <p style="font-size: 13px">新增報名</p>
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn
+            v-if="menuType === 1"
+            class="ma-3"
+            small
+            outlined
+            color="#635BFF"
+            variant="flat"
+            style="font-weight: bold"
+            :disabled="contestantShow"
+            @click="createExamCodeAlert"
+          >
+            <v-icon small left> mdi-card-account-details-outline </v-icon>
+            <p style="font-size: 13px">產生應試資料</p>
+          </v-btn>
+          <v-btn
+            v-if="menuType === 2"
+            class="ma-3"
+            small
+            outlined
+            color="#635BFF"
+            variant="flat"
+            style="font-weight: bold"
+            @click="createCampCode"
+          >
+            <v-icon small left> mdi-card-account-details-outline </v-icon>
+            <p style="font-size: 13px">產生選訓資料</p>
+          </v-btn>
+          <v-btn
+            v-if="menuType === 3"
+            class="ma-3"
+            small
+            outlined
+            color="#635BFF"
+            variant="flat"
+            style="font-weight: bold"
+            @click="setCMS"
+          >
+            <v-icon small left> mdi-card-account-details-outline </v-icon>
+            <p style="font-size: 13px">產生CMS資料</p>
+          </v-btn>
+          <v-divider class="mx-1" inset vertical></v-divider>
+          <v-btn
+            v-if="menuType === 1 || menuType === 2"
+            class="ma-2"
+            small
+            outlined
+            color="#635BFF"
+            variant="flat"
+            style="font-weight: bold"
+            depressed
+            :loading="isSelecting"
+            @click="onButtonClick"
+          >
+            <v-icon small left> mdi-file-upload-outline </v-icon>
+            <p style="font-size: 13px">匯入</p>
+          </v-btn>
+          <input
+            ref="uploader"
+            class="d-none"
+            type="file"
+            @change="onFileChanged"
+          />
+          <v-btn
+            v-if="menuType === 3 || menuType === 4"
+            class="ma-2"
+            small
+            outlined
+            color="#635BFF"
+            variant="flat"
+            style="font-weight: bold"
+            depressed
+            :loading="isSelecting"
+            :disabled="true"
+            @click="onButtonClick"
+          >
+            <v-icon small left> mdi-file-upload-outline </v-icon>
+            <p style="font-size: 13px">匯入</p>
+          </v-btn>
+          <input
+            ref="uploader"
+            class="d-none"
+            type="file"
+            @change="onFileChanged"
+          />
+          <v-btn
+            class="ma-2"
+            small
+            outlined
+            color="#635BFF"
+            variant="flat"
+            style="font-weight: bold"
+            @click="downloadPersonnelFile"
+          >
+            <v-icon small left> mdi-tray-arrow-down </v-icon>
+            <p style="font-size: 13px">匯出</p>
+          </v-btn>
+        </v-toolbar>
       </template>
       <template v-slot:item.statusName="{ item }">
         <v-icon
@@ -224,682 +298,7 @@
         <div v-if="item.schoolType === 's'">高中</div>
         <div v-if="item.schoolType === 'I'">國際</div>
       </template>
-      <template v-slot:top>
-        <v-toolbar flat>
-          <v-dialog v-model="dialog" width="518px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                small
-                color="#635BFF"
-                dark
-                class="mb-2"
-                v-bind="attrs"
-                v-on="on"
-                @click="editItem(editedItem)"
-              >
-                <v-icon small left> mdi-account-plus-outline </v-icon>
-                <p style="font-size: 13px; margin-top: 16px">新增報名</p>
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title style="background-color: #0046fe; height: 57px">
-                <v-icon
-                  large
-                  style="
-                    font-size: 23px;
-                    font-weight: bold;
-                    color: white;
-                    margin-right: 7px;
-                  "
-                >
-                  mdi-plus
-                </v-icon>
-                <span
-                  class="text-h5"
-                  style="
-                    font-size: 18px !important;
-                    font-weight: bold;
-                    color: white;
-                  "
-                  >{{ formTitle }}</span
-                >
-              </v-card-title>
-              <v-form ref="form" v-model="valid">
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col
-                        v-if="defaultItemShow.chineseName"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <v-text-field
-                          v-model="editedItem.chineseName"
-                          label="姓名(中)"
-                          :counter="18"
-                          :rules="[
-                            (v) => !!v || '姓名(中)不能為空',
-                            (v) => v.length <= 18 || '超過規定字數',
-                          ]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.schoolType"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <v-select
-                          :items="schoolTypeList"
-                          v-model="editedItem.schoolType"
-                          item-text="name"
-                          item-value="value"
-                          label="學籍"
-                          :rules="[(v) => !!v || '學籍不能為空']"
-                        ></v-select>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.englishName"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <v-text-field
-                          v-if="menuType !== 2"
-                          v-model="editedItem.englishName"
-                          label="姓名(英)"
-                          :counter="36"
-                          :rules="[
-                            (v) =>
-                              (v.length >= 0 &&
-                                !!defaultItemIsNull.englishName) ||
-                              (!!v && !defaultItemIsNull.englishName) ||
-                              '姓名(英)不能為空',
-                            (v) => v.length <= 36 || '超過規定字數',
-                          ]"
-                        ></v-text-field>
-                        <v-text-field
-                          v-if="menuType === 2"
-                          v-model="editedItem.englishName"
-                          label="姓名(英)"
-                          :counter="36"
-                          :rules="[(v) => v.length <= 36 || '超過規定字數']"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.teacher"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <v-text-field
-                          v-if="menuType !== 2"
-                          v-model="editedItem.teacher"
-                          label="指導老師"
-                          :counter="36"
-                          :rules="[
-                            (v) =>
-                              (v.length >= 0 && !!defaultItemIsNull.teacher) ||
-                              (!!v && !defaultItemIsNull.teacher) ||
-                              '指導老師不能為空',
-                            (v) => v.length <= 36 || '超過規定字數',
-                          ]"
-                        ></v-text-field>
-                        <v-text-field
-                          v-if="menuType === 2"
-                          v-model="editedItem.teacher"
-                          label="指導老師"
-                          :counter="18"
-                          :rules="[(v) => v.length <= 18 || '超過規定字數']"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.idCard"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <v-text-field
-                          v-model="editedItem.idCard"
-                          label="識別碼"
-                          :rules="[
-                            (v) =>
-                              (v.length >= 0 && !!defaultItemIsNull.idCard) ||
-                              (!!v && !defaultItemIsNull.idCard) ||
-                              '識別碼不能為空',
-                            (v) =>
-                              (v.length === 5 && !!defaultItemIsNull.idCard) ||
-                              (v.length === 5 && !defaultItemIsNull.idCard) ||
-                              (v.length <= 0 && defaultItemIsNull.idCard) ||
-                              '識別碼只能5碼',
-                            (v) =>
-                              (/^[A-Za-z][1-2]\d{3}$/.test(v) &&
-                                !!defaultItemIsNull.idCard) ||
-                              (/^[A-Za-z][1-2]\d{3}$/.test(v) &&
-                                !defaultItemIsNull.idCard) ||
-                              (v.length <= 0 && defaultItemIsNull.idCard) ||
-                              '識別碼格式不對',
-                          ]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.area"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <v-select
-                          :items="examAreaList"
-                          v-model="editedItem.codeName"
-                          item-text="areaName"
-                          item-value="codeName"
-                          return-object
-                          label="考區"
-                          :rules="[(v) => !!v || '考區不能為空']"
-                        ></v-select>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.schoolName"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -22px"
-                      >
-                        <div>學校：</div>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.schoolName"
-                        cols="12"
-                        sm="6"
-                        md="6"
-                        style="margin-top: -31px"
-                      >
-                        <v-select
-                          v-model="editedItem.cityNumber"
-                          :items="cityList"
-                          item-text="city_name"
-                          item-value="city_number"
-                          label="城市"
-                          :rules="[(v) => !!v || '城市不能為空']"
-                        ></v-select>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.schoolName"
-                        cols="12"
-                        sm="6"
-                        md="6"
-                        style="margin-top: -31px"
-                      >
-                        <v-select
-                          v-model="editedItem.areaNumber"
-                          :items="areaList[editedItem.cityNumber]"
-                          item-text="area_name"
-                          item-value="area_number"
-                          label="鄉鎮區"
-                          :rules="[(v) => !!v || '鄉鎮區不能為空']"
-                        ></v-select>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.schoolName"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <v-select
-                          v-model="editedItem.schoolNumber"
-                          :items="schoolList[editedItem.areaNumber]"
-                          item-text="school_name"
-                          item-value="school_number"
-                          label="校名"
-                          return-object
-                          :rules="[(v) => !!v || '校名不能為空']"
-                          @change="checkSchoolType()"
-                        ></v-select>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.grade"
-                        cols="12"
-                        sm="6"
-                        md="6"
-                        style="margin-top: -31px"
-                      >
-                        <v-text-field
-                          v-model="editedItem.grade"
-                          label="年級"
-                          :autofocus="autofocusStatus"
-                          :rules="[checkGrade]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.birthday"
-                        cols="12"
-                        sm="2"
-                        md="6"
-                        style="margin-top: -31px"
-                      >
-                        <v-dialog
-                          ref="dialog"
-                          v-model="modal"
-                          :return-value.sync="editedItem.birthday"
-                          persistent
-                          width="290px"
-                        >
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                              v-model="editedItem.birthday"
-                              label="出生年月"
-                              prepend-icon="mdi-calendar"
-                              readonly
-                              v-bind="attrs"
-                              v-on="on"
-                              @blur="date = parseDate(editedItem.birthday)"
-                              :rules="[(v) => !!v || '出生年月不能為空']"
-                            ></v-text-field>
-                          </template>
-                          <v-date-picker
-                            v-model="editedItem.birthday"
-                            type="month"
-                            scrollable
-                            locale="zh-cn"
-                          >
-                            <v-spacer></v-spacer>
-                            <v-btn text color="primary" @click="modal = false">
-                              取消
-                            </v-btn>
-                            <v-btn
-                              text
-                              color="primary"
-                              @click="$refs.dialog.save(editedItem.birthday)"
-                            >
-                              確認
-                            </v-btn>
-                          </v-date-picker>
-                        </v-dialog>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.APCS"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <v-text-field
-                          v-model="editedItem.APCS"
-                          label="APCS級分"
-                          :counter="2"
-                          :rules="[
-                            (v) => !!v || 'APCS級分不能為空',
-                            (v) => v.length <= 2 || '超過規定字數',
-                          ]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.email"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <v-text-field
-                          v-model="editedItem.email"
-                          label="信箱"
-                          :rules="emailRules"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.raceType"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <v-text-field
-                          v-model="editedItem.raceType"
-                          label="組別"
-                          :counter="20"
-                          :rules="[
-                            (v) => !!v || '組別不能為空',
-                            (v) => v.length <= 20 || '超過規定字數',
-                          ]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        v-if="globalSystemValue.olympic !== 'TOIREG'"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="
-                          margin-top: -22px;
-                          font-weight: bold;
-                          margin-bottom: 10px;
-                        "
-                      >
-                        <div>
-                          建立者：{{ editedItem.createRole }} -
-                          {{ editedItem.adminName }}
-                        </div>
-                        <div>建立時間：{{ editedItem.createTime }}</div>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="12" style="margin-top: -22px">
-                        <div>帳號狀態：</div>
-                      </v-col>
-                      <v-col cols="12" sm="2" md="12" style="margin-top: -31px">
-                        <v-radio-group
-                          v-model="editedItem.signupStatus"
-                          row
-                          required
-                        >
-                          <v-radio
-                            :value="'3'"
-                            style="width: 26%"
-                            @click="sendMail.signupStatus = '3'"
-                          >
-                            <template v-slot:label>
-                              <v-icon
-                                large
-                                style="margin-left: 7px; color: #2bcd2b"
-                              >
-                                mdi-circle-small
-                              </v-icon>
-                              <span style="font-weight: bold; color: #2bcd2b"
-                                >通過</span
-                              >
-                            </template>
-                          </v-radio>
-                          <v-radio
-                            :value="'2'"
-                            style="width: 29%"
-                            @click="sendMail.signupStatus = '2'"
-                          >
-                            <template v-slot:label>
-                              <v-icon
-                                large
-                                style="margin-left: 7px; color: #6b6b6b"
-                              >
-                                mdi-circle-small
-                              </v-icon>
-                              <span style="font-weight: bold; color: #6b6b6b"
-                                >不通過</span
-                              >
-                            </template>
-                          </v-radio>
-                          <v-radio
-                            :value="'1'"
-                            style="width: 29%"
-                            @click="sendMail.signupStatus = '1'"
-                          >
-                            <template v-slot:label>
-                              <v-icon
-                                large
-                                style="margin-left: 7px; color: #ff3c01"
-                              >
-                                mdi-circle-small
-                              </v-icon>
-                              <span style="font-weight: bold; color: #ff3c01"
-                                >待審核</span
-                              >
-                            </template>
-                          </v-radio>
-                        </v-radio-group>
-                      </v-col>
-                      <v-col
-                        v-show="
-                          examCodeExist && editedIndex != -1 && menuType === 1
-                        "
-                        cols="12"
-                        sm="2"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <distribution-seat
-                          :id="id"
-                          :examCodeExist="examCodeExist"
-                          :studentExamCode="studentExamCode"
-                          :editedItem="editedItem"
-                          :editedIndex="editedIndex"
-                          :desserts="desserts"
-                          @updateTable="updateTable"
-                          @updateEditedItem="updateEditedItem"
-                          @updateStudentExamCode="updateStudentExamCode"
-                        >
-                        </distribution-seat>
-                      </v-col>
-                      <v-col
-                        v-if="
-                          editedItem.signupStatus === '2' ||
-                          sendMail.signupStatus === '2'
-                        "
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -10px"
-                      >
-                        <div>是否寄送通知信：</div>
-                      </v-col>
-                      <v-col
-                        v-if="
-                          editedItem.signupStatus === '2' ||
-                          sendMail.signupStatus === '2'
-                        "
-                        cols="12"
-                        sm="2"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <v-radio-group
-                          :key="editedItem.stId"
-                          v-model="sendMail.status"
-                          row
-                        >
-                          <v-radio label="是" :value="'1'"></v-radio>
-                          <v-radio label="否" :value="'2'"></v-radio>
-                        </v-radio-group>
-                      </v-col>
-                      <v-col
-                        v-if="sendMail.status === '1'"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <div>不通過通知信件內容：</div>
-                      </v-col>
-                      <v-col
-                        v-if="sendMail.status === '1'"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -17px"
-                      >
-                        <v-textarea
-                          v-model="sendMail.emailContent"
-                          outlined
-                          name="input-7-4"
-                          label="請輸入信件內容"
-                          :counter="500"
-                          :rules="[(v) => v.length <= 500 || '超過規定字數']"
-                        ></v-textarea>
-                      </v-col>
-                      <v-col
-                        v-if="sendMail.status === '1'"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -31px"
-                      >
-                        <v-btn
-                          small
-                          color="#635BFF"
-                          dark
-                          class="mb-2"
-                          @click="sentSignupFail(editedItem)"
-                        >
-                          <v-icon small left>
-                            mdi-email-arrow-right-outline
-                          </v-icon>
-                          <p style="font-size: 13px; margin-top: 16px">
-                            寄送信件
-                          </p>
-                        </v-btn>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.remark"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -10px"
-                      >
-                        <div>備註：</div>
-                      </v-col>
-                      <v-col
-                        v-if="defaultItemShow.remark"
-                        cols="12"
-                        sm="6"
-                        md="12"
-                        style="margin-top: -17px"
-                      >
-                        <v-textarea
-                          v-model="editedItem.remark"
-                          outlined
-                          name="input-7-4"
-                          label="請輸入備註內容"
-                          :counter="100"
-                          :rules="[(v) => v.length <= 100 || '超過規定字數']"
-                        ></v-textarea>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions style="margin-top: -50px">
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color=" darken-1"
-                    text
-                    @click="close"
-                    style="font-weight: bold; font-size: 17px"
-                    >取消</v-btn
-                  >
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="savePersonnel"
-                    :disabled="!valid || editedItem.signupStatus === ''"
-                    style="color: #2d5bff; font-weight: bold; font-size: 17px"
-                    >儲存</v-btn
-                  >
-                </v-card-actions>
-              </v-form>
-              <v-overlay :value="loadShow">
-                <v-progress-circular
-                  :size="50"
-                  color="primary"
-                  indeterminate
-                ></v-progress-circular>
-                <div>處理中....</div>
-              </v-overlay>
-            </v-card>
-          </v-dialog>
-          <v-spacer></v-spacer>
-          <v-btn
-            v-if="menuType === 1"
-            class="ma-3"
-            small
-            outlined
-            color="indigo"
-            style="font-weight: bold"
-            :disabled="contestantShow"
-            @click="createExamCodeAlert"
-          >
-            <v-icon small left> mdi-card-account-details-outline </v-icon>
-            <p style="font-size: 13px; margin-top: 16px">產生應試資料</p>
-          </v-btn>
-          <v-btn
-            v-if="menuType === 2"
-            class="ma-3"
-            small
-            outlined
-            color="indigo"
-            style="font-weight: bold"
-            @click="createCampCode"
-          >
-            <v-icon small left> mdi-card-account-details-outline </v-icon>
-            <p style="font-size: 13px; margin-top: 16px">產生選訓資料</p>
-          </v-btn>
-          <v-btn
-            v-if="menuType === 3"
-            class="ma-3"
-            small
-            outlined
-            color="indigo"
-            style="font-weight: bold"
-            @click="setCMS"
-          >
-            <v-icon small left> mdi-card-account-details-outline </v-icon>
-            <p style="font-size: 13px; margin-top: 16px">產生CMS資料</p>
-          </v-btn>
-          <v-divider class="mx-1" inset vertical></v-divider>
-          <v-btn
-            v-if="menuType === 1 || menuType === 2"
-            class="ma-2"
-            small
-            outlined
-            color="indigo"
-            style="font-weight: bold"
-            depressed
-            :loading="isSelecting"
-            @click="onButtonClick"
-          >
-            <v-icon small left> mdi-file-upload-outline </v-icon>
-            <p style="font-size: 13px; margin-top: 16px">匯入</p>
-          </v-btn>
-          <input
-            ref="uploader"
-            class="d-none"
-            type="file"
-            @change="onFileChanged"
-          />
-          <v-btn
-            v-if="menuType === 3 || menuType === 4"
-            class="ma-2"
-            small
-            outlined
-            color="indigo"
-            style="font-weight: bold"
-            depressed
-            :loading="isSelecting"
-            :disabled="true"
-            @click="onButtonClick"
-          >
-            <v-icon small left> mdi-file-upload-outline </v-icon>
-            <p style="font-size: 13px; margin-top: 16px">匯入</p>
-          </v-btn>
-          <input
-            ref="uploader"
-            class="d-none"
-            type="file"
-            @change="onFileChanged"
-          />
-          <v-btn
-            class="ma-2"
-            small
-            outlined
-            color="indigo"
-            style="font-weight: bold"
-            @click="downloadPersonnelFile"
-          >
-            <v-icon small left> mdi-tray-arrow-down </v-icon>
-            <p style="font-size: 13px; margin-top: 16px">匯出</p>
-          </v-btn>
-        </v-toolbar>
-      </template>
+
       <template v-slot:item.actions="{ item }">
         <v-icon title="編輯報名人" class="mr-2" @click="editItem(item)"
           >mdi-text-box-edit-outline
@@ -920,7 +319,7 @@
       <v-card>
         <v-card-title
           v-if="pupTitleShow === '1'"
-          style="background-color: #2d5bff; height: 57px"
+          style="background-color: #2d5bff; height: 48px"
         >
           <v-icon
             large
@@ -941,7 +340,7 @@
         </v-card-title>
         <v-card-title
           v-if="pupTitleShow === '2'"
-          style="background-color: #900d16; height: 57px"
+          style="background-color: #900d16; height: 48px"
         >
           <v-icon
             large
@@ -982,7 +381,7 @@
       <v-card>
         <v-card-title
           v-if="pupTitleShow === '1'"
-          style="background-color: #2d5bff; height: 57px"
+          style="background-color: #2d5bff; height: 48px"
         >
           <v-icon
             large
@@ -1037,7 +436,7 @@
     </v-dialog>
     <v-dialog v-model="createExamCodePup" max-width="500px">
       <v-card>
-        <v-card-title style="background-color: #900d16; height: 57px">
+        <v-card-title style="background-color: #900d16; height: 48px">
           <v-icon
             large
             style="
@@ -1084,14 +483,573 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-overlay :value="loadFile">
+    <v-dialog v-model="dialog" width="518px">
+      <v-card>
+        <v-card-title style="background-color: #0046fe; height: 48px">
+          <v-icon
+            large
+            style="
+              font-size: 23px;
+              font-weight: bold;
+              color: white;
+              margin-right: 7px;
+            "
+          >
+            mdi-plus
+          </v-icon>
+          <span
+            class="text-h5"
+            style="font-size: 18px !important; font-weight: bold; color: white"
+            >{{ formTitle }}</span
+          >
+        </v-card-title>
+        <v-form ref="form" v-model="valid">
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col
+                  v-if="defaultItemShow.chineseName"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-text-field
+                    v-model="editedItem.chineseName"
+                    label="姓名(中)"
+                    :counter="18"
+                    variant="underlined"
+                    :rules="[
+                      (v) => !!v || '姓名(中)不能為空',
+                      (v) => v.length <= 18 || '超過規定字數',
+                    ]"
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.schoolType"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-select
+                    :items="schoolTypeList"
+                    v-model="editedItem.schoolType"
+                    item-title="name"
+                    item-value="value"
+                    label="學籍"
+                    variant="underlined"
+                    :rules="[(v) => !!v || '學籍不能為空']"
+                  ></v-select>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.englishName"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-text-field
+                    v-if="menuType !== 2"
+                    v-model="editedItem.englishName"
+                    label="姓名(英)"
+                    :counter="36"
+                    variant="underlined"
+                    :rules="[
+                      (v) =>
+                        (v.length >= 0 && !!defaultItemIsNull.englishName) ||
+                        (!!v && !defaultItemIsNull.englishName) ||
+                        '姓名(英)不能為空',
+                      (v) => v.length <= 36 || '超過規定字數',
+                    ]"
+                  ></v-text-field>
+                  <v-text-field
+                    v-if="menuType === 2"
+                    v-model="editedItem.englishName"
+                    label="姓名(英)"
+                    :counter="36"
+                    :rules="[(v) => v.length <= 36 || '超過規定字數']"
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.teacher"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-text-field
+                    v-if="menuType !== 2"
+                    v-model="editedItem.teacher"
+                    label="指導老師"
+                    :counter="36"
+                    variant="underlined"
+                    :rules="[
+                      (v) =>
+                        (v.length >= 0 && !!defaultItemIsNull.teacher) ||
+                        (!!v && !defaultItemIsNull.teacher) ||
+                        '指導老師不能為空',
+                      (v) => v.length <= 36 || '超過規定字數',
+                    ]"
+                  ></v-text-field>
+                  <v-text-field
+                    v-if="menuType === 2"
+                    v-model="editedItem.teacher"
+                    label="指導老師"
+                    :counter="18"
+                    variant="underlined"
+                    :rules="[(v) => v.length <= 18 || '超過規定字數']"
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.idCard"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-text-field
+                    v-model="editedItem.idCard"
+                    label="識別碼"
+                    variant="underlined"
+                    :rules="[
+                      (v) =>
+                        (v.length >= 0 && !!defaultItemIsNull.idCard) ||
+                        (!!v && !defaultItemIsNull.idCard) ||
+                        '識別碼不能為空',
+                      (v) =>
+                        (v.length === 5 && !!defaultItemIsNull.idCard) ||
+                        (v.length === 5 && !defaultItemIsNull.idCard) ||
+                        (v.length <= 0 && defaultItemIsNull.idCard) ||
+                        '識別碼只能5碼',
+                      (v) =>
+                        (/^[A-Za-z][1-2]\d{3}$/.test(v) &&
+                          !!defaultItemIsNull.idCard) ||
+                        (/^[A-Za-z][1-2]\d{3}$/.test(v) &&
+                          !defaultItemIsNull.idCard) ||
+                        (v.length <= 0 && defaultItemIsNull.idCard) ||
+                        '識別碼格式不對',
+                    ]"
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.area"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-select
+                    :items="examAreaList"
+                    v-model="editedItem.codeName"
+                    item-title="areaName"
+                    item-value="codeName"
+                    return-object
+                    label="考區"
+                    variant="underlined"
+                    :rules="[(v) => !!v || '考區不能為空']"
+                  ></v-select>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.schoolName"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -22px"
+                >
+                  <div>學校：</div>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.schoolName"
+                  cols="12"
+                  sm="6"
+                  md="6"
+                  style="margin-top: -31px"
+                >
+                  <v-select
+                    v-model="editedItem.cityNumber"
+                    :items="cityList"
+                    item-title="city_name"
+                    item-value="city_number"
+                    label="城市"
+                    variant="underlined"
+                    :rules="[(v) => !!v || '城市不能為空']"
+                  ></v-select>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.schoolName"
+                  cols="12"
+                  sm="6"
+                  md="6"
+                  style="margin-top: -31px"
+                >
+                  <v-select
+                    v-model="editedItem.areaNumber"
+                    :items="areaList[editedItem.cityNumber]"
+                    item-title="area_name"
+                    item-value="area_number"
+                    label="鄉鎮區"
+                    variant="underlined"
+                    :rules="[(v) => !!v || '鄉鎮區不能為空']"
+                  ></v-select>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.schoolName"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-select
+                    v-model="editedItem.schoolNumber"
+                    :items="schoolList[editedItem.areaNumber]"
+                    item-title="school_name"
+                    item-value="school_number"
+                    label="校名"
+                    variant="underlined"
+                    :rules="[(v) => !!v || '校名不能為空']"
+                    @change="checkSchoolType()"
+                  ></v-select>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.grade"
+                  cols="12"
+                  sm="6"
+                  md="6"
+                  style="margin-top: -31px"
+                >
+                  <v-text-field
+                    v-model="editedItem.grade"
+                    label="年級"
+                    variant="underlined"
+                    :rules="[checkGrade]"
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.birthday"
+                  cols="12"
+                  sm="2"
+                  md="6"
+                  style="margin-top: -31px"
+                >
+                  <!-- <v-dialog
+                          ref="dialog"
+                          v-model="modal"
+                          :return-value.sync="editedItem.birthday"
+                          persistent
+                          width="290px"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                              v-model="editedItem.birthday"
+                              label="出生年月"
+                              prepend-icon="mdi-calendar"
+                              readonly
+                              v-bind="attrs"
+                              v-on="on"
+                              @blur="date = parseDate(editedItem.birthday)"
+                              :rules="[(v) => !!v || '出生年月不能為空']"
+                            ></v-text-field>
+                          </template>
+                          <v-date-picker
+                            v-model="editedItem.birthday"
+                            type="month"
+                            scrollable
+                            locale="zh-cn"
+                          >
+                            <v-spacer></v-spacer>
+                            <v-btn text color="primary" @click="modal = false">
+                              取消
+                            </v-btn>
+                            <v-btn
+                              text
+                              color="primary"
+                              @click="$refs.dialog.save(editedItem.birthday)"
+                            >
+                              確認
+                            </v-btn>
+                          </v-date-picker>
+                        </v-dialog> -->
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.APCS"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-text-field
+                    v-model="editedItem.APCS"
+                    label="APCS級分"
+                    :counter="2"
+                    variant="underlined"
+                    :rules="[
+                      (v) => !!v || 'APCS級分不能為空',
+                      (v) => v.length <= 2 || '超過規定字數',
+                    ]"
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.email"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-text-field
+                    v-model="editedItem.email"
+                    label="信箱"
+                    variant="underlined"
+                    :rules="emailRules"
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.raceType"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-text-field
+                    v-model="editedItem.raceType"
+                    label="組別"
+                    :counter="20"
+                    variant="underlined"
+                    :rules="[
+                      (v) => !!v || '組別不能為空',
+                      (v) => v.length <= 20 || '超過規定字數',
+                    ]"
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  v-if="globalSystemValue.olympic !== 'TOIREG'"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="
+                    margin-top: -22px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <div>
+                    建立者：{{ editedItem.createRole }} -
+                    {{ editedItem.adminName }}
+                  </div>
+                  <div>建立時間：{{ editedItem.createTime }}</div>
+                </v-col>
+                <v-col cols="12" sm="6" md="12" style="margin-top: -22px">
+                  <div>帳號狀態：</div>
+                </v-col>
+                <v-col cols="12" sm="2" md="12" style="margin-top: -31px">
+                  <v-radio-group
+                    v-model="editedItem.signupStatus"
+                    inline
+                    required
+                  >
+                    <v-radio
+                      :value="'3'"
+                      style="width: 26%"
+                      @click="sendMail.signupStatus = '3'"
+                    >
+                      <template v-slot:label>
+                        <v-icon large style="margin-left: 7px; color: #2bcd2b">
+                          mdi-circle-small
+                        </v-icon>
+                        <span style="font-weight: bold; color: #2bcd2b"
+                          >通過</span
+                        >
+                      </template>
+                    </v-radio>
+                    <v-radio
+                      :value="'2'"
+                      style="width: 29%"
+                      @click="sendMail.signupStatus = '2'"
+                    >
+                      <template v-slot:label>
+                        <v-icon large style="margin-left: 7px; color: #6b6b6b">
+                          mdi-circle-small
+                        </v-icon>
+                        <span style="font-weight: bold; color: #6b6b6b"
+                          >不通過</span
+                        >
+                      </template>
+                    </v-radio>
+                    <v-radio
+                      :value="'1'"
+                      style="width: 29%"
+                      @click="sendMail.signupStatus = '1'"
+                    >
+                      <template v-slot:label>
+                        <v-icon large style="margin-left: 7px; color: #ff3c01">
+                          mdi-circle-small
+                        </v-icon>
+                        <span style="font-weight: bold; color: #ff3c01"
+                          >待審核</span
+                        >
+                      </template>
+                    </v-radio>
+                  </v-radio-group>
+                </v-col>
+                <v-col
+                  v-show="examCodeExist && editedIndex != -1 && menuType === 1"
+                  cols="12"
+                  sm="2"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <distribution-seat
+                    :id="id"
+                    :examCodeExist="examCodeExist"
+                    :studentExamCode="studentExamCode"
+                    :editedItem="editedItem"
+                    :editedIndex="editedIndex"
+                    :desserts="desserts"
+                    @updateTable="updateTable"
+                    @updateEditedItem="updateEditedItem"
+                    @updateStudentExamCode="updateStudentExamCode"
+                  >
+                  </distribution-seat>
+                </v-col>
+                <v-col
+                  v-if="
+                    editedItem.signupStatus === '2' ||
+                    sendMail.signupStatus === '2'
+                  "
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -10px"
+                >
+                  <div>是否寄送通知信：</div>
+                </v-col>
+                <v-col
+                  v-if="
+                    editedItem.signupStatus === '2' ||
+                    sendMail.signupStatus === '2'
+                  "
+                  cols="12"
+                  sm="2"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-radio-group
+                    :key="editedItem.stId"
+                    v-model="sendMail.status"
+                    inline
+                  >
+                    <v-radio label="是" :value="'1'"></v-radio>
+                    <v-radio label="否" :value="'2'"></v-radio>
+                  </v-radio-group>
+                </v-col>
+                <v-col
+                  v-if="sendMail.status === '1'"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <div>不通過通知信件內容：</div>
+                </v-col>
+                <v-col
+                  v-if="sendMail.status === '1'"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -17px"
+                >
+                  <v-textarea
+                    v-model="sendMail.emailContent"
+                    outlined
+                    name="input-7-4"
+                    label="請輸入信件內容"
+                    :counter="500"
+                    :rules="[(v) => v.length <= 500 || '超過規定字數']"
+                  ></v-textarea>
+                </v-col>
+                <v-col
+                  v-if="sendMail.status === '1'"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-btn
+                    small
+                    color="#635BFF"
+                    dark
+                    class="mb-2"
+                    @click="sentSignupFail(editedItem)"
+                  >
+                    <v-icon small left> mdi-email-arrow-right-outline </v-icon>
+                    <p style="font-size: 13px; margin-top: 16px">寄送信件</p>
+                  </v-btn>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.remark"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -10px"
+                >
+                  <div>備註：</div>
+                </v-col>
+                <v-col
+                  v-if="defaultItemShow.remark"
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -17px"
+                >
+                  <v-textarea
+                    v-model="editedItem.remark"
+                    outlined
+                    name="input-7-4"
+                    label="請輸入備註內容"
+                    :counter="100"
+                    :rules="[(v) => v.length <= 100 || '超過規定字數']"
+                  ></v-textarea>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions style="margin-top: -50px">
+            <v-spacer></v-spacer>
+            <v-btn
+              color=" darken-1"
+              text
+              @click="close"
+              style="font-weight: bold; font-size: 17px"
+              >取消</v-btn
+            >
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="savePersonnel"
+              :disabled="!valid || editedItem.signupStatus === ''"
+              style="color: #2d5bff; font-weight: bold; font-size: 17px"
+              >儲存</v-btn
+            >
+          </v-card-actions>
+        </v-form>
+        <v-overlay v-model="loadShow" class="align-center justify-center">
+          <v-progress-circular indeterminate color="primary" :size="60">
+          </v-progress-circular>
+        </v-overlay>
+      </v-card>
+    </v-dialog>
+    <v-overlay v-model="loadFile" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
+    </v-overlay>
+    <!-- <v-overlay :value="loadFile">
       <v-progress-circular
         :size="50"
         color="primary"
         indeterminate
       ></v-progress-circular>
       <div>處理中....</div>
-    </v-overlay>
+    </v-overlay> -->
     <v-snackbar v-model="snackMail" :timeout="snackbarTimeout">
       {{ copyName }}：{{ copyValue }}
       <template v-slot:action="{ attrs }">
@@ -1166,7 +1124,7 @@ export default {
       (v) => !!v || "信箱不能為空",
       (v) =>
         /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/.test(
-          v
+          v,
         ) || "信箱格式不對",
     ],
     // idCartRules: [
@@ -1198,9 +1156,18 @@ export default {
     menuType: 0,
     examCodeExist: false,
     loadList: true,
-    desserts: [],
-    dessertsTemp: [],
-    headers: [],
+    desserts: {
+      type: Array,
+      default: () => [],
+    },
+    dessertsTemp: {
+      type: Array,
+      default: () => [],
+    },
+    headers: {
+      type: Array,
+      default: () => [],
+    },
     passCount: 0,
     nopassCount: 0,
     failCount: 0,
@@ -1277,6 +1244,7 @@ export default {
           return "年級必須在1~6之間";
         }
       } else if (this.editedItem.type === "j") {
+        console.log(456);
         if (value <= 6 || value > 9) {
           if (this.autofocusStatus) {
             this.editedItem.grade = "";
@@ -1319,7 +1287,7 @@ export default {
         () => {
           this.isSelecting = false;
         },
-        { once: true }
+        { once: true },
       );
 
       this.ouloadCheckAlert();
@@ -1592,7 +1560,9 @@ export default {
       await this.getSelectAreaList();
       await this.getExamCode(item);
 
-      if (item.type === "e") {
+      if (item.schoolNumber === undefined) {
+        item.schoolNumber = "";
+      } else if (item.type === "e") {
         item.schoolNumber = item.schoolNumber + "_e";
       } else if (item.type === "j") {
         item.schoolNumber = item.schoolNumber + "_j";
@@ -1691,7 +1661,7 @@ export default {
 
       await this.axios.post(
         this.systemENV.APISERVERURL + "/sentSignupFail",
-        data
+        data,
       );
       this.cleanPupData();
     },
@@ -2050,10 +2020,10 @@ export default {
           null
       ) {
         const signupStartTime = JSON.parse(
-          localStorage.getItem(this.globalSystemValue.olympic + this.id + "T")
+          localStorage.getItem(this.globalSystemValue.olympic + this.id + "T"),
         );
         const signupEndTime = JSON.parse(
-          localStorage.getItem(this.globalSystemValue.olympic + this.id + "E")
+          localStorage.getItem(this.globalSystemValue.olympic + this.id + "E"),
         );
 
         if (

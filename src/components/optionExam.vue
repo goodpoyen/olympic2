@@ -30,7 +30,7 @@
       </v-tabs>
       <v-tabs-window v-model="tab">
         <v-tabs-window-item v-for="n in 4" :key="n" :value="n">
-          <!-- <v-container v-if="n == 1" fluid>
+          <v-container v-if="n == 1" fluid>
             <personnel-info
               :loadList="loadList"
               :desserts="desserts"
@@ -44,7 +44,7 @@
               :failCount="failCount"
             ></personnel-info>
           </v-container>
-          <v-container v-if="n == 2" fluid>
+          <!-- <v-container v-if="n == 2" fluid>
             <exam-area
               :loadList="loadList"
               :desserts="desserts"
@@ -60,7 +60,7 @@
               :fixCodeName="fixCodeName"
             >
             </class-room>
-          </v-container>-->
+          </v-container>
           <v-container v-if="n == 4" fluid>
             <contestants
               :loadList="loadList"
@@ -71,7 +71,7 @@
               :sendExamNotice="sendExamNotice"
               :sendExamScoreNoice="sendExamScoreNoice"
             ></contestants>
-          </v-container>
+          </v-container>-->
         </v-tabs-window-item>
       </v-tabs-window>
     </v-card>
@@ -79,10 +79,10 @@
 </template>
 
 <script>
-// import PersonnelInfo from "./personnelInfo.vue";
+import PersonnelInfo from "./personnelInfo.vue";
 // import ExamArea from "./examArea.vue";
 // import ClassRoom from "./classRoom.vue";
-import Contestants from "./contestants.vue";
+// import Contestants from "./contestants.vue";
 
 export default {
   data: () => ({
@@ -109,10 +109,10 @@ export default {
   }),
 
   components: {
-    // PersonnelInfo,
+    PersonnelInfo,
     // ExamArea,
     // ClassRoom,
-    Contestants,
+    // Contestants,
   },
 
   computed: {
