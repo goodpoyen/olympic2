@@ -175,10 +175,11 @@
                 v-model="examAreaId"
                 :items="examArea"
                 :disabled="examAreaStatus"
-                item-text="areaName"
+                item-title="areaName"
                 item-value="areaId"
                 label="考區名稱"
-                @change="
+                variant="underlined"
+                @update:modelValue="
                   chagneType === 'auto' ? getEnoughRoom() : getRoomByArea()
                 "
               ></v-select>
@@ -188,10 +189,13 @@
                 v-model="examRoomId"
                 :items="examRoom"
                 :disabled="examRoomStatus"
-                item-text="roomName"
+                item-title="roomName"
                 item-value="roomId"
                 label="考場名稱"
-                @change="chagneType === 'distribution' ? getRoomInfo() : ''"
+                variant="underlined"
+                @update:modelValue="
+                  chagneType === 'distribution' ? getRoomInfo() : ''
+                "
               ></v-select>
             </v-col>
           </v-row>
@@ -204,23 +208,16 @@
             v-model="choice"
             :headers="roomInfoHeaders"
             :items="roomInfoData"
-            :item-key="itemKey"
+            :item-value="itemKey"
             :items-per-page="100"
-            single-select
             show-select
             loading-text="資料處理中...."
-            class="elevation-1"
           >
-            <template
-              v-for="(header, index) in headers"
-              v-slot:[`header.${header.value}`]="{ header }"
-            >
-              <thead>
-                <span>{{ header.text }} </span>
-              </thead>
-            </template>
             <template v-slot:item.examCode="{ item }">
-              {{ item.examCode.split("_")[1] }}
+              <span v-if="globalSystemValue.system === 'olympic'"
+                >{{ item.examCode }}
+              </span>
+              <span v-else>{{ item.examCode.split("_")[1] }} </span>
             </template>
           </v-data-table>
         </v-card-text>
@@ -234,8 +231,8 @@
               examPup = false;
               examAreaId = 0;
               examRoomId = 0;
-              examRoom = {};
-              examArea = {};
+              examRoom = [];
+              examArea = [];
               examAreaStatus = false;
               examRoomStatus = false;
               roomInfoData = [];
@@ -259,11 +256,7 @@
     </v-dialog>
     <v-dialog v-model="distritionPup" width="24%">
       <v-card>
-        <v-card-title
-          dark
-          class="text-h5 grey lighten-2 white--text"
-          style="background-color: #900d16 !important"
-        >
+        <v-card-title style="background-color: #900d16; color: white">
           <div
             v-if="distributionData.schoolNameAll !== ''"
             style="font-size: 18px; font-weight: bold"
@@ -349,8 +342,8 @@ export default {
   data: () => ({
     itemKey: "seatNumber",
     chagneType: "",
-    examArea: {},
-    examRoom: {},
+    examArea: [],
+    examRoom: [],
     headers: [],
     roomInfoHeaders: [],
     roomInfoData: [],
@@ -381,7 +374,7 @@ export default {
   watch: {
     choice(item) {
       if (item.length > 0) {
-        this.distributionData = Object.assign({}, item[0]);
+        this.distributionData = Object.assign({}, this.roomInfoData[item - 1]);
         this.distritionPup = true;
       } else {
         this.distritionPup = false;
@@ -481,43 +474,43 @@ export default {
     async setRoomInfoHeaders() {
       if (this.globalSystemValue.system === "olympic") {
         this.roomInfoHeaders = [
-          { text: "座號", value: "seatNumber", sortable: false },
+          { title: "座號", value: "seatNumber", sortable: false },
           {
-            text: "應試號碼",
+            title: "應試號碼",
             value: "examCode",
             sortable: false,
           },
           {
-            text: "姓名",
+            title: "姓名",
             value: "chineseName",
             sortable: false,
           },
           {
-            text: "學校",
+            title: "學校",
             value: "schoolNameAll",
             sortable: false,
           },
         ];
       } else {
         this.roomInfoHeaders = [
-          { text: "座號", value: "seatNumber", sortable: false },
+          { title: "座號", value: "seatNumber", sortable: false },
           {
-            text: "學生代碼",
+            title: "學生代碼",
             value: "examOnly",
             sortable: false,
           },
           {
-            text: "甄選號碼",
+            title: "甄選號碼",
             value: "examCode",
             sortable: false,
           },
           {
-            text: "姓名",
+            title: "姓名",
             value: "name",
             sortable: false,
           },
           {
-            text: "學校",
+            title: "學校",
             value: "schoolNameAll",
             sortable: false,
           },
@@ -564,8 +557,8 @@ export default {
             this.examPup = false;
             this.examAreaId = 0;
             this.examRoomId = 0;
-            this.examRoom = {};
-            this.examArea = {};
+            this.examRoom = [];
+            this.examArea = [];
             this.choice = [];
             this.roomInfoData = [];
             this.$emit("updateStudentExamCode", this.studentExamCode);
@@ -618,16 +611,14 @@ export default {
           // console.log(response.data);
           this.distritionPup = false;
           if (response.data.code === 200) {
-            this.studentExamCode = response.data.resultData;
+            this.$emit("updateStudentExamCode", response.data.resultData);
             this.examPup = false;
             this.examAreaId = 0;
             this.examRoomId = 0;
-            this.examRoom = {};
-            this.examArea = {};
+            this.examRoom = [];
+            this.examArea = [];
             this.choice = [];
             this.roomInfoData = [];
-
-            this.$emit("updateStudentExamCode", this.studentExamCode);
           } else {
             this.globalSystemTool.removeLocalStorage();
           }
@@ -704,7 +695,7 @@ export default {
     async closeSelectData() {
       this.distributionData = {};
       this.choice = [];
-      this.roomInfoData = [];
+      // this.roomInfoData = [];
     },
   },
   async mounted() {},

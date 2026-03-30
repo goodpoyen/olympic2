@@ -1042,14 +1042,6 @@
       <v-progress-circular indeterminate color="primary" :size="60">
       </v-progress-circular>
     </v-overlay>
-    <!-- <v-overlay :value="loadFile">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>處理中....</div>
-    </v-overlay> -->
     <v-snackbar v-model="snackMail" :timeout="snackbarTimeout">
       {{ copyName }}：{{ copyValue }}
       <template v-slot:action="{ attrs }">
@@ -1244,7 +1236,6 @@ export default {
           return "年級必須在1~6之間";
         }
       } else if (this.editedItem.type === "j") {
-        console.log(456);
         if (value <= 6 || value > 9) {
           if (this.autofocusStatus) {
             this.editedItem.grade = "";
@@ -1521,15 +1512,19 @@ export default {
     },
 
     updateTable(filterData) {
-      this.desserts = filterData;
+      // console.log(123);
+      // console.log(filterData);
+      // this.desserts = JSON.parse(JSON.stringify(filterData));
+      // this.desserts = Object.assign({}, filterData);
+      // this.desserts = filterData;
     },
 
     updateEditedItem(item) {
-      this.editedItem = item;
+      this.editedItem = Object.assign({}, item);
     },
 
     updateStudentExamCode(item) {
-      this.studentExamCode = item;
+      this.studentExamCode = Object.assign({}, item);
     },
 
     async createExamCodeAlert() {
