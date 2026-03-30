@@ -5,223 +5,35 @@
       :items="desserts"
       :items-per-page="50"
       :footer-props="{ 'items-per-page-options': [50, 100, 150, 200, 250, -1] }"
-      multi-sort
       :loading="loadList"
       loading-text="資料處理中...."
       class="elevation-1"
     >
-      <template
-        v-for="(header, index) in headers"
-        v-slot:[`header.${header.value}`]="{ header }"
-      >
-        <span>{{ header.text }} </span>
-        <br />
-        <v-menu offset-y :close-on-content-click="false">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-if="header.text === '功能'"
-              icon
-              v-bind="attrs"
-              v-on="on"
-              style="visibility: hidden"
-            >
-              <v-icon small :color="header[header.filterName + '_C']">
-                mdi-filter
-              </v-icon>
-            </v-btn>
-            <v-btn v-else icon v-bind="attrs" v-on="on">
-              <v-icon small :color="header[header.filterName + '_C']">
-                mdi-filter
-              </v-icon>
-            </v-btn>
-          </template>
-          <table-filter
-            :desserts="desserts"
-            :dessertsTemp="dessertsTemp"
-            :header="header"
-            @updateTable="updateTable"
-          >
-          </table-filter>
-        </v-menu>
-      </template>
       <template v-slot:top>
-        <v-toolbar flat>
-          <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                small
-                color="#635BFF"
-                dark
-                class="mb-2"
-                v-bind="attrs"
-                v-on="on"
-                @click="editItem(editedItem)"
-              >
-                <v-icon small left> mdi-domain </v-icon>
-                <p style="font-size: 13px; margin-top: 16px">新增考區</p>
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title style="background-color: #0046fe; height: 57px">
-                <v-icon
-                  large
-                  style="
-                    font-size: 23px;
-                    font-weight: bold;
-                    color: white;
-                    margin-right: 7px;
-                  "
-                >
-                  mdi-plus
-                </v-icon>
-                <span
-                  class="text-h5"
-                  style="
-                    font-size: 18px !important;
-                    font-weight: bold;
-                    color: white;
-                  "
-                  >{{ formTitle }}</span
-                >
-              </v-card-title>
-              <v-form ref="form" v-model="valid">
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="6" md="8" style="margin-top: -15px">
-                        <v-text-field
-                          :disabled="fixCodeName && editedIndex !== -1"
-                          v-model="editedItem.codeName"
-                          label="考區代碼"
-                          :counter="10"
-                          :rules="[
-                            (v) => !!v || '考區代碼不能為空',
-                            (v) => v.length <= 10 || '超過規定字數',
-                          ]"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="8" style="margin-top: -31px">
-                        <v-text-field
-                          v-model="editedItem.areaName"
-                          label="考區名稱"
-                          :counter="50"
-                          :rules="[
-                            (v) => !!v || '考區名稱不能為空',
-                            (v) => v.length <= 50 || '超過規定字數',
-                          ]"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="8" style="margin-top: -31px">
-                        <v-text-field
-                          v-model="editedItem.address"
-                          label="地址"
-                          :counter="50"
-                          :rules="[
-                            (v) => !!v || '地址不能為空',
-                            (v) => v.length <= 50 || '超過規定字數',
-                          ]"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color=" darken-1"
-                    text
-                    @click="close"
-                    style="font-weight: bold; font-size: 17px"
-                    >取消</v-btn
-                  >
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="saveExamArea"
-                    :disabled="!valid"
-                    style="color: #2d5bff; font-weight: bold; font-size: 17px"
-                    >儲存</v-btn
-                  >
-                </v-card-actions>
-              </v-form>
-              <v-overlay :value="loadShow">
-                <v-progress-circular
-                  :size="50"
-                  color="primary"
-                  indeterminate
-                ></v-progress-circular>
-                <div>處理中....</div>
-              </v-overlay>
-            </v-card>
-          </v-dialog>
-          <v-dialog v-model="dialogDelete" max-width="500px">
-            <v-card>
-              <v-card-title style="background-color: red; height: 57px">
-                <v-icon
-                  large
-                  style="
-                    font-size: 23px;
-                    font-weight: bold;
-                    color: white;
-                    margin-right: 7px;
-                  "
-                >
-                  mdi-minus
-                </v-icon>
-                <span
-                  class="text-h5"
-                  style="
-                    font-size: 18px !important;
-                    font-weight: bold;
-                    color: white;
-                  "
-                  >確定刪除此考區資訊？</span
-                >
-              </v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  color=" darken-1"
-                  text
-                  @click="closeDelete"
-                  style="font-weight: bold; font-size: 17px"
-                  >取消</v-btn
-                >
-                <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="removeExamArea"
-                  :disabled="!valid"
-                  style="color: #2d5bff; font-weight: bold; font-size: 17px"
-                  >刪除</v-btn
-                >
-              </v-card-actions>
-              <v-overlay :value="loadShow">
-                <v-progress-circular
-                  :size="50"
-                  color="primary"
-                  indeterminate
-                ></v-progress-circular>
-                <div>處理中....</div>
-              </v-overlay>
-            </v-card>
-          </v-dialog>
+        <v-toolbar flat style="background-color: white">
+          <v-btn
+            small
+            color="#635BFF"
+            dark
+            class="mb-2"
+            variant="flat"
+            @click="editItem(editedItem)"
+          >
+            <v-icon small left> mdi-domain </v-icon>
+            <p style="font-size: 13px">新增考區</p>
+          </v-btn>
           <v-spacer></v-spacer>
           <v-btn
             class="ma-2"
             small
             outlined
-            color="indigo"
+            color="#635BFF"
+            variant="flat"
             style="font-weight: bold"
             @click="downloadAllAreaFile()"
           >
             <v-icon small left> mdi-tray-arrow-down </v-icon>
-            <p style="font-size: 13px; margin-top: 16px">
-              匯出所有考區場務資料
-            </p>
+            <p style="font-size: 13px">匯出所有考區場務資料</p>
           </v-btn>
         </v-toolbar>
       </template>
@@ -275,7 +87,7 @@
     </v-data-table>
     <v-dialog v-model="areaChangePup" max-width="400px">
       <v-card>
-        <v-card-title style="background-color: #2d5bff; height: 57px">
+        <v-card-title style="background-color: #2d5bff; height: 48px">
           <v-icon
             large
             style="
@@ -304,7 +116,7 @@
               <span style="font-size: 15px; font-weight: bold">
                 分配方式 ：
               </span>
-              <v-radio-group v-model="chagneAreaMod" row>
+              <v-radio-group v-model="chagneAreaMod" inline>
                 <v-radio value="R" label="隨機分配"></v-radio>
                 <v-radio value="S" label="依據學校"></v-radio>
               </v-radio-group>
@@ -325,7 +137,7 @@
               <v-text-field
                 v-model="chagneAreaAmount"
                 dense
-                outlined
+                variant="underlined"
                 label="調換考生總數"
               ></v-text-field>
             </v-col>
@@ -344,8 +156,9 @@
               <v-select
                 v-model="cityNum"
                 :items="cityList"
-                item-text="city_name"
+                item-title="city_name"
                 item-value="city_number"
+                variant="underlined"
                 label="城市"
               ></v-select>
             </v-col>
@@ -353,8 +166,9 @@
               <v-select
                 v-model="institutionNum"
                 :items="institution"
-                item-text="state"
+                item-title="state"
                 item-value="value"
+                variant="underlined"
                 label="公/私立"
               ></v-select>
             </v-col>
@@ -366,8 +180,9 @@
                     ? schoolList[cityNum][institutionNum]
                     : schoolList[cityNum]
                 "
-                item-text="school_name"
+                item-title="school_name"
                 item-value="school_number"
+                variant="underlined"
                 label="校名"
               ></v-select>
             </v-col>
@@ -377,8 +192,9 @@
                 dense
                 v-model="areaId"
                 :items="examAreaList"
-                item-text="areaName"
+                item-title="areaName"
                 item-value="areaId"
+                variant="underlined"
                 label="調換考區名稱"
               ></v-select>
             </v-col>
@@ -417,21 +233,13 @@
             >確定</v-btn
           >
         </v-card-actions>
-        <v-overlay :value="loadShow">
-          <v-progress-circular
-            :size="50"
-            color="primary"
-            indeterminate
-          ></v-progress-circular>
-          <div>處理中....</div>
-        </v-overlay>
       </v-card>
     </v-dialog>
     <v-dialog v-model="alertPup" max-width="500px">
       <v-card>
         <v-card-title
           v-if="pupTitleShow === '1'"
-          style="background-color: #2d5bff; height: 57px"
+          style="background-color: #2d5bff; height: 48px"
         >
           <v-icon
             large
@@ -489,13 +297,136 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-overlay :value="loadFile">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>處理中....</div>
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-card-title style="background-color: #0046fe; height: 48px">
+          <v-icon
+            large
+            style="
+              font-size: 23px;
+              font-weight: bold;
+              color: white;
+              margin-right: 7px;
+            "
+          >
+            mdi-plus
+          </v-icon>
+          <span
+            class="text-h5"
+            style="font-size: 18px !important; font-weight: bold; color: white"
+            >{{ formTitle }}</span
+          >
+        </v-card-title>
+        <v-form ref="form" v-model="valid">
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="12" sm="6" md="8" style="margin-top: -15px">
+                  <v-text-field
+                    :disabled="fixCodeName && editedIndex !== -1"
+                    v-model="editedItem.codeName"
+                    label="考區代碼"
+                    :counter="10"
+                    variant="underlined"
+                    :rules="[
+                      (v) => !!v || '考區代碼不能為空',
+                      (v) => v.length <= 10 || '超過規定字數',
+                    ]"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="8" style="margin-top: -31px">
+                  <v-text-field
+                    v-model="editedItem.areaName"
+                    label="考區名稱"
+                    :counter="50"
+                    variant="underlined"
+                    :rules="[
+                      (v) => !!v || '考區名稱不能為空',
+                      (v) => v.length <= 50 || '超過規定字數',
+                    ]"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="8" style="margin-top: -31px">
+                  <v-text-field
+                    v-model="editedItem.address"
+                    label="地址"
+                    :counter="50"
+                    variant="underlined"
+                    :rules="[
+                      (v) => !!v || '地址不能為空',
+                      (v) => v.length <= 50 || '超過規定字數',
+                    ]"
+                    required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color=" darken-1"
+              text
+              @click="close"
+              style="font-weight: bold; font-size: 17px"
+              >取消</v-btn
+            >
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="saveExamArea"
+              :disabled="!valid"
+              style="color: #2d5bff; font-weight: bold; font-size: 17px"
+              >儲存</v-btn
+            >
+          </v-card-actions>
+        </v-form>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="dialogDelete" max-width="500px">
+      <v-card>
+        <v-card-title style="background-color: red; height: 48px">
+          <v-icon
+            large
+            style="
+              font-size: 23px;
+              font-weight: bold;
+              color: white;
+              margin-right: 7px;
+            "
+          >
+            mdi-minus
+          </v-icon>
+          <span
+            class="text-h5"
+            style="font-size: 18px !important; font-weight: bold; color: white"
+            >確定刪除此考區資訊？</span
+          >
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color=" darken-1"
+            text
+            @click="closeDelete"
+            style="font-weight: bold; font-size: 17px"
+            >取消</v-btn
+          >
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="removeExamArea"
+            style="color: #2d5bff; font-weight: bold; font-size: 17px"
+            >刪除</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-overlay v-model="loadShow" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
   </div>
 </template>
@@ -506,7 +437,6 @@ import TableFilter from "./utilsComponets/tableFilter.vue";
 export default {
   data: () => ({
     valid: true,
-    loadFile: false,
     alertPup: false,
     changeAlertStatus: false,
     changeAlertStatus2: false,
@@ -539,7 +469,7 @@ export default {
     ],
     headers: [
       {
-        text: "考區代碼",
+        title: "考區代碼",
         value: "codeName",
         filterName: "codeName",
         type: "text",
@@ -547,7 +477,7 @@ export default {
         codeName_C: "",
       },
       {
-        text: "考區名稱",
+        title: "考區名稱",
         value: "areaName",
         filterName: "areaName",
         type: "text",
@@ -555,7 +485,7 @@ export default {
         areaName_C: "",
       },
       {
-        text: "地址",
+        title: "地址",
         value: "address",
         filterName: "address",
         type: "text",
@@ -563,7 +493,7 @@ export default {
         address_C: "",
       },
       {
-        text: "總座位數",
+        title: "總座位數",
         value: "defaultNumber",
         filterName: "defaultNumber",
         type: "text",
@@ -571,14 +501,14 @@ export default {
         defaultNumber_C: "",
       },
       {
-        text: "報名人數",
+        title: "報名人數",
         value: "totalSignup",
         filterName: "totalSignup",
         type: "text",
         totalSignup_M: "",
         totalSignup_C: "",
       },
-      { text: "功能", value: "actions" },
+      { title: "功能", value: "actions" },
     ],
     editedIndex: -1,
     editedItem: {
@@ -596,8 +526,14 @@ export default {
   }),
 
   props: {
-    desserts: [],
-    dessertsTemp: [],
+    desserts: {
+      type: Array,
+      default: () => [],
+    },
+    dessertsTemp: {
+      type: Array,
+      default: () => [],
+    },
     loadList: true,
     fixCodeName: true,
   },
@@ -635,13 +571,13 @@ export default {
       data.olympic = this.globalSystemValue.olympic;
       data.type = "allArea";
 
-      this.loadFile = true;
+      this.loadShow = true;
       await this.axios
         .post(this.systemENV.APISERVERURL + "/downloadAllAreaFile", data, {
           responseType: "blob",
         })
         .then((response) => {
-          this.loadFile = false;
+          this.loadShow = false;
           // console.log(response);
           const link = document.createElement("a");
           const blob = new Blob([response.data], { type: "application/zip" });
@@ -649,7 +585,7 @@ export default {
           link.href = URL.createObjectURL(blob);
           link.setAttribute(
             "download",
-            this.globalSystemValue.olympic + "_所有考區場務資料.zip"
+            this.globalSystemValue.olympic + "_所有考區場務資料.zip",
           );
           document.body.appendChild(link);
           link.click();
@@ -670,13 +606,13 @@ export default {
       data.olympic = this.globalSystemValue.olympic;
       data.type = "examArea";
 
-      this.loadFile = true;
+      this.loadShow = true;
       await this.axios
         .post(this.systemENV.APISERVERURL + "/downloadAreaFile", data, {
           responseType: "blob",
         })
         .then((response) => {
-          this.loadFile = false;
+          this.loadShow = false;
           // console.log(response)
           const link = document.createElement("a");
           const blob = new Blob([response.data], { type: "application/zip" });
@@ -689,7 +625,7 @@ export default {
               item.codeName +
               "_" +
               item.areaName +
-              ".zip"
+              ".zip",
           );
           document.body.appendChild(link);
           link.click();
