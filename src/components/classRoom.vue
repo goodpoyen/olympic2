@@ -5,320 +5,23 @@
       :items="desserts"
       :items-per-page="50"
       :footer-props="{ 'items-per-page-options': [50, 100, 150, 200, 250, -1] }"
-      multi-sort
       :loading="loadList"
       loading-text="資料處理中...."
       class="elevation-1"
     >
-      <template
-        v-for="(header, index) in headers"
-        v-slot:[`header.${header.value}`]="{ header }"
-      >
-        <span>{{ header.text }} </span>
-        <br />
-        <v-menu offset-y :close-on-content-click="false">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-if="header.text === '功能'"
-              icon
-              v-bind="attrs"
-              v-on="on"
-              style="visibility: hidden"
-            >
-              <v-icon small :color="header[header.filterName + '_C']">
-                mdi-filter
-              </v-icon>
-            </v-btn>
-            <v-btn v-else icon v-bind="attrs" v-on="on">
-              <v-icon small :color="header[header.filterName + '_C']">
-                mdi-filter
-              </v-icon>
-            </v-btn>
-          </template>
-          <table-filter
-            :desserts="desserts"
-            :dessertsTemp="dessertsTemp"
-            :header="header"
-            @updateTable="updateTable"
-          >
-          </table-filter>
-        </v-menu>
-      </template>
       <template v-slot:top>
-        <v-toolbar flat>
-          <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                small
-                color="#635BFF"
-                dark
-                class="mb-2"
-                v-bind="attrs"
-                v-on="on"
-                @click="editItem(editedItem)"
-              >
-                <v-icon small left> mdi-map-marker-radius-outline </v-icon>
-                <p style="font-size: 13px; margin-top: 16px">新增考場</p>
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title style="background-color: #0046fe; height: 57px">
-                <v-icon
-                  large
-                  style="
-                    font-size: 23px;
-                    font-weight: bold;
-                    color: white;
-                    margin-right: 7px;
-                  "
-                >
-                  mdi-plus
-                </v-icon>
-                <span
-                  class="text-h5"
-                  style="
-                    font-size: 18px !important;
-                    font-weight: bold;
-                    color: white;
-                  "
-                  >{{ formTitle }}</span
-                >
-              </v-card-title>
-              <v-form ref="form" v-model="valid">
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="2" md="6" style="margin-top: -15px">
-                        <v-text-field
-                          :disabled="fixCodeName && editedIndex !== -1"
-                          :key="editedItem.roomId"
-                          v-model="editedItem.codeName"
-                          label="考場代碼"
-                          :rules="[(v) => !!v || '考場代碼不能為空']"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="2" md="6" style="margin-top: -15px">
-                        <v-select
-                          :key="editedItem.roomId"
-                          v-model="editedItem.areaId"
-                          :disabled="
-                            (sendExamNotice || sendExamScoreNoice) &&
-                            editedIndex !== -1
-                          "
-                          :items="examAreaList"
-                          item-text="areaName"
-                          item-value="areaId"
-                          label="考區名稱"
-                          return-object
-                          :rules="[(v) => !!v || '考區不能為空']"
-                          required
-                        ></v-select>
-                      </v-col>
-                      <v-col cols="12" sm="2" md="6" style="margin-top: -31px">
-                        <v-text-field
-                          :key="editedItem.roomId"
-                          v-model="editedItem.roomName"
-                          :disabled="
-                            (sendExamNotice || sendExamScoreNoice) &&
-                            editedIndex !== -1
-                          "
-                          label="考場名稱"
-                          :rules="[(v) => !!v || '考場名稱不能為空']"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="2"
-                        md="6"
-                        style="margin-top: -31px"
-                        @click="
-                          editedItem.rowNumber = '0';
-                          editedItem.columnNumber = '0';
-                        "
-                      >
-                        <v-text-field
-                          v-if="
-                            globalSystemValue.olympic !== 'TMO' &&
-                            globalSystemValue.olympic !== 'TWICHO'
-                          "
-                          :key="editedItem.roomId"
-                          v-model="editedItem.defaultNumber"
-                          label="總座數"
-                          :rules="[(v) => !!v || '總座數不能為空']"
-                          required
-                        ></v-text-field>
-                        <v-text-field
-                          v-else
-                          :key="editedItem.roomId"
-                          :disabled="fixCodeName && editedIndex !== -1"
-                          v-model="editedItem.defaultNumber"
-                          label="總座數"
-                          :rules="[(v) => !!v || '總座數不能為空']"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color=" darken-1"
-                    text
-                    @click="close"
-                    style="font-weight: bold; font-size: 17px"
-                    >取消</v-btn
-                  >
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="saveClassRoom"
-                    :disabled="!valid"
-                    style="color: #2d5bff; font-weight: bold; font-size: 17px"
-                    >儲存</v-btn
-                  >
-                </v-card-actions>
-              </v-form>
-              <v-overlay :value="loadShow">
-                <v-progress-circular
-                  :size="50"
-                  color="primary"
-                  indeterminate
-                ></v-progress-circular>
-                <div>處理中....</div>
-              </v-overlay>
-            </v-card>
-          </v-dialog>
-          <v-dialog v-model="dialogDelete" max-width="500px">
-            <v-card>
-              <v-card-title style="background-color: red; height: 57px">
-                <v-icon
-                  large
-                  style="
-                    font-size: 23px;
-                    font-weight: bold;
-                    color: white;
-                    margin-right: 7px;
-                  "
-                >
-                  mdi-minus
-                </v-icon>
-                <span
-                  class="text-h5"
-                  style="
-                    font-size: 18px !important;
-                    font-weight: bold;
-                    color: white;
-                  "
-                  >確定刪除此承考場資訊？</span
-                >
-              </v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  color=" darken-1"
-                  text
-                  @click="closeDelete"
-                  style="font-weight: bold; font-size: 17px"
-                  >取消</v-btn
-                >
-                <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="deleteItemConfirm"
-                  :disabled="!valid"
-                  style="color: #2d5bff; font-weight: bold; font-size: 17px"
-                  >刪除</v-btn
-                >
-              </v-card-actions>
-              <v-overlay :value="loadShow">
-                <v-progress-circular
-                  :size="50"
-                  color="primary"
-                  indeterminate
-                ></v-progress-circular>
-                <div>處理中....</div>
-              </v-overlay>
-            </v-card>
-          </v-dialog>
-          <v-dialog v-model="download" width="24%">
-            <v-card>
-              <v-card-title
-                dark
-                class="text-h5 grey lighten-2 white--text"
-                style="background-color: #0046fe !important"
-              >
-                <v-icon large class="mr-2 white--text" style="font-size: 24px">
-                  mdi-download-box-outline
-                </v-icon>
-                <div style="font-size: 18px; font-weight: bold">考場下載</div>
-              </v-card-title>
-
-              <v-card-text
-                style="
-                  margin-top: 5%;
-                  font-size: 18px;
-                  font-weight: bold;
-                  color: #2d5bff;
-                "
-                >{{ downloadItem.areaName }} - {{ downloadItem.roomName }}教室
-              </v-card-text>
-              <v-checkbox
-                v-model="downloadSelected"
-                label="考場資料"
-                value="classFile"
-                style="
-                  margin-top: 1%;
-                  margin-left: 6.2%;
-                  font-size: 18px;
-                  font-weight: bold;
-                  color: black;
-                "
-              ></v-checkbox>
-              <v-checkbox
-                v-model="downloadSelected"
-                label="座位標籤"
-                value="seatFile"
-                style="
-                  margin-top: -5px;
-                  margin-left: 6.2%;
-                  font-size: 18px;
-                  font-weight: bold;
-                  color: black;
-                "
-              ></v-checkbox>
-
-              <v-card-actions style="margin-top: 3px">
-                <v-spacer></v-spacer>
-                <v-btn
-                  color="black darken-1"
-                  text
-                  style="font-weight: bold; font-size: 17px"
-                  @click="colseDownloads(downloadItem)"
-                >
-                  取消
-                </v-btn>
-                <v-btn
-                  color="darken-1"
-                  text
-                  style="color: #2d5bff; font-weight: bold; font-size: 17px"
-                  @click="downloadClassFile(downloadItem)"
-                >
-                  下載</v-btn
-                >
-              </v-card-actions>
-              <v-overlay :value="loadShow">
-                <v-progress-circular
-                  :size="50"
-                  color="primary"
-                  indeterminate
-                ></v-progress-circular>
-                <div>處理中....</div>
-              </v-overlay>
-            </v-card>
-          </v-dialog>
+        <v-toolbar flat style="background-color: white">
+          <v-btn
+            small
+            color="#635BFF"
+            dark
+            class="mb-2"
+            variant="flat"
+            @click="editItem(editedItem)"
+          >
+            <v-icon small left> mdi-map-marker-radius-outline </v-icon>
+            <p style="font-size: 13px">新增考場</p>
+          </v-btn>
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
@@ -360,7 +63,7 @@
       <v-card>
         <v-card-title
           v-if="pupTitleShow === '1'"
-          style="background-color: #2d5bff; height: 57px"
+          style="background-color: #2d5bff; height: 48px"
         >
           <v-icon
             large
@@ -420,7 +123,7 @@
     </v-dialog>
     <v-dialog v-model="classChangePup" max-width="400px">
       <v-card>
-        <v-card-title style="background-color: #2d5bff; height: 57px">
+        <v-card-title style="background-color: #2d5bff; height: 48px">
           <v-icon
             large
             style="
@@ -460,7 +163,7 @@
               <v-text-field
                 v-model="chagneRoomAccount"
                 dense
-                outlined
+                variant="underlined"
                 label="調換考生總數"
               ></v-text-field>
             </v-col>
@@ -481,8 +184,9 @@
                 dense
                 v-model="examRoomId"
                 :items="examRoom"
-                item-text="roomName"
+                item-title="roomName"
                 item-value="roomId"
+                variant="underlined"
                 label="調換考場名稱"
               ></v-select>
             </v-col>
@@ -507,8 +211,8 @@
             text
             @click="
               classChangePup = false;
-              roomInfo = {};
-              examRoom = {};
+              roomInfo = [];
+              examRoom = [];
             "
             style="font-weight: bold; font-size: 17px"
             >取消</v-btn
@@ -522,6 +226,130 @@
             >確定</v-btn
           >
         </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-card-title style="background-color: #0046fe; height: 48px">
+          <v-icon
+            large
+            style="
+              font-size: 23px;
+              font-weight: bold;
+              color: white;
+              margin-right: 7px;
+            "
+          >
+            mdi-plus
+          </v-icon>
+          <span
+            class="text-h5"
+            style="font-size: 18px !important; font-weight: bold; color: white"
+            >{{ formTitle }}</span
+          >
+        </v-card-title>
+        <v-form ref="form" v-model="valid">
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="12" sm="2" md="6" style="margin-top: -15px">
+                  <v-text-field
+                    :disabled="fixCodeName && editedIndex !== -1"
+                    :key="editedItem.roomId"
+                    v-model="editedItem.codeName"
+                    label="考場代碼"
+                    variant="underlined"
+                    :rules="[(v) => !!v || '考場代碼不能為空']"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="2" md="6" style="margin-top: -15px">
+                  <v-select
+                    :key="editedItem.roomId"
+                    v-model="editedItem.areaId"
+                    :disabled="
+                      (sendExamNotice || sendExamScoreNoice) &&
+                      editedIndex !== -1
+                    "
+                    :items="examAreaList"
+                    item-title="areaName"
+                    item-value="areaId"
+                    label="考區名稱"
+                    return-object
+                    variant="underlined"
+                    :rules="[(v) => !!v || '考區不能為空']"
+                    required
+                  ></v-select>
+                </v-col>
+                <v-col cols="12" sm="2" md="6" style="margin-top: -31px">
+                  <v-text-field
+                    :key="editedItem.roomId"
+                    v-model="editedItem.roomName"
+                    :disabled="
+                      (sendExamNotice || sendExamScoreNoice) &&
+                      editedIndex !== -1
+                    "
+                    label="考場名稱"
+                    variant="underlined"
+                    :rules="[(v) => !!v || '考場名稱不能為空']"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="2"
+                  md="6"
+                  style="margin-top: -31px"
+                  @click="
+                    editedItem.rowNumber = '0';
+                    editedItem.columnNumber = '0';
+                  "
+                >
+                  <v-text-field
+                    v-if="
+                      globalSystemValue.olympic !== 'TMO' &&
+                      globalSystemValue.olympic !== 'TWICHO'
+                    "
+                    :key="editedItem.roomId"
+                    v-model="editedItem.defaultNumber"
+                    label="總座數"
+                    variant="underlined"
+                    :rules="[(v) => !!v || '總座數不能為空']"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    v-else
+                    :key="editedItem.roomId"
+                    :disabled="fixCodeName && editedIndex !== -1"
+                    v-model="editedItem.defaultNumber"
+                    label="總座數"
+                    variant="underlined"
+                    :rules="[(v) => !!v || '總座數不能為空']"
+                    required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color=" darken-1"
+              text
+              @click="close"
+              style="font-weight: bold; font-size: 17px"
+              >取消</v-btn
+            >
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="saveClassRoom"
+              :disabled="!valid"
+              style="color: #2d5bff; font-weight: bold; font-size: 17px"
+              >儲存</v-btn
+            >
+          </v-card-actions>
+        </v-form>
         <v-overlay :value="loadShow">
           <v-progress-circular
             :size="50"
@@ -532,13 +360,116 @@
         </v-overlay>
       </v-card>
     </v-dialog>
-    <v-overlay :value="loadFile">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>處理中....</div>
+    <v-dialog v-model="dialogDelete" max-width="500px">
+      <v-card>
+        <v-card-title style="background-color: red; height: 48px">
+          <v-icon
+            large
+            style="
+              font-size: 23px;
+              font-weight: bold;
+              color: white;
+              margin-right: 7px;
+            "
+          >
+            mdi-minus
+          </v-icon>
+          <span
+            class="text-h5"
+            style="font-size: 18px !important; font-weight: bold; color: white"
+            >確定刪除此承考場資訊？</span
+          >
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color=" darken-1"
+            text
+            @click="closeDelete"
+            style="font-weight: bold; font-size: 17px"
+            >取消</v-btn
+          >
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="deleteItemConfirm"
+            :disabled="!valid"
+            style="color: #2d5bff; font-weight: bold; font-size: 17px"
+            >刪除</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="download" width="28%">
+      <v-card>
+        <v-card-title
+          dark
+          style="background-color: #0046fe; height: 48px; color: white"
+        >
+          <v-icon
+            large
+            style="
+              font-size: 23px;
+              font-weight: bold;
+              color: white;
+              margin-right: 7px;
+            "
+          >
+            mdi-download-box-outline
+          </v-icon>
+          <span style="font-size: 18px; font-weight: bold">考場下載</span>
+        </v-card-title>
+
+        <v-card-text style="font-size: 18px; font-weight: bold; color: #2d5bff"
+          >{{ downloadItem.areaName }} - {{ downloadItem.roomName }}教室
+        </v-card-text>
+        <v-checkbox
+          v-model="downloadSelected"
+          label="考場資料"
+          value="classFile"
+          style="
+            margin-left: 6.2%;
+            font-size: 18px;
+            font-weight: bold;
+            color: black;
+          "
+        ></v-checkbox>
+        <v-checkbox
+          v-model="downloadSelected"
+          label="座位標籤"
+          value="seatFile"
+          style="
+            margin-left: 6.2%;
+            font-size: 18px;
+            font-weight: bold;
+            color: black;
+          "
+        ></v-checkbox>
+
+        <v-card-actions style="margin-top: 3px">
+          <v-spacer></v-spacer>
+          <v-btn
+            color="black darken-1"
+            text
+            style="font-weight: bold; font-size: 17px"
+            @click="colseDownloads(downloadItem)"
+          >
+            取消
+          </v-btn>
+          <v-btn
+            color="darken-1"
+            text
+            style="color: #2d5bff; font-weight: bold; font-size: 17px"
+            @click="downloadClassFile(downloadItem)"
+          >
+            下載</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-overlay v-model="loadShow" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
   </div>
 </template>
@@ -549,7 +480,6 @@ import TableFilter from "./utilsComponets/tableFilter.vue";
 export default {
   data: () => ({
     alertPup: false,
-    loadFile: false,
     changeAlertStatus: false,
     changeAlertStatus2: false,
     changeAlert: "",
@@ -573,14 +503,14 @@ export default {
     sendExamScoreNoice: false,
     signupName: "",
     year: "",
-    roomInfo: {},
-    examRoom: {},
+    roomInfo: [],
+    examRoom: [],
     examRoomId: 0,
     inRoomData: {},
     chagneRoomAccount: 0,
     headers: [
       {
-        text: "考場代碼",
+        title: "考場代碼",
         value: "codeName",
         filterName: "codeName",
         type: "text",
@@ -588,7 +518,7 @@ export default {
         codeName_C: "",
       },
       {
-        text: "考區名稱",
+        title: "考區名稱",
         value: "areaName",
         filterName: "areaName",
         type: "text",
@@ -596,7 +526,7 @@ export default {
         areaName_C: "",
       },
       {
-        text: "考場名稱",
+        title: "考場名稱",
         value: "roomName",
         filterName: "roomName",
         type: "text",
@@ -606,7 +536,7 @@ export default {
       // { text: "行排", value: "rowNumber", filterName: "rowNumber" },
       // { text: "直排", value: "columnNumber", filterName: "columnNumber" },
       {
-        text: "考生總座數",
+        title: "考生總座數",
         value: "defaultNumber",
         filterName: "defaultNumber",
         type: "text",
@@ -614,14 +544,14 @@ export default {
         defaultNumber_C: "",
       },
       {
-        text: "已安排座位數量",
+        title: "已安排座位數量",
         value: "total",
         filterName: "total",
         type: "text",
         total_M: "",
         total_C: "",
       },
-      { text: "功能", value: "actions" },
+      { title: "功能", value: "actions" },
     ],
     downloadSelected: [],
     defaultStatus: "2",
@@ -660,8 +590,14 @@ export default {
   }),
 
   props: {
-    desserts: [],
-    dessertsTemp: [],
+    desserts: {
+      type: Array,
+      default: () => [],
+    },
+    dessertsTemp: {
+      type: Array,
+      default: () => [],
+    },
     loadList: true,
     fixCodeName: true,
   },
@@ -746,7 +682,7 @@ export default {
               item.areaName +
               "_" +
               item.roomName +
-              ".zip"
+              ".zip",
           );
           document.body.appendChild(link);
           link.click();
@@ -825,8 +761,8 @@ export default {
             // console.log(error);
           });
 
-        this.roomInfo = {};
-        this.examRoom = {};
+        this.roomInfo = [];
+        this.examRoom = [];
         this.inRoomData = {};
         this.examRoomId = 0;
         this.chagneRoomAccount = 0;
@@ -939,8 +875,8 @@ export default {
       this.$refs.form.reset();
       this.examRoomId = 0;
       this.chagneRoomAccount = 0;
-      this.roomInfo = {};
-      this.examRoom = {};
+      this.roomInfo = [];
+      this.examRoom = [];
       this.inRoomData = {};
       this.dialog = false;
       this.valid = true;

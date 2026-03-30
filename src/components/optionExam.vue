@@ -52,7 +52,7 @@
               :fixCodeName="fixCodeName"
             ></exam-area>
           </v-container>
-          <!--  <v-container v-if="n == 3" fluid>
+          <v-container v-if="n == 3" fluid>
             <class-room
               :desserts="desserts"
               :dessertsTemp="dessertsTemp"
@@ -61,7 +61,7 @@
             >
             </class-room>
           </v-container>
-          <v-container v-if="n == 4" fluid>
+          <!--  <v-container v-if="n == 4" fluid>
             <contestants
               :loadList="loadList"
               :desserts="desserts"
@@ -81,7 +81,7 @@
 <script>
 import PersonnelInfo from "./personnelInfo.vue";
 import ExamArea from "./examArea.vue";
-// import ClassRoom from "./classRoom.vue";
+import ClassRoom from "./classRoom.vue";
 // import Contestants from "./contestants.vue";
 
 export default {
@@ -111,7 +111,7 @@ export default {
   components: {
     PersonnelInfo,
     ExamArea,
-    // ClassRoom,
+    ClassRoom,
     // Contestants,
   },
 
