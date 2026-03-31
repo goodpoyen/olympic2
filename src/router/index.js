@@ -139,11 +139,11 @@ const routes = [
         name: "account",
         component: () => import("../components/account.vue"),
       },
-      // {
-      //   path: "schoolUser",
-      //   name: "schoolUser",
-      //   component: () => import("../components/schoolUser.vue"),
-      // },
+      {
+        path: "schoolUser",
+        name: "schoolUser",
+        component: () => import("../components/schoolUser.vue"),
+      },
       // {
       //   path: "upload",
       //   name: "upload",

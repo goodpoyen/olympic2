@@ -113,7 +113,6 @@
             v-if="menuType === 1"
             class="ma-3"
             small
-            outlined
             color="#635BFF"
             variant="outlined"
             style="font-weight: bold"
@@ -972,7 +971,7 @@
                     @click="sentSignupFail(editedItem)"
                   >
                     <v-icon small left> mdi-email-arrow-right-outline </v-icon>
-                    <p style="font-size: 13px; margin-top: 16px">寄送信件</p>
+                    <p style="font-size: 13px">寄送信件</p>
                   </v-btn>
                 </v-col>
                 <v-col
@@ -1034,14 +1033,12 @@
     </v-overlay>
     <v-snackbar v-model="snackMail" :timeout="snackbarTimeout">
       {{ copyName }}：{{ copyValue }}
-      <template v-slot:action="{ attrs }">
-        <v-btn color="red" text @click="copyText(copyValue)" v-bind="attrs">
-          複製
-        </v-btn>
-        <v-btn color="blue" text @click="snackMail = false" v-bind="attrs">
-          關閉
-        </v-btn>
-      </template>
+      <v-btn color="red" variant="text" @click="copyText(copyValue)">
+        複製
+      </v-btn>
+      <v-btn color="blue" variant="text" @click="snackMail = false">
+        關閉
+      </v-btn>
     </v-snackbar>
   </div>
 </template>

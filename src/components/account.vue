@@ -616,7 +616,7 @@
                     @click="sendStopAccount(editedItem)"
                   >
                     <v-icon small left> mdi-email-arrow-right-outline </v-icon>
-                    <p style="font-size: 13px; margin-top: 16px">寄送信件</p>
+                    <p style="font-size: 13px">寄送信件</p>
                   </v-btn>
                 </v-col>
               </v-row>
@@ -647,7 +647,12 @@
     </v-overlay>
     <v-snackbar v-model="snackMail" :timeout="snackbarTimeout">
       聯絡信箱：{{ copyMail }}
-      <v-btn color="red" @click="copyText(copyMail)" style="margin-left: 15px">
+      <v-btn
+        color="red"
+        variant="text"
+        @click="copyText(copyMail)"
+        style="margin-left: 15px"
+      >
         複製
       </v-btn>
     </v-snackbar>
