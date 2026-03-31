@@ -53,8 +53,8 @@
 </template>
 
 <script>
-// import PersonnelInfo from "./personnelInfo.vue";
-// import Contestants from "./contestants.vue";
+import PersonnelInfo from "./personnelInfo.vue";
+import Contestants from "./contestants.vue";
 export default {
   data: () => ({
     type: 0,
@@ -80,8 +80,8 @@ export default {
   }),
 
   components: {
-    // PersonnelInfo,
-    // Contestants,
+    PersonnelInfo,
+    Contestants,
   },
 
   computed: {
