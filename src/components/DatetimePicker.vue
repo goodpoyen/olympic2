@@ -25,7 +25,7 @@
 
     <v-card>
       <v-card-text class="px-0 py-0">
-        <v-tabs fixed-tabs v-model="activeTab">
+        <!-- <v-tabs fixed-tabs v-model="activeTab">
           <v-tab key="calendar">
             <slot name="dateIcon">
               <v-icon>mdi-calendar-month</v-icon>
@@ -54,7 +54,7 @@
               full-width
             ></v-time-picker>
           </v-tab-item>
-        </v-tabs>
+        </v-tabs> -->
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>

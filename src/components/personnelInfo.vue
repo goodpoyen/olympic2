@@ -722,43 +722,43 @@
                   style="margin-top: -31px"
                 >
                   <!-- <v-dialog
-                          ref="dialog"
-                          v-model="modal"
-                          :return-value.sync="editedItem.birthday"
-                          persistent
-                          width="290px"
-                        >
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                              v-model="editedItem.birthday"
-                              label="出生年月"
-                              prepend-icon="mdi-calendar"
-                              readonly
-                              v-bind="attrs"
-                              v-on="on"
-                              @blur="date = parseDate(editedItem.birthday)"
-                              :rules="[(v) => !!v || '出生年月不能為空']"
-                            ></v-text-field>
-                          </template>
-                          <v-date-picker
-                            v-model="editedItem.birthday"
-                            type="month"
-                            scrollable
-                            locale="zh-cn"
-                          >
-                            <v-spacer></v-spacer>
-                            <v-btn text color="primary" @click="modal = false">
-                              取消
-                            </v-btn>
-                            <v-btn
-                              text
-                              color="primary"
-                              @click="$refs.dialog.save(editedItem.birthday)"
-                            >
-                              確認
-                            </v-btn>
-                          </v-date-picker>
-                        </v-dialog> -->
+                    ref="dialog"
+                    v-model="modal"
+                    :return-value.sync="editedItem.birthday"
+                    persistent
+                    width="290px"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="editedItem.birthday"
+                        label="出生年月"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        @blur="date = parseDate(editedItem.birthday)"
+                        :rules="[(v) => !!v || '出生年月不能為空']"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="editedItem.birthday"
+                      type="month"
+                      scrollable
+                      locale="zh-cn"
+                    >
+                      <v-spacer></v-spacer>
+                      <v-btn text color="primary" @click="modal = false">
+                        取消
+                      </v-btn>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="$refs.dialog.save(editedItem.birthday)"
+                      >
+                        確認
+                      </v-btn>
+                    </v-date-picker>
+                  </v-dialog> -->
                 </v-col>
                 <v-col
                   v-if="defaultItemShow.APCS"
