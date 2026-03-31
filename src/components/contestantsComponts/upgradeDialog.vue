@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title style="background-color: #2d5bff; height: 57px">
+    <v-card-title style="background-color: #2d5bff; height: 48px">
       <v-icon
         large
         style="
@@ -25,7 +25,7 @@
         >請選擇實驗實作活動？</span
       >
     </v-card-title>
-    <v-card-text style="font-size: 20px; margin-top: 19px; font-weight: bold">
+    <v-card-text style="font-size: 20px; font-weight: bold">
       <v-radio-group v-if="!campData" v-model="schedulId">
         <v-radio
           v-for="data in upgradeRaceList"
@@ -56,21 +56,41 @@
         >確定</v-btn
       >
     </v-card-actions>
+    <v-overlay v-model="loadShow" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
+    </v-overlay>
   </v-card>
 </template>
 <script>
 export default {
   data: () => ({
     loadShow: false,
+    schedulId: "",
   }),
 
-  props: { id: "", selected: [], upgradePup: false, upgradeRaceList: [] },
+  props: {
+    id: "",
+    selected: {
+      type: Array,
+      default: () => [],
+    },
+    upgradePup: false,
+    upgradeRaceList: {
+      type: Array,
+      default: () => [],
+    },
+    campData: {
+      type: Boolean,
+      default: false,
+    },
+  },
 
   watch: {},
 
   methods: {
     async saveUpgrade() {
-      this.upgradePup = false;
+      // this.upgradePup = false;
       this.loadShow = true;
       await this.tokenService.renewLT();
       const data = {};
@@ -101,6 +121,8 @@ export default {
         .catch(function (error) {
           // console.log(error);
         });
+
+      this.$emit("closeUpgradepup", false);
     },
 
     closeDialog() {

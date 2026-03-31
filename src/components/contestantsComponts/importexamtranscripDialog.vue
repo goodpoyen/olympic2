@@ -107,13 +107,9 @@
         >確定</v-btn
       >
     </v-card-actions>
-    <v-overlay :value="loadShow">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>處理中....</div>
+    <v-overlay v-model="loadShow" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
   </v-card>
 </template>
@@ -127,8 +123,14 @@ export default {
     pupTitleShow: "",
     pupTitleIcon: "",
     pupText: "",
-    subjectConfig: [],
-    errorData: [],
+    subjectConfig: {
+      type: Array,
+      default: () => [],
+    },
+    errorData: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   watch: {},

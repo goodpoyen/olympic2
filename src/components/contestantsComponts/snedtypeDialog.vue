@@ -1,19 +1,20 @@
 <template>
   <v-card>
-    <v-card-title
-      dark
-      class="text-h5 grey lighten-2 white--text"
-      style="background-color: #0046fe !important"
-    >
-      <v-icon large class="mr-2 white--text" style="font-size: 24px">
+    <v-card-title dark style="background-color: #0046fe !important">
+      <v-icon large style="font-size: 24px; color: white">
         mdi-email-arrow-right-outline
       </v-icon>
-      <div v-if="!reviewMod" style="font-size: 18px; font-weight: bold">
+      <span
+        v-if="!reviewMod"
+        style="font-size: 18px; font-weight: bold; color: white"
+      >
         發送資料選擇
-      </div>
-      <div v-else style="font-size: 18px; font-weight: bold">瀏覽資料選擇</div>
+      </span>
+      <span v-else style="font-size: 18px; font-weight: bold; color: white"
+        >瀏覽資料選擇</span
+      >
     </v-card-title>
-    <v-card-text style="font-size: 20px; margin-top: 19px; font-weight: bold">
+    <v-card-text style="font-size: 20px; font-weight: bold">
       <div v-for="header in mailTypeHeader" :key="header.value">
         <v-checkbox
           v-if="header.show"
@@ -43,8 +44,8 @@
           v-if="header.testMailConfirm"
           style="
             color: #2bcd2b;
-            margin-top: -44px;
-            margin-left: 109px;
+            margin-top: -57px;
+            margin-left: 114px;
             font-size: 12px;
           "
         >
@@ -174,13 +175,9 @@
         確定</v-btn
       >
     </v-card-actions>
-    <v-overlay :value="loadShow">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>處理中....</div>
+    <v-overlay v-model="loadShow" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
   </v-card>
 </template>
@@ -207,12 +204,18 @@ export default {
     id: "",
     reviewMod: false,
     confirmTestmailStatus: false,
-    mailTypeHeader: [],
+    mailTypeHeader: {
+      type: Array,
+      default: () => [],
+    },
     sendMailtype: "",
     sendMailSelected: "",
     scheduleType: 0,
     tempReviewItem: {},
-    selected: [],
+    selected: {
+      type: Array,
+      default: () => [],
+    },
     target: "",
     sendType: "",
   },
@@ -376,7 +379,7 @@ export default {
       this.sendResult = false;
 
       if (!this.confirmTestmailStatus) {
-        this.confirmTestmailStatus = false;
+        // this.confirmTestmailStatus = false;
         this.snedmailWordingBTN = "寄送抽測信";
       }
       clearInterval(this.reciprocal);

@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title
       v-if="pupTitleShow === '1'"
-      style="background-color: #2d5bff; height: 57px"
+      style="background-color: #2d5bff; height: 48px"
     >
       <v-icon
         large
@@ -21,7 +21,7 @@
         >{{ pupTitle }}</span
       >
     </v-card-title>
-    <v-card-text style="font-size: 20px; margin-top: 19px; font-weight: bold">
+    <v-card-text style="font-size: 20px; font-weight: bold">
       <div v-html="pupText"></div>
       <div
         v-if="
@@ -57,13 +57,9 @@
         >確定</v-btn
       >
     </v-card-actions>
-    <v-overlay :value="sendShow">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>處理中....</div>
+    <v-overlay v-model="sendShow" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
   </v-card>
 </template>
@@ -86,8 +82,14 @@ export default {
     target: "",
     sendType: "",
     tempItem: {},
-    multiSelect: [],
-    selected: [],
+    multiSelect: {
+      type: Array,
+      default: () => [],
+    },
+    selected: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   watch: {},
@@ -111,7 +113,6 @@ export default {
       this.sendShow = true;
       await this.tokenService.renewLT();
 
-      this.sendMailpup = true;
       this.sendShow = false;
 
       this.chagneSendMailContent();
@@ -131,7 +132,7 @@ export default {
 
       await this.axios.post(
         this.systemENV.APISERVERURL + "/sendExamCodeMail",
-        data
+        data,
       );
     },
 
@@ -140,7 +141,6 @@ export default {
       await this.tokenService.renewLT();
 
       this.sendShow = false;
-      this.sendMailpup = true;
 
       this.chagneSendMailContent();
 
@@ -157,7 +157,7 @@ export default {
 
         await this.axios.post(
           this.systemENV.APISERVERURL + "/sendScroeMail",
-          data
+          data,
         );
       } else {
         let data = {};
@@ -170,7 +170,7 @@ export default {
 
         await this.axios.post(
           this.systemENV.APISERVERURL + "/sendScienceScroeMail",
-          data
+          data,
         );
       }
 
@@ -185,7 +185,6 @@ export default {
       await this.tokenService.renewLT();
 
       this.sendShow = false;
-      this.sendMailpup = true;
 
       this.chagneSendMailContent();
 
@@ -214,9 +213,6 @@ export default {
 
     async sendMultiScroeMail() {
       await this.tokenService.renewLT();
-
-      this.sendMailpup = false;
-      this.sendMailpup = true;
 
       this.chagneSendMailContent();
 

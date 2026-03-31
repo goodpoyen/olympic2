@@ -1,17 +1,15 @@
 <template>
   <v-card>
-    <v-card-title
-      dark
-      class="text-h5 grey lighten-2 white--text"
-      style="background-color: #0046fe !important"
-    >
-      <v-icon large class="mr-2 white--text" style="font-size: 24px">
+    <v-card-title dark style="background-color: #0046fe !important">
+      <v-icon large style="font-size: 24px; color: white">
         mdi-tray-arrow-down
       </v-icon>
-      <div style="font-size: 18px; font-weight: bold">下載選擇</div>
+      <span style="font-size: 18px; font-weight: bold; color: white"
+        >下載選擇</span
+      >
     </v-card-title>
 
-    <v-card-text style="font-size: 18px; font-weight: bold; color: #2d5bff">
+    <v-card-text style="font-size: 18px; font-weight: bold">
       <v-radio-group v-model="selectDowloadTyep" column>
         <v-radio label="甄選資料" value="contestantsList"></v-radio>
         <v-radio
@@ -41,13 +39,9 @@
         確定</v-btn
       >
     </v-card-actions>
-    <v-overlay :value="loadShow">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>處理中....</div>
+    <v-overlay v-model="loadShow" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
   </v-card>
 </template>

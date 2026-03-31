@@ -1,17 +1,15 @@
 <template>
   <v-card>
-    <v-card-title
-      dark
-      class="text-h5 grey lighten-2 white--text"
-      style="background-color: #0046fe !important"
-    >
-      <v-icon large class="mr-2 white--text" style="font-size: 24px">
+    <v-card-title dark style="background-color: #0046fe !important">
+      <v-icon large style="font-size: 24px; color: white">
         mdi-file-upload-outline
       </v-icon>
-      <div style="font-size: 18px; font-weight: bold">匯入選擇</div>
+      <span style="font-size: 18px; font-weight: bold; color: white">
+        匯入選擇
+      </span>
     </v-card-title>
 
-    <v-card-text style="font-size: 18px; font-weight: bold; color: #2d5bff">
+    <v-card-text style="font-size: 18px; font-weight: bold">
       <v-radio-group v-model="selectImportTyep" column>
         <v-radio
           v-if="globalSystemValue.system !== 'science'"

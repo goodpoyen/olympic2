@@ -41,140 +41,94 @@
       :items="desserts"
       :items-per-page="50"
       :footer-props="{ 'items-per-page-options': [50, 100, 150, 200, 250, -1] }"
-      multi-sort
       show-select
-      :item-key="itemKey"
+      return-object
+      :item-value="itemKey"
       :loading="loadList"
       loading-text="資料處理中...."
       class="elevation-1"
-      @toggle-select-all="selectAllToggle"
     >
-      <template
-        v-for="(header, index) in headers"
-        v-slot:[`header.${header.value}`]="{ header }"
-      >
-        <span>{{ header.text }} </span>
-        <br />
-        <v-menu offset-y :close-on-content-click="false">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-if="header.text === '功能'"
-              icon
-              v-bind="attrs"
-              v-on="on"
-              style="visibility: hidden"
-            >
-              <v-icon small :color="header[header.filterName + '_C']">
-                mdi-filter
-              </v-icon>
-            </v-btn>
-            <v-btn v-else icon v-bind="attrs" v-on="on">
-              <v-icon small :color="header[header.filterName + '_C']">
-                mdi-filter
-              </v-icon>
-            </v-btn>
-          </template>
-          <table-filter
-            :desserts="desserts"
-            :dessertsTemp="dessertsTemp"
-            :header="header"
-            @updateTable="updateTable"
-          >
-          </table-filter>
-        </v-menu>
-      </template>
       <template v-slot:top>
-        <v-toolbar flat>
+        <v-toolbar flat style="background-color: white">
           <div v-if="selected.length > 0">
             <v-btn
+              icon="mdi-card-account-details-outline"
+              size="small"
+              variant="outlined"
+              @click="checkAlert('multi', 'exam', {})"
+              style="margin-top: -20px; margin-left: 10px"
               :title="
                 '寄送' +
                 titleExam +
                 ' (注意：只發送有打勾的資料，非全部資料寄送)'
               "
-              class="mx-2"
-              fab
-              small
-              @click="checkAlert('multi', 'exam', {})"
-              style="margin-top: -15px"
-            >
-              <v-icon> mdi-card-account-details-outline </v-icon>
-            </v-btn>
+            ></v-btn>
             <v-divider
-              class="mx-4"
-              inset
+              class="mx-5"
               vertical
+              color="primary"
               style="
                 min-height: 30px;
                 margin-top: 18px;
-                border-color: rgb(215 215 215 / 95%);
+                border-color: rgb(20 19 19 / 95%);
               "
             ></v-divider>
             <v-btn
-              v-if="globalSystemValue.system === 'olympic'"
-              title="成績證明寄送前抽測"
-              class="mx-2"
-              fab
-              small
+              icon="mdi-email-check-outline"
+              size="small"
               @click="
                 confirmTestmailStatus = confirmScoreTest !== '' ? true : false;
                 setEmailpup = true;
               "
-              style="margin-top: -15px"
-            >
-              <v-icon> mdi-email-check-outline </v-icon>
-            </v-btn>
+              style="margin-top: -20px"
+              variant="outlined"
+              title="成績證明寄送前抽測"
+            ></v-btn>
             <v-btn
               v-if="globalSystemValue.system === 'olympic'"
               :disabled="randomScoreTest === 0"
+              icon="mdi-license"
+              size="small"
+              @click="checkAlert('multi', 'score', {})"
+              style="margin-top: -20px; margin-left: 10px"
+              variant="outlined"
               :title="
                 '寄送' +
                 titleScore +
                 ' (注意：只發送有打勾的資料，非全部資料寄送)'
               "
-              class="mx-2"
-              fab
-              small
-              @click="checkAlert('multi', 'score', {})"
-              style="margin-top: -15px"
-            >
-              <v-icon> mdi-license </v-icon>
-            </v-btn>
+            ></v-btn>
             <v-btn
               v-else
+              icon="mdi-license"
+              size="small"
+              @click="checkAlert('multi', 'score', {})"
+              style="margin-top: -20px; margin-left: 10px"
+              variant="outlined"
               :title="
                 '寄送' +
                 titleScore +
                 ' (注意：只發送有打勾的資料，非全部資料寄送)'
               "
-              class="mx-2"
-              fab
-              small
-              @click="checkAlert('multi', 'score', {})"
-              style="margin-top: -15px"
-            >
-              <v-icon> mdi-license </v-icon>
-            </v-btn>
+            ></v-btn>
             <v-divider
               class="mx-4"
               vertical
               style="
                 min-height: 30px;
                 margin-top: 18px;
-                border-color: rgb(215 215 215 / 95%);
+                border-color: rgb(20 19 19 / 95%);
               "
             ></v-divider>
             <v-btn
               v-if="scheduleType !== 6"
-              title="晉級"
-              class="mx-2"
-              fab
-              small
+              icon="mdi-account-multiple-check-outline"
+              size="small"
               @click="upgradeShow"
-              style="margin-top: -15px"
-            >
-              <v-icon> mdi-account-multiple-check-outline </v-icon>
-            </v-btn>
+              style="margin-top: -20px"
+              variant="outlined"
+              title="晉級"
+            ></v-btn>
           </div>
           <v-btn
             v-if="
@@ -182,26 +136,27 @@
             "
             class="ma-2"
             small
-            outlined
-            color="indigo"
+            color="#635BFF"
+            variant="flat"
             style="font-weight: bold"
             @click="goToLink('/manage/defaultscore/' + id)"
           >
             <v-icon small left> mdi mdi-link-edit </v-icon>
-            <p style="font-size: 13px; margin-top: 16px">修改成績科目</p>
+            <p style="font-size: 13px">修改成績科目</p>
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn
             class="ma-2"
             small
             outlined
-            color="indigo"
+            color="#635BFF"
+            variant="flat"
             style="font-weight: bold"
             :disabled="desserts.length == 0"
             @click="importPup = true"
           >
             <v-icon small left> mdi-file-upload-outline </v-icon>
-            <p style="font-size: 13px; margin-top: 16px">匯入</p>
+            <p style="font-size: 13px">匯入</p>
           </v-btn>
           <input
             ref="uploader"
@@ -213,13 +168,14 @@
             class="ma-2"
             small
             outlined
-            color="indigo"
+            color="#635BFF"
+            variant="flat"
             style="font-weight: bold"
             :disabled="desserts.length == 0"
             @click="downloadPup = true"
           >
             <v-icon small left> mdi-tray-arrow-down </v-icon>
-            <p style="font-size: 13px; margin-top: 16px">匯出</p>
+            <p style="font-size: 13px">匯出</p>
           </v-btn>
         </v-toolbar>
         <div
@@ -337,23 +293,21 @@
         <v-text-field
           dense
           v-model="item.score"
-          outlined
-          style="width: 60px; top: 11px"
+          style="width: 90px; padding: 9px"
+          variant="outlined"
           @keyup="scoreInput(item)"
         >
-          ></v-text-field
-        >
+        </v-text-field>
       </template>
       <template v-slot:item.pr="{ item }">
         <v-text-field
           dense
           v-model="item.pr"
-          outlined
-          style="width: 60px; top: 11px"
+          style="width: 90px; padding: 9px"
+          variant="outlined"
           @keyup="PRInput(item)"
         >
-          ></v-text-field
-        >
+        </v-text-field>
       </template>
       <template v-slot:item.pass="{ item }">
         <div
@@ -448,7 +402,7 @@
       >
       </snedtype-dialog>
     </v-dialog>
-    <v-dialog v-model="setEmailpup" width="35%">
+    <v-dialog v-model="setEmailpup" width="37%">
       <setemail-dialog
         :confirmTestmailStatus="confirmTestmailStatus"
         @closeSetMailpup="closeSetMailpup"
@@ -1025,20 +979,16 @@
       >
       </downloadfile-Dialog>
     </v-dialog>
-    <v-dialog v-model="importPup" width="30%">
+    <v-dialog v-model="importPup" width="35%">
       <importfile-dialog
         @uploadFile="uploadFile"
         @closeImportpup="closeImportpup"
       >
       </importfile-dialog>
     </v-dialog>
-    <v-overlay :value="loadShow">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>處理中....</div>
+    <v-overlay v-model="loadShow" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
   </div>
 </template>
@@ -1144,8 +1094,14 @@ export default {
   }),
 
   props: {
-    desserts: [],
-    dessertsTemp: [],
+    desserts: {
+      type: Array,
+      default: () => [],
+    },
+    dessertsTemp: {
+      type: Array,
+      default: () => [],
+    },
     loadList: true,
     examSend: 0,
     scoreSend: 0,
@@ -1320,7 +1276,7 @@ export default {
           formData,
           {
             headers: header,
-          }
+          },
         )
         .then((response) => {
           // console.log(response.data);
@@ -1712,20 +1668,6 @@ export default {
       this.absentTypeTemp = "0";
     },
 
-    async selectAllToggle(props) {
-      if (props.items.length > 0 && props.value) {
-        const self = this;
-        props.items.forEach((item) => {
-          self.multiSelect.push(item);
-        });
-      }
-
-      if (!props.value) {
-        this.selected = [];
-        this.multiSelect = [];
-      }
-    },
-
     async controllerSnedTypePup(type, item) {
       this.sendMailtype = "";
       this.setWording();
@@ -1907,6 +1849,8 @@ export default {
       this.sendMailtype = "";
 
       this.axios.post(this.systemENV.APISERVERURL + "/randomTest", data);
+
+      return testmail;
     },
 
     async confirmTestMail(value) {
@@ -1977,8 +1921,8 @@ export default {
     setDesserts(value) {
       Object.assign(this.desserts[this.desserts.indexOf(value)], value);
 
-      this.sendExamNotice = value.sendExamNotice;
-      this.sendExamScoreNoice = value.sendExamScoreNoice;
+      // this.sendExamNotice = value.sendExamNotice;
+      // this.sendExamScoreNoice = value.sendExamScoreNoice;
 
       this.sendMailSelected = "";
       this.tempItem = {};
@@ -1995,11 +1939,11 @@ export default {
       this.multiSelect = [];
       this.sendMailSelected = "";
 
-      if (value === "exam") {
-        this.sendExamNotice = true;
-      } else if (value === "score") {
-        this.sendExamScoreNoice = true;
-      }
+      // if (value === "exam") {
+      //   this.sendExamNotice = true;
+      // } else if (value === "score") {
+      //   this.sendExamScoreNoice = true;
+      // }
     },
 
     closeSendTypepup(value) {
@@ -2033,11 +1977,11 @@ export default {
       this.tempReviewItem = {};
       this.tempItem = {};
 
-      if (value === "exam") {
-        this.sendExamNotice = true;
-      } else if (value === "score") {
-        this.sendExamScoreNoice = true;
-      }
+      // if (value === "exam") {
+      //   this.sendExamNotice = true;
+      // } else if (value === "score") {
+      //   this.sendExamScoreNoice = true;
+      // }
     },
 
     closeSetMailpup(value) {
@@ -2195,7 +2139,7 @@ export default {
       this.itemKey = "stId";
       this.headers = [
         {
-          text: "選訓編號",
+          title: "選訓編號",
           value: "stId",
           filterName: "stId",
           type: "text",
@@ -2203,7 +2147,7 @@ export default {
           stId_C: "",
         },
         {
-          text: "中文姓名",
+          title: "中文姓名",
           value: "chineseName",
           filterName: "chineseName",
           type: "text",
@@ -2211,7 +2155,7 @@ export default {
           chineseName_C: "",
         },
         {
-          text: "成績",
+          title: "成績",
           value: "score",
           filterName: "score",
           type: "text",
@@ -2219,20 +2163,20 @@ export default {
           score_C: "",
         },
         {
-          text: "PR值",
+          title: "PR值",
           value: "pr",
           filterName: "pr",
           type: "text",
           pr_M: "",
           pr_C: "",
         },
-        { text: "功能", value: "actions", width: "15%" },
+        { title: "功能", value: "actions", width: "15%" },
       ];
     } else if (this.scheduleType === 5 || this.scheduleType === 6) {
       this.itemKey = "stId";
       this.headers = [
         {
-          text: "學生代碼",
+          title: "學生代碼",
           value: "examOnly",
           filterName: "examOnly",
           type: "text",
@@ -2241,7 +2185,7 @@ export default {
           width: "7%",
         },
         {
-          text: "甄選號碼",
+          title: "甄選號碼",
           value: "examCode",
           filterName: "examCode",
           type: "text",
@@ -2250,7 +2194,7 @@ export default {
           width: "8%",
         },
         {
-          text: "姓名",
+          title: "姓名",
           value: "chineseName",
           filterName: "chineseName",
           type: "text",
@@ -2259,7 +2203,7 @@ export default {
           width: "8%",
         },
         {
-          text: "畢業學校",
+          title: "畢業學校",
           value: "schoolNameAll",
           filterName: "schoolNameAll",
           type: "text",
@@ -2268,7 +2212,7 @@ export default {
           width: "14%",
         },
         {
-          text: "考區名稱",
+          title: "考區名稱",
           value: "areaName",
           filterName: "areaName",
           type: "text",
@@ -2276,7 +2220,7 @@ export default {
           areaName_C: "",
         },
         {
-          text: "考場",
+          title: "考場",
           value: "roomName",
           filterName: "roomName",
           type: "text",
@@ -2284,7 +2228,7 @@ export default {
           roomName_C: "",
         },
         {
-          text: "座號",
+          title: "座號",
           value: "seatNumber",
           filterName: "seatNumber",
           type: "text",
@@ -2295,7 +2239,7 @@ export default {
       ];
       if (this.scheduleType === 5) {
         let temp = {
-          text: "晉級結果",
+          title: "晉級結果",
           value: "pass",
           filterName: "pass",
           type: "text",
@@ -2304,10 +2248,10 @@ export default {
           width: "8%",
         };
         this.headers.push(temp);
-        this.headers.push({ text: "功能", value: "actions", width: "17%" });
+        this.headers.push({ title: "功能", value: "actions", width: "17%" });
       } else {
         let temp = {
-          text: "甄選結果",
+          title: "甄選結果",
           value: "pass",
           filterName: "pass",
           type: "text",
@@ -2316,13 +2260,13 @@ export default {
           width: "8%",
         };
         this.headers.push(temp);
-        this.headers.push({ text: "功能", value: "actions", width: "17%" });
+        this.headers.push({ title: "功能", value: "actions", width: "17%" });
       }
     } else {
       this.itemKey = "examCode";
       this.headers = [
         {
-          text: "應試號碼",
+          title: "應試號碼",
           value: "examCode",
           filterName: "examCode",
           type: "text",
@@ -2330,7 +2274,7 @@ export default {
           examCode_C: "",
         },
         {
-          text: "中文姓名",
+          title: "中文姓名",
           value: "chineseName",
           filterName: "chineseName",
           type: "text",
@@ -2339,7 +2283,7 @@ export default {
           width: "10%",
         },
         {
-          text: "學校",
+          title: "學校",
           value: "schoolNameAll",
           filterName: "schoolNameAll",
           type: "text",
@@ -2348,7 +2292,7 @@ export default {
           width: "15%",
         },
         {
-          text: "考區名稱",
+          title: "考區名稱",
           value: "areaName",
           filterName: "areaName",
           type: "text",
@@ -2356,7 +2300,7 @@ export default {
           areaName_C: "",
         },
         {
-          text: "考場",
+          title: "考場",
           value: "roomName",
           filterName: "roomName",
           type: "text",
@@ -2364,7 +2308,7 @@ export default {
           roomName_C: "",
         },
         {
-          text: "座號",
+          title: "座號",
           value: "seatNumber",
           filterName: "seatNumber",
           type: "text",
@@ -2373,7 +2317,7 @@ export default {
           width: "7%",
         },
         {
-          text: "成績",
+          title: "成績",
           value: "score",
           filterName: "score",
           type: "text",
@@ -2381,14 +2325,14 @@ export default {
           score_C: "",
         },
         {
-          text: "PR值",
+          title: "PR值",
           value: "pr",
           filterName: "pr",
           type: "text",
           pr_M: "",
           pr_C: "",
         },
-        { text: "功能", value: "actions", width: "15%" },
+        { title: "功能", value: "actions", width: "15%" },
       ];
     }
 

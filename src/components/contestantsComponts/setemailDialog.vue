@@ -1,25 +1,24 @@
 <template>
   <v-card>
-    <v-card-title
-      dark
-      class="text-h5 grey lighten-2 white--text"
-      style="background-color: #0046fe !important"
-    >
-      <v-icon large class="mr-2 white--text" style="font-size: 24px">
+    <v-card-title dark style="background-color: #0046fe !important">
+      <v-icon large style="font-size: 24px; color: white">
         mdi-email-check-outline
       </v-icon>
-      <div style="font-size: 18px; font-weight: bold">成績證明寄送前抽測</div>
+      <span style="font-size: 18px; font-weight: bold; color: white"
+        >成績證明寄送前抽測</span
+      >
     </v-card-title>
-    <v-card-text style="font-size: 20px; margin-top: 19px; font-weight: bold">
+    <v-card-text style="font-size: 20px; font-weight: bold">
       <div style="font-size: 17px">
         寄送成績證明前，請先完成抽測確認，以確保資料與成績正確。
       </div>
       <v-text-field
-        style="width: 60%; margin-top: 20px"
+        style="width: 55%; margin-top: 20px"
         v-model="testMail"
+        variant="underlined"
         label="成績證明（抽測確認）將寄送至："
       ></v-text-field>
-      <div style="margin-left: 295px; margin-top: -50px">
+      <div style="margin-left: 295px; margin-top: -59px">
         <v-btn
           v-if="!lock"
           elevation="1"
@@ -81,13 +80,9 @@
         關閉
       </v-btn>
     </v-card-actions>
-    <v-overlay :value="loadShow">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>處理中....</div>
+    <v-overlay v-model="loadShow" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
   </v-card>
 </template>
@@ -139,11 +134,11 @@ export default {
     sendTestMail() {
       let result = this.$emit("sendTestMail", this.testMail);
 
-      if (result.testMail === "") {
-        this.testMailCheck = true;
-      } else {
-        this.testMailCheck = false;
-      }
+      // if (result.testMail === "") {
+      //   this.testMailCheck = true;
+      // } else {
+      //   this.testMailCheck = false;
+      // }
     },
 
     sendTimeDownStart() {

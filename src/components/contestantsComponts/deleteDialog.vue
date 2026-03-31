@@ -1,16 +1,12 @@
 <template>
   <v-card>
-    <v-card-title
-      dark
-      class="text-h5 grey lighten-2 white--text"
-      style="background-color: #900d16 !important"
-    >
-      <div style="font-size: 18px; font-weight: bold">確定刪除資料？</div>
+    <v-card-title dark style="background-color: #900d16 !important">
+      <div style="font-size: 18px; font-weight: bold; color: white" ;>
+        確定刪除資料？
+      </div>
     </v-card-title>
 
-    <v-card-text
-      style="margin-top: 5%; font-size: 18px; font-weight: bold; color: #0c0c0c"
-    >
+    <v-card-text style="font-size: 18px; font-weight: bold; color: #0c0c0c">
       確定刪除資料？
     </v-card-text>
 
@@ -53,13 +49,9 @@
         確定</v-btn
       >
     </v-card-actions>
-    <v-overlay :value="loadShow">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>處理中....</div>
+    <v-overlay v-model="loadShow" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
   </v-card>
 </template>

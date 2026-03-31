@@ -61,7 +61,7 @@
             >
             </class-room>
           </v-container>
-          <!--  <v-container v-if="n == 4" fluid>
+          <v-container v-if="n == 4" fluid>
             <contestants
               :loadList="loadList"
               :desserts="desserts"
@@ -71,7 +71,7 @@
               :sendExamNotice="sendExamNotice"
               :sendExamScoreNoice="sendExamScoreNoice"
             ></contestants>
-          </v-container>-->
+          </v-container>
         </v-tabs-window-item>
       </v-tabs-window>
     </v-card>
@@ -82,7 +82,7 @@
 import PersonnelInfo from "./personnelInfo.vue";
 import ExamArea from "./examArea.vue";
 import ClassRoom from "./classRoom.vue";
-// import Contestants from "./contestants.vue";
+import Contestants from "./contestants.vue";
 
 export default {
   data: () => ({
@@ -112,7 +112,7 @@ export default {
     PersonnelInfo,
     ExamArea,
     ClassRoom,
-    // Contestants,
+    Contestants,
   },
 
   computed: {

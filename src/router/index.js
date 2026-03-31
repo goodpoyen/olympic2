@@ -110,30 +110,30 @@ const routes = [
         props: true,
         component: () => import("../components/optionScienceExam.vue"),
       },
-      // {
-      //   path: "personnelInfo/:id",
-      //   name: "personnelInfo",
-      //   props: true,
-      //   component: () => import("../components/personnelInfo.vue"),
-      // },
-      // {
-      //   path: "examArea/:id",
-      //   name: "examArea",
-      //   props: true,
-      //   component: () => import("../components/examArea.vue"),
-      // },
-      // {
-      //   path: "classRoom/:id",
-      //   name: "classRoom",
-      //   props: true,
-      //   component: () => import("../components/classRoom.vue"),
-      // },
-      // {
-      //   path: "contestants/:id",
-      //   name: "contestants",
-      //   props: true,
-      //   component: () => import("../components/contestants.vue"),
-      // },
+      {
+        path: "personnelInfo/:id",
+        name: "personnelInfo",
+        props: true,
+        component: () => import("../components/personnelInfo.vue"),
+      },
+      {
+        path: "examArea/:id",
+        name: "examArea",
+        props: true,
+        component: () => import("../components/examArea.vue"),
+      },
+      {
+        path: "classRoom/:id",
+        name: "classRoom",
+        props: true,
+        component: () => import("../components/classRoom.vue"),
+      },
+      {
+        path: "contestants/:id",
+        name: "contestants",
+        props: true,
+        component: () => import("../components/contestants.vue"),
+      },
       {
         path: "account",
         name: "account",
@@ -161,17 +161,6 @@ const routes = [
       // },
     ],
   },
-  // {
-  //   path: "/",
-  //   name: "home",
-  //   component: HomeView,
-  // },
-  // {
-  //   path: "/about",
-  //   name: "about",
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  // },
 ];
 
 const router = createRouter({
