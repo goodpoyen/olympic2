@@ -148,9 +148,8 @@
           <v-btn
             class="ma-2"
             small
-            outlined
             color="#635BFF"
-            variant="flat"
+            variant="outlined"
             style="font-weight: bold"
             :disabled="desserts.length == 0"
             @click="importPup = true"
@@ -167,9 +166,8 @@
           <v-btn
             class="ma-2"
             small
-            outlined
             color="#635BFF"
-            variant="flat"
+            variant="outlined"
             style="font-weight: bold"
             :disabled="desserts.length == 0"
             @click="downloadPup = true"

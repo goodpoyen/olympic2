@@ -42,7 +42,7 @@
 
 <script>
 import PersonnelInfo from "./personnelInfo.vue";
-// import onlineContestants from "./onlineContestants.vue";
+import onlineContestants from "./onlineContestants.vue";
 
 export default {
   data: () => ({
@@ -66,7 +66,7 @@ export default {
 
   components: {
     PersonnelInfo,
-    // onlineContestants,
+    onlineContestants,
   },
 
   computed: {

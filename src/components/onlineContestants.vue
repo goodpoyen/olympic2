@@ -11,59 +11,13 @@
       class="elevation-1"
       @toggle-select-all="selectAllToggle"
     >
-      <template
-        v-for="(header, index) in headers"
-        v-slot:[`header.${header.value}`]="{ header }"
-      >
-        <thead>
-          <tr>
-            <span>{{ header.text }}</span>
-            <br />
-            <v-menu
-              v-if="header.text != '功能'"
-              offset-y
-              :close-on-content-click="false"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on">
-                  <v-icon :id="'contestnatsColor' + index" small color="">
-                    mdi-filter
-                  </v-icon>
-                </v-btn>
-              </template>
-              <div style="background-color: white; width: 280px">
-                <v-text-field
-                  style="margin-bottom: -23px"
-                  @keyup.enter="filteredDesserts(index, header.filterName)"
-                  :id="'contestnatsInput' + index"
-                  clearable
-                  class="pa-4"
-                  type="text"
-                  label="輸入搜尋"
-                  :autofocus="true"
-                  @click:clear="cleanDesserts(index, header.filterName)"
-                ></v-text-field>
-                <span
-                  style="
-                    font-size: 13px;
-                    color: rgb(47, 187, 101);
-                    margin-left: 16px;
-                    font-weight: bold;
-                  "
-                  >輸入完畢後，按下Enter鍵即可過濾</span
-                >
-              </div>
-            </v-menu>
-          </tr>
-        </thead>
-      </template>
       <template v-slot:top>
-        <v-toolbar flat>
+        <v-toolbar flat style="background-color: white">
           <div v-if="selected.length > 0">
             <v-btn
               title="寄送考試通知"
-              class="mx-2"
-              fab
+              color="#635BFF"
+              variant="outlined"
               small
               @click="sendMultiMailCheckAlert('examMulti')"
             >
@@ -71,8 +25,8 @@
             </v-btn>
             <v-btn
               title="寄送成績證明"
-              class="mx-2"
-              fab
+              color="#635BFF"
+              variant="outlined"
               small
               @click="sendMultiMailCheckAlert('scoreMulti')"
             >
@@ -83,14 +37,14 @@
           <v-btn
             class="ma-2"
             small
-            outlined
-            color="indigo"
+            color="#635BFF"
+            variant="outlined"
             style="font-weight: bold"
             :disabled="desserts.length == 0"
             @click="onButtonClick"
           >
             <v-icon small left> mdi-file-upload-outline </v-icon>
-            <p style="font-size: 13px; margin-top: 16px">匯入</p>
+            <p style="font-size: 13px">匯入</p>
           </v-btn>
           <input
             ref="uploader"
@@ -101,14 +55,14 @@
           <v-btn
             class="ma-2"
             small
-            outlined
-            color="indigo"
+            color="#635BFF"
+            variant="outlined"
             style="font-weight: bold"
             :disabled="desserts.length == 0"
             @click="loadCMSFile"
           >
             <v-icon small left> mdi-tray-arrow-down </v-icon>
-            <p style="font-size: 13px; margin-top: 16px">匯出</p>
+            <p style="font-size: 13px">匯出</p>
           </v-btn>
         </v-toolbar>
       </template>
@@ -137,19 +91,18 @@
         <v-text-field
           dense
           v-model="item.score"
-          outlined
-          style="width: 80px; top: 11px"
-          @keyup="updateCMSScore(item)"
+          style="width: 90px; padding: 9px"
+          variant="outlined"
+          @keyup="scoreInput(item)"
         >
-          ></v-text-field
-        >
+        </v-text-field>
       </template>
     </v-data-table>
     <v-dialog v-model="alertPup" max-width="500px">
       <v-card>
         <v-card-title
           v-if="pupTitleShow === '1'"
-          style="background-color: #2d5bff; height: 57px"
+          style="background-color: #2d5bff; height: 48px"
         >
           <v-icon
             large
@@ -189,9 +142,7 @@
             >{{ pupTitle }}</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <div v-html="pupText"></div>
         </v-card-text>
         <v-card-actions>
@@ -214,7 +165,7 @@
       <v-card>
         <v-card-title
           v-if="pupTitleShow === '1'"
-          style="background-color: #2d5bff; height: 57px"
+          style="background-color: #2d5bff; height: 48px"
         >
           <v-icon
             large
@@ -233,9 +184,7 @@
             >{{ pupTitle }}</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <div v-html="pupText"></div>
         </v-card-text>
         <v-card-actions>
@@ -269,13 +218,9 @@
             >確定</v-btn
           >
         </v-card-actions>
-        <v-overlay :value="sendShow">
-          <v-progress-circular
-            :size="50"
-            color="primary"
-            indeterminate
-          ></v-progress-circular>
-          <div>處理中....</div>
+        <v-overlay v-model="sendShow" class="align-center justify-center">
+          <v-progress-circular indeterminate color="primary" :size="60">
+          </v-progress-circular>
         </v-overlay>
       </v-card>
     </v-dialog>
@@ -283,7 +228,7 @@
       <v-card>
         <v-card-title
           v-if="pupTitleShow === '1'"
-          style="background-color: #2d5bff; height: 57px"
+          style="background-color: #2d5bff; height: 48px"
         >
           <v-icon
             large
@@ -302,9 +247,7 @@
             >{{ pupTitle }}</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <div v-html="pupText"></div>
         </v-card-text>
         <v-card-actions>
@@ -335,13 +278,9 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-overlay :value="loadShow">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>處理中....</div>
+    <v-overlay v-model="loadShow" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
   </div>
 </template>
@@ -370,15 +309,15 @@ export default {
     sendMailpup: false,
     sendMailtype: "",
     headers: [
-      { text: "姓名", value: "chineseName", filterName: "chineseName" },
-      { text: "學校", value: "schoolNameAll", filterName: "schoolNameAll" },
-      { text: "指導老師", value: "teacherName", filterName: "teacherName" },
-      { text: "帳號", value: "cmsA", filterName: "cmsA" },
-      { text: "密碼", value: "cmsP", filterName: "cmsP" },
-      { text: "信箱", value: "email", filterName: "email" },
-      { text: "成績", value: "score", filterName: "score" },
-      { text: "組別", value: "type", filterName: "type" },
-      { text: "功能", value: "actions" },
+      { title: "姓名", value: "chineseName", filterName: "chineseName" },
+      { title: "學校", value: "schoolNameAll", filterName: "schoolNameAll" },
+      { title: "指導老師", value: "teacherName", filterName: "teacherName" },
+      { title: "帳號", value: "cmsA", filterName: "cmsA" },
+      { title: "密碼", value: "cmsP", filterName: "cmsP" },
+      { title: "信箱", value: "email", filterName: "email" },
+      { title: "成績", value: "score", filterName: "score" },
+      { title: "組別", value: "type", filterName: "type" },
+      { title: "功能", value: "actions" },
     ],
     desserts: [],
     dessertsTemp: [],
@@ -516,7 +455,7 @@ export default {
 
       await this.axios.post(
         this.systemENV.APISERVERURL + "/updateCMSScore",
-        data
+        data,
       );
     },
 
@@ -630,7 +569,7 @@ export default {
             this.tempItem.sendExamScoreNoice = true;
             Object.assign(
               this.desserts[this.desserts.indexOf(this.tempItem)],
-              this.tempItem
+              this.tempItem,
             );
           } else {
             this.cleanPupData();
@@ -671,7 +610,7 @@ export default {
       this.pupText = "成績證明已發送";
       await this.axios.post(
         this.systemENV.APISERVERURL + "/sendScroeMail",
-        data
+        data,
       );
     },
 

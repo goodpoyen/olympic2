@@ -26,9 +26,8 @@
           <v-btn
             class="ma-2"
             small
-            outlined
             color="#635BFF"
-            variant="flat"
+            variant="outlined"
             style="font-weight: bold"
             @click="downloadAllAreaFile()"
           >

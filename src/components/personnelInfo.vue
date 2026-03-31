@@ -115,7 +115,7 @@
             small
             outlined
             color="#635BFF"
-            variant="flat"
+            variant="outlined"
             style="font-weight: bold"
             :disabled="contestantShow"
             @click="createExamCodeAlert"
@@ -129,7 +129,7 @@
             small
             outlined
             color="#635BFF"
-            variant="flat"
+            variant="outlined"
             style="font-weight: bold"
             @click="createCampCode"
           >
@@ -140,9 +140,8 @@
             v-if="menuType === 3"
             class="ma-3"
             small
-            outlined
             color="#635BFF"
-            variant="flat"
+            variant="outlined"
             style="font-weight: bold"
             @click="setCMS"
           >
@@ -154,9 +153,8 @@
             v-if="menuType === 1 || menuType === 2"
             class="ma-2"
             small
-            outlined
             color="#635BFF"
-            variant="flat"
+            variant="outlined"
             style="font-weight: bold"
             depressed
             :loading="isSelecting"
@@ -175,9 +173,8 @@
             v-if="menuType === 3 || menuType === 4"
             class="ma-2"
             small
-            outlined
             color="#635BFF"
-            variant="flat"
+            variant="outlined"
             style="font-weight: bold"
             depressed
             :loading="isSelecting"
@@ -196,9 +193,8 @@
           <v-btn
             class="ma-2"
             small
-            outlined
             color="#635BFF"
-            variant="flat"
+            variant="outlined"
             style="font-weight: bold"
             @click="downloadPersonnelFile"
           >
@@ -450,9 +446,7 @@
             >{{ pupTitle }}</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <div v-html="pupText"></div>
         </v-card-text>
         <v-card-actions>
