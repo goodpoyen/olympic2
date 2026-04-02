@@ -1,21 +1,25 @@
 <template>
   <div>
-    <v-tabs color="blue accent-4" left>
+    <v-tabs v-model="tab" color="blue accent-4" left>
       <v-tab
         v-if="olyId === 0 || level === 1"
         style="color: black; font-weight: bolder"
+        :value="1"
         @click="changeTab(1)"
         >科學能力</v-tab
       >
       <v-tab
         v-if="olyId === 0 || level === 2"
         style="color: black; font-weight: bolder"
+        :value="2"
         @click="changeTab(2)"
         >實驗實作</v-tab
       >
-      <v-tab-item v-for="n in 2" :key="n">
+    </v-tabs>
+    <v-tabs-window v-model="tab">
+      <v-tabs-window-item v-for="n in 2" :key="n" :value="n">
         <v-container v-if="n == 1 || n == 2" fluid>
-          <div style="margin-left: 78px; font-size: 14px; font-weight: bold">
+          <div style="font-size: 14px; font-weight: bold">
             設定對象:
             <v-btn
               v-if="level === 1 && olyId === 0"
@@ -25,9 +29,7 @@
               style="margin-left: 11px; margin-top: -2px"
             >
               <v-icon small left> mdi-cog-outline </v-icon>
-              <p style="font-size: 14px; margin-top: 13px">
-                科學能力科目系統預設值
-              </p>
+              <p style="font-size: 14px">科學能力科目系統預設值</p>
             </v-btn>
             <v-btn
               v-if="level === 2 && olyId === 0"
@@ -37,9 +39,7 @@
               style="margin-left: 11px; margin-top: -2px"
             >
               <v-icon small left> mdi-cog-outline </v-icon>
-              <p style="font-size: 14px; margin-top: 13px">
-                實驗實作科目系統預設值
-              </p>
+              <p style="font-size: 14px">實驗實作科目系統預設值</p>
             </v-btn>
             <v-btn
               v-if="level === 1 && olyId !== 0"
@@ -76,9 +76,9 @@
             loading-text="資料處理中...."
             density="compact"
             class="elevation-1"
-            style="width: 88%; margin: 2% auto"
+            style="margin: 2% auto"
           >
-            <template #body="props">
+            <!-- <template #body="props">
               <draggable
                 :list="props.items"
                 tag="tbody"
@@ -146,134 +146,33 @@
                   </tr>
                 </template>
               </draggable>
-            </template>
+            </template> -->
             <template v-slot:top>
-              <v-toolbar flat>
-                <v-dialog v-model="libaryPup" width="50%">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      v-if="globalSystemValue.level === '1'"
-                      small
-                      color="#635BFF"
-                      dark
-                      class="mb-2"
-                      v-bind="attrs"
-                      v-on="on"
-                      @click="getSubjectLibaray()"
-                    >
-                      <v-icon small left> mdi-format-list-checkbox </v-icon>
-                      <p style="font-size: 13px; margin-top: 16px">新增科目</p>
-                    </v-btn>
-                  </template>
-                  <v-card>
-                    <v-card-title
-                      style="background-color: #0046fe; height: 57px"
-                    >
-                      <v-icon
-                        large
-                        style="
-                          font-size: 23px;
-                          font-weight: bold;
-                          color: white;
-                          margin-right: 7px;
-                        "
-                      >
-                        mdi-plus
-                      </v-icon>
-                      <span
-                        class="text-h5"
-                        style="
-                          font-size: 18px !important;
-                          font-weight: bold;
-                          color: white;
-                        "
-                        >選擇科目</span
-                      >
-                    </v-card-title>
-                    <v-card-text>
-                      <v-container>
-                        <v-data-table
-                          v-model="selected"
-                          :headers="libaryHeaders"
-                          :items="libaryList"
-                          :item-key="itemKey"
-                          :items-per-page="500"
-                          :hide-default-footer="true"
-                          show-select
-                          loading-text="資料處理中...."
-                          class="elevation-1"
-                          @toggle-select-all="selectAllToggle"
-                        >
-                          <template v-slot:item.dataType="{ item }">
-                            <span v-if="item.dataType === 'num'">數字</span>
-                            <span v-if="item.dataType === 'string'">文字</span>
-                            <span v-if="item.dataType === 'boolean'"
-                              >是/否</span
-                            >
-                          </template>
-                          <template
-                            v-slot:item.data-table-select="{
-                              item,
-                              isSelected,
-                              select,
-                            }"
-                          >
-                            <v-simple-checkbox
-                              :value="isSelected"
-                              @input="
-                                select($event);
-                                selectToggle(item, $event);
-                              "
-                            ></v-simple-checkbox>
-                          </template>
-                        </v-data-table>
-                      </v-container>
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        color=" darken-1"
-                        text
-                        @click="libaryPup = false"
-                        style="font-weight: bold; font-size: 17px"
-                        >取消</v-btn
-                      >
-                      <v-btn
-                        color="blue darken-1"
-                        text
-                        style="
-                          color: #2d5bff;
-                          font-weight: bold;
-                          font-size: 17px;
-                        "
-                        @click="saveSubjectConfig('saveSubject')"
-                        >儲存</v-btn
-                      >
-                    </v-card-actions>
-                    <v-overlay :value="loadShow">
-                      <v-progress-circular
-                        :size="50"
-                        color="primary"
-                        indeterminate
-                      ></v-progress-circular>
-                      <div>處理中....</div>
-                    </v-overlay>
-                  </v-card>
-                </v-dialog>
+              <v-toolbar flat style="background-color: white">
+                <v-btn
+                  v-if="globalSystemValue.level === '1'"
+                  small
+                  color="#635BFF"
+                  variant="flat"
+                  @click="
+                    getSubjectLibaray();
+                    libaryPup = true;
+                  "
+                >
+                  <v-icon small left> mdi-format-list-checkbox </v-icon>
+                  <p style="font-size: 13px">新增科目</p>
+                </v-btn>
                 <v-spacer></v-spacer>
                 <v-btn
                   v-if="olyId !== 0"
-                  class="ma-3"
                   small
-                  outlined
-                  color="indigo"
+                  color="#635BFF"
+                  variant="flat"
                   style="font-weight: bold"
                   @click="saveSubjectConfig('updateDefault')"
                 >
                   <v-icon small left> mdi mdi-update </v-icon>
-                  <p style="font-size: 13px; margin-top: 16px">
-                    同步更新系統預設值
-                  </p>
+                  <p style="font-size: 13px">同步更新系統預設值</p>
                 </v-btn>
               </v-toolbar>
             </template>
@@ -287,8 +186,89 @@
             <div>資料儲存中....</div>
           </v-overlay>
         </v-container>
-      </v-tab-item>
-    </v-tabs>
+      </v-tabs-window-item>
+    </v-tabs-window>
+    <v-dialog v-model="libaryPup" width="50%">
+      <v-card>
+        <v-card-title style="background-color: #0046fe; height: 48px">
+          <v-icon
+            large
+            style="
+              font-size: 23px;
+              font-weight: bold;
+              color: white;
+              margin-right: 7px;
+            "
+          >
+            mdi-plus
+          </v-icon>
+          <span
+            class="text-h5"
+            style="font-size: 18px !important; font-weight: bold; color: white"
+            >選擇科目</span
+          >
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-data-table
+              v-model="selected"
+              :headers="libaryHeaders"
+              :items="libaryList"
+              :item-key="itemKey"
+              :items-per-page="500"
+              :hide-default-footer="true"
+              show-select
+              return-object
+              loading-text="資料處理中...."
+              class="elevation-1"
+              @toggle-select-all="selectAllToggle"
+            >
+              <template v-slot:item.dataType="{ item }">
+                <span v-if="item.dataType === 'num'">數字</span>
+                <span v-if="item.dataType === 'string'">文字</span>
+                <span v-if="item.dataType === 'boolean'">是/否</span>
+              </template>
+              <!-- <template
+                v-slot:item.data-table-select="{ item, isSelected, select }"
+              >
+                <v-simple-checkbox
+                  :value="isSelected"
+                  @input="
+                    select($event);
+                    selectToggle(item, $event);
+                  "
+                ></v-simple-checkbox>
+              </template> -->
+            </v-data-table>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color=" darken-1"
+            text
+            @click="libaryPup = false"
+            style="font-weight: bold; font-size: 17px"
+            >取消</v-btn
+          >
+          <v-btn
+            color="blue darken-1"
+            text
+            style="color: #2d5bff; font-weight: bold; font-size: 17px"
+            @click="saveSubjectConfig('saveSubject')"
+            >儲存</v-btn
+          >
+        </v-card-actions>
+        <v-overlay :value="loadShow">
+          <v-progress-circular
+            :size="50"
+            color="primary"
+            indeterminate
+          ></v-progress-circular>
+          <div>處理中....</div>
+        </v-overlay>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -304,42 +284,42 @@ import draggable from "vuedraggable";
 export default {
   data: () => ({
     configHeaders: [
-      { text: "科目排序", value: "sort" },
-      { text: "科目名稱", value: "subjectName", sortable: false },
+      { title: "科目排序", value: "sort" },
+      { title: "科目名稱", value: "subjectName", sortable: false },
       {
-        text: "資料型態",
+        title: "資料型態",
         value: "dataType",
         sortable: false,
       },
       {
-        text: "成績長度限制",
+        title: "成績長度限制",
         value: "valueLength",
         sortable: false,
       },
       {
-        text: "描述長度限制",
+        title: "描述長度限制",
         value: "descriptionLength",
         sortable: false,
       },
       {
-        text: "科目描述(非必填)",
+        title: "科目描述(非必填)",
         value: "description",
         sortable: false,
         width: "35%",
       },
     ],
     libaryHeaders: [
-      { text: "科目", value: "subjectName" },
+      { title: "科目", value: "subjectName" },
       {
-        text: "資料型態",
+        title: "資料型態",
         value: "dataType",
       },
       {
-        text: "成績長度限制",
+        title: "成績長度限制",
         value: "valueLength",
       },
       {
-        text: "描述長度限制",
+        title: "描述長度限制",
         value: "descriptionLength",
       },
     ],
@@ -359,6 +339,7 @@ export default {
     loadList: false,
     dropLock: false,
     saveLoading: false,
+    tab: null,
   }),
 
   components: {

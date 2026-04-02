@@ -109,10 +109,11 @@ export default {
     },
 
     groupClick(item) {
-      if (item.title === "成績單設定") {
+      console.log(item);
+      if (item.text === "成績單設定") {
         location.href = "/manage/defaultscore/0";
       }
-      if (item.title === "專案設定") {
+      if (item.text === "專案設定") {
         location.href = "/manage/setting";
       }
     },

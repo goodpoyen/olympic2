@@ -164,11 +164,11 @@ const routes = [
       //   name: "setting",
       //   component: () => import("../components/setting.vue"),
       // },
-      // {
-      //   path: "defaultscore/:olyid",
-      //   name: "defaultscore",
-      //   component: () => import("../components/defaultscore.vue"),
-      // },
+      {
+        path: "defaultscore/:olyid",
+        name: "defaultscore",
+        component: () => import("../components/defaultscore.vue"),
+      },
     ],
   },
 ];
