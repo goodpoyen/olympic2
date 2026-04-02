@@ -1030,13 +1030,9 @@
                 <v-icon small left> mdi-email-arrow-right-outline </v-icon>
                 <p style="font-size: 13px">寄送</p>
               </v-btn>
-              <v-overlay :value="sendLoad">
-                <v-progress-circular
-                  :size="50"
-                  color="primary"
-                  indeterminate
-                ></v-progress-circular>
-                <div>寄信中....</div>
+              <v-overlay v-model="sendLoad" class="align-center justify-center">
+                <v-progress-circular indeterminate color="primary" :size="60">
+                </v-progress-circular>
               </v-overlay>
             </v-card-text>
           </v-card>
@@ -2107,34 +2103,24 @@
             >
           </v-card-actions>
         </v-form>
-        <v-overlay :value="loadShow">
-          <v-progress-circular
-            :size="50"
-            color="primary"
-            indeterminate
-          ></v-progress-circular>
-          <div>處理中....</div>
+        <v-overlay v-model="loadShow" class="align-center justify-center">
+          <v-progress-circular indeterminate color="primary" :size="60">
+          </v-progress-circular>
         </v-overlay>
       </v-card>
     </v-dialog>
-    <v-overlay :value="loadFile">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>處理中....</div>
+    <v-overlay v-model="loadFile" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
     <v-snackbar v-model="snackMail" :timeout="snackbarTimeout">
       {{ copyName }}：{{ copyValue }}
-      <template v-slot:action="{ attrs }">
-        <v-btn color="red" text @click="copyText(copyValue)" v-bind="attrs">
-          複製
-        </v-btn>
-        <v-btn color="blue" text @click="snackMail = false" v-bind="attrs">
-          關閉
-        </v-btn>
-      </template>
+      <v-btn color="red" variant="text" @click="copyText(copyValue)">
+        複製
+      </v-btn>
+      <v-btn color="blue" variant="text" @click="snackMail = false">
+        關閉
+      </v-btn>
     </v-snackbar>
   </div>
 </template>
