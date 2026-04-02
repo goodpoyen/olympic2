@@ -21,11 +21,11 @@ const routes = [
   //   name: "applyScore",
   //   component: () => import("../views/apply.vue"),
   // },
-  // {
-  //   path: "/science/scilogin",
-  //   name: "scienceScilogin",
-  //   component: () => import("../views/loginView.vue"),
-  // },
+  {
+    path: "/science/scilogin",
+    name: "scienceScilogin",
+    component: () => import("../views/loginView.vue"),
+  },
   // {
   //   path: "/change",
   //   name: "change",

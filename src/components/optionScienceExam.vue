@@ -2,21 +2,24 @@
   <div>
     <v-card>
       <v-tabs v-model="tab" color="blue accent-4" left>
-        <v-tab style="color: black; font-weight: bolder">人員資料</v-tab>
+        <v-tab :value="1" style="color: black; font-weight: bolder"
+          >人員資料</v-tab
+        >
         <v-tab
-          :value="1"
+          :value="2"
           style="color: black; font-weight: bolder"
           @click="getExamAreaInfo"
           >考區資料</v-tab
         >
         <v-tab
-          :value="2"
+          :value="3"
           style="color: black; font-weight: bolder"
           @click="getClassRoomInfo"
           >考場資料</v-tab
         >
 
         <v-tab
+          :value="4"
           style="color: black; font-weight: bolder"
           @click="getContestantsInfo"
           :disabled="contestantShow && actionTest === ''"
@@ -61,10 +64,10 @@
 </template>
 
 <script>
-// import ScienceInfo from "./scienceInfo.vue";
-// import ExamArea from "./examArea.vue";
-// import ClassRoom from "./classRoom.vue";
-// import Contestants from "./contestants.vue";
+import ScienceInfo from "./scienceInfo.vue";
+import ExamArea from "./examArea.vue";
+import ClassRoom from "./classRoom.vue";
+import Contestants from "./contestants.vue";
 
 export default {
   data: () => ({
@@ -90,10 +93,10 @@ export default {
   }),
 
   components: {
-    // ScienceInfo,
-    // ExamArea,
-    // ClassRoom,
-    // Contestants,
+    ScienceInfo,
+    ExamArea,
+    ClassRoom,
+    Contestants,
   },
 
   computed: {
