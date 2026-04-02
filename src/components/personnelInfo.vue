@@ -721,44 +721,29 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <!-- <v-dialog
-                    ref="dialog"
-                    v-model="modal"
-                    :return-value.sync="editedItem.birthday"
-                    persistent
-                    width="290px"
+                  <v-menu
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
                   >
-                    <template v-slot:activator="{ on, attrs }">
+                    <template v-slot:activator="{ props }">
                       <v-text-field
-                        v-model="editedItem.birthday"
-                        label="出生年月"
                         prepend-icon="mdi-calendar"
+                        v-model="editedItem.birthday"
+                        label="選擇年月"
                         readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        @blur="date = parseDate(editedItem.birthday)"
-                        :rules="[(v) => !!v || '出生年月不能為空']"
+                        variant="underlined"
+                        v-bind="props"
                       ></v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="editedItem.birthday"
-                      type="month"
-                      scrollable
-                      locale="zh-cn"
-                    >
-                      <v-spacer></v-spacer>
-                      <v-btn text color="primary" @click="modal = false">
-                        取消
-                      </v-btn>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="$refs.dialog.save(editedItem.birthday)"
-                      >
-                        確認
-                      </v-btn>
-                    </v-date-picker>
-                  </v-dialog> -->
+                      v-model="picker"
+                      view-mode="months"
+                      @click=""
+                    ></v-date-picker>
+                  </v-menu>
                 </v-col>
                 <v-col
                   v-if="defaultItemShow.APCS"
@@ -1046,9 +1031,10 @@
 <script>
 import TableFilter from "./utilsComponets/tableFilter.vue";
 import DistributionSeat from "./utilsComponets/distributionSeat.vue";
-
 export default {
   data: () => ({
+    picker: new Date().toISOString().substring(0, 7), // 初始化為 YYYY-MM
+    selectedMonth: new Date().toISOString().substring(0, 7),
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
@@ -1170,6 +1156,11 @@ export default {
   watch: {
     dialog(val) {
       val || this.close();
+    },
+
+    picker(val) {
+      this.editedItem.birthday = val.toISOString().substring(0, 7);
+      this.menu = false; // 選擇後自動關閉
     },
   },
 
