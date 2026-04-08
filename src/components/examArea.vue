@@ -159,6 +159,10 @@
                 item-value="city_number"
                 variant="underlined"
                 label="城市"
+                @click="
+                  institutionNum = '';
+                  schoolNum = '';
+                "
               ></v-select>
             </v-col>
             <v-col v-if="chagneAreaMod === 'S'">
@@ -169,6 +173,7 @@
                 item-value="value"
                 variant="underlined"
                 label="公/私立"
+                @click="schoolNum = ''"
               ></v-select>
             </v-col>
             <v-col v-if="chagneAreaMod === 'S'" cols="12" sm="6" md="12">
@@ -177,7 +182,7 @@
                 :items="
                   institutionNum !== ''
                     ? schoolList[cityNum][institutionNum]
-                    : schoolList[cityNum]
+                    : []
                 "
                 item-title="school_name"
                 item-value="school_number"

@@ -537,9 +537,7 @@
                 <v-col cols="12" sm="6" md="12" style="margin-top: -22px">
                   <div>就讀國中：</div>
                 </v-col>
-                {{ studentData.cityNumber }} {{ studentData.institution }}
-                {{ studentData.schoolNumber }}
-                <v-col cols="12" sm="6" md="4" style="margin-top: -31px">
+                <v-col cols="12" sm="6" md="4" style="margin-top: -25px">
                   <v-select
                     :items="cityList"
                     v-model="studentData.cityNumber"
@@ -548,9 +546,13 @@
                     label="城市"
                     variant="underlined"
                     :disabled="lock"
+                    @click="
+                      studentData.institution = '';
+                      studentData.schoolNumber = '';
+                    "
                   ></v-select>
                 </v-col>
-                <v-col cols="12" sm="6" md="4" style="margin-top: -31px">
+                <v-col cols="12" sm="6" md="4" style="margin-top: -25px">
                   <v-select
                     v-model="studentData.institution"
                     :items="institution"
@@ -561,17 +563,18 @@
                     :rules="[(v) => !!v || '公/私立不能為空']"
                     required
                     :disabled="lock"
+                    @click="studentData.schoolNumber = ''"
                   ></v-select>
                 </v-col>
-                <v-col cols="12" sm="6" md="4" style="margin-top: -31px">
-                  <!-- <v-select
+                <v-col cols="12" sm="6" md="4" style="margin-top: -25px">
+                  <v-select
                     v-model="studentData.schoolNumber"
                     :items="
                       studentData.institution !== ''
                         ? schoolList[studentData.cityNumber][
                             studentData.institution
                           ]
-                        : schoolList[studentData.cityNumber]
+                        : []
                     "
                     item-title="school_name"
                     item-value="school_number"
@@ -580,18 +583,7 @@
                     :rules="[(v) => !!v || '校名不能為空']"
                     required
                     :disabled="lock"
-                  ></v-select> -->
-                  <!-- <v-select
-                    v-model="studentData.schoolNumber"
-                    :items="schoolList[17]['公立']"
-                    item-title="school_name"
-                    item-value="school_number"
-                    label="校名"
-                    variant="underlined"
-                    :rules="[(v) => !!v || '校名不能為空']"
-                    required
-                    :disabled="lock"
-                  ></v-select> -->
+                  ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6" md="12" style="margin-top: -31px">
                   <v-radio-group
@@ -1426,9 +1418,9 @@ export default {
       birthday: "",
       idCard: "",
       email: "",
-      cityNumber: null,
-      institution: null,
-      schoolNumber: null,
+      cityNumber: "",
+      institution: "",
+      schoolNumber: "",
       studentStatus: "",
       identity: "",
       payStatus: "",
@@ -1601,7 +1593,7 @@ export default {
           data,
         )
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data.code === 200) {
             this.cityList = response.data.resultData.cityList;
             this.schoolList = response.data.resultData.schoolList;
