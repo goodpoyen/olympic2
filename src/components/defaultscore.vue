@@ -214,11 +214,10 @@
               v-model="selected"
               :headers="libaryHeaders"
               :items="libaryList"
-              :item-key="itemKey"
+              :item-value="itemKey"
               :items-per-page="500"
               :hide-default-footer="true"
               show-select
-              return-object
               loading-text="資料處理中...."
               class="elevation-1"
               @toggle-select-all="selectAllToggle"
@@ -232,7 +231,7 @@
                 v-slot:item.data-table-select="{ item, isSelected, select }"
               >
                 <v-simple-checkbox
-                  :value="isSelected"
+                  :model-value="isSelected"
                   @input="
                     select($event);
                     selectToggle(item, $event);
