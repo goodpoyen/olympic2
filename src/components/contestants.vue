@@ -1894,8 +1894,7 @@ export default {
     },
 
     updateDesserts(value) {
-      this.desserts = value;
-      this.dessertsTemp = value;
+      this.$emit("updateDesserts", value);
     },
 
     updateSelectd(value) {

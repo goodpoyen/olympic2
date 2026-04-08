@@ -70,6 +70,7 @@
               :scoreSend="scoreSend"
               :sendExamNotice="sendExamNotice"
               :sendExamScoreNoice="sendExamScoreNoice"
+              @updateDesserts="updateDesserts"
             ></contestants>
           </v-container>
         </v-tabs-window-item>
@@ -402,6 +403,11 @@ export default {
         .catch(function (error) {
           // console.log(error);
         });
+    },
+
+    updateDesserts(value) {
+      this.desserts = value;
+      this.dessertsTemp = value;
     },
   },
 

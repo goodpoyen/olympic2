@@ -82,8 +82,8 @@ export default {
           // console.log(response.data);
           if (response.data.code === 200) {
             this.loadShow = false;
-            this.$emit("updateDesserts", []);
             this.$emit("closeDeletepup", false);
+            this.$emit("updateDesserts", []);
           } else {
             this.globalSystemTool.removeLocalStorage();
           }
