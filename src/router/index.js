@@ -36,11 +36,11 @@ const routes = [
     name: "scienceChange",
     component: () => import("../views/change.vue"),
   },
-  // {
-  //   path: "/science/signup",
-  //   name: "scienceSignup",
-  //   component: () => import("../views/scienceSignup.vue"),
-  // },
+  {
+    path: "/science/signup",
+    name: "scienceSignup",
+    component: () => import("../views/scienceSignup.vue"),
+  },
   // {
   //   path: "/science/signup/:testName",
   //   name: "testScienceSignup",

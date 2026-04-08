@@ -633,7 +633,6 @@
                     v-model="editedItem.codeName"
                     item-title="areaName"
                     item-value="codeName"
-                    return-object
                     label="考區"
                     variant="underlined"
                     :rules="[(v) => !!v || '考區不能為空']"

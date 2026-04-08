@@ -2,7 +2,7 @@
   <v-main>
     <div>
       <v-toolbar dark class="pa-0" style="background-color: #2f365f">
-        <v-toolbar-title style="margin: 10px auto"
+        <v-toolbar-title style="margin: 10px 40%; color: white"
           >高級中等學校科學班報名網</v-toolbar-title
         >
       </v-toolbar>
@@ -10,14 +10,14 @@
       <v-card
         v-show="openStatus && !maintain"
         class="mx-auto"
-        :max-width="device === 'PC' ? '50%' : '100%'"
+        :max-width="device === 'PC' ? '60%' : '100%'"
         style="margin: 10px"
       >
         <v-card-title
           style="background-color: #ededf3; height: 49px; line-height: 0rem"
         >
           <v-icon>mdi-school</v-icon>
-          <div style="margin: 0px 10px; font-weight: bold; font-size: 16px">
+          <div style="margin: -14px 35px; font-weight: bold; font-size: 16px">
             選擇報名學校
           </div>
         </v-card-title>
@@ -50,144 +50,274 @@
             <span style="color: red; font-weight: bold"
               >一次填寫僅能報名一校，若要報名多校，請分別填寫資料及繳費。</span
             >
-            <v-radio-group v-model="studentData.signupSchool" row>
-              <v-card style="margin-right: 43px; margin-top: 10px; height: 50%">
+            <v-radio-group v-model="studentData.signupSchool" inline>
+              <v-card
+                style="
+                  margin-right: 20px;
+                  margin-top: 10px;
+                  height: 50%;
+                  width: 17%;
+                "
+              >
                 <v-card-title style="margin-right: -8px">
-                  <v-radio value="JGHS" style="margin: -2px auto"></v-radio>
+                  <v-radio value="JGHS" style="margin: -2px 30px"></v-radio>
                 </v-card-title>
                 <v-img
                   max-height="80"
                   max-width="80"
                   src="/images/logoJGHS.png"
-                  style="margin: -16px auto"
+                  style="margin: -2px 25px"
                 ></v-img>
-                <v-card-title style="font-size: 16px; font-weight: bolder">
+                <v-card-title
+                  style="
+                    font-size: 16px;
+                    font-weight: bolder;
+                    margin: -2px 20px;
+                  "
+                >
                   建國高中
                 </v-card-title>
               </v-card>
-              <v-card style="margin-right: 43px; margin-top: 10px; height: 50%">
+              <v-card
+                style="
+                  margin-right: 20px;
+                  margin-top: 10px;
+                  height: 50%;
+                  width: 17%;
+                "
+              >
                 <v-card-title style="margin-right: -8px">
-                  <v-radio value="HSNU" style="margin: -2px auto"></v-radio>
+                  <v-radio value="HSNU" style="margin: -2px 30px"></v-radio>
                 </v-card-title>
                 <v-img
                   max-height="80"
                   max-width="80"
                   src="/images/logoHSNU.png"
-                  style="margin: -16px auto"
+                  style="margin: -2px 25px"
                 ></v-img>
-                <v-card-title style="font-size: 16px; font-weight: bolder">
+                <v-card-title
+                  style="
+                    font-size: 16px;
+                    font-weight: bolder;
+                    margin: -2px 20px;
+                  "
+                >
                   師大附中
                 </v-card-title>
               </v-card>
-              <v-card style="margin-right: 43px; margin-top: 10px; height: 50%">
+              <v-card
+                style="
+                  margin-right: 20px;
+                  margin-top: 10px;
+                  height: 50%;
+                  width: 17%;
+                "
+              >
                 <v-card-title style="margin-right: -8px">
-                  <v-radio value="TFGHS" style="margin: -2px auto"></v-radio>
+                  <v-radio value="TFGHS" style="margin: -2px 30px"></v-radio>
                 </v-card-title>
                 <v-img
                   max-height="80"
                   max-width="80"
                   src="/images/logoTFGHS.png"
-                  style="margin: -16px auto"
+                  style="margin: -2px 25px"
                 ></v-img>
-                <v-card-title style="font-size: 16px; font-weight: bolder">
+                <v-card-title
+                  style="
+                    font-size: 16px;
+                    font-weight: bolder;
+                    margin: -2px 20px;
+                  "
+                >
                   北一女中
                 </v-card-title>
               </v-card>
-              <v-card style="margin-right: 43px; margin-top: 10px; height: 50%">
+              <v-card
+                style="
+                  margin-right: 20px;
+                  margin-top: 10px;
+                  height: 50%;
+                  width: 17%;
+                "
+              >
                 <v-card-title style="margin-right: -8px">
-                  <v-radio value="WLSH" style="margin: -2px auto"></v-radio>
+                  <v-radio value="WLSH" style="margin: -2px 30px"></v-radio>
                 </v-card-title>
                 <v-img
                   max-height="80"
                   max-width="80"
                   src="/images/logoWLSH.png"
-                  style="margin: -16px auto"
+                  style="margin: -2px 25px"
                 ></v-img>
-                <v-card-title style="font-size: 16px; font-weight: bolder">
+                <v-card-title
+                  style="
+                    font-size: 16px;
+                    font-weight: bolder;
+                    margin: -2px 20px;
+                  "
+                >
                   武陵高中
                 </v-card-title>
               </v-card>
-              <v-card style="margin-right: 43px; margin-top: 10px; height: 50%">
+              <v-card
+                style="
+                  margin-right: 20px;
+                  margin-top: 10px;
+                  height: 50%;
+                  width: 17%;
+                "
+              >
                 <v-card-title style="margin-right: -8px">
-                  <v-radio value="NEHS" style="margin: -2px auto"></v-radio>
+                  <v-radio value="NEHS" style="margin: -2px 30px"></v-radio>
                 </v-card-title>
                 <v-img
                   max-height="80"
                   max-width="80"
                   src="/images/logoNEHS.png"
-                  style="margin: -16px auto"
+                  style="margin: -2px 25px"
                 ></v-img>
-                <v-card-title style="font-size: 16px; font-weight: bolder">
+                <v-card-title
+                  style="
+                    font-size: 16px;
+                    font-weight: bolder;
+                    margin: -2px 20px;
+                  "
+                >
                   竹科實中
                 </v-card-title>
               </v-card>
-              <v-card style="margin-right: 43px; margin-top: 10px; height: 50%">
+              <v-card
+                style="
+                  margin-right: 20px;
+                  margin-top: 10px;
+                  height: 50%;
+                  width: 17%;
+                "
+              >
                 <v-card-title style="margin-right: -8px">
-                  <v-radio value="TCFSH" style="margin: -2px auto"></v-radio>
+                  <v-radio value="TCFSH" style="margin: -2px 30px"></v-radio>
                 </v-card-title>
                 <v-img
                   max-height="80"
                   max-width="80"
                   src="/images/logoTCFSH.png"
-                  style="margin: -16px auto"
+                  style="margin: -2px 25px"
                 ></v-img>
-                <v-card-title style="font-size: 16px; font-weight: bolder">
+                <v-card-title
+                  style="
+                    font-size: 16px;
+                    font-weight: bolder;
+                    margin: -2px 20px;
+                  "
+                >
                   臺中一中
                 </v-card-title>
               </v-card>
-              <v-card style="margin-right: 43px; margin-top: 10px; height: 50%">
+              <v-card
+                style="
+                  margin-right: 20px;
+                  margin-top: 10px;
+                  height: 50%;
+                  width: 17%;
+                "
+              >
                 <v-card-title style="margin-right: -8px">
-                  <v-radio value="CHSH" style="margin: -2px auto"></v-radio>
+                  <v-radio value="CHSH" style="margin: -2px 30px"></v-radio>
                 </v-card-title>
                 <v-img
                   max-height="80"
                   max-width="80"
                   src="/images/logoCHSH.png"
-                  style="margin: -16px auto"
+                  style="margin: -2px 25px"
                 ></v-img>
-                <v-card-title style="font-size: 16px; font-weight: bolder">
+                <v-card-title
+                  style="
+                    font-size: 16px;
+                    font-weight: bolder;
+                    margin: -2px 20px;
+                  "
+                >
                   彰化高中
                 </v-card-title>
               </v-card>
-              <v-card style="margin-right: 43px; margin-top: 10px; height: 50%">
+              <v-card
+                style="
+                  margin-right: 20px;
+                  margin-top: 10px;
+                  height: 50%;
+                  width: 17%;
+                "
+              >
                 <v-card-title style="margin-right: -8px">
-                  <v-radio value="CYSH" style="margin: -2px auto"></v-radio>
+                  <v-radio value="CYSH" style="margin: -2px 30px"></v-radio>
                 </v-card-title>
                 <v-img
                   max-height="80"
                   max-width="80"
                   src="/images/logoCYSH.png"
-                  style="margin: -16px auto"
+                  style="margin: -2px 25px"
                 ></v-img>
-                <v-card-title style="font-size: 16px; font-weight: bolder">
+                <v-card-title
+                  style="
+                    font-size: 16px;
+                    font-weight: bolder;
+                    margin: -2px 20px;
+                  "
+                >
                   嘉義高中
                 </v-card-title>
               </v-card>
-              <v-card style="margin-right: 43px; margin-top: 10px; height: 50%">
+              <v-card
+                style="
+                  margin-right: 20px;
+                  margin-top: 10px;
+                  height: 50%;
+                  width: 17%;
+                "
+              >
                 <v-card-title style="margin-right: -8px">
-                  <v-radio value="TNFSH" style="margin: -2px auto"></v-radio>
+                  <v-radio value="TNFSH" style="margin: -2px 30px"></v-radio>
                 </v-card-title>
                 <v-img
                   max-height="80"
                   max-width="80"
                   src="/images/logoTNFSH.png"
-                  style="margin: -16px auto"
+                  style="margin: -2px 25px"
                 ></v-img>
-                <v-card-title style="font-size: 16px; font-weight: bolder">
+                <v-card-title
+                  style="
+                    font-size: 16px;
+                    font-weight: bolder;
+                    margin: -2px 20px;
+                  "
+                >
                   臺南一中
                 </v-card-title>
               </v-card>
-              <v-card style="margin-right: 43px; margin-top: 10px; height: 50%">
+              <v-card
+                style="
+                  margin-right: 20px;
+                  margin-top: 10px;
+                  height: 50%;
+                  width: 17%;
+                "
+              >
                 <v-card-title style="margin-right: -8px">
-                  <v-radio value="KSHS" style="margin: -2px auto"></v-radio>
+                  <v-radio value="KSHS" style="margin: -2px 30px"></v-radio>
                 </v-card-title>
                 <v-img
                   max-height="80"
                   max-width="80"
                   src="/images/logoKSHS.png"
-                  style="margin: -16px auto"
+                  style="margin: -2px 25px"
                 ></v-img>
-                <v-card-title style="font-size: 16px; font-weight: bolder">
+                <v-card-title
+                  style="
+                    font-size: 16px;
+                    font-weight: bolder;
+                    margin: -2px 20px;
+                  "
+                >
                   高雄高中
                 </v-card-title>
               </v-card>
@@ -198,7 +328,7 @@
           style="background-color: #ededf3; height: 49px; line-height: 0rem"
         >
           <v-icon>mdi-account-school</v-icon>
-          <div style="margin: 0px 10px; font-weight: bold; font-size: 16px">
+          <div style="margin: -14px 35px; font-weight: bold; font-size: 16px">
             填寫甄選學生基本資料
           </div>
         </v-card-title>
@@ -211,12 +341,13 @@
                     v-model="studentData.name"
                     label="姓名"
                     :counter="18"
+                    variant="underlined"
                     :rules="nameRules"
                     required
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="2" md="4" style="margin-top: -31px">
-                  <v-text-field
+                  <!-- <v-text-field
                     v-model="studentData.birthday"
                     label="出生年月(民國/月)"
                     prepend-icon="mdi-calendar"
@@ -244,13 +375,14 @@
                         確認
                       </v-btn>
                     </v-date-picker>
-                  </v-dialog>
+                  </v-dialog> -->
                 </v-col>
                 <v-col cols="12" sm="6" md="4" style="margin-top: -31px">
                   <v-text-field
                     v-model="maskIdCard"
                     type="email"
                     label="身分證統一編號"
+                    variant="underlined"
                     :rules="[checkIdcard]"
                     required
                   ></v-text-field>
@@ -265,6 +397,7 @@
                     v-model="studentData.email"
                     label="電子信箱"
                     inputmode="email"
+                    variant="underlined"
                     :rules="emailRules"
                     required
                   ></v-text-field>
@@ -311,6 +444,7 @@
                     label="輸入驗證碼"
                     maxlength="4"
                     required
+                    variant="underlined"
                     :disabled="sendOTPStauts"
                   ></v-text-field>
                   <div
@@ -363,6 +497,7 @@
                     v-model="studentData.parentsName"
                     label="緊急聯絡人姓名"
                     :counter="18"
+                    variant="underlined"
                     :rules="parentsNameRules"
                     required
                     :disabled="lock"
@@ -373,6 +508,7 @@
                     v-model="studentData.parentsPhone"
                     label="緊急聯絡人手機"
                     :counter="20"
+                    variant="underlined"
                     :rules="parentsNumberRules"
                     required
                     :disabled="lock"
@@ -401,15 +537,16 @@
                 <v-col cols="12" sm="6" md="12" style="margin-top: -22px">
                   <div>就讀國中：</div>
                 </v-col>
+                {{ studentData.cityNumber }} {{ studentData.institution }}
+                {{ studentData.schoolNumber }}
                 <v-col cols="12" sm="6" md="4" style="margin-top: -31px">
                   <v-select
-                    v-model="studentData.cityNumber"
                     :items="cityList"
-                    item-text="city_name"
+                    v-model="studentData.cityNumber"
+                    item-title="city_name"
                     item-value="city_number"
                     label="城市"
-                    :rules="[(v) => !!v || '城市不能為空']"
-                    required
+                    variant="underlined"
                     :disabled="lock"
                   ></v-select>
                 </v-col>
@@ -417,16 +554,17 @@
                   <v-select
                     v-model="studentData.institution"
                     :items="institution"
-                    item-text="state"
+                    item-title="state"
                     item-value="value"
                     label="公/私立"
+                    variant="underlined"
                     :rules="[(v) => !!v || '公/私立不能為空']"
                     required
                     :disabled="lock"
                   ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6" md="4" style="margin-top: -31px">
-                  <v-select
+                  <!-- <v-select
                     v-model="studentData.schoolNumber"
                     :items="
                       studentData.institution !== ''
@@ -435,18 +573,30 @@
                           ]
                         : schoolList[studentData.cityNumber]
                     "
-                    item-text="school_name"
+                    item-title="school_name"
                     item-value="school_number"
                     label="校名"
+                    variant="underlined"
                     :rules="[(v) => !!v || '校名不能為空']"
                     required
                     :disabled="lock"
-                  ></v-select>
+                  ></v-select> -->
+                  <!-- <v-select
+                    v-model="studentData.schoolNumber"
+                    :items="schoolList[17]['公立']"
+                    item-title="school_name"
+                    item-value="school_number"
+                    label="校名"
+                    variant="underlined"
+                    :rules="[(v) => !!v || '校名不能為空']"
+                    required
+                    :disabled="lock"
+                  ></v-select> -->
                 </v-col>
                 <v-col cols="12" sm="6" md="12" style="margin-top: -31px">
                   <v-radio-group
                     v-model="studentData.studentStatus"
-                    row
+                    inline
                     :disabled="lock"
                   >
                     <v-radio label="國三應屆畢業生" value="1"></v-radio>
@@ -479,12 +629,16 @@
           style="background-color: #ededf3; height: 49px; line-height: 0rem"
         >
           <v-icon>mdi-account-circle-outline</v-icon>
-          <div style="margin: 0px 10px; font-weight: bold; font-size: 16px">
+          <div style="margin: -14px 35px; font-weight: bold; font-size: 16px">
             身分別
           </div>
         </v-card-title>
         <v-card-text>
-          <v-radio-group v-model="studentData.identity" :disabled="lock">
+          <v-radio-group
+            v-model="studentData.identity"
+            :disabled="lock"
+            style="margin-top: 20px"
+          >
             <v-radio label="一般生" value="1"></v-radio>
             <v-radio
               label="特殊身分 (身障生、僑生、蒙藏生、原住民、政府派外工作人員子女、境外優秀科技人才子女)"
@@ -511,12 +665,17 @@
           style="background-color: #ededf3; height: 49px; line-height: 0rem"
         >
           <v-icon>mdi-currency-usd</v-icon>
-          <div style="margin: 0px 10px; font-weight: bold; font-size: 16px">
+          <div style="margin: -14px 35px; font-weight: bold; font-size: 16px">
             繳費身分
           </div>
         </v-card-title>
         <v-card-text>
-          <v-radio-group v-model="studentData.payStatus" :disabled="lock" row>
+          <v-radio-group
+            v-model="studentData.payStatus"
+            :disabled="lock"
+            inline
+            style="margin-top: 25px"
+          >
             <v-radio
               label="免繳費"
               value="2"
@@ -546,7 +705,7 @@
           <v-radio-group
             v-if="studentData.payStatus === '1'"
             v-model="studentData.defaultPayment"
-            row
+            inline
             style="color: rgba(0, 0, 0, 0.6)"
           >
             預選繳費方式：
@@ -584,7 +743,7 @@
           <div
             class="v-messages__message"
             style="
-              margin: 0px 10px;
+              margin: -22px 35px;
               font-size: 16px;
               font-weight: bold;
               line-height: 18px;
@@ -594,7 +753,11 @@
           </div>
         </v-card-title>
         <v-card-text>
-          <v-radio-group v-model="studentData.reward" :disabled="lock">
+          <v-radio-group
+            v-model="studentData.reward"
+            :disabled="lock"
+            style="margin-top: 25px"
+          >
             <v-radio
               label="依各校自行訂定之評量規定，依序推薦。"
               value="1"
@@ -647,12 +810,17 @@
           style="background-color: #ededf3; height: 49px; line-height: 0rem"
         >
           <v-icon>mdi-card-account-details-outline</v-icon>
-          <div style="margin: 0px 10px; font-weight: bold; font-size: 16px">
+          <div style="margin: -14px 35px; font-weight: bold; font-size: 16px">
             錄取方式
           </div>
         </v-card-title>
         <v-card-text>
-          <v-radio-group v-model="studentData.admission" row :disabled="lock">
+          <v-radio-group
+            v-model="studentData.admission"
+            inline
+            :disabled="lock"
+            style="margin-top: 25px"
+          >
             <v-radio label="甄選錄取" value="1"></v-radio>
             <v-radio label="直接錄取 (需經審查後通知)" value="2"></v-radio>
           </v-radio-group>
@@ -684,7 +852,7 @@
           <div
             class="v-messages__message"
             style="
-              margin: 0px 10px;
+              margin: -22px 35px;
               font-size: 16px;
               font-weight: bold;
               line-height: 18px;
@@ -694,7 +862,12 @@
           </div>
         </v-card-title>
         <v-card-text>
-          <v-radio-group v-model="studentData.handicapped" row :disabled="lock">
+          <v-radio-group
+            v-model="studentData.handicapped"
+            inline
+            :disabled="lock"
+            style="margin-top: 25px"
+          >
             <v-radio label="否" value="2"></v-radio>
             <v-radio label="是" value="1"></v-radio>
           </v-radio-group>
@@ -718,7 +891,7 @@
           style="background-color: #ededf3; height: 49px; line-height: 0rem"
         >
           <v-icon>mdi-alert-circle-outline</v-icon>
-          <div style="margin: 0px 10px; font-weight: bold; font-size: 16px">
+          <div style="margin: -14px 35px; font-weight: bold; font-size: 16px">
             注意事項
           </div>
         </v-card-title>
@@ -744,6 +917,7 @@
             color="#FFC75F"
             style="margin: 10px auto; font-weight: bold; width: 20%"
             rounded
+            variant="flat"
             :disabled="lock || confirmBtnlock"
             @click="
               timeDownStart();
@@ -756,6 +930,7 @@
             v-if="chooseStatus"
             style="margin: 10px auto; font-weight: bold; width: 20%"
             :disabled="lock"
+            variant="flat"
             @click="
               confirmStatus = true;
               chooseStatus = false;
@@ -769,6 +944,7 @@
             color="#FFC75F"
             style="margin: 10px auto; font-weight: bold; width: 20%"
             rounded
+            variant="flat"
             :disabled="lock"
             @click="signupAlert()"
           >
@@ -958,9 +1134,7 @@
             "
           >
             <v-icon small left style="color: black"> mdi-youtube </v-icon>
-            <p style="font-size: 13px; margin-top: 16px; color: black">
-              教學影片
-            </p>
+            <p style="font-size: 13px; color: black">教學影片</p>
           </v-btn>
           <v-btn
             class="ma-2"
@@ -977,9 +1151,7 @@
             <v-icon small left style="color: black">
               mdi-script-text-outline
             </v-icon>
-            <p style="font-size: 13px; margin-top: 16px; color: black">
-              教學手冊
-            </p>
+            <p style="font-size: 13px; color: black">教學手冊</p>
           </v-btn>
           <div v-if="teachType === 'yt'">
             <v-progress-circular
@@ -1179,7 +1351,7 @@ export default {
     confirmBtnlock: false,
     sendOTPStauts: true,
     editorProcess: false,
-    lock: true,
+    lock: false,
     lockSend: false,
     signupStepPop: false,
     sendOPTPup: false,
@@ -1222,7 +1394,7 @@ export default {
       (v) => !!v || "電子信箱不能為空",
       (v) =>
         /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/.test(
-          v
+          v,
         ) || "電子信箱格式不對",
     ],
     nameRules: [
@@ -1254,9 +1426,9 @@ export default {
       birthday: "",
       idCard: "",
       email: "",
-      cityNumber: "",
-      institution: "",
-      schoolNumber: "",
+      cityNumber: null,
+      institution: null,
+      schoolNumber: null,
       studentStatus: "",
       identity: "",
       payStatus: "",
@@ -1383,7 +1555,7 @@ export default {
             link.href = URL.createObjectURL(blob);
             link.setAttribute(
               "download",
-              year + "學年度高級中等學校科學班報名網教學手冊.pdf"
+              year + "學年度高級中等學校科學班報名網教學手冊.pdf",
             );
             document.body.appendChild(link);
             link.click();
@@ -1426,10 +1598,10 @@ export default {
       await this.axios
         .post(
           this.systemENV.APISERVERURL + "/getSchoolAddressListByScience",
-          data
+          data,
         )
         .then((response) => {
-          // console.log(response.data)
+          console.log(response.data);
           if (response.data.code === 200) {
             this.cityList = response.data.resultData.cityList;
             this.schoolList = response.data.resultData.schoolList;
@@ -1584,7 +1756,7 @@ export default {
       if (this.studentData.email !== "") {
         const email =
           /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/.test(
-            this.studentData.email
+            this.studentData.email,
           );
 
         if (!email) {
@@ -1602,7 +1774,7 @@ export default {
 
       if (this.studentData.parentsName !== "") {
         const parentsName = /^[\u4E00-\u9FA5]{1,18}$/.test(
-          this.studentData.parentsName
+          this.studentData.parentsName,
         );
 
         if (!parentsName) {
@@ -1620,7 +1792,7 @@ export default {
 
       if (this.studentData.parentsPhone !== "") {
         const parentsPhone = /^[0-9\d()-/#/*]{1,20}$/.test(
-          this.studentData.parentsPhone
+          this.studentData.parentsPhone,
         );
 
         if (!parentsPhone) {
@@ -1793,7 +1965,7 @@ export default {
 
       await this.axios.post(
         this.systemENV.APISERVERURL + "/sentEditorURLMail",
-        data
+        data,
       );
     },
 
@@ -1970,7 +2142,7 @@ export default {
       let ROC = this.checkPostDate(dateArray[0], dateArray[1], dateArray[2]);
 
       let newDate = new Date(
-        parseInt(ROC.year) + 1911 + "/" + ROC.month + "/" + ROC.date
+        parseInt(ROC.year) + 1911 + "/" + ROC.month + "/" + ROC.date,
       );
 
       this.sendMailDate = ROC.year + "年" + ROC.month + "月" + ROC.date + "日";
