@@ -26,16 +26,16 @@ const routes = [
     name: "scienceScilogin",
     component: () => import("../views/loginView.vue"),
   },
-  // {
-  //   path: "/change",
-  //   name: "change",
-  //   component: () => import("../views/change.vue"),
-  // },
-  // {
-  //   path: "/science/change",
-  //   name: "scienceChange",
-  //   component: () => import("../views/change.vue"),
-  // },
+  {
+    path: "/change",
+    name: "change",
+    component: () => import("../views/change.vue"),
+  },
+  {
+    path: "/science/change",
+    name: "scienceChange",
+    component: () => import("../views/change.vue"),
+  },
   // {
   //   path: "/science/signup",
   //   name: "scienceSignup",

@@ -8,7 +8,7 @@
     }"
   >
     <v-card
-      style="margin: 40px auto"
+      style="position: relative; top: 7%; left: 25%"
       :max-width="device === 'PC' ? '50%' : '80%'"
     >
       <v-card-title
@@ -32,6 +32,7 @@
                   :append-icon="showPWD ? 'mdi-eye' : 'mdi-eye-off'"
                   @click:append="showPWD = !showPWD"
                   :type="showPWD ? 'text' : 'password'"
+                  variant="underlined"
                   :rules="PWDRules"
                   required
                 ></v-text-field>
@@ -48,6 +49,7 @@
                   :append-icon="showConfirm ? 'mdi-eye' : 'mdi-eye-off'"
                   @click:append="showConfirm = !showConfirm"
                   :type="showConfirm ? 'text' : 'password'"
+                  variant="underlined"
                   :rules="confirmPWDRules"
                   required
                 ></v-text-field>
@@ -83,6 +85,7 @@
       style="
         font-size: 10px;
         position: absolute;
+        color: white;
         bottom: 0;
         width: 100%;
         height: 60px;
@@ -138,27 +141,27 @@ export default {
             this.tokenService.store(
               "act",
               response.data.resultData.act,
-              "1800000"
+              "1800000",
             );
             this.tokenService.store(
               "ret",
               response.data.resultData.ret,
-              "1800000"
+              "1800000",
             );
             this.tokenService.store(
               "level",
               response.data.resultData.level,
-              "1800000"
+              "1800000",
             );
             this.tokenService.store(
               "olympic",
               response.data.resultData.olympic,
-              "1800000"
+              "1800000",
             );
             this.tokenService.store(
               "system",
               response.data.resultData.system,
-              "1800000"
+              "1800000",
             );
             location.href = "/manage/optionMenu";
           } else if (response.data.code === 207) {
