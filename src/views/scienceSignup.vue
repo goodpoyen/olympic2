@@ -888,7 +888,7 @@
           </div>
         </v-card-title>
         <v-card-text>
-          <ol style="margin-top: 10px">
+          <ol style="margin-top: 10px; padding-left: 25px">
             <li style="color: black; font-weight: bolder">
               須符合簡章肆、報名資格，經國民中學推薦者，始得報名甄選入學科學班。
             </li>
@@ -956,7 +956,7 @@
         <v-card-title
           style="background-color: white; height: 27px; line-height: 0rem"
         >
-          <div style="margin: 0px auto; font-size: 10px; color: gray">
+          <div style="margin: 0px 42%; font-size: 10px; color: gray">
             @ {{ new Date().getFullYear() }} All Rights Reserved.
           </div>
         </v-card-title>
@@ -970,7 +970,7 @@
         <v-card-title
           style="background-color: #ededf3; height: 49px; line-height: 0rem"
         >
-          <div style="margin: 0px auto; font-weight: bold; font-size: 20px">
+          <div style="margin: 15px 40%; font-weight: bold; font-size: 20px">
             {{ colseWord }}
           </div>
         </v-card-title>
@@ -984,7 +984,7 @@
         <v-card-title
           style="background-color: #ededf3; height: 49px; line-height: 0rem"
         >
-          <div style="margin: 0px auto; font-weight: bold; font-size: 20px">
+          <div style="margin: 15px 28%; font-weight: bold; font-size: 20px">
             系統例行維護中<span v-show="maintainTime">(凌晨12:00~01:00)</span>
           </div>
         </v-card-title>
@@ -994,7 +994,7 @@
       <v-card>
         <v-card-title
           v-if="pupTitleShow === '1'"
-          style="background-color: #2d5bff; height: 57px"
+          style="background-color: #2d5bff; height: 48px"
         >
           <v-icon
             large
@@ -1015,7 +1015,7 @@
         </v-card-title>
         <v-card-title
           v-if="pupTitleShow === '2'"
-          style="background-color: #900d16; height: 57px"
+          style="background-color: #900d16; height: 48px"
         >
           <v-icon
             large
@@ -1034,9 +1034,7 @@
             >{{ pupTitle }}</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <div v-html="pupText"></div>
         </v-card-text>
         <v-card-actions>
@@ -1093,7 +1091,7 @@
     </v-dialog>
     <v-dialog v-model="signupStepPop" max-width="600px">
       <v-card>
-        <v-card-title style="background-color: black; height: 57px">
+        <v-card-title style="background-color: black; height: 48px">
           <v-icon
             large
             style="
@@ -1111,9 +1109,7 @@
             >報名步驟教學</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <v-btn
             class="ma-2"
             small
@@ -1217,7 +1213,7 @@
     </v-dialog>
     <v-dialog v-model="sendOPTPup" max-width="500px">
       <v-card>
-        <v-card-title style="background-color: #2d5bff; height: 57px">
+        <v-card-title style="background-color: #2d5bff; height: 48px">
           <v-icon
             large
             style="
@@ -1235,9 +1231,7 @@
             >驗證碼已寄出</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           驗證碼已寄至您的信箱，將信件內的四位數驗證碼，輸入至下方(輸入驗證碼)，再按下驗證，方可繼續以下報名動作。
         </v-card-text>
         <v-card-actions>
@@ -1261,7 +1255,7 @@
       <v-card>
         <v-card-title
           v-if="pupTitleShow === '2'"
-          style="background-color: #900d16; height: 57px"
+          style="background-color: #900d16; height: 48px"
         >
           <v-icon
             large
@@ -1282,7 +1276,7 @@
         </v-card-title>
         <v-card-title
           v-if="pupTitleShow === '1'"
-          style="background-color: blue; height: 57px"
+          style="background-color: blue; height: 48px"
         >
           <v-icon
             large
@@ -1301,9 +1295,7 @@
             >{{ pupTitle }}</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <div v-html="pupText"></div>
         </v-card-text>
         <v-card-actions>
@@ -1319,13 +1311,9 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-overlay :value="signupProcess">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>報名處理中....</div>
+    <v-overlay v-model="signupProcess" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
   </v-main>
 </template>
