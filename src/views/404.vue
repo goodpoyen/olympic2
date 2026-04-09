@@ -5,7 +5,7 @@
         <v-card-title
           style="background-color: #ededf3; height: 49px; line-height: 0rem"
         >
-          <div style="margin: 0px auto; font-weight: bold; font-size: 20px">
+          <div style="margin: 15px 40%; font-weight: bold; font-size: 20px">
             找不到頁面！
           </div>
         </v-card-title>

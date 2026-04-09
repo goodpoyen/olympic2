@@ -1930,45 +1930,29 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="2" md="6" style="margin-top: -19px">
-                  <!-- <v-dialog
-                    ref="dialog"
-                    v-model="modal"
-                    :return-value.sync="editedItem.birthday"
-                    persistent
-                    width="290px"
+                  <v-menu
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
                   >
-                    <template v-slot:activator="{ on, attrs }">
+                    <template v-slot:activator="{ props }">
                       <v-text-field
-                        v-model="editedItem.birthday"
-                        label="出生年月"
                         prepend-icon="mdi-calendar"
+                        v-model="editedItem.birthday"
+                        label="出生年月(民國/月)"
                         readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        @blur="date = parseDate(editedItem.birthday)"
-                        :rules="[(v) => !!v || '出生年月不能為空']"
-                        required
+                        variant="underlined"
+                        v-bind="props"
                       ></v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="editedItem.birthday"
-                      type="month"
-                      scrollable
-                      locale="zh-cn"
-                    >
-                      <v-spacer></v-spacer>
-                      <v-btn text color="primary" @click="modal = false">
-                        取消
-                      </v-btn>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="$refs.dialog.save(editedItem.birthday)"
-                      >
-                        確認
-                      </v-btn>
-                    </v-date-picker>
-                  </v-dialog> -->
+                      v-model="birthdyPickerValue"
+                      view-mode="months"
+                      @click=""
+                    ></v-date-picker>
+                  </v-menu>
                 </v-col>
                 <v-col
                   v-if="editedIndex === -1"
@@ -2214,6 +2198,8 @@ export default {
         ) || "電子信箱格式不對",
     ],
     defaultStatus: "2",
+    birthdyPickerValue: "100-01",
+    menu: false,
     desserts: [],
     dessertsTemp: [],
     editedIndex: -1,
@@ -2272,6 +2258,14 @@ export default {
     },
 
     selected(data) {},
+
+    birthdyPickerValue(val) {
+      if (val.length === undefined) {
+        this.editedItem.birthday = val.toISOString().substring(1, 7);
+      }
+
+      this.menu = false; // 選擇後自動關閉
+    },
   },
 
   methods: {
@@ -2762,6 +2756,9 @@ export default {
       }
       this.editedItem = Object.assign({}, this.updateInfo);
       this.editedItemTemp = Object.assign({}, this.updateInfo);
+
+      this.birthdyPickerValue = this.editedItem.birthday;
+
       this.dialog = true;
       this.updateInfo = [];
     },

@@ -347,35 +347,31 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="2" md="4" style="margin-top: -31px">
-                  <!-- <v-text-field
-                    v-model="studentData.birthday"
-                    label="出生年月(民國/月)"
-                    prepend-icon="mdi-calendar"
-                    readonly
-                    @click="birthdayPicker = true"
-                    :rules="[(v) => !!v || '出生年月不能為空']"
-                    required
-                  ></v-text-field>
-                  <v-dialog v-model="birthdayPicker" width="290px">
+                  <v-menu
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        prepend-icon="mdi-calendar"
+                        v-model="studentData.birthday"
+                        label="出生年月(民國/月)"
+                        readonly
+                        variant="underlined"
+                        v-bind="props"
+                        :rules="[(v) => !!v || '出生年月不能為空']"
+                        required
+                      ></v-text-field>
+                    </template>
                     <v-date-picker
                       v-model="birthdyPickerValue"
-                      type="month"
-                      scrollable
-                      locale="zh-cn"
-                    >
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="birthdayPicker = false"
-                      >
-                        取消
-                      </v-btn>
-                      <v-btn text color="primary" @click="inputBirthdayValue()">
-                        確認
-                      </v-btn>
-                    </v-date-picker>
-                  </v-dialog> -->
+                      view-mode="months"
+                      @click=""
+                    ></v-date-picker>
+                  </v-menu>
                 </v-col>
                 <v-col cols="12" sm="6" md="4" style="margin-top: -31px">
                   <v-text-field
@@ -1325,6 +1321,7 @@ export default {
   data: () => ({
     videoId: "https://www.youtube.com/embed/oo5YfX-j_i4?si=DKZx6qqxXju2ClZR",
     birthdyPickerValue: "",
+    menu: false,
     teachVideoColor: "grey",
     teachBookColor: "white",
     OTPBtnlock: false,
@@ -1432,6 +1429,17 @@ export default {
         return null;
       }
       return this.$route.params.testName;
+    },
+  },
+
+  watch: {
+    birthdyPickerValue(val) {
+      if (val.length === undefined) {
+        this.studentData.birthday = this.parseDate(
+          val.toISOString().substring(1, 7),
+        );
+      }
+      this.menu = false; // 選擇後自動關閉
     },
   },
 
