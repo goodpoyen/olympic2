@@ -2,7 +2,7 @@
   <v-main>
     <div>
       <v-toolbar dark class="pa-0" style="background-color: #2f365f">
-        <v-toolbar-title style="margin: 10px auto"
+        <v-toolbar-title style="margin: 10px 40%; color: white"
           >高級中等學校科學班報名網</v-toolbar-title
         >
       </v-toolbar>
@@ -225,7 +225,7 @@
         <v-card-title
           style="background-color: white; height: 27px; line-height: 0rem"
         >
-          <div style="margin: 0px auto; font-size: 10px; color: gray">
+          <div style="margin: 0px 40%; font-size: 10px; color: gray">
             @ {{ new Date().getFullYear() }} ALL Rights Reserved.
           </div>
         </v-card-title>
@@ -286,7 +286,7 @@ export default {
 
             this.student = response.data.resultData;
             this.schoolName = this.globalSystemTool.getScienceAllName(
-              this.student.signupSchool
+              this.student.signupSchool,
             );
           } else {
             this.globalSystemTool.removeLocalStorage();

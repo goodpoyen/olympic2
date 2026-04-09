@@ -918,7 +918,8 @@
             v-if="chooseStatus"
             style="margin: 10px auto; font-weight: bold; width: 20%"
             :disabled="lock"
-            variant="flat"
+            rounded
+            variant="tonal"
             @click="
               confirmStatus = true;
               chooseStatus = false;

@@ -46,11 +46,11 @@ const routes = [
   //   name: "testScienceSignup",
   //   component: () => import("../views/scienceSignup.vue"),
   // },
-  // {
-  //   path: "/science/signupresult/:id",
-  //   name: "signupresult",
-  //   component: () => import("../views/scienceSignupFinish.vue"),
-  // },
+  {
+    path: "/science/signupresult/:id",
+    name: "signupresult",
+    component: () => import("../views/scienceSignupFinish.vue"),
+  },
   // {
   //   path: "/science/verifyOPT/:signupKey",
   //   name: "verifyOPT",
@@ -60,11 +60,6 @@ const routes = [
   //   path: "/science/editor/:signupKey/:editorKey",
   //   name: "editor",
   //   component: () => import("../views/scienceEditor.vue"),
-  // },
-  // {
-  //   path: "/science/signupresult/:id",
-  //   name: "signupresult",
-  //   component: () => import("../views/scienceSignupFinish.vue"),
   // },
   // {
   //   path: "/science/editor/:signupKey/barcodeprint/:paymentNumber",
