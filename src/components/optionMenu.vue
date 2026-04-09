@@ -882,7 +882,7 @@
                   md="3"
                   style="margin-top: -31px; font-size: 16px"
                 >
-                  開放成績查詢
+                  提供成績查詢
                 </v-col>
                 <v-col
                   v-show="editedItem.type === 1"

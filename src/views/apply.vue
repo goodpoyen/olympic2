@@ -171,7 +171,7 @@ export default {
       (v) => !!v || "信箱不能為空",
       (v) =>
         /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/.test(
-          v
+          v,
         ) || "信箱格式錯誤",
     ],
   }),
@@ -295,7 +295,7 @@ export default {
 
             this.makeCode();
           } else if (response.data.code === 217) {
-            this.dialogMsg = "查無此信箱成績資訊 (請確認報名信箱是否正確)";
+            this.dialogMsg = "查無信箱報名資訊或尚未開放成績查詢";
             this.dialog = true;
             this.verifycode = "";
 
