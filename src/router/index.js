@@ -56,21 +56,21 @@ const routes = [
     name: "verifyOPT",
     component: () => import("../views/loginOTP.vue"),
   },
-  // {
-  //   path: "/science/editor/:signupKey/:editorKey",
-  //   name: "editor",
-  //   component: () => import("../views/scienceEditor.vue"),
-  // },
-  // {
-  //   path: "/science/editor/:signupKey/barcodeprint/:paymentNumber",
-  //   name: "barcodeprint",
-  //   component: () => import("../views/barcodeprint.vue"),
-  // },
-  // {
-  //   path: "/science/checkback/:num",
-  //   name: "checkback",
-  //   component: () => import("../views/checkback.vue"),
-  // },
+  {
+    path: "/science/editor/:signupKey/:editorKey",
+    name: "editor",
+    component: () => import("../views/scienceEditor.vue"),
+  },
+  {
+    path: "/science/editor/:signupKey/barcodeprint/:paymentNumber",
+    name: "barcodeprint",
+    component: () => import("../views/barcodeprint.vue"),
+  },
+  {
+    path: "/science/checkback/:num",
+    name: "checkback",
+    component: () => import("../views/checkback.vue"),
+  },
   {
     path: "/science/scoreload/:id",
     name: "scoreload",

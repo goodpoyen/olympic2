@@ -4,18 +4,20 @@
       <v-toolbar-title
         v-if="menuType !== 6"
         :style="{
-          margin: '10px auto',
+          margin: '10px 37%',
           fontWeight: 'bold',
           fontSize: titleFontSize,
+          color: 'white',
         }"
         >高級中等學校科學班報名資料修改</v-toolbar-title
       >
       <v-toolbar-title
         v-else
         :style="{
-          margin: '10px auto',
+          margin: '10px 37%',
           fontWeight: 'bold',
           fontSize: titleFontSize,
+          color: 'white',
         }"
         >高級中等學校科學班實驗實作繳費</v-toolbar-title
       >
@@ -44,13 +46,12 @@
           v-if="selectedSchool.scheduleType !== 6"
           style="margin-top: 20px"
         >
-          <v-card-title style="background-color: #ededf3; height: 46px">
-            <v-icon style="margin-top: -10px"> mdi-face-man </v-icon>
+          <v-card-title style="background-color: #ededf3; height: 50px">
+            <v-icon style="margin-top: -2px"> mdi-face-man </v-icon>
             <span
               style="
                 font-size: 17px !important;
                 font-weight: 900;
-                margin-top: -11px;
                 margin-left: 8px;
               "
               >修改甄選學生基本資料</span
@@ -68,6 +69,7 @@
                         v-model="selectedSchool.name"
                         label="學生姓名"
                         :counter="18"
+                        variant="underlined"
                         :rules="[
                           (v) => !!v || '學生姓名不能為空',
                           (v) => v.length <= 18 || '超過規定字數',
@@ -77,12 +79,13 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="2" md="6" style="margin-top: -31px">
-                      <v-text-field
+                      <!-- <v-text-field
                         v-model="selectedSchool.birthday"
                         label="出生年月(民國/月)"
                         prepend-icon="mdi-calendar"
                         readonly
                         @click="birthdayPicker = true"
+                        variant="underlined"
                         :rules="[(v) => !!v || '出生年月不能為空']"
                         required
                         :disabled="lock"
@@ -110,7 +113,7 @@
                             確認
                           </v-btn>
                         </v-date-picker>
-                      </v-dialog>
+                      </v-dialog> -->
                     </v-col>
                     <v-col cols="12" sm="6" md="6" style="margin-top: -31px">
                       <v-text-field
@@ -118,6 +121,7 @@
                         v-model="selectedSchool.idCard"
                         label="身分證統一編號"
                         :rules="idCartRulesMask"
+                        variant="underlined"
                         required
                         :disabled="idCardEditor"
                       ></v-text-field>
@@ -126,6 +130,7 @@
                         v-model="selectedSchool.idCard"
                         label="身分證統一編號"
                         :rules="idCartRules"
+                        variant="underlined"
                         required
                         :disabled="idCardEditor"
                       ></v-text-field>
@@ -140,6 +145,7 @@
                           font-weight: bold;
                           font-size: 14px;
                         "
+                        variant="tonal"
                         :disabled="lock"
                         @click="
                           idCardEditor = false;
@@ -152,31 +158,38 @@
                     <v-col cols="12" sm="6" md="12" style="margin-top: -22px">
                       <div>就讀國中：</div>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4" style="margin-top: -31px">
+                    <v-col cols="12" sm="6" md="4" style="margin-top: -20px">
                       <v-select
                         v-model="selectedSchool.cityNumber"
                         :items="cityList"
-                        item-text="city_name"
+                        item-title="city_name"
                         item-value="city_number"
                         label="城市"
+                        variant="underlined"
                         :rules="[(v) => !!v || '城市不能為空']"
                         required
                         :disabled="lock"
+                        @click="
+                          selectedSchool.institution = '';
+                          selectedSchool.schoolNumber = '';
+                        "
                       ></v-select>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4" style="margin-top: -31px">
+                    <v-col cols="12" sm="6" md="4" style="margin-top: -20px">
                       <v-select
                         v-model="selectedSchool.institution"
                         :items="institution"
-                        item-text="state"
+                        item-title="state"
                         item-value="value"
                         label="公/私立"
+                        variant="underlined"
                         :rules="[(v) => !!v || '公/私立不能為空']"
                         required
                         :disabled="lock"
+                        @click="selectedSchool.schoolNumber = ''"
                       ></v-select>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4" style="margin-top: -31px">
+                    <v-col cols="12" sm="6" md="4" style="margin-top: -20px">
                       <v-select
                         v-model="selectedSchool.schoolNumber"
                         :items="
@@ -186,10 +199,10 @@
                               ]
                             : []
                         "
-                        item-text="school_name"
+                        item-title="school_name"
                         item-value="school_number"
                         label="校名"
-                        return-object
+                        variant="underlined"
                         :rules="[(v) => !!v || '校名不能為空']"
                         required
                         :disabled="lock"
@@ -201,6 +214,7 @@
                         v-model="selectedSchool.parentsName"
                         label="緊急聯絡人姓名"
                         :counter="18"
+                        variant="underlined"
                         :rules="parentsNameRules"
                       ></v-text-field>
                     </v-col>
@@ -210,6 +224,7 @@
                         v-model="selectedSchool.parentsPhone"
                         label="緊急聯絡人手機"
                         :counter="20"
+                        variant="underlined"
                         :rules="parentsNumberRules"
                       ></v-text-field>
                     </v-col>
@@ -269,8 +284,8 @@
           <v-card-actions>
             <v-btn
               v-if="lock && !lockEditor"
-              color="darken-1"
-              regular
+              color="blue darken-1"
+              variant="flat"
               @click="
                 editorAction();
                 reviewLock = true;
@@ -281,8 +296,8 @@
             <v-btn
               v-if="!lock"
               color="blue darken-1"
-              regular
               @click="saveScinceInfoByEditor('info')"
+              variant="flat"
               style="
                 margin: 10px auto;
                 font-weight: bold;
@@ -295,13 +310,12 @@
           </v-card-actions>
         </v-card>
         <v-card style="margin-top: 20px">
-          <v-card-title style="background-color: #ededf3; height: 46px">
-            <v-icon style="margin-top: -10px"> mdi-currency-usd </v-icon>
+          <v-card-title style="background-color: #ededf3; height: 50px">
+            <v-icon style="margin-top: -2px"> mdi-currency-usd </v-icon>
             <span
               style="
                 font-size: 17px !important;
                 font-weight: 900;
-                margin-top: -11px;
                 margin-left: 8px;
               "
               >繳費身分</span
@@ -367,7 +381,7 @@
                 selectedSchool.paymentType === '超商條碼'
               "
               color="darken-1"
-              regular
+              variant="tonal"
               style="margin: 10px auto; font-weight: bold; font-size: 17px"
               @click="createPaymentNumberAlert('onlyCreditCard')"
               >更換繳費方式</v-btn
@@ -381,7 +395,7 @@
                 selectedSchool.paymentType === '信用卡'
               "
               color="darken-1"
-              regular
+              variant="tonal"
               style="margin: 10px auto; font-weight: bold; font-size: 17px"
               @click="createPaymentNumberAlert('all')"
               >前往繳費</v-btn
@@ -392,7 +406,7 @@
                 selectedSchool.payStatus !== '2'
               "
               color="darken-1"
-              regular
+              variant="tonal"
               style="margin: 10px auto; font-weight: bold; font-size: 17px"
               @click="createPaymentNumberAlert('all')"
               >前往繳費</v-btn
@@ -403,7 +417,7 @@
                 selectedSchool.payStatus !== '2'
               "
               color="darken-1"
-              regular
+              variant="tonal"
               style="margin: 10px auto; font-weight: bold; font-size: 17px"
               @click="createPaymentNumberAlert('all')"
               >重新取得繳費方式</v-btn
@@ -418,7 +432,7 @@
                 selectedSchool.paymentType === '超商條碼'
               "
               color="darken-1"
-              regular
+              variant="tonal"
               style="margin: 10px auto; font-weight: bold; font-size: 17px"
               @click="barCdoePrint()"
               >下載超商繳費條碼</v-btn
@@ -429,13 +443,13 @@
           v-if="selectedSchool.scheduleType !== 6"
           style="margin-top: 20px"
         >
-          <v-card-title style="background-color: #ededf3; height: 46px">
+          <v-card-title style="background-color: #ededf3; height: 50px">
             <v-btn
               x-small
               outlined
               class="ma-2 white--text"
               style="
-                margin: -5px -4px 7px !important;
+                margin: 3px -4px 7px !important;
                 height: 30px;
                 width: 30px;
                 color: black !important;
@@ -455,7 +469,6 @@
               style="
                 font-size: 17px !important;
                 font-weight: 900;
-                margin-top: -11px;
                 margin-left: 17px;
               "
               >身分別</span
@@ -560,13 +573,13 @@
           v-if="selectedSchool.scheduleType !== 6"
           style="margin-top: 20px"
         >
-          <v-card-title style="background-color: #ededf3; height: 46px">
+          <v-card-title style="background-color: #ededf3; height: 50px">
             <v-btn
               x-small
               outlined
               class="ma-2 white--text"
               style="
-                margin: -5px -4px 7px !important;
+                margin: 3px -4px 7px !important;
                 height: 30px;
                 width: 30px;
                 color: black !important;
@@ -585,7 +598,6 @@
               style="
                 font-size: 17px !important;
                 font-weight: 900;
-                margin-top: -11px;
                 margin-left: 17px;
               "
               >於國民中學就學期間之表現</span
@@ -674,13 +686,13 @@
           v-if="selectedSchool.scheduleType !== 6"
           style="margin-top: 20px"
         >
-          <v-card-title style="background-color: #ededf3; height: 46px">
+          <v-card-title style="background-color: #ededf3; height: 50px">
             <v-btn
               x-small
               outlined
               class="ma-2 white--text"
               style="
-                margin: -5px -4px 7px !important;
+                margin: 3px -4px 7px !important;
                 height: 30px;
                 width: 30px;
                 color: black !important;
@@ -702,7 +714,6 @@
               style="
                 font-size: 17px !important;
                 font-weight: 900;
-                margin-top: -11px;
                 margin-left: 17px;
               "
               >錄取方式</span
@@ -768,14 +779,14 @@
         >
           <v-card-title
             v-if="device === 'PC'"
-            style="background-color: #ededf3; height: 46px"
+            style="background-color: #ededf3; height: 50px"
           >
             <v-btn
               x-small
               outlined
               class="ma-2 white--text"
               style="
-                margin: -5px -4px 7px !important;
+                margin: 3px -4px 7px !important;
                 height: 30px;
                 width: 30px;
                 color: black !important;
@@ -797,7 +808,6 @@
               style="
                 font-size: 17px !important;
                 font-weight: 900;
-                margin-top: -11px;
                 margin-left: 17px;
               "
               >符合身心障礙生或緊急重大傷病生或懷孕生</span
@@ -900,7 +910,7 @@
           <div style="color: rgb(143, 131, 131); font-weight: bolder">
             注意事項
           </div>
-          <ol style="margin-top: 10px">
+          <ol style="margin-top: 10px; margin-left: 20px">
             <li style="color: rgb(143, 131, 131); font-weight: bolder">
               線上刷卡繳費者，刷卡成功會收到系統通知信-報名繳費成功。
             </li>
@@ -918,16 +928,17 @@
         </div>
       </v-card-text>
       <v-card-title
+        class="d-flex justify-center"
         style="background-color: white; height: 27px; line-height: 0rem"
       >
-        <div style="margin: 0px auto; font-size: 10px; color: gray">
+        <div style="font-size: 10px; color: gray">
           @ {{ new Date().getFullYear() }} All Rights Reserved.
         </div>
       </v-card-title>
     </v-card>
     <v-dialog v-if="show" v-model="chagneIdentity" max-width="600px">
       <v-card>
-        <v-card-title style="background-color: #434447; height: 57px">
+        <v-card-title style="background-color: #434447; height: 48px">
           <v-icon
             large
             style="
@@ -945,13 +956,11 @@
             >身分別</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <v-radio-group
             v-model="selectedSchool.studentStatus"
             :disabled="desserts[selectedSchool.index].studentStatusPass === '1'"
-            row
+            inline
           >
             <v-radio
               :value="'1'"
@@ -984,7 +993,7 @@
           <v-radio-group
             v-model="selectedSchool.identity"
             :disabled="desserts[selectedSchool.index].identityPass === '1'"
-            row
+            inline
           >
             <v-radio :value="'1'" label="一般生" style="width: 35%"></v-radio>
             <v-radio :value="'2'" label="特殊身分" style="width: 35%"></v-radio>
@@ -1031,7 +1040,7 @@
     </v-dialog>
     <v-dialog v-model="chagneReward" max-width="600px">
       <v-card>
-        <v-card-title style="background-color: #434447; height: 57px">
+        <v-card-title style="background-color: #434447; height: 48px">
           <v-icon
             large
             style="
@@ -1049,9 +1058,7 @@
             >於國民中學就學期間之表現</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <v-radio-group v-model="selectedSchool.reward">
             <v-radio
               :value="'1'"
@@ -1133,7 +1140,7 @@
       <v-card>
         <v-card-title
           v-if="pupType === '2'"
-          style="background-color: #900d16; height: 57px"
+          style="background-color: #900d16; height: 48px"
         >
           <v-icon
             large
@@ -1154,7 +1161,7 @@
         </v-card-title>
         <v-card-title
           v-if="pupType === '1'"
-          style="background-color: blue; height: 57px"
+          style="background-color: blue; height: 48px"
         >
           <v-icon
             large
@@ -1173,9 +1180,7 @@
             >{{ pupTitle }}</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <div v-html="pupText"></div>
         </v-card-text>
         <v-card-actions>
@@ -1196,7 +1201,7 @@
     </v-dialog>
     <v-dialog v-model="createPaymentNumbePup" max-width="500px">
       <v-card>
-        <v-card-title style="background-color: blue; height: 57px">
+        <v-card-title style="background-color: blue; height: 48px">
           <v-icon
             large
             style="
@@ -1214,9 +1219,7 @@
             >{{ pupTitle }}</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <div v-html="pupText"></div>
         </v-card-text>
         <v-card-actions>
@@ -1245,7 +1248,7 @@
     </v-dialog>
     <v-dialog v-model="editorAlert" max-width="500px">
       <v-card>
-        <v-card-title style="background-color: blue; height: 57px">
+        <v-card-title style="background-color: blue; height: 48px">
           <v-icon
             large
             style="
@@ -1263,9 +1266,7 @@
             >您確定要修改資料？</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <div>您確定要修改資料？</div>
         </v-card-text>
         <v-card-actions>
@@ -1289,13 +1290,9 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-overlay :value="editorProcess">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-      <div>{{ loadingWord }}</div>
+    <v-overlay v-model="editorProcess" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
     </v-overlay>
   </div>
 </template>
@@ -1414,7 +1411,7 @@ export default {
 
     inputBirthdayValue() {
       this.selectedSchool.birthday = this.parseDate(
-        this.birthdyPickerValue.replace("-", "/")
+        this.birthdyPickerValue.replace("-", "/"),
       );
       this.birthdayPicker = false;
     },
@@ -1618,7 +1615,7 @@ export default {
               this.selectedSchoolTemp,
               this.selectedSchool,
               this.selectedSchool.signupSchool,
-              recordType
+              recordType,
             );
 
             this.editorProcess = false;
@@ -1631,10 +1628,10 @@ export default {
             response.data.resultData.index = index;
             response.data.resultData.signupSchoolName =
               this.globalSystemTool.getScienceAllName(
-                response.data.resultData.signupSchool
+                response.data.resultData.signupSchool,
               );
             response.data.resultData = this.changeData(
-              response.data.resultData
+              response.data.resultData,
             );
 
             this.desserts[index] = Object.assign({}, response.data.resultData);
@@ -1679,7 +1676,7 @@ export default {
       await this.axios
         .post(this.systemENV.APISERVERURL + "/getEditorInfo", data)
         .then((response) => {
-          // console.log(response.data);
+          console.log(response.data);
           if (response.data.code === 200) {
             this.desserts = response.data.resultData;
 
@@ -1705,7 +1702,7 @@ export default {
               data.parentsName = "";
               data.index = index;
               data.signupSchoolName = that.globalSystemTool.getScienceAllName(
-                data.signupSchool
+                data.signupSchool,
               );
               data = that.changeData(data);
             });
@@ -1721,7 +1718,7 @@ export default {
             this.selectedSchool.parentsPhone = "";
             this.selectedSchoolTemp = Object.assign(
               {},
-              this.desserts[indexType]
+              this.desserts[indexType],
             );
             this.selectedSchoolTemp.buttonChoose = true;
             this.selectedSchoolTemp.parentsName = "";
@@ -1729,7 +1726,7 @@ export default {
 
             this.birthdyPickerValue = this.selectedSchool.birthday.replace(
               "/",
-              "-"
+              "-",
             );
           } else {
             location.href = "/science/signup/";
@@ -1776,7 +1773,7 @@ export default {
       await this.axios
         .post(
           this.systemENV.APISERVERURL + "/getSchoolAddressListByScience",
-          data
+          data,
         )
         .then((response) => {
           // console.log(response.data)
@@ -1909,7 +1906,7 @@ export default {
       let ROC = this.checkPostDate(dateArray[0], dateArray[1], dateArray[2]);
 
       let newDate = new Date(
-        parseInt(ROC.year) + 1911 + "/" + ROC.month + "/" + ROC.date
+        parseInt(ROC.year) + 1911 + "/" + ROC.month + "/" + ROC.date,
       );
 
       this.sendMailDate = ROC.year + "年" + ROC.month + "月" + ROC.date + "日";
@@ -2104,7 +2101,7 @@ export default {
 
         if (
           !this.globalSystemTool.verificationIdCard(
-            this.selectedSchool.idCard
+            this.selectedSchool.idCard,
           ) &&
           !this.idCardEditor
         ) {
