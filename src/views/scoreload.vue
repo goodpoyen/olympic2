@@ -23,7 +23,7 @@
         </div>
       </v-card-title>
 
-      <v-card-text style="width: 60%; margin: 0px auto">
+      <v-card-text style="width: 60%; margin: -30px auto">
         <v-row>
           <v-col
             cols="3"
@@ -45,7 +45,7 @@
               margin-top: 16px;
               font-weight: bold;
               border-bottom: 1px solid;
-              height: 40px;
+              height: 55px;
               font-size: 34px;
             "
           >
@@ -67,7 +67,7 @@
             style="
               font-weight: bold;
               border-bottom: 1px solid;
-              height: 40px;
+              height: 55px;
               font-size: 34px;
             "
           >
@@ -89,7 +89,7 @@
             style="
               font-weight: bold;
               border-bottom: 1px solid;
-              height: 40px;
+              height: 55px;
               font-size: 34px;
             "
           >
@@ -99,7 +99,7 @@
         <v-card
           v-if="userInfo.scheduleType === 5"
           outlined
-          style="margin-top: 40px"
+          style="margin-top: 30px"
         >
           <v-card-title
             style="background-color: #e0eafb; height: 60px; margin-bottom: 10px"
@@ -387,6 +387,9 @@
 </template>
 
 <script>
+import html2Canvas from "html2canvas";
+import JsPDF from "jspdf";
+
 export default {
   data: () => ({
     subjectConfig: [],
@@ -554,6 +557,42 @@ export default {
         }
       }
       this.loadStaus = false;
+    },
+
+    async getPdf(selector) {
+      let PDF = new JsPDF("", "pt", "a4");
+      var title = this.htmlTitle;
+      await html2Canvas(document.querySelector(selector), {
+        scale: 2,
+        useCORS: true,
+      }).then((canvas) => {
+        const contentWidth = canvas.width;
+        const contentHeight = canvas.height;
+
+        const pageHeight = (contentWidth / 592.28) * 841.89;
+        let leftHeight = contentHeight;
+        let position = 0;
+        const imgWidth = 595.28;
+        const imgHeight = (592.28 / contentWidth) * contentHeight;
+
+        const pageData = canvas.toDataURL("image/jpeg", 1.0);
+
+        if (leftHeight < pageHeight) {
+          PDF.addImage(pageData, "JPEG", 0, 0, imgWidth, imgHeight);
+        } else {
+          while (leftHeight > 0) {
+            PDF.addImage(pageData, "JPEG", 0, position, imgWidth, imgHeight);
+            leftHeight -= pageHeight;
+            position -= 841.89;
+
+            if (leftHeight > 0) {
+              PDF.addPage();
+            }
+          }
+        }
+      });
+
+      PDF.save(title + ".pdf");
     },
 
     async getTitle(unitCode) {

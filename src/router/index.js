@@ -71,16 +71,16 @@ const routes = [
   //   name: "checkback",
   //   component: () => import("../views/checkback.vue"),
   // },
-  // {
-  //   path: "/science/scoreload/:id",
-  //   name: "scoreload",
-  //   component: () => import("../views/scoreload.vue"),
-  // },
-  // {
-  //   path: "/science/scoreload/review/:id",
-  //   name: "scoreload",
-  //   component: () => import("../views/scoreload.vue"),
-  // },
+  {
+    path: "/science/scoreload/:id",
+    name: "scoreload",
+    component: () => import("../views/scoreload.vue"),
+  },
+  {
+    path: "/science/scoreload/review/:id",
+    name: "scoreload",
+    component: () => import("../views/scoreload.vue"),
+  },
   {
     path: "/manage",
     name: "manage",

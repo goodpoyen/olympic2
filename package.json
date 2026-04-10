@@ -19,7 +19,6 @@
     "vue-loader": "^17.4.2",
     "vue-play": "^3.2.1",
     "vue-router": "^4.0.3",
-    "vue-youtube-embed": "^2.2.2",
     "vuedraggable": "^2.24.3",
     "vuetify": "^3.12.4",
     "vuetify-datetime-picker": "^2.1.1",

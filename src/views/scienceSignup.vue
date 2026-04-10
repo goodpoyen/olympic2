@@ -1152,13 +1152,6 @@
             >
               載入中....
             </div>
-            <!-- <youtube
-              v-if="!editorProcess"
-              :video-id="videoId"
-              :player-width="560"
-              :player-height="315"
-              @ready="ready"
-            ></youtube> -->
             <iframe
               width="560"
               height="315"
@@ -1315,9 +1308,6 @@
   </v-main>
 </template>
 <script>
-// import { getIdFromURL } from "vue-youtube-embed";
-// let videoId = getIdFromURL("https://www.youtube.com/embed/FaS52wDBAy8");
-
 export default {
   data: () => ({
     videoId: "https://www.youtube.com/embed/oo5YfX-j_i4?si=DKZx6qqxXju2ClZR",
@@ -1329,7 +1319,7 @@ export default {
     confirmBtnlock: false,
     sendOTPStauts: true,
     editorProcess: false,
-    lock: false,
+    lock: true,
     lockSend: false,
     signupStepPop: false,
     sendOPTPup: false,
