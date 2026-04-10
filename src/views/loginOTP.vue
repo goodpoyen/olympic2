@@ -11,12 +11,22 @@
     <v-toolbar dark class="pa-0" style="background-color: #2f365f">
       <v-toolbar-title
         v-if="device === 'PC'"
-        style="margin: 10px auto; font-weight: bold; font-size: 23px"
+        style="
+          margin: 10px 37%;
+          font-weight: bold;
+          font-size: 23px;
+          color: white;
+        "
         >{{ pageTitle }}
       </v-toolbar-title>
       <v-toolbar-title
         v-else
-        style="margin: 10px auto; font-weight: bold; font-size: 20px"
+        style="
+          margin: 10px 37%;
+          font-weight: bold;
+          font-size: 20px;
+          color: white;
+        "
         >{{ pageTitle }}
       </v-toolbar-title>
     </v-toolbar>
@@ -59,7 +69,7 @@
         "
       >
         <v-icon medium>mdi-email-check</v-icon>
-        <div style="margin: 0px 10px; font-weight: bold; font-size: 16px">
+        <div style="margin: -15px 35px; font-weight: bold; font-size: 16px">
           電子信箱驗證
         </div>
       </v-card-title>
@@ -110,6 +120,7 @@
                     v-model="OTPNumber"
                     label="輸入信箱驗證碼"
                     maxlength="4"
+                    variant="underlined"
                     required
                     @keydown.enter.prevent="verifyOPTLogin()"
                   ></v-text-field>
@@ -161,7 +172,7 @@
           <div style="color: rgb(143, 131, 131); font-weight: bolder">
             注意事項
           </div>
-          <ol style="margin-top: 10px">
+          <ol style="margin-top: 10px; margin-left: 20px">
             <li style="color: rgb(143, 131, 131); font-weight: bolder">
               若信箱未收到驗證碼，可再點選『寄送驗證碼』按鈕，重新取得新的驗證碼。
             </li>
@@ -179,15 +190,17 @@
           rounded
           style="margin: 10px auto; font-weight: bold; width: 20%"
           :loading="loadVerify"
+          variant="tonal"
           @click="verifyOPTLogin()"
         >
           驗證
         </v-btn>
       </v-card-actions>
       <v-card-title
+        class="d-flex justify-center"
         style="background-color: white; height: 27px; line-height: 0rem"
       >
-        <div style="margin: 0px auto; font-size: 10px; color: gray">
+        <div style="font-size: 10px; color: gray">
           @ {{ new Date().getFullYear() }} All Rights Reserved.
         </div>
       </v-card-title>
@@ -199,16 +212,18 @@
       style="margin: 0px auto; margin-top: 3%"
     >
       <v-card-title
+        class="d-flex justify-center"
         style="background-color: white; height: 27px; line-height: 0rem"
       >
-        <div style="margin: 0px auto; font-size: 16px; color: red">
+        <div style="font-size: 16px; color: red">
           {{ this.warningWord }}
         </div>
       </v-card-title>
       <v-card-title
+        class="d-flex justify-center"
         style="background-color: white; height: 27px; line-height: 0rem"
       >
-        <div style="margin: 0px auto; font-size: 10px; color: gray">
+        <div style="font-size: 10px; color: gray">
           @ {{ new Date().getFullYear() }} All Rights Reserved.
         </div>
       </v-card-title>

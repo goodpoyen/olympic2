@@ -51,11 +51,11 @@ const routes = [
     name: "signupresult",
     component: () => import("../views/scienceSignupFinish.vue"),
   },
-  // {
-  //   path: "/science/verifyOPT/:signupKey",
-  //   name: "verifyOPT",
-  //   component: () => import("../views/loginOTP.vue"),
-  // },
+  {
+    path: "/science/verifyOPT/:signupKey",
+    name: "verifyOPT",
+    component: () => import("../views/loginOTP.vue"),
+  },
   // {
   //   path: "/science/editor/:signupKey/:editorKey",
   //   name: "editor",
