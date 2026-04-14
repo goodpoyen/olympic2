@@ -1090,13 +1090,9 @@
             >
           </v-card-actions>
         </v-form>
-        <v-overlay :value="loadShow">
-          <v-progress-circular
-            :size="50"
-            color="primary"
-            indeterminate
-          ></v-progress-circular>
-          <div>處理中....</div>
+        <v-overlay v-model="loadShow" class="align-center justify-center">
+          <v-progress-circular indeterminate color="primary" :size="60">
+          </v-progress-circular>
         </v-overlay>
       </v-card>
     </v-dialog>
@@ -1138,13 +1134,9 @@
             >刪除</v-btn
           >
         </v-card-actions>
-        <v-overlay :value="loadShow">
-          <v-progress-circular
-            :size="50"
-            color="primary"
-            indeterminate
-          ></v-progress-circular>
-          <div>處理中....</div>
+        <v-overlay v-model="loadShow" class="align-center justify-center">
+          <v-progress-circular indeterminate color="primary" :size="60">
+          </v-progress-circular>
         </v-overlay>
       </v-card>
     </v-dialog>
@@ -1308,13 +1300,9 @@
             >確定</v-btn
           >
         </v-card-actions>
-        <v-overlay :value="loadShow">
-          <v-progress-circular
-            :size="50"
-            color="primary"
-            indeterminate
-          ></v-progress-circular>
-          <div>處理中....</div>
+        <v-overlay v-model="loadShow" class="align-center justify-center">
+          <v-progress-circular indeterminate color="primary" :size="60">
+          </v-progress-circular>
         </v-overlay>
       </v-card>
     </v-dialog>
@@ -1950,48 +1938,16 @@ export default {
         this.editedItem.type === 5 ||
         this.editedItem.type === 6
       ) {
-        // this.editedItem.examStart = this.globalSystemTool.GMTdateTimeFormat(
-        //   this.editedItem.examStart,
-        // );
-        // this.editedItem.examEnd = this.globalSystemTool.GMTdateTimeFormat(
-        //   this.editedItem.examEnd,
-        // );
-        // this.editedItem.signupEnd = this.globalSystemTool.GMTdateTimeFormat(
-        //   this.editedItem.signupEnd,
-        // );
-        // this.editedItem.signupStart = this.globalSystemTool.GMTdateTimeFormat(
-        //   this.editedItem.signupStart,
-        // );
-
-        if (this.editedItem.queryScore === "1") {
-          // this.editedItem.queryStart = this.globalSystemTool.GMTdateTimeFormat(
-          //   this.editedItem.queryStart,
-          // );
-          // this.editedItem.queryEnd = this.globalSystemTool.GMTdateTimeFormat(
-          //   this.editedItem.queryEnd,
-          // );
-        } else {
+        if (this.editedItem.queryScore !== "1") {
           this.editedItem.queryStart = null;
           this.editedItem.queryEnd = null;
         }
       } else if (this.editedItem.type === 2) {
-        // this.editedItem.examStart = this.globalSystemTool.GMTdateTimeFormat(
-        //   this.editedItem.examStart,
-        // );
-        // this.editedItem.examEnd = this.globalSystemTool.GMTdateTimeFormat(
-        //   this.editedItem.examEnd,
-        // );
         this.editedItem.signupEnd = null;
         this.editedItem.signupStart = null;
       } else {
         this.editedItem.examStart = null;
         this.editedItem.examEnd = null;
-        // this.editedItem.signupEnd = this.globalSystemTool.GMTdateTimeFormat(
-        //   this.editedItem.signupEnd,
-        // );
-        // this.editedItem.signupStart = this.globalSystemTool.GMTdateTimeFormat(
-        //   this.editedItem.signupStart,
-        // );
       }
 
       if (
@@ -2007,40 +1963,40 @@ export default {
         data.maintain = "0";
       }
       this.loadShow = true;
-      console.log(data);
-      // await this.axios
-      //   .post(this.systemENV.APISERVERURL + "/saveMenu", data)
-      //   .then((response) => {
-      //     this.loadShow = false;
-      //     // console.log(response.data);
-      //     if (response.data.code === 200) {
-      //       data.olyId = response.data.resultData;
-      //       if (this.editedIndex > -1) {
-      //         Object.assign(this.desserts[this.editedIndex], data);
-      //       } else {
-      //         this.desserts.unshift(data);
-      //       }
 
-      //       if (type === "Column") {
-      //         this.closeColumn();
-      //       } else {
-      //         this.close();
-      //       }
-      //     } else if (response.data.code === 502) {
-      //       this.closeDelete();
-      //       this.alertPup = true;
-      //       this.pupTitle = "選拔建立問題";
-      //       this.pupTitleShow = "2";
-      //       this.pupTitleIcon = "mdi-alert-outline";
-      //       this.pupText = "選拔名稱有重複請確認名稱與參賽年分";
-      //       this.pupType = "create";
-      //     } else {
-      //       this.globalSystemTool.removeLocalStorage();
-      //     }
-      //   })
-      //   .catch(function (error) {
-      //     // console.log(error);
-      //   });
+      await this.axios
+        .post(this.systemENV.APISERVERURL + "/saveMenu", data)
+        .then((response) => {
+          this.loadShow = false;
+          // console.log(response.data);
+          if (response.data.code === 200) {
+            data.olyId = response.data.resultData;
+            if (this.editedIndex > -1) {
+              Object.assign(this.desserts[this.editedIndex], data);
+            } else {
+              this.desserts.unshift(data);
+            }
+
+            if (type === "Column") {
+              this.closeColumn();
+            } else {
+              this.close();
+            }
+          } else if (response.data.code === 502) {
+            this.closeDelete();
+            this.alertPup = true;
+            this.pupTitle = "選拔建立問題";
+            this.pupTitleShow = "2";
+            this.pupTitleIcon = "mdi-alert-outline";
+            this.pupText = "選拔名稱有重複請確認名稱與參賽年分";
+            this.pupType = "create";
+          } else {
+            this.globalSystemTool.removeLocalStorage();
+          }
+        })
+        .catch(function (error) {
+          // console.log(error);
+        });
       this.warningOpen = true;
     },
 
