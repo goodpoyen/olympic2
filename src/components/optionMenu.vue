@@ -411,7 +411,7 @@
                     甄選模組：
                   </span>
                 </v-col>
-                <v-col cols="12" sm="12" md="12" style="margin-top: -31px">
+                <v-col cols="12" sm="12" md="12" style="margin-top: -15px">
                   <v-radio-group
                     :disabled="editedItem.type === 5 && level === '4'"
                     v-model="editedItem.type"
@@ -806,16 +806,19 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <!-- <v-datetime-picker
+                  <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
-                    :key="editedItem.olyId"
                     v-model="editedItem.signupStart"
-                    :text-field-props="textFieldProps"
-                    datetime="editedItem.signupStart"
                     :label="timeWording + '開始時間'"
-                    style="width: 191px"
-                    locale="zh-cn"
-                  ></v-datetime-picker> -->
+                    prepend-inner-icon="mdi-calendar-clock"
+                    readonly
+                    variant="outlined"
+                    style="width: 250px"
+                    @click="
+                      dateTimeType = 'signupStart';
+                      setDateTimeDefault(editedItem.signupStart);
+                    "
+                  ></v-text-field>
                 </v-col>
                 <v-col
                   v-show="editedItem.type !== 2"
@@ -824,14 +827,19 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <!-- <v-datetime-picker
+                  <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
-                    :key="editedItem.olyId"
                     v-model="editedItem.signupEnd"
-                    :text-field-props="textFieldProps"
                     :label="timeWording + '結束時間'"
-                    style="width: 191px"
-                  ></v-datetime-picker> -->
+                    prepend-inner-icon="mdi-calendar-clock"
+                    readonly
+                    variant="outlined"
+                    style="width: 250px"
+                    @click="
+                      dateTimeType = 'signupEnd';
+                      setDateTimeDefault(editedItem.signupEnd);
+                    "
+                  ></v-text-field>
                 </v-col>
                 <v-col
                   v-show="
@@ -845,15 +853,18 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <!-- <template>
-                    <v-datetime-picker
-                      :key="editedItem.olyId"
-                      v-model="editedItem.examStart"
-                      :text-field-props="textFieldProps"
-                      :label="timeWording2 + '開始時間'"
-                      style="width: 191px"
-                    ></v-datetime-picker>
-                  </template> -->
+                  <v-text-field
+                    v-model="editedItem.examStart"
+                    :label="timeWording2 + '開始時間'"
+                    prepend-inner-icon="mdi-calendar-clock"
+                    readonly
+                    variant="outlined"
+                    style="width: 250px"
+                    @click="
+                      dateTimeType = 'examStart';
+                      setDateTimeDefault(editedItem.examStart);
+                    "
+                  ></v-text-field>
                 </v-col>
                 <v-col
                   v-show="
@@ -867,13 +878,18 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <!-- <v-datetime-picker
-                    :key="editedItem.olyId"
+                  <v-text-field
                     v-model="editedItem.examEnd"
-                    :text-field-props="textFieldProps"
                     :label="timeWording2 + '結束時間'"
-                    style="width: 191px"
-                  ></v-datetime-picker> -->
+                    prepend-inner-icon="mdi-calendar-clock"
+                    readonly
+                    variant="outlined"
+                    style="width: 250px"
+                    @click="
+                      dateTimeType = 'examEnd';
+                      setDateTimeDefault(editedItem.examEnd);
+                    "
+                  ></v-text-field>
                 </v-col>
                 <v-col
                   v-show="editedItem.type === 1"
@@ -903,15 +919,18 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <!-- <template>
-                    <v-datetime-picker
-                      :key="editedItem.olyId"
-                      v-model="editedItem.queryStart"
-                      :text-field-props="textFieldProps"
-                      label="成績查詢開始時間"
-                      style="width: 191px"
-                    ></v-datetime-picker>
-                  </template> -->
+                  <v-text-field
+                    v-model="editedItem.queryStart"
+                    label="成績查詢開始時間"
+                    prepend-inner-icon="mdi-calendar-clock"
+                    readonly
+                    variant="outlined"
+                    style="width: 250px"
+                    @click="
+                      dateTimeType = 'queryStart';
+                      setDateTimeDefault(editedItem.queryStart);
+                    "
+                  ></v-text-field>
                 </v-col>
                 <v-col
                   v-show="editedItem.queryScore === '1'"
@@ -920,13 +939,18 @@
                   md="6"
                   style="margin-top: -31px"
                 >
-                  <!-- <v-datetime-picker
-                    :key="editedItem.olyId"
+                  <v-text-field
                     v-model="editedItem.queryEnd"
-                    :text-field-props="textFieldProps"
                     label="成績查詢結束時間"
-                    style="width: 191px"
-                  ></v-datetime-picker> -->
+                    prepend-inner-icon="mdi-calendar-clock"
+                    readonly
+                    variant="outlined"
+                    style="width: 250px"
+                    @click="
+                      dateTimeType = 'queryEnd';
+                      setDateTimeDefault(editedItem.queryEnd);
+                    "
+                  ></v-text-field>
                 </v-col>
                 <v-col
                   v-show="editedItem.type === 1"
@@ -1321,17 +1345,47 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="dateTimeFace" width="auto">
+      <v-card color="surface" elevation="24">
+        <v-tabs v-model="tab" grow bg-color="primary">
+          <v-tab value="date"><v-icon start>mdi-calendar</v-icon>日期</v-tab>
+          <v-tab value="time"><v-icon start>mdi-clock</v-icon>時間</v-tab>
+        </v-tabs>
+
+        <v-window v-model="tab">
+          <v-window-item value="date">
+            <v-date-picker
+              v-model="dateVal"
+              hide-header
+              @update:model-value="tab = 'time'"
+            ></v-date-picker>
+          </v-window-item>
+          <v-window-item value="time">
+            <v-time-picker v-model="timeVal" format="24hr"></v-time-picker>
+          </v-window-item>
+        </v-window>
+
+        <v-card-actions class="justify-end pa-4">
+          <v-btn variant="text" @click="dateTimeFace = false">取消</v-btn>
+          <v-btn color="primary" variant="flat" @click="setDateTime"
+            >確定</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
-import DatetimePicker from "../components/DatetimePicker";
+import dayjs from "dayjs";
 
 export default {
-  components: {
-    "v-datetime-picker": DatetimePicker,
-  },
   data: () => ({
+    dateTimeFace: false,
+    tab: "date",
+    dateVal: new Date(),
+    timeVal: "12:00",
+    dateTimeType: "",
     yearList: [],
     alertPup: false,
     warning: false,
@@ -1483,9 +1537,35 @@ export default {
   },
 
   methods: {
-    allowedYears: (date) => {
-      // date is : YYYY
-      return parseInt(date, 10);
+    setDateTimeDefault(dateTime) {
+      let arr = [];
+      this.dateTimeFace = true;
+
+      arr = dateTime.split(" ");
+
+      this.dateVal = new Date(arr[0]);
+      this.timeVal = arr[1];
+    },
+    setDateTime() {
+      let dateStr = dayjs(this.dateVal).format("YYYY-MM-DD");
+
+      if (this.dateTimeType === "signupStart") {
+        this.editedItem.signupStart = dateStr + " " + this.timeVal;
+      } else if (this.dateTimeType === "signupEnd") {
+        this.editedItem.signupEnd = dateStr + " " + this.timeVal;
+      } else if (this.dateTimeType === "examStart") {
+        this.editedItem.examStart = dateStr + " " + this.timeVal;
+      } else if (this.dateTimeType === "examEnd") {
+        this.editedItem.examEnd = dateStr + " " + this.timeVal;
+      } else if (this.dateTimeType === "queryStart") {
+        this.editedItem.queryStart = dateStr + " " + this.timeVal;
+      } else if (this.dateTimeType === "queryEnd") {
+        this.editedItem.queryEnd = dateStr + " " + this.timeVal;
+      }
+
+      this.tab = "date";
+      this.dateTimeType = "";
+      this.dateTimeFace = false;
     },
 
     checkExamTime(item) {
@@ -1614,7 +1694,6 @@ export default {
     },
 
     async changeOlympic() {
-      console.log(5555);
       await this.tokenService.renewLT();
 
       this.tokenService.store("olympic", this.selectOlympic, "1800000");
@@ -1819,7 +1898,6 @@ export default {
         .catch(function (error) {
           // console.log(error);
         });
-      console.log(6);
       this.warningOpen = true;
     },
 
@@ -1872,48 +1950,48 @@ export default {
         this.editedItem.type === 5 ||
         this.editedItem.type === 6
       ) {
-        this.editedItem.examStart = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.examStart,
-        );
-        this.editedItem.examEnd = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.examEnd,
-        );
-        this.editedItem.signupEnd = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.signupEnd,
-        );
-        this.editedItem.signupStart = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.signupStart,
-        );
+        // this.editedItem.examStart = this.globalSystemTool.GMTdateTimeFormat(
+        //   this.editedItem.examStart,
+        // );
+        // this.editedItem.examEnd = this.globalSystemTool.GMTdateTimeFormat(
+        //   this.editedItem.examEnd,
+        // );
+        // this.editedItem.signupEnd = this.globalSystemTool.GMTdateTimeFormat(
+        //   this.editedItem.signupEnd,
+        // );
+        // this.editedItem.signupStart = this.globalSystemTool.GMTdateTimeFormat(
+        //   this.editedItem.signupStart,
+        // );
 
         if (this.editedItem.queryScore === "1") {
-          this.editedItem.queryStart = this.globalSystemTool.GMTdateTimeFormat(
-            this.editedItem.queryStart,
-          );
-          this.editedItem.queryEnd = this.globalSystemTool.GMTdateTimeFormat(
-            this.editedItem.queryEnd,
-          );
+          // this.editedItem.queryStart = this.globalSystemTool.GMTdateTimeFormat(
+          //   this.editedItem.queryStart,
+          // );
+          // this.editedItem.queryEnd = this.globalSystemTool.GMTdateTimeFormat(
+          //   this.editedItem.queryEnd,
+          // );
         } else {
           this.editedItem.queryStart = null;
           this.editedItem.queryEnd = null;
         }
       } else if (this.editedItem.type === 2) {
-        this.editedItem.examStart = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.examStart,
-        );
-        this.editedItem.examEnd = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.examEnd,
-        );
+        // this.editedItem.examStart = this.globalSystemTool.GMTdateTimeFormat(
+        //   this.editedItem.examStart,
+        // );
+        // this.editedItem.examEnd = this.globalSystemTool.GMTdateTimeFormat(
+        //   this.editedItem.examEnd,
+        // );
         this.editedItem.signupEnd = null;
         this.editedItem.signupStart = null;
       } else {
         this.editedItem.examStart = null;
         this.editedItem.examEnd = null;
-        this.editedItem.signupEnd = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.signupEnd,
-        );
-        this.editedItem.signupStart = this.globalSystemTool.GMTdateTimeFormat(
-          this.editedItem.signupStart,
-        );
+        // this.editedItem.signupEnd = this.globalSystemTool.GMTdateTimeFormat(
+        //   this.editedItem.signupEnd,
+        // );
+        // this.editedItem.signupStart = this.globalSystemTool.GMTdateTimeFormat(
+        //   this.editedItem.signupStart,
+        // );
       }
 
       if (
@@ -1929,39 +2007,40 @@ export default {
         data.maintain = "0";
       }
       this.loadShow = true;
-      await this.axios
-        .post(this.systemENV.APISERVERURL + "/saveMenu", data)
-        .then((response) => {
-          this.loadShow = false;
-          // console.log(response.data);
-          if (response.data.code === 200) {
-            data.olyId = response.data.resultData;
-            if (this.editedIndex > -1) {
-              Object.assign(this.desserts[this.editedIndex], data);
-            } else {
-              this.desserts.unshift(data);
-            }
+      console.log(data);
+      // await this.axios
+      //   .post(this.systemENV.APISERVERURL + "/saveMenu", data)
+      //   .then((response) => {
+      //     this.loadShow = false;
+      //     // console.log(response.data);
+      //     if (response.data.code === 200) {
+      //       data.olyId = response.data.resultData;
+      //       if (this.editedIndex > -1) {
+      //         Object.assign(this.desserts[this.editedIndex], data);
+      //       } else {
+      //         this.desserts.unshift(data);
+      //       }
 
-            if (type === "Column") {
-              this.closeColumn();
-            } else {
-              this.close();
-            }
-          } else if (response.data.code === 502) {
-            this.closeDelete();
-            this.alertPup = true;
-            this.pupTitle = "選拔建立問題";
-            this.pupTitleShow = "2";
-            this.pupTitleIcon = "mdi-alert-outline";
-            this.pupText = "選拔名稱有重複請確認名稱與參賽年分";
-            this.pupType = "create";
-          } else {
-            this.globalSystemTool.removeLocalStorage();
-          }
-        })
-        .catch(function (error) {
-          // console.log(error);
-        });
+      //       if (type === "Column") {
+      //         this.closeColumn();
+      //       } else {
+      //         this.close();
+      //       }
+      //     } else if (response.data.code === 502) {
+      //       this.closeDelete();
+      //       this.alertPup = true;
+      //       this.pupTitle = "選拔建立問題";
+      //       this.pupTitleShow = "2";
+      //       this.pupTitleIcon = "mdi-alert-outline";
+      //       this.pupText = "選拔名稱有重複請確認名稱與參賽年分";
+      //       this.pupType = "create";
+      //     } else {
+      //       this.globalSystemTool.removeLocalStorage();
+      //     }
+      //   })
+      //   .catch(function (error) {
+      //     // console.log(error);
+      //   });
       this.warningOpen = true;
     },
 
