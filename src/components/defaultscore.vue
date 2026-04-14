@@ -177,13 +177,9 @@
               </v-toolbar>
             </template>
           </v-data-table>
-          <v-overlay :value="saveLoading">
-            <v-progress-circular
-              :size="50"
-              color="primary"
-              indeterminate
-            ></v-progress-circular>
-            <div>資料儲存中....</div>
+          <v-overlay v-model="saveLoading" class="align-center justify-center">
+            <v-progress-circular indeterminate color="primary" :size="60">
+            </v-progress-circular>
           </v-overlay>
         </v-container>
       </v-tabs-window-item>
@@ -214,30 +210,19 @@
               v-model="selected"
               :headers="libaryHeaders"
               :items="libaryList"
-              :item-value="itemKey"
+              :item-value="slId"
               :items-per-page="500"
               :hide-default-footer="true"
               show-select
               loading-text="資料處理中...."
               class="elevation-1"
-              @toggle-select-all="selectAllToggle"
+              return-object
             >
               <template v-slot:item.dataType="{ item }">
                 <span v-if="item.dataType === 'num'">數字</span>
                 <span v-if="item.dataType === 'string'">文字</span>
                 <span v-if="item.dataType === 'boolean'">是/否</span>
               </template>
-              <!-- <template
-                v-slot:item.data-table-select="{ item, isSelected, select }"
-              >
-                <v-simple-checkbox
-                  :model-value="isSelected"
-                  @input="
-                    select($event);
-                    selectToggle(item, $event);
-                  "
-                ></v-simple-checkbox>
-              </template> -->
             </v-data-table>
           </v-container>
         </v-card-text>
@@ -258,13 +243,9 @@
             >儲存</v-btn
           >
         </v-card-actions>
-        <v-overlay :value="loadShow">
-          <v-progress-circular
-            :size="50"
-            color="primary"
-            indeterminate
-          ></v-progress-circular>
-          <div>處理中....</div>
+        <v-overlay v-model="loadShow" class="align-center justify-center">
+          <v-progress-circular indeterminate color="primary" :size="60">
+          </v-progress-circular>
         </v-overlay>
       </v-card>
     </v-dialog>
@@ -523,53 +504,6 @@ export default {
       return this.$store.state.title;
     },
 
-    async selectAllToggle(props) {
-      if (props.value) {
-        this.configIdLsit = [];
-
-        const that = this;
-
-        props.items.forEach((item, index) => {
-          that.configIdLsit.push(item.slId);
-        });
-      }
-
-      if (!props.value) {
-        this.configIdLsit = [];
-      }
-    },
-
-    selectToggle(data, event) {
-      if (event) {
-        if (this.configIdLsit.length === 0) {
-          this.configIdLsit.push(data.slId);
-        } else {
-          const that = this;
-
-          this.configIdLsit.forEach((item, index) => {
-            if (item !== data.slId && !that.configIdLsit.includes(data.slId)) {
-              that.configIdLsit.push(data.slId);
-            }
-          });
-        }
-      } else {
-        let temp = [];
-        const that = this;
-
-        this.configIdLsit.forEach((item, index) => {
-          if (temp.length === 0 && item !== data.slId) {
-            temp.push(item);
-          } else {
-            if (item !== data.slId) {
-              temp.push(item);
-            }
-          }
-        });
-        this.configIdLsit = [];
-        this.configIdLsit = temp;
-      }
-    },
-
     close() {
       this.subjectList = [];
       this.selected = [];
@@ -597,7 +531,7 @@ export default {
       await this.axios
         .post(this.systemENV.APISERVERURL + "/getSubjectConfig", data)
         .then((response) => {
-          // console.log(response.data);
+          console.log(response.data);
           this.loadList = false;
 
           if (response.data.code === 200) {
@@ -605,11 +539,19 @@ export default {
             this.selected = [];
             this.configIdLsit = [];
             this.configList = response.data.resultData;
-            this.selected = response.data.resultData;
+
             const that = this;
             this.configList.forEach((item, index) => {
               item.tempSubjectName = item.subjectName;
-              that.configIdLsit.push(item.slId);
+
+              let temp = {};
+              temp.slId = item.slId;
+              temp.valueLength = item.valueLength;
+              temp.descriptionLength = item.descriptionLength;
+              temp.dataType = item.dataType;
+              temp.subjectName = item.subjectName;
+
+              this.selected.push(temp);
             });
           } else {
             this.globalSystemTool.removeLocalStorage();
@@ -669,6 +611,13 @@ export default {
       this.loadShow = true;
       await this.tokenService.renewLT();
 
+      const that = this;
+      this.selected.forEach((item, index) => {
+        that.configIdLsit.push(item.slId);
+      });
+
+      // console.log(this.configIdLsit);
+
       const data = {};
       data.AT = await this.tokenService.getFastAT();
       data.systemName = this.globalSystemValue.system;
@@ -678,22 +627,22 @@ export default {
       data.olyId = this.olyId;
       data.type = type;
 
-      await this.axios
-        .post(this.systemENV.APISERVERURL + "/saveSubjectConfig", data)
-        .then((response) => {
-          // console.log(response.data);
-          this.loadShow = false;
-          this.libaryPup = false;
+      // await this.axios
+      //   .post(this.systemENV.APISERVERURL + "/saveSubjectConfig", data)
+      //   .then((response) => {
+      //     // console.log(response.data);
+      //     this.loadShow = false;
+      //     this.libaryPup = false;
 
-          if (response.data.code === 200) {
-            this.getSubjectConfig();
-          } else {
-            this.globalSystemTool.removeLocalStorage();
-          }
-        })
-        .catch(function (error) {
-          // console.log(error);
-        });
+      //     if (response.data.code === 200) {
+      //       this.getSubjectConfig();
+      //     } else {
+      //       this.globalSystemTool.removeLocalStorage();
+      //     }
+      //   })
+      //   .catch(function (error) {
+      //     // console.log(error);
+      //   });
     },
   },
 
