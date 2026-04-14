@@ -86,7 +86,7 @@
             ></v-btn>
             <v-btn
               v-if="globalSystemValue.system === 'olympic'"
-              :disabled="randomScoreTest === 0"
+              :disabled="confirmScoreTest === ''"
               icon="mdi-license"
               size="small"
               @click="checkAlert('multi', 'score', {})"
@@ -259,7 +259,7 @@
         <v-icon
           v-if="globalSystemValue.system === 'olympic'"
           :title="'寄送' + titleScore"
-          :disabled="randomScoreTest === 0"
+          :disabled="confirmScoreTest === ''"
           class="mr-4"
           :style="item.sendExamScoreNoice ? { color: 'green' } : { color: '' }"
           @click="checkAlert('one', 'score', item)"
