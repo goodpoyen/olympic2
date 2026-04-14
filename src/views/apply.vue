@@ -8,7 +8,7 @@
     }"
   >
     <v-card
-      style="margin: 40px auto"
+      style="position: relative; top: 7%; left: 25%""
       :loading="load"
       :max-width="device === 'PC' ? '50%' : '80%'"
     >
@@ -39,7 +39,7 @@
                 md="12"
                 style="margin-top: -31px"
               >
-                <v-radio-group v-model="role" row>
+                <v-radio-group v-model="role" inline>
                   <v-radio label="聯絡人" value="1"></v-radio>
                   <v-radio label="學生" value="2"></v-radio>
                 </v-radio-group>
@@ -50,6 +50,7 @@
                   label="報名信箱"
                   inputmode="email"
                   prepend-icon="mdi-email-check-outline"
+                  variant="underlined"
                   :rules="emailRules"
                   required
                 ></v-text-field>
@@ -61,6 +62,7 @@
                   label="驗證碼"
                   :type="'verifycode'"
                   prepend-icon="mdi-keyboard-outline"
+                  variant="underlined"
                   :rules="[
                     (v) => !!v || '驗證碼不能為空',
                     (v) => v.length <= 4 || '超過規定字數',
@@ -76,12 +78,13 @@
                 ></v-progress-circular>
                 <img :src="imgaesCode" v-show="!imgaesCodeLoading" />
                 <v-btn
-                  icon
+                  icon="mdi-cached"
+                  size="small"
+                  variant="text"
                   color="green"
                   v-show="!imgaesCodeLoading"
                   @click="refreshCode"
                 >
-                  <v-icon>mdi-cached</v-icon>
                 </v-btn>
               </v-col>
             </v-row>
@@ -109,9 +112,9 @@
         <v-card-actions>
           <v-btn
             v-if="page === 'signup'"
+            variant="flat"
             block
             depressed
-            class="mr-4 white--text"
             color="#2D5BFF"
             :disabled="load"
             @click="applySignup()"
@@ -120,9 +123,9 @@
           >
           <v-btn
             v-if="page === 'score'"
+            variant="flat"
             block
             depressed
-            class="mr-4 white--text"
             color="#2D5BFF"
             :disabled="load"
             @click="applyScore()"
@@ -137,6 +140,7 @@
       style="
         font-size: 10px;
         position: absolute;
+        color: white;
         bottom: 0;
         width: 100%;
         height: 60px;

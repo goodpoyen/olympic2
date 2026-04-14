@@ -11,16 +11,16 @@ const routes = [
     name: "login",
     component: () => import("../views/loginView.vue"),
   },
-  // {
-  //   path: "/applySignup",
-  //   name: "applySignup",
-  //   component: () => import("../views/apply.vue"),
-  // },
-  // {
-  //   path: "/applyScore",
-  //   name: "applyScore",
-  //   component: () => import("../views/apply.vue"),
-  // },
+  {
+    path: "/applySignup",
+    name: "applySignup",
+    component: () => import("../views/apply.vue"),
+  },
+  {
+    path: "/applyScore",
+    name: "applyScore",
+    component: () => import("../views/apply.vue"),
+  },
   {
     path: "/science/scilogin",
     name: "scienceScilogin",
