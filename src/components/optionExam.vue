@@ -51,6 +51,7 @@
               :desserts="desserts"
               :dessertsTemp="dessertsTemp"
               :fixCodeName="fixCodeName"
+              @updateFilter="updateFilter"
             ></exam-area>
           </v-container>
           <v-container v-if="n == 3" fluid>
@@ -59,6 +60,7 @@
               :dessertsTemp="dessertsTemp"
               :loadList="loadList"
               :fixCodeName="fixCodeName"
+              @updateFilter="updateFilter"
             >
             </class-room>
           </v-container>
