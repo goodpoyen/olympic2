@@ -29,6 +29,7 @@
               :passCount="passCount"
               :nopassCount="nopassCount"
               :failCount="failCount"
+              @updateFilter="updateFilter"
             ></personnel-info>
           </v-container>
           <v-container v-if="n == 2" fluid>
@@ -182,6 +183,10 @@ export default {
       }
 
       return data;
+    },
+
+    updateFilter(value) {
+      this.desserts = value;
     },
   },
 

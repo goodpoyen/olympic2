@@ -11,6 +11,54 @@
       class="elevation-1"
       @toggle-select-all="selectAllToggle"
     >
+      <template v-slot:headers="{ columns, isSorted, getSortIcon, toggleSort }">
+        <tr>
+          <template v-for="column in columns" :key="column.key">
+            <th>
+              <span
+                class="me-2 cursor-pointer"
+                @click="toggleSort(column)"
+                v-text="column.title"
+              ></span>
+              <v-icon
+                v-if="isSorted(column)"
+                :icon="getSortIcon(column)"
+                color="medium-emphasis"
+              ></v-icon>
+              <div class="d-flex align-center">
+                <span>
+                  <v-menu offset-y :close-on-content-click="false">
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        v-if="column.title === '功能'"
+                        size="x-small"
+                        icon="mdi-filter"
+                        variant="text"
+                        v-bind="props"
+                        style="visibility: hidden"
+                      ></v-btn>
+                      <v-btn
+                        v-else
+                        size="x-small"
+                        icon="mdi-filter"
+                        variant="text"
+                        v-bind="props"
+                      ></v-btn>
+                    </template>
+                    <table-filter
+                      :desserts="desserts"
+                      :dessertsTemp="dessertsTemp"
+                      :header="column"
+                      @updateTable="updateTable"
+                    >
+                    </table-filter>
+                  </v-menu>
+                </span>
+              </div>
+            </th>
+          </template>
+        </tr>
+      </template>
       <template v-slot:top>
         <v-toolbar flat style="background-color: white">
           <div v-if="selected.length > 0">
@@ -286,6 +334,8 @@
 </template>
 
 <script>
+import TableFilter from "./utilsComponets/tableFilter.vue";
+
 export default {
   data: () => ({
     loadShow: false,
@@ -309,14 +359,29 @@ export default {
     sendMailpup: false,
     sendMailtype: "",
     headers: [
-      { title: "姓名", value: "chineseName", filterName: "chineseName" },
-      { title: "學校", value: "schoolNameAll", filterName: "schoolNameAll" },
-      { title: "指導老師", value: "teacherName", filterName: "teacherName" },
-      { title: "帳號", value: "cmsA", filterName: "cmsA" },
-      { title: "密碼", value: "cmsP", filterName: "cmsP" },
-      { title: "信箱", value: "email", filterName: "email" },
-      { title: "成績", value: "score", filterName: "score" },
-      { title: "組別", value: "type", filterName: "type" },
+      {
+        title: "姓名",
+        value: "chineseName",
+        filterName: "chineseName",
+        type: "text",
+      },
+      {
+        title: "學校",
+        value: "schoolNameAll",
+        filterName: "schoolNameAll",
+        type: "text",
+      },
+      {
+        title: "指導老師",
+        value: "teacherName",
+        filterName: "teacherName",
+        type: "text",
+      },
+      { title: "帳號", value: "cmsA", filterName: "cmsA", type: "text" },
+      { title: "密碼", value: "cmsP", filterName: "cmsP", type: "text" },
+      { title: "信箱", value: "email", filterName: "email", type: "text" },
+      { title: "成績", value: "score", filterName: "score", type: "text" },
+      { title: "組別", value: "type", filterName: "type", type: "text" },
       { title: "功能", value: "actions" },
     ],
     desserts: [],
@@ -347,6 +412,10 @@ export default {
       teacherName: "",
     },
   }),
+
+  components: {
+    TableFilter,
+  },
 
   computed: {
     id() {
@@ -678,76 +747,76 @@ export default {
       this.pupText = "您確定要發送信件？";
     },
 
-    filteredDesserts(index, filterName) {
-      const value = document.getElementById("contestnatsInput" + index).value;
+    // filteredDesserts(index, filterName) {
+    //   const value = document.getElementById("contestnatsInput" + index).value;
 
-      document.getElementById("contestnatsColor" + index).style.color =
-        "rgb(25 118 210)";
+    //   document.getElementById("contestnatsColor" + index).style.color =
+    //     "rgb(25 118 210)";
 
-      if (
-        document.getElementById("contestnatsInput" + index).value.length !== 0
-      ) {
-        this.filterList.push(value + "_" + filterName);
+    //   if (
+    //     document.getElementById("contestnatsInput" + index).value.length !== 0
+    //   ) {
+    //     this.filterList.push(value + "_" + filterName);
 
-        this.desserts = this.desserts.filter((dessert) => {
-          if (dessert[filterName] !== undefined) {
-            return dessert[filterName]
-              .toString()
-              .toLowerCase()
-              .includes(value.toString().toLowerCase());
-          } else {
-            return dessert[filterName];
-          }
-        });
-      } else {
-        this.cleanDesserts(index, filterName);
-      }
+    //     this.desserts = this.desserts.filter((dessert) => {
+    //       if (dessert[filterName] !== undefined) {
+    //         return dessert[filterName]
+    //           .toString()
+    //           .toLowerCase()
+    //           .includes(value.toString().toLowerCase());
+    //       } else {
+    //         return dessert[filterName];
+    //       }
+    //     });
+    //   } else {
+    //     this.cleanDesserts(index, filterName);
+    //   }
 
-      return this.desserts;
-    },
+    //   return this.desserts;
+    // },
 
-    cleanDesserts(index, filterName) {
-      const value =
-        document.getElementById("contestnatsInput" + index).value +
-        "_" +
-        filterName;
+    // cleanDesserts(index, filterName) {
+    //   const value =
+    //     document.getElementById("contestnatsInput" + index).value +
+    //     "_" +
+    //     filterName;
 
-      if (this.filterList.length > 0) {
-        this.filterList.forEach(function (data, index, object) {
-          let search = data.split("_");
-          if (search[1] === filterName) {
-            object.splice(index, 1);
-          }
-        });
-      }
+    //   if (this.filterList.length > 0) {
+    //     this.filterList.forEach(function (data, index, object) {
+    //       let search = data.split("_");
+    //       if (search[1] === filterName) {
+    //         object.splice(index, 1);
+    //       }
+    //     });
+    //   }
 
-      document.getElementById("contestnatsInput" + index).value = "";
+    //   document.getElementById("contestnatsInput" + index).value = "";
 
-      document.getElementById("contestnatsColor" + index).style.color = "";
+    //   document.getElementById("contestnatsColor" + index).style.color = "";
 
-      if (this.filterList.length > 0) {
-        const that = this;
-        this.filterList.forEach(function (data) {
-          let search = data.split("_");
-          that.desserts = that.dessertsTemp.filter((item) => {
-            if (item[search[1]] !== undefined) {
-              return item[search[1]]
-                .toString()
-                .toLowerCase()
-                .includes(search[0].toString().toLowerCase());
-            } else {
-              return item[filterName];
-            }
-          });
-        });
-      } else {
-        this.desserts = this.dessertsTemp.filter((dessert) => {
-          return dessert[filterName];
-        });
-      }
+    //   if (this.filterList.length > 0) {
+    //     const that = this;
+    //     this.filterList.forEach(function (data) {
+    //       let search = data.split("_");
+    //       that.desserts = that.dessertsTemp.filter((item) => {
+    //         if (item[search[1]] !== undefined) {
+    //           return item[search[1]]
+    //             .toString()
+    //             .toLowerCase()
+    //             .includes(search[0].toString().toLowerCase());
+    //         } else {
+    //           return item[filterName];
+    //         }
+    //       });
+    //     });
+    //   } else {
+    //     this.desserts = this.dessertsTemp.filter((dessert) => {
+    //       return dessert[filterName];
+    //     });
+    //   }
 
-      return this.desserts;
-    },
+    //   return this.desserts;
+    // },
 
     cleanPupData() {
       this.alertPup = false;
@@ -783,6 +852,10 @@ export default {
         .catch(function (error) {
           // console.log(error);
         });
+    },
+
+    updateTable(filterData) {
+      this.desserts = filterData;
     },
   },
 
