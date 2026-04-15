@@ -33,6 +33,7 @@
               :passCount="passCount"
               :nopassCount="nopassCount"
               :failCount="failCount"
+              @updateFilter="updateFilter"
             ></personnel-info>
           </v-container>
           <v-container v-if="n == 2" fluid>
@@ -243,6 +244,10 @@ export default {
         .catch(function (error) {
           // console.log(error);
         });
+    },
+
+    updateFilter(value) {
+      this.desserts = value;
     },
   },
 
