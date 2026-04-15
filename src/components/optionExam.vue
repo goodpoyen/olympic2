@@ -73,7 +73,7 @@
               :scoreSend="scoreSend"
               :sendExamNotice="sendExamNotice"
               :sendExamScoreNoice="sendExamScoreNoice"
-              @updateDesserts="updateDesserts"
+              @updateFilter="updateFilter"
             ></contestants>
           </v-container>
         </v-tabs-window-item>

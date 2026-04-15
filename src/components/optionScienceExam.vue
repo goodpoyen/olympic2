@@ -36,6 +36,7 @@
               :loadList="loadList"
               :desserts="desserts"
               :dessertsTemp="dessertsTemp"
+              @updateFilter="updateFilter"
             ></exam-area>
           </v-container>
           <v-container v-if="n == 3" fluid>
@@ -43,6 +44,7 @@
               :desserts="desserts"
               :dessertsTemp="dessertsTemp"
               :loadList="loadList"
+              @updateFilter="updateFilter"
             >
             </class-room>
           </v-container>
@@ -55,6 +57,7 @@
               :scoreSend="scoreSend"
               :admissionCount="admissionCount"
               :handicappedCount="handicappedCount"
+              @updateFilter="updateFilter"
             ></contestants>
           </v-container>
         </v-tabs-window-item>
@@ -232,6 +235,10 @@ export default {
         .catch(function (error) {
           // console.log(error);
         });
+    },
+
+    updateFilter(value) {
+      this.desserts = value;
     },
   },
 
