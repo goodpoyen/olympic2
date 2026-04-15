@@ -95,6 +95,54 @@
       Dense
       class="elevation-1"
     >
+      <template v-slot:headers="{ columns, isSorted, getSortIcon, toggleSort }">
+        <tr>
+          <template v-for="column in columns" :key="column.key">
+            <th>
+              <span
+                class="me-2 cursor-pointer"
+                @click="toggleSort(column)"
+                v-text="column.title"
+              ></span>
+              <v-icon
+                v-if="isSorted(column)"
+                :icon="getSortIcon(column)"
+                color="medium-emphasis"
+              ></v-icon>
+              <div class="d-flex align-center">
+                <span>
+                  <v-menu offset-y :close-on-content-click="false">
+                    <template v-slot:activator="{ props }">
+                      <v-btn
+                        v-if="column.title === '功能'"
+                        size="x-small"
+                        icon="mdi-filter"
+                        variant="text"
+                        v-bind="props"
+                        style="visibility: hidden"
+                      ></v-btn>
+                      <v-btn
+                        v-else
+                        size="x-small"
+                        icon="mdi-filter"
+                        variant="text"
+                        v-bind="props"
+                      ></v-btn>
+                    </template>
+                    <table-filter
+                      :desserts="desserts"
+                      :dessertsTemp="dessertsTemp"
+                      :header="column"
+                      @updateTable="updateTable"
+                    >
+                    </table-filter>
+                  </v-menu>
+                </span>
+              </div>
+            </th>
+          </template>
+        </tr>
+      </template>
       <template v-slot:top>
         <v-toolbar flat style="background-color: white">
           <v-btn
@@ -1494,6 +1542,7 @@ export default {
       // this.desserts = JSON.parse(JSON.stringify(filterData));
       // this.desserts = Object.assign({}, filterData);
       // this.desserts = filterData;
+      this.$emit("updateFilter", filterData);
     },
 
     updateEditedItem(item) {

@@ -1,11 +1,18 @@
 <template>
-  <div style="background-color: white; width: 280px">
+  <div
+    style="
+      background-color: white;
+      width: 280px;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    "
+  >
     <v-select
       v-if="header.type === 'select'"
       v-model="header[header.filterName + '_M']"
       :items="header.selectItem"
       label="請選擇"
       style="margin-left: 13px; width: 249px"
+      variant="underlined"
       @change="filteredDesserts('', header)"
     ></v-select>
     <v-text-field
@@ -28,6 +35,7 @@
       type="text"
       label="輸入搜尋"
       :autofocus="true"
+      variant="underlined"
       @click:clear="cleanDesserts(header)"
     ></v-text-field>
     <v-btn
@@ -45,12 +53,22 @@
 export default {
   data: () => ({
     filterList: [],
+    filterData: [],
   }),
 
   props: {
-    desserts: [],
-    dessertsTemp: [],
-    header: [],
+    desserts: {
+      type: Array,
+      default: () => [],
+    },
+    dessertsTemp: {
+      type: Array,
+      default: () => [],
+    },
+    header: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   methods: {
@@ -80,12 +98,12 @@ export default {
         this.filterList.push(value + "_" + headerData.filterName);
 
         if (headerData.type === "select") {
-          this.desserts = this.dessertsTemp.filter((dessert) => {
+          this.filterData = this.dessertsTemp.filter((dessert) => {
             return dessert[headerData.filterName];
           });
         }
 
-        this.desserts = this.desserts.filter((dessert) => {
+        this.filterData = this.desserts.filter((dessert) => {
           if (dessert[headerData.filterName] !== undefined) {
             if (value === "未繳費") {
               if (
@@ -114,7 +132,7 @@ export default {
         this.cleanDesserts(headerData);
       }
 
-      this.$emit("updateTable", this.desserts);
+      this.$emit("updateTable", this.filterData);
     },
 
     cleanDesserts(headerData) {
@@ -138,7 +156,7 @@ export default {
         const that = this;
         this.filterList.forEach(function (data) {
           let search = data.split("_");
-          that.desserts = that.dessertsTemp.filter((item) => {
+          that.filterData = that.dessertsTemp.filter((item) => {
             if (item[search[1]] !== undefined) {
               return item[search[1]]
                 .toString()
@@ -150,12 +168,12 @@ export default {
           });
         });
       } else {
-        this.desserts = this.dessertsTemp.filter((dessert) => {
+        this.filterData = this.dessertsTemp.filter((dessert) => {
           return dessert[headerData.filterName];
         });
       }
 
-      this.$emit("updateTable", this.desserts);
+      this.$emit("updateTable", this.filterData);
     },
   },
   async mounted() {},
