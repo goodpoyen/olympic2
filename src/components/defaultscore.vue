@@ -69,7 +69,6 @@
           <v-data-table
             :headers="configHeaders"
             :items="configList"
-            :item-key="itemKey"
             :items-per-page="70"
             :hide-default-footer="true"
             :loading="loadList"
@@ -78,75 +77,92 @@
             class="elevation-1"
             style="margin: 2% auto"
           >
-            <!-- <template #body="props">
-              <draggable
-                :list="props.items"
-                tag="tbody"
-                :move="onMoveItem"
-                @end="onDropItem"
-              >
-                <template v-for="(item, index) in props.items">
-                  <tr>
-                    <td v-for="header in configHeaders">
-                      <div v-if="header.value === 'sort'">
-                        {{ index + 1 }}
-                      </div>
-                      <div v-else-if="header.value === 'subjectName'">
-                        <v-text-field
-                          v-if="item['editorSubjectName'] === ''"
-                          dense
-                          v-model="item['tempSubjectName']"
-                          outlined
-                          color="rgb(255, 60, 1)"
-                          style="margin-top: 22px"
-                          @click="addTemp(item)"
-                          @change="saveEditorConfig('editor')"
-                        >
-                          ></v-text-field
-                        >
-                        <v-text-field
-                          v-else
-                          dense
-                          v-model="item['editorSubjectName']"
-                          outlined
-                          color="rgb(255, 60, 1)"
-                          style="margin-top: 22px"
-                          @click="addTemp(item)"
-                          @change="saveEditorConfig('editor')"
-                        >
-                          ></v-text-field
-                        >
-                      </div>
-                      <div v-else-if="header.value === 'dataType'">
-                        <span v-if="item[header.value] === 'num'">數字</span>
-                        <span v-if="item[header.value] === 'string'">文字</span>
-                        <span v-if="item[header.value] === 'boolean'"
-                          >是/否</span
-                        >
-                      </div>
-                      <div v-else-if="header.value === 'description'">
-                        <v-textarea
-                          v-model="item['editorSubjectDescription']"
-                          prepend-inner-icon="mdi-pencil"
-                          outlined
-                          color="rgb(255, 60, 1)"
-                          :value="item['editorSubjectDescription']"
-                          style="margin-top: 22px; font-size: 16px"
-                          rows="2"
-                          :maxlength="item.descriptionLength"
-                          :counter="item.descriptionLength"
-                          @click="addTemp(item)"
-                          @change="saveEditorConfig('editor')"
-                        ></v-textarea>
-                      </div>
-                      <div v-else>
-                        {{ item[header.value] }}
-                      </div>
-                    </td>
-                  </tr>
-                </template>
-              </draggable>
-            </template> -->
+            <tr>
+              <th style="width: 10%">科目排序</th>
+              <th style="width: 20%">科目名稱</th>
+              <th style="width: 10%">資料型態</th>
+              <th style="width: 10%">成績長度限制</th>
+              <th style="width: 10%">描述長度限制</th>
+              <th style="width: 40%">科目描述(非必填)</th>
+            </tr>
+            <draggable
+              v-model="configList"
+              tag="tbody"
+              item-key="slId"
+              @change="dragChange"
+            >
+              <template #item="{ element, index }">
+                <tr>
+                  <td>
+                    <div>
+                      {{ index + 1 }}
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <v-text-field
+                        v-if="element['editorSubjectName'] === ''"
+                        dense
+                        v-model="element['tempSubjectName']"
+                        variant="underlined"
+                        color="rgb(255, 60, 1)"
+                        style="margin-top: 22px; width: 100%"
+                        @click="addTemp(element)"
+                        @change="saveEditorConfig('editor')"
+                      >
+                      </v-text-field>
+                      <v-text-field
+                        v-else
+                        dense
+                        v-model="element['editorSubjectName']"
+                        variant="underlined"
+                        color="rgb(255, 60, 1)"
+                        style="margin-top: 22px; width: 100%"
+                        @click="addTemp(element)"
+                        @change="saveEditorConfig('editor')"
+                      >
+                      </v-text-field>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <span v-if="element['dataType'] === 'num'">數字</span>
+                      <span v-if="element['dataType'] === 'string'">文字</span>
+                      <span v-if="element['dataType'] === 'boolean'"
+                        >是/否</span
+                      >
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      {{ element["valueLength"] }}
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      {{ element["descriptionLength"] }}
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <v-textarea
+                        v-model="element['editorSubjectDescription']"
+                        prepend-inner-icon="mdi-pencil"
+                        variant="underlined"
+                        color="rgb(255, 60, 1)"
+                        :value="element['editorSubjectDescription']"
+                        style="margin-top: 22px; font-size: 16px; width: 100%"
+                        rows="2"
+                        :maxlength="element.descriptionLength"
+                        :counter="element.descriptionLength"
+                        @click="addTemp(element)"
+                        @change="saveEditorConfig('editor')"
+                      ></v-textarea>
+                    </div>
+                  </td>
+                </tr>
+              </template>
+            </draggable>
             <template v-slot:top>
               <v-toolbar flat style="background-color: white">
                 <v-btn
@@ -265,7 +281,12 @@ export default {
   data: () => ({
     configHeaders: [
       { title: "科目排序", value: "sort" },
-      { title: "科目名稱", value: "subjectName", sortable: false },
+      {
+        title: "科目名稱",
+        value: "subjectName",
+        sortable: false,
+        width: "35%",
+      },
       {
         title: "資料型態",
         value: "dataType",
@@ -285,7 +306,7 @@ export default {
         title: "科目描述(非必填)",
         value: "description",
         sortable: false,
-        width: "35%",
+        width: "20%",
       },
     ],
     libaryHeaders: [
@@ -339,6 +360,10 @@ export default {
   },
 
   methods: {
+    async dragChange() {
+      console.log(this.configList);
+    },
+
     async changeTab(level) {
       this.level = level;
       this.getSubjectConfig();
@@ -531,7 +556,7 @@ export default {
       await this.axios
         .post(this.systemENV.APISERVERURL + "/getSubjectConfig", data)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           this.loadList = false;
 
           if (response.data.code === 200) {
@@ -616,8 +641,6 @@ export default {
         that.configIdLsit.push(item.slId);
       });
 
-      // console.log(this.configIdLsit);
-
       const data = {};
       data.AT = await this.tokenService.getFastAT();
       data.systemName = this.globalSystemValue.system;
@@ -627,22 +650,22 @@ export default {
       data.olyId = this.olyId;
       data.type = type;
 
-      // await this.axios
-      //   .post(this.systemENV.APISERVERURL + "/saveSubjectConfig", data)
-      //   .then((response) => {
-      //     // console.log(response.data);
-      //     this.loadShow = false;
-      //     this.libaryPup = false;
+      await this.axios
+        .post(this.systemENV.APISERVERURL + "/saveSubjectConfig", data)
+        .then((response) => {
+          // console.log(response.data);
+          this.loadShow = false;
+          this.libaryPup = false;
 
-      //     if (response.data.code === 200) {
-      //       this.getSubjectConfig();
-      //     } else {
-      //       this.globalSystemTool.removeLocalStorage();
-      //     }
-      //   })
-      //   .catch(function (error) {
-      //     // console.log(error);
-      //   });
+          if (response.data.code === 200) {
+            this.getSubjectConfig();
+          } else {
+            this.globalSystemTool.removeLocalStorage();
+          }
+        })
+        .catch(function (error) {
+          // console.log(error);
+        });
     },
   },
 
