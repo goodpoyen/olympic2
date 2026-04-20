@@ -71,7 +71,6 @@
             :items="configList"
             :items-per-page="70"
             :hide-default-footer="true"
-            :loading="loadList"
             loading-text="資料處理中...."
             density="compact"
             class="elevation-1"
@@ -259,12 +258,12 @@
             >儲存</v-btn
           >
         </v-card-actions>
-        <v-overlay v-model="loadShow" class="align-center justify-center">
-          <v-progress-circular indeterminate color="primary" :size="60">
-          </v-progress-circular>
-        </v-overlay>
       </v-card>
     </v-dialog>
+    <v-overlay v-model="loadShow" class="align-center justify-center">
+      <v-progress-circular indeterminate color="primary" :size="60">
+      </v-progress-circular>
+    </v-overlay>
   </div>
 </template>
 
@@ -334,10 +333,8 @@ export default {
     selected: [],
     configIdLsit: [],
     level: 1,
-    loadList: false,
     libaryPup: false,
     loadShow: false,
-    loadList: false,
     dropLock: false,
     saveLoading: false,
     tab: null,
@@ -476,7 +473,7 @@ export default {
     },
 
     async getSubjectConfig() {
-      this.loadList = true;
+      this.loadShow = true;
       await this.tokenService.renewLT();
 
       const data = {};
@@ -490,7 +487,7 @@ export default {
         .post(this.systemENV.APISERVERURL + "/getSubjectConfig", data)
         .then((response) => {
           // console.log(response.data);
-          this.loadList = false;
+          this.loadShow = false;
 
           if (response.data.code === 200) {
             this.subjectList = [];
