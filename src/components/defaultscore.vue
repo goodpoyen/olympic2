@@ -361,7 +361,7 @@ export default {
 
   methods: {
     async dragChange() {
-      console.log(this.configList);
+      await this.saveEditorConfig("sort");
     },
 
     async changeTab(level) {
@@ -455,73 +455,6 @@ export default {
       this.editedTempIndex = -1;
       this.dropLock = false;
       this.saveLoading = false;
-    },
-
-    async onMoveItem(evt, originalEvent) {
-      const item = evt.draggedContext.element;
-      const itemIdx = evt.draggedContext.futureIndex;
-
-      if (this.dropLock) {
-        return false;
-      }
-
-      return true;
-    },
-
-    async onDropItem(evt, originalEvent) {
-      if (this.dropLock || evt.newIndex == evt.oldIndex) {
-        return false;
-      }
-
-      let temp = [];
-      const that = this;
-      this.configList.forEach((item, index) => {
-        let tempItem = {};
-        if (index >= evt.newIndex && index <= evt.oldIndex) {
-          if (index == evt.newIndex) {
-            that.configList[index] = {};
-            that.configList[index].slId = that.configList[evt.oldIndex].slId;
-            that.configList[index].editorSubjectName =
-              that.configList[evt.oldIndex].editorSubjectName;
-            that.configList[index].editorSubjectDescription =
-              that.configList[evt.oldIndex].editorSubjectDescription;
-
-            tempItem.slId = item.slId;
-            tempItem.editorSubjectName = item.editorSubjectName;
-            tempItem.editorSubjectDescription = item.editorSubjectDescription;
-            temp = tempItem;
-          } else {
-            that.configList[index] = temp;
-            tempItem.slId = item.slId;
-            tempItem.editorSubjectName = item.editorSubjectName;
-            tempItem.editorSubjectDescription = item.editorSubjectDescription;
-            temp = tempItem;
-          }
-        } else if (index <= evt.newIndex && index >= evt.oldIndex) {
-          if (index == evt.oldIndex) {
-            tempItem.slId = item.slId;
-            tempItem.editorSubjectName = item.editorSubjectName;
-            tempItem.editorSubjectDescription = item.editorSubjectDescription;
-            temp = tempItem;
-
-            that.configList[index] = that.configList[index + 1];
-          } else {
-            if (index == evt.newIndex) {
-              that.configList[index] = temp;
-            } else {
-              that.configList[index] = that.configList[index + 1];
-            }
-          }
-        } else {
-          that.configList[index] = {};
-          that.configList[index].slId = item.slId;
-          that.configList[index].editorSubjectName = item.editorSubjectName;
-          that.configList[index].editorSubjectDescription =
-            item.editorSubjectDescription;
-        }
-      });
-
-      await this.saveEditorConfig("sort");
     },
 
     reloadTitle() {
