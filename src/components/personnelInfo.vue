@@ -10,7 +10,7 @@
         style="margin-left: 11px; margin-top: -2px"
       >
         <v-icon small left> mdi-notebook-edit-outline </v-icon>
-        <p style="font-size: 14px; margin-top: -4px">測驗</p>
+        <p style="font-size: 14px; margin-left: 2px; margin-top: -4px">測驗</p>
       </v-btn>
       <v-btn
         v-if="menuType === 2"
@@ -20,7 +20,9 @@
         style="margin-left: 11px; margin-top: -2px"
       >
         <v-icon small left> mdi-town-hall </v-icon>
-        <p style="font-size: 14px; margin-top: -4px">選拔營</p>
+        <p style="font-size: 14px; margin-left: 2px; margin-top: -4px">
+          選拔營
+        </p>
       </v-btn>
       <v-btn
         v-if="menuType === 3"
@@ -30,7 +32,9 @@
         style="margin-left: 11px; margin-top: -2px"
       >
         <v-icon small left> mdi-cast-education </v-icon>
-        <p style="font-size: 14px; margin-top: -4px">線上賽</p>
+        <p style="font-size: 14px; margin-left: 2px; margin-top: -4px">
+          線上賽
+        </p>
       </v-btn>
       <v-btn
         v-if="menuType === 4"
@@ -40,7 +44,9 @@
         style="margin-left: 11px; margin-top: -2px"
       >
         <v-icon small left> mdi-party-popper </v-icon>
-        <p style="font-size: 14px; margin-top: -4px">新手同樂會</p>
+        <p style="font-size: 14px; margin-left: 2px; margin-top: -4px">
+          新手同樂會
+        </p>
       </v-btn>
       <v-btn
         v-if="menuType === 7"
@@ -50,7 +56,9 @@
         style="margin-left: 11px; margin-top: -2px"
       >
         <v-icon small left> mdi-account-group </v-icon>
-        <p style="font-size: 14px; margin-top: -4px">資訊營</p>
+        <p style="font-size: 14px; margin-left: 2px; margin-top: -4px">
+          資訊營
+        </p>
       </v-btn>
       <div style="display: inline; margin: 52px">
         選拔名稱:
@@ -154,7 +162,7 @@
             @click="editItem(editedItem)"
           >
             <v-icon small left> mdi-account-plus-outline </v-icon>
-            <p style="font-size: 13px">新增報名</p>
+            <p style="margin-left: 2px; font-size: 13px">新增報名</p>
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn
@@ -168,7 +176,7 @@
             @click="createExamCodeAlert"
           >
             <v-icon small left> mdi-card-account-details-outline </v-icon>
-            <p style="font-size: 13px">產生應試資料</p>
+            <p style="margin-left: 2px; font-size: 13px">產生應試資料</p>
           </v-btn>
           <v-btn
             v-if="menuType === 2"
@@ -193,7 +201,7 @@
             @click="setCMS"
           >
             <v-icon small left> mdi-card-account-details-outline </v-icon>
-            <p style="font-size: 13px">產生CMS資料</p>
+            <p style="margin-left: 2px; font-size: 13px">產生CMS資料</p>
           </v-btn>
           <v-divider class="mx-1" inset vertical></v-divider>
           <v-btn
@@ -208,7 +216,7 @@
             @click="onButtonClick"
           >
             <v-icon small left> mdi-file-upload-outline </v-icon>
-            <p style="font-size: 13px">匯入</p>
+            <p style="margin-left: 2px; font-size: 13px">匯入</p>
           </v-btn>
           <input
             ref="uploader"
@@ -229,7 +237,7 @@
             @click="onButtonClick"
           >
             <v-icon small left> mdi-file-upload-outline </v-icon>
-            <p style="font-size: 13px">匯入</p>
+            <p style="margin-left: 2px; font-size: 13px">匯入</p>
           </v-btn>
           <input
             ref="uploader"
@@ -246,7 +254,7 @@
             @click="downloadPersonnelFile"
           >
             <v-icon small left> mdi-tray-arrow-down </v-icon>
-            <p style="font-size: 13px">匯出</p>
+            <p style="margin-left: 2px; font-size: 13px">匯出</p>
           </v-btn>
         </v-toolbar>
       </template>

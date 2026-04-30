@@ -434,7 +434,7 @@
                           <v-icon small left>
                             mdi-notebook-edit-outline
                           </v-icon>
-                          <p style="font-size: 14px">測驗</p>
+                          <p style="margin-left: 2px; font-size: 14px">測驗</p>
                         </v-btn>
                       </template>
                     </v-radio>
@@ -453,7 +453,9 @@
                           <v-icon small left>
                             mdi-notebook-edit-outline
                           </v-icon>
-                          <p style="font-size: 14px">甄選考試</p>
+                          <p style="margin-left: 2px; font-size: 14px">
+                            甄選考試
+                          </p>
                         </v-btn>
                       </template>
                     </v-radio>
@@ -470,7 +472,9 @@
                           style="margin-left: 11px; margin-top: -2px"
                         >
                           <v-icon small left> mdi-rotate-orbit </v-icon>
-                          <p style="font-size: 14px">實驗實作</p>
+                          <p style="margin-left: 2px; font-size: 14px">
+                            實驗實作
+                          </p>
                         </v-btn>
                       </template>
                     </v-radio>
@@ -487,7 +491,9 @@
                           style="margin-left: 11px; margin-top: -2px"
                         >
                           <v-icon small left> mdi-town-hall </v-icon>
-                          <p style="font-size: 14px">選訓營</p>
+                          <p style="margin-left: 2px; font-size: 14px">
+                            選訓營
+                          </p>
                         </v-btn>
                       </template>
                     </v-radio>

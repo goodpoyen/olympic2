@@ -100,7 +100,7 @@
                     @click="dialog = true"
                   >
                     <v-icon small left> mdi-account-plus-outline </v-icon>
-                    <p style="font-size: 13px">新增帳號</p>
+                    <p style="margin-left: 2px; font-size: 13px">新增帳號</p>
                   </v-btn>
                 </v-toolbar>
               </template>

@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title dark style="background-color: #0046fe !important">
-      <v-icon large style="font-size: 24px; color: white">
+      <v-icon large style="font-size: 24px; color: white; margin-top: -3px">
         mdi-file-upload-outline
       </v-icon>
       <span style="font-size: 18px; font-weight: bold; color: white">

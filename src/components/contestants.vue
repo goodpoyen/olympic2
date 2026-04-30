@@ -203,7 +203,7 @@
             @click="importPup = true"
           >
             <v-icon small left> mdi-file-upload-outline </v-icon>
-            <p style="font-size: 13px">匯入</p>
+            <p style="margin-left: 2px; font-size: 13px">匯入</p>
           </v-btn>
           <input
             ref="uploader"
@@ -221,7 +221,7 @@
             @click="downloadPup = true"
           >
             <v-icon small left> mdi-tray-arrow-down </v-icon>
-            <p style="font-size: 13px">匯出</p>
+            <p style="margin-left: 2px; font-size: 13px">匯出</p>
           </v-btn>
         </v-toolbar>
         <div

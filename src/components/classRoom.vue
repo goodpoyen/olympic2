@@ -68,7 +68,7 @@
             @click="editItem(editedItem)"
           >
             <v-icon small left> mdi-map-marker-radius-outline </v-icon>
-            <p style="font-size: 13px">新增考場</p>
+            <p style="margin-left: 2px; font-size: 13px">新增考場</p>
           </v-btn>
         </v-toolbar>
       </template>

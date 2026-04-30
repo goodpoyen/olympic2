@@ -1,16 +1,28 @@
 <template>
   <v-card>
     <v-card-title dark style="background-color: #0046fe !important">
-      <v-icon large style="font-size: 24px; color: white">
+      <v-icon large style="font-size: 24px; color: white; margin-top: -3px">
         mdi-email-arrow-right-outline
       </v-icon>
       <span
         v-if="!reviewMod"
-        style="font-size: 18px; font-weight: bold; color: white"
+        style="
+          font-size: 18px;
+          margin-left: 4px;
+          font-weight: bold;
+          color: white;
+        "
       >
         發送資料選擇
       </span>
-      <span v-else style="font-size: 18px; font-weight: bold; color: white"
+      <span
+        v-else
+        style="
+          font-size: 18px;
+          margin-left: 4px;
+          font-weight: bold;
+          color: white;
+        "
         >瀏覽資料選擇</span
       >
     </v-card-title>

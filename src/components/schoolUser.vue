@@ -197,7 +197,7 @@
             @click="dialog = true"
           >
             <v-icon small left> mdi-account-box-multiple </v-icon>
-            <p style="font-size: 13px">新增聯絡人</p>
+            <p style="margin-left: 2px; font-size: 13px">新增聯絡人</p>
           </v-btn>
           <v-spacer></v-spacer>
           <div
@@ -225,7 +225,7 @@
             @click="downloadPup = true"
           >
             <v-icon small left> mdi-tray-arrow-down </v-icon>
-            <p style="font-size: 13px">匯出</p>
+            <p style="margin-left: 2px; font-size: 13px">匯出</p>
           </v-btn>
         </v-toolbar>
       </template>

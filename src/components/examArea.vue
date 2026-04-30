@@ -68,7 +68,7 @@
             @click="editItem(editedItem)"
           >
             <v-icon small left> mdi-domain </v-icon>
-            <p style="font-size: 13px">新增考區</p>
+            <p style="margin-left: 2px; font-size: 13px">新增考區</p>
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn
@@ -80,7 +80,9 @@
             @click="downloadAllAreaFile()"
           >
             <v-icon small left> mdi-tray-arrow-down </v-icon>
-            <p style="font-size: 13px">匯出所有考區場務資料</p>
+            <p style="margin-left: 2px; font-size: 13px">
+              匯出所有考區場務資料
+            </p>
           </v-btn>
         </v-toolbar>
       </template>
