@@ -68,15 +68,27 @@
       </div>
       <div style="display: inline">
         報名統計:
-        <v-icon title="已通過" large style="margin-left: 7px; color: #2bcd2b">
+        <v-icon
+          title="已通過"
+          size="x-large"
+          style="margin-left: 7px; color: #2bcd2b"
+        >
           mdi-circle-small
         </v-icon>
         {{ passCount }}人
-        <v-icon title="待審核" large style="margin-left: 7px; color: #ff3c01">
+        <v-icon
+          title="待審核"
+          size="x-large"
+          style="margin-left: 7px; color: #ff3c01"
+        >
           mdi-circle-small
         </v-icon>
         {{ nopassCount }}人
-        <v-icon title="不通過" large style="margin-left: 7px; color: #6b6b6b">
+        <v-icon
+          title="不通過"
+          size="x-large"
+          style="margin-left: 7px; color: #6b6b6b"
+        >
           mdi-circle-small
         </v-icon>
         {{ failCount }}人
@@ -86,7 +98,7 @@
           class="v-divider v-divider--inset v-divider--vertical"
           style="min-height: 18px; margin-left: 12px"
         />
-        <v-icon title="總人數" large style="color: #635bff">
+        <v-icon title="總人數" size="x-large" style="color: #635bff">
           mdi-circle-small
         </v-icon>
         {{ desserts.length }}人
@@ -261,21 +273,21 @@
       <template v-slot:item.statusName="{ item }">
         <v-icon
           v-if="item.statusName == '待審核'"
-          large
+          size="x-large"
           style="margin-left: 7px; color: #ff3c01"
         >
           mdi-circle-small
         </v-icon>
         <v-icon
           v-if="item.statusName == '已通過'"
-          large
+          size="x-large"
           style="margin-left: 7px; color: #2bcd2b"
         >
           mdi-circle-small
         </v-icon>
         <v-icon
           v-if="item.statusName == '不通過'"
-          large
+          size="x-large"
           style="margin-left: 7px; color: #6b6b6b"
         >
           mdi-circle-small
