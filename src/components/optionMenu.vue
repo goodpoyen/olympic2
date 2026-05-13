@@ -1951,9 +1951,15 @@ export default {
       } else if (this.editedItem.type === 2) {
         this.editedItem.signupEnd = null;
         this.editedItem.signupStart = null;
+
+        this.editedItem.queryStart = null;
+        this.editedItem.queryEnd = null;
       } else {
         this.editedItem.examStart = null;
         this.editedItem.examEnd = null;
+
+        this.editedItem.queryStart = null;
+        this.editedItem.queryEnd = null;
       }
 
       if (
