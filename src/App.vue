@@ -71,14 +71,20 @@ export default {
     ) {
       if (
         this.systemENV.MOD === "sit" &&
-        location.hostname !== "scibeta.csie.ntnu.edu.tw"
+        location.hostname !== "scibeta.csie.ntnu.edu.tw" &&
+        location.hostname !== "olybeta.csie.ntnu.edu.tw"
       ) {
-        location.href = "https://scibeta.csie.ntnu.edu.tw";
+        if (location.hostname === "scibeta.csie.ntnu.edu.tw") {
+          location.href = "https://scibeta.csie.ntnu.edu.tw";
+        } else {
+          location.href = "https://olybeta.csie.ntnu.edu.tw";
+        }
       }
 
       if (
         this.systemENV.MOD === "prod" &&
-        location.hostname !== "sciprograms.tpmso.org"
+        location.hostname !== "sciprograms.tpmso.org" &&
+        location.hostname !== "apply.tpmso.org"
       ) {
         location.href = "https://sciprograms.tpmso.org";
       }
