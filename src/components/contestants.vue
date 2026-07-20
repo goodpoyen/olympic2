@@ -1811,7 +1811,6 @@ export default {
 
     checkAlert(mode, type, item) {
       this.cleanPupData();
-      this.setWording();
       this.sendMailpup = true;
 
       if (mode === "multi") {
@@ -1824,6 +1823,8 @@ export default {
         } else {
           this.sendMailtype = "multiScore";
         }
+
+        this.setWording();
 
         this.selected.forEach((exam) => {
           if (type === "exam" && exam.sendExamNotice) {
@@ -1852,6 +1853,8 @@ export default {
         } else {
           this.sendMailtype = "score";
         }
+
+        this.setWording();
 
         this.tempItem = item;
       }
@@ -1922,14 +1925,20 @@ export default {
     setWording() {
       if (this.globalSystemValue.system === "olympic") {
         this.target = "參賽者";
-        if (this.sendMailtype.indexOf("exam") === 0) {
+        if (
+          this.sendMailtype.indexOf("exam") === 0 ||
+          this.sendMailtype.indexOf("multiExam") === 0
+        ) {
           this.sendType = "【考試通知】";
         } else {
           this.sendType = "【成績證明】";
         }
       } else {
         this.target = "甄選生";
-        if (this.sendMailtype.indexOf("exam") === 0) {
+        if (
+          this.sendMailtype.indexOf("exam") === 0 ||
+          this.sendMailtype.indexOf("multiExam") === 0
+        ) {
           this.sendType = "【甄選證及甄選須知】";
         } else {
           this.sendType = "【成績單】";
