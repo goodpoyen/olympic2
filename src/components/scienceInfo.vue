@@ -1030,7 +1030,7 @@
                 >
                 <br />
                 <span style="font-size: 13px; font-weight: bold">{{
-                  systemENV.VUE_APP_LOCALURL +
+                  systemENV.VUE_APP_SCILOCALURL +
                   "/science/verifyOPT/" +
                   editedItem.editorUri
                 }}</span>
