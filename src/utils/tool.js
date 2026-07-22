@@ -194,7 +194,7 @@ export function globalTool() {
 
   function removeLocalStorage() {
     localStorage.clear();
-    if (location.hostname === this.systemENV.OLYDOMAIN) {
+    if (location.hostname === systemENV.OLYDOMAIN) {
       location.href = "/login";
     } else {
       if (systemENV.MOD === "dev") {
@@ -205,7 +205,7 @@ export function globalTool() {
             location.href = "/login";
           }
         }
-      } else if (location.hostname === this.systemENV.SCIDOMAIN) {
+      } else if (location.hostname === systemENV.SCIDOMAIN) {
         location.href = "/science/scilogin";
       }
     }
