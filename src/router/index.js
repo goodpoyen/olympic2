@@ -41,11 +41,11 @@ const routes = [
     name: "scienceSignup",
     component: () => import("../views/scienceSignup.vue"),
   },
-  // {
-  //   path: "/science/signup/:testName",
-  //   name: "testScienceSignup",
-  //   component: () => import("../views/scienceSignup.vue"),
-  // },
+  {
+    path: "/science/signup/:testName",
+    name: "testScienceSignup",
+    component: () => import("../views/scienceSignup.vue"),
+  },
   {
     path: "/science/signupresult/:id",
     name: "signupresult",
@@ -78,7 +78,7 @@ const routes = [
   },
   {
     path: "/science/scoreload/review/:id",
-    name: "scoreload",
+    name: "scoreloadReview",
     component: () => import("../views/scoreload.vue"),
   },
   {

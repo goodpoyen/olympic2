@@ -26,13 +26,13 @@ export function tokenService() {
 
       if (new Date().getTime() - itemObj.time >= itemObj.expire) {
         localStorage.clear();
-        if (location.hostname === this.systemENV.OLYDOMAIN) {
+        if (location.hostname === systemENV.OLYDOMAIN) {
           location.href = "/login";
         } else {
           if (systemENV.MOD === "dev") {
             location.href = "/science/scilogin";
             // location.href = '/login'
-          } else if (location.hostname === this.systemENV.SCIDOMAIN) {
+          } else if (location.hostname === systemENV.SCIDOMAIN) {
             location.href = "/science/scilogin";
           }
         }
@@ -138,13 +138,13 @@ export function tokenService() {
           fastAT = response.data.resultData.act;
         } else {
           localStorage.clear();
-          if (location.hostname === this.systemENV.OLYDOMAIN) {
+          if (location.hostname === systemENV.OLYDOMAIN) {
             location.href = "/login";
           } else {
             if (systemENV.MOD === "dev") {
               location.href = "/science/scilogin";
               // location.href = '/login'
-            } else if (location.hostname === this.systemENV.SCIDOMAIN) {
+            } else if (location.hostname === systemENV.SCIDOMAIN) {
               location.href = "/science/scilogin";
             }
           }
