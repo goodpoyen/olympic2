@@ -194,10 +194,7 @@ export function globalTool() {
 
   function removeLocalStorage() {
     localStorage.clear();
-    if (
-      location.hostname === "reg.tpmso.org" ||
-      location.hostname === "olybeta.csie.ntnu.edu.tw"
-    ) {
+    if (location.hostname === this.systemENV.OLYDOMAIN) {
       location.href = "/login";
     } else {
       if (systemENV.MOD === "dev") {
@@ -208,10 +205,7 @@ export function globalTool() {
             location.href = "/login";
           }
         }
-      } else if (
-        location.hostname === "sciprograms.tpmso.org" ||
-        location.hostname === "scibeta.csie.ntnu.edu.tw"
-      ) {
+      } else if (location.hostname === this.systemENV.SCIDOMAIN) {
         location.href = "/science/scilogin";
       }
     }

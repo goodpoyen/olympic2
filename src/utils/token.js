@@ -26,19 +26,13 @@ export function tokenService() {
 
       if (new Date().getTime() - itemObj.time >= itemObj.expire) {
         localStorage.clear();
-        if (
-          location.hostname === "reg.tpmso.org" ||
-          location.hostname === "olybeta.csie.ntnu.edu.tw"
-        ) {
+        if (location.hostname === this.systemENV.OLYDOMAIN) {
           location.href = "/login";
         } else {
           if (systemENV.MOD === "dev") {
             location.href = "/science/scilogin";
             // location.href = '/login'
-          } else if (
-            location.hostname === "sciprograms.tpmso.org" ||
-            location.hostname === "scibeta.csie.ntnu.edu.tw"
-          ) {
+          } else if (location.hostname === this.systemENV.SCIDOMAIN) {
             location.href = "/science/scilogin";
           }
         }
@@ -144,19 +138,13 @@ export function tokenService() {
           fastAT = response.data.resultData.act;
         } else {
           localStorage.clear();
-          if (
-            location.hostname === "reg.tpmso.org" ||
-            location.hostname === "olybeta.csie.ntnu.edu.tw"
-          ) {
+          if (location.hostname === this.systemENV.OLYDOMAIN) {
             location.href = "/login";
           } else {
             if (systemENV.MOD === "dev") {
               location.href = "/science/scilogin";
               // location.href = '/login'
-            } else if (
-              location.hostname === "sciprograms.tpmso.org" ||
-              location.hostname === "scibeta.csie.ntnu.edu.tw"
-            ) {
+            } else if (location.hostname === this.systemENV.SCIDOMAIN) {
               location.href = "/science/scilogin";
             }
           }

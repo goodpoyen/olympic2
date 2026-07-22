@@ -71,40 +71,34 @@ export default {
     ) {
       if (
         this.systemENV.MOD === "sit" &&
-        location.hostname !== "scibeta.csie.ntnu.edu.tw" &&
-        location.hostname !== "olybeta.csie.ntnu.edu.tw"
+        location.hostname !== this.systemENV.SCIDOMAIN &&
+        location.hostname !== this.systemENV.OLYDOMAIN
       ) {
-        if (location.hostname === "scibeta.csie.ntnu.edu.tw") {
-          location.href = "https://scibeta.csie.ntnu.edu.tw";
+        if (location.hostname === this.systemENV.SCIDOMAIN) {
+          location.href = this.systemENV.VUE_APP_SCILOCALURL;
         } else {
-          location.href = "https://olybeta.csie.ntnu.edu.tw";
+          location.href = this.systemENV.VUE_APP_OLYLOCALURL;
         }
       }
 
       if (
         this.systemENV.MOD === "prod" &&
-        location.hostname !== "sciprograms.tpmso.org" &&
-        location.hostname !== "apply.tpmso.org"
+        location.hostname !== this.systemENV.SCIDOMAIN &&
+        location.hostname !== this.systemENV.APLDOMAIN
       ) {
-        location.href = "https://sciprograms.tpmso.org";
+        location.href = this.systemENV.VUE_APP_SCILOCALURL;
       }
       this.loginShow = true;
       return true;
     }
 
     if (currentUrl.includes("/login") || currentUrl.includes("/scilogin")) {
-      if (
-        location.hostname === "reg.tpmso.org" ||
-        location.hostname === "olybeta.csie.ntnu.edu.tw"
-      ) {
+      if (location.hostname === this.systemENV.OLYDOMAIN) {
         this.loginShow = true;
       } else {
         if (this.systemENV.MOD === "dev") {
           this.loginShow = true;
-        } else if (
-          location.hostname === "sciprograms.tpmso.org" ||
-          location.hostname === "scibeta.csie.ntnu.edu.tw"
-        ) {
+        } else if (location.hostname === this.systemENV.SCIDOMAIN) {
           this.loginShow = true;
         }
       }
@@ -112,10 +106,7 @@ export default {
 
     if (!(await this.tokenService.checkLogin())) {
       if (!currentUrl.includes("/login") && !currentUrl.includes("/scilogin")) {
-        if (
-          location.hostname === "reg.tpmso.org" ||
-          location.hostname === "olybeta.csie.ntnu.edu.tw"
-        ) {
+        if (location.hostname === this.systemENV.OLYDOMAIN) {
           location.href = "/login";
         } else {
           if (this.systemENV.MOD === "dev") {
@@ -128,39 +119,34 @@ export default {
             } else {
               location.href = "/science/signup";
             }
-          } else if (
-            location.hostname === "sciprograms.tpmso.org" ||
-            location.hostname === "scibeta.csie.ntnu.edu.tw"
-          ) {
+          } else if (location.hostname === this.systemENV.SCIDOMAIN) {
             location.href = "/science/signup";
           }
         }
       } else {
         if (
-          (location.hostname === "reg.tpmso.org" ||
-            location.hostname === "olybeta.csie.ntnu.edu.tw") &&
+          location.hostname === this.systemENV.OLYDOMAIN &&
           currentUrl.includes("/science/")
         ) {
           if (this.systemENV.MOD === "sit") {
-            location.href = "https://scibeta.csie.ntnu.edu.tw";
+            location.href = this.systemENV.VUE_APP_SCILOCALURL;
           }
 
           if (this.systemENV.MOD === "prod") {
-            location.href = "https://sciprograms.tpmso.org";
+            location.href = this.systemENV.VUE_APP_SCILOCALURL;
           }
         }
 
         if (
-          (location.hostname === "sciprograms.tpmso.org" ||
-            location.hostname === "scibeta.csie.ntnu.edu.tw") &&
+          location.hostname === this.systemENV.SCIDOMAIN &&
           !currentUrl.includes("/science/")
         ) {
           if (this.systemENV.MOD === "sit") {
-            location.href = "https://olybeta.csie.ntnu.edu.tw";
+            location.href = this.systemENV.VUE_APP_OLYLOCALURL;
           }
 
           if (this.systemENV.MOD === "prod") {
-            location.href = "https://reg.tpmso.org";
+            location.href = this.systemENV.VUE_APP_OLYLOCALURL;
           }
         }
       }
@@ -190,17 +176,11 @@ export default {
                 location.href = "/login";
               }
             }
-            if (
-              location.hostname === "reg.tpmso.org" ||
-              location.hostname === "olybeta.csie.ntnu.edu.tw"
-            ) {
+            if (location.hostname === this.systemENV.OLYDOMAIN) {
               location.href = "/login";
             }
 
-            if (
-              location.hostname === "sciprograms.tpmso.org" ||
-              location.hostname === "scibeta.csie.ntnu.edu.tw"
-            ) {
+            if (location.hostname === this.systemENV.SCIDOMAIN) {
               location.href = "/science/scilogin";
             }
           }

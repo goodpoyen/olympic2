@@ -2171,10 +2171,8 @@ export default {
 
     if (this.systemENV.MOD === "dev") {
       systemDomain = "http://localhost:8080";
-    } else if (this.systemENV.MOD === "sit") {
-      systemDomain = "https://scibeta.csie.ntnu.edu.tw";
     } else {
-      systemDomain = "https://sciprograms.tpmso.org";
+      systemDomain = this.systemENV.VUE_APP_SCILOCALURL;
     }
     if (window.performance.navigation.type === 2) {
       location.href = "/science/signup/";
