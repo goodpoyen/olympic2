@@ -1953,18 +1953,22 @@
                   >
                     <template v-slot:activator="{ props }">
                       <v-text-field
-                        prepend-icon="mdi-calendar"
                         v-model="editedItem.birthday"
                         label="出生年月(民國/月)"
+                        prepend-icon="mdi-calendar"
                         readonly
                         variant="underlined"
                         v-bind="props"
                       ></v-text-field>
                     </template>
+
                     <v-date-picker
-                      v-model="birthdyPickerValue"
-                      view-mode="months"
-                      @click=""
+                      v-model:view-mode="viewMode"
+                      v-model="displayDate"
+                      @update:month="onMonthSelect"
+                      @update:year="onYearSelect"
+                      hide-header
+                      color="primary"
                     ></v-date-picker>
                   </v-menu>
                 </v-col>
@@ -2129,6 +2133,10 @@ import DistributionSeat from "./utilsComponets/distributionSeat.vue";
 
 export default {
   data: () => ({
+    viewMode: "months",
+    selectedYear: new Date().getFullYear(),
+    selectedMonth: new Date().getMonth(),
+    menu: false,
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
@@ -2157,7 +2165,6 @@ export default {
     selected: [],
     recordTable: [],
     paymentTable: [],
-    menu: false,
     menuType: 0,
     modal: false,
     statusName: "",
@@ -2260,6 +2267,23 @@ export default {
     id() {
       return this.$route.params.id;
     },
+
+    displayDate() {
+      if (this.editedItem.birthday) {
+        let [year, month] = this.editedItem.birthday.split("-");
+        this.selectedYear = parseInt(year);
+        this.selectedMonth = parseInt(month);
+
+        return `${this.selectedYear + 1911}-${this.selectedMonth}`;
+      } else {
+        this.selectedYear = new Date().getFullYear();
+        this.selectedMonth = new Date().getMonth();
+
+        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+        return `${this.selectedYear - 1911}-${monthStr}`;
+      }
+    },
   },
 
   watch: {
@@ -2272,19 +2296,54 @@ export default {
     },
 
     selected(data) {},
-
-    birthdyPickerValue(val) {
-      if (val.length === undefined) {
-        this.editedItem.birthday = val.toISOString().substring(1, 7);
-      }
-
-      this.menu = false; // 選擇後自動關閉
-    },
   },
 
   methods: {
     copyText(text) {
       navigator.clipboard.writeText(text).then(() => {});
+    },
+
+    async onYearSelect(year) {
+      this.selectedYear = year;
+
+      if (this.editedItem.birthday) {
+        let [year, month] = this.editedItem.birthday.split("-");
+        this.editedItem.birthday =
+          (parseInt(this.selectedYear) - 1911).toString() + "-" + month;
+      } else {
+        this.selectedMonth = new Date().getMonth();
+        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+        this.editedItem.birthday =
+          (parseInt(this.selectedYear) - 1911).toString() + "-" + monthStr;
+      }
+
+      setTimeout(() => {
+        this.viewMode = "months";
+      }, 1);
+    },
+
+    async onMonthSelect(date) {
+      this.selectedMonth = date;
+
+      if (this.editedItem.birthday) {
+        let [year, month] = this.editedItem.birthday.split("-");
+        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+        this.editedItem.birthday = parseInt(year) + "-" + monthStr;
+      } else {
+        this.selectedYear = new Date().getFullYear();
+        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+        this.editedItem.birthday =
+          (parseInt(this.selectedYear) - 1911).toString() + "-" + monthStr;
+      }
+
+      this.menu = false;
+
+      setTimeout(() => {
+        this.viewMode = "months";
+      }, 1);
     },
 
     selectAllToggle(props) {

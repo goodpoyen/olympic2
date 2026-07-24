@@ -356,20 +356,22 @@
                   >
                     <template v-slot:activator="{ props }">
                       <v-text-field
-                        prepend-icon="mdi-calendar"
                         v-model="studentData.birthday"
                         label="出生年月(民國/月)"
+                        prepend-icon="mdi-calendar"
                         readonly
                         variant="underlined"
                         v-bind="props"
-                        :rules="[(v) => !!v || '出生年月不能為空']"
-                        required
                       ></v-text-field>
                     </template>
+
                     <v-date-picker
-                      v-model="birthdyPickerValue"
-                      view-mode="months"
-                      @click=""
+                      v-model:view-mode="viewMode"
+                      v-model="displayDate"
+                      @update:month="onMonthSelect"
+                      @update:year="onYearSelect"
+                      hide-header
+                      color="primary"
                     ></v-date-picker>
                   </v-menu>
                 </v-col>
@@ -1310,9 +1312,12 @@
 <script>
 export default {
   data: () => ({
+    viewMode: "months",
+    selectedYear: new Date().getFullYear(),
+    selectedMonth: new Date().getMonth(),
+    menu: false,
     videoId: "https://www.youtube.com/embed/oo5YfX-j_i4?si=DKZx6qqxXju2ClZR",
     birthdyPickerValue: "",
-    menu: false,
     teachVideoColor: "grey",
     teachBookColor: "white",
     OTPBtnlock: false,
@@ -1421,18 +1426,27 @@ export default {
       }
       return this.$route.params.testName;
     },
-  },
 
-  watch: {
-    birthdyPickerValue(val) {
-      if (val.length === undefined) {
-        this.studentData.birthday = this.parseDate(
-          val.toISOString().substring(1, 7),
-        );
+    displayDate() {
+      if (this.studentData.birthday) {
+        let [year, month] = this.studentData.birthday.split("-");
+        this.selectedYear = parseInt(year);
+        this.selectedMonth = parseInt(month);
+
+        return `${this.selectedYear + 1911}-${this.selectedMonth}`;
+      } else {
+        // this.selectedYear = new Date().getFullYear();
+        // this.selectedMonth = new Date().getMonth();
+
+        // let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+        // return `${this.selectedYear - 1911}-${monthStr}`;
+        return this.birthdyPickerValue;
       }
-      this.menu = false; // 選擇後自動關閉
     },
   },
+
+  watch: {},
 
   beforeDestroy() {
     clearInterval(this.reciprocal);
@@ -1441,6 +1455,49 @@ export default {
   },
 
   methods: {
+    async onYearSelect(year) {
+      this.selectedYear = year;
+
+      if (this.studentData.birthday) {
+        let [year, month] = this.studentData.birthday.split("-");
+        this.studentData.birthday =
+          (parseInt(this.selectedYear) - 1911).toString() + "-" + month;
+      } else {
+        this.selectedMonth = new Date().getMonth();
+        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+        this.studentData.birthday =
+          (parseInt(this.selectedYear) - 1911).toString() + "-" + monthStr;
+      }
+
+      setTimeout(() => {
+        this.viewMode = "months";
+      }, 1);
+    },
+
+    async onMonthSelect(date) {
+      this.selectedMonth = date;
+
+      if (this.studentData.birthday) {
+        let [year, month] = this.studentData.birthday.split("-");
+        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+        this.studentData.birthday = parseInt(year) + "-" + monthStr;
+      } else {
+        this.selectedYear = new Date().getFullYear();
+        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+        this.studentData.birthday =
+          (parseInt(this.selectedYear) - 1911).toString() + "-" + monthStr;
+      }
+
+      this.menu = false;
+
+      setTimeout(() => {
+        this.viewMode = "months";
+      }, 1);
+    },
+
     checkIdcard(value) {
       let input = value.split("");
       let tempId = this.studentData.idCard;
