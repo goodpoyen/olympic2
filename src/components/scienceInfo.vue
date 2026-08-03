@@ -88,10 +88,27 @@
       show-select
       @toggle-select-all="selectAllToggle"
     >
-      <template v-slot:headers="{ columns, isSorted, getSortIcon, toggleSort }">
+      <template
+        v-slot:headers="{
+          columns,
+          isSorted,
+          getSortIcon,
+          toggleSort,
+          selectAll,
+          someSelected,
+          allSelected,
+        }"
+      >
         <tr>
           <template v-for="column in columns" :key="column.key">
-            <th>
+            <th v-if="column.key === 'data-table-select'">
+              <v-checkbox-btn
+                :model-value="allSelected"
+                :indeterminate="someSelected && !allSelected"
+                @update:model-value="selectAll"
+              ></v-checkbox-btn>
+            </th>
+            <th v-else>
               <span
                 class="me-2 cursor-pointer"
                 @click="toggleSort(column)"
@@ -2347,6 +2364,7 @@ export default {
     },
 
     selectAllToggle(props) {
+      console.log(4444);
       if (props.items.length > 0 && props.value) {
         const self = this;
         props.items.forEach((item) => {

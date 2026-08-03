@@ -48,10 +48,27 @@
       loading-text="資料處理中...."
       class="elevation-1"
     >
-      <template v-slot:headers="{ columns, isSorted, getSortIcon, toggleSort }">
+      <template
+        v-slot:headers="{
+          columns,
+          isSorted,
+          getSortIcon,
+          toggleSort,
+          selectAll,
+          someSelected,
+          allSelected,
+        }"
+      >
         <tr>
           <template v-for="column in columns" :key="column.key">
-            <th>
+            <th v-if="column.key === 'data-table-select'">
+              <v-checkbox-btn
+                :model-value="allSelected"
+                :indeterminate="someSelected && !allSelected"
+                @update:model-value="selectAll"
+              ></v-checkbox-btn>
+            </th>
+            <th v-else>
               <span
                 class="me-2 cursor-pointer"
                 @click="toggleSort(column)"
