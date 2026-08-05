@@ -11,7 +11,7 @@ import { globalTool } from "./utils/tool.js";
 import { recordService } from "./utils/record.js";
 import { tokenService } from "./utils/token.js";
 
-loadFonts();
+// loadFonts();
 
 const app = createApp(App);
 
