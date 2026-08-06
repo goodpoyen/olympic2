@@ -214,7 +214,6 @@ export default {
           text: "甄選管理",
           icon: "mdi-calendar-text-outline",
         },
-        { text: "系統管理", icon: "mdi-cog-outline" },
       ];
 
       this.groupItems = [
@@ -239,7 +238,6 @@ export default {
           text: "甄選管理",
           icon: "mdi-calendar-text-outline",
         },
-        { text: "系統管理", icon: "mdi-cog-outline" },
       ];
 
       this.groupItems = [

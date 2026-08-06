@@ -81,7 +81,10 @@ export default {
     ) {
       this.loginShow = true;
 
-      if (location.hostname === this.systemENV.APLDOMAIN) {
+      if (
+        this.systemENV.MOD === "prod" &&
+        location.hostname === this.systemENV.APLDOMAIN
+      ) {
         return true;
       }
     }
