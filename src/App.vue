@@ -69,38 +69,20 @@ export default {
       currentUrl.includes("/applySignup") ||
       currentUrl.includes("/applyScore")
     ) {
-      if (
-        this.systemENV.MOD === "sit" &&
-        location.hostname !== this.systemENV.SCIDOMAIN &&
-        location.hostname !== this.systemENV.OLYDOMAIN
-      ) {
-        if (location.hostname === this.systemENV.SCIDOMAIN) {
-          location.href = this.systemENV.VUE_APP_SCILOCALURL;
-        } else {
-          location.href = this.systemENV.VUE_APP_OLYLOCALURL;
-        }
-      }
-
-      if (
-        this.systemENV.MOD === "prod" &&
-        location.hostname !== this.systemENV.SCIDOMAIN &&
-        location.hostname !== this.systemENV.APLDOMAIN
-      ) {
-        location.href = this.systemENV.VUE_APP_SCILOCALURL;
-      }
       this.loginShow = true;
+
       return true;
     }
 
-    if (currentUrl.includes("/login") || currentUrl.includes("/scilogin")) {
-      if (location.hostname === this.systemENV.OLYDOMAIN) {
-        this.loginShow = true;
-      } else {
-        if (this.systemENV.MOD === "dev") {
-          this.loginShow = true;
-        } else if (location.hostname === this.systemENV.SCIDOMAIN) {
-          this.loginShow = true;
-        }
+    if (
+      currentUrl.includes("/login") ||
+      currentUrl.includes("/scilogin") ||
+      currentUrl.includes("/404")
+    ) {
+      this.loginShow = true;
+
+      if (location.hostname === this.systemENV.APLDOMAIN) {
+        return true;
       }
     }
 
@@ -108,45 +90,23 @@ export default {
       if (!currentUrl.includes("/login") && !currentUrl.includes("/scilogin")) {
         if (location.hostname === this.systemENV.OLYDOMAIN) {
           location.href = "/login";
-        } else {
-          if (this.systemENV.MOD === "dev") {
-            if (currentUrl.includes("/manage")) {
-              if (this.globalSystemValue.system === "science") {
-                location.href = "/science/scilogin";
-              } else {
-                location.href = "/login";
-              }
-            } else {
-              location.href = "/science/signup";
-            }
-          } else if (location.hostname === this.systemENV.SCIDOMAIN) {
+        } else if (location.hostname === this.systemENV.APLDOMAIN) {
+          location.href = "/404";
+        } else if (location.hostname === this.systemENV.SCIDOMAIN) {
+          if (currentUrl.includes("/manage")) {
+            location.href = "/science/scilogin";
+          } else {
             location.href = "/science/signup";
           }
-        }
-      } else {
-        if (
-          location.hostname === this.systemENV.OLYDOMAIN &&
-          currentUrl.includes("/science/")
-        ) {
-          if (this.systemENV.MOD === "sit") {
-            location.href = this.systemENV.VUE_APP_SCILOCALURL;
-          }
-
-          if (this.systemENV.MOD === "prod") {
-            location.href = this.systemENV.VUE_APP_SCILOCALURL;
-          }
-        }
-
-        if (
-          location.hostname === this.systemENV.SCIDOMAIN &&
-          !currentUrl.includes("/science/")
-        ) {
-          if (this.systemENV.MOD === "sit") {
-            location.href = this.systemENV.VUE_APP_OLYLOCALURL;
-          }
-
-          if (this.systemENV.MOD === "prod") {
-            location.href = this.systemENV.VUE_APP_OLYLOCALURL;
+        } else {
+          if (currentUrl.includes("/manage")) {
+            if (this.globalSystemValue.system === "science") {
+              location.href = "/science/scilogin";
+            } else {
+              location.href = "/login";
+            }
+          } else {
+            location.href = "/science/signup";
           }
         }
       }

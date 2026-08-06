@@ -21,6 +21,8 @@ export default {
 
   methods: {},
 
-  mounted() {},
+  mounted() {
+    this.loginShow = true;
+  },
 };
 </script>
