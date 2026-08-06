@@ -63,9 +63,10 @@ export default {
       currentUrl.includes("/science/editor/") ||
       currentUrl.includes("/science/barcodeprint/") ||
       currentUrl.includes("/science/checkback/") ||
-      currentUrl.includes("/science/signup") ||
+      currentUrl.includes("/science/signupresult/") ||
       currentUrl.includes("/science/signup/") ||
       currentUrl.includes("/science/scoreload/") ||
+      currentUrl.includes("/science/signup") ||
       currentUrl.includes("/applySignup") ||
       currentUrl.includes("/applyScore")
     ) {
@@ -90,7 +91,7 @@ export default {
     }
 
     if (!(await this.tokenService.checkLogin())) {
-      if (!currentUrl.includes("/login") && !currentUrl.includes("/scilogin")) {
+      if (currentUrl !== "/login" && currentUrl !== "/scilogin") {
         if (location.hostname === this.systemENV.OLYDOMAIN) {
           location.href = "/login";
         } else if (location.hostname === this.systemENV.APLDOMAIN) {
