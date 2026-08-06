@@ -91,7 +91,7 @@ export default {
     }
 
     if (!(await this.tokenService.checkLogin())) {
-      if (currentUrl !== "/login" && currentUrl !== "/scilogin") {
+      if (currentUrl !== "/login" && currentUrl !== "/science/scilogin") {
         if (location.hostname === this.systemENV.OLYDOMAIN) {
           location.href = "/login";
         } else if (location.hostname === this.systemENV.APLDOMAIN) {
