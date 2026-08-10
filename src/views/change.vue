@@ -55,9 +55,24 @@
                 ></v-text-field>
               </v-col>
             </v-row>
+            <v-row style="display: flex; justify-content: center">
+              <v-col cols="12" sm="6" md="6">
+                <span style="font-weight: bold; color: red"
+                  >* 注意！！新密碼不能與前三次相同。</span
+                >
+              </v-col>
+            </v-row>
+            <v-alert
+              v-show="alertShow"
+              variant="outlined"
+              type="warning"
+              style="width: 50%; margin-top: 20px; margin-left: 23%"
+            >
+              {{ errorMsg }}
+            </v-alert>
           </v-container>
         </v-card-text>
-        <v-card-actions style="margin-top: -50px">
+        <v-card-actions style="margin-top: -10px">
           <v-spacer></v-spacer>
           <v-btn
             color="blue darken-1"
@@ -69,16 +84,6 @@
           >
         </v-card-actions>
       </v-form>
-      <v-alert
-        v-show="alertShow"
-        outlined
-        type="warning"
-        prominent
-        border="left"
-      >
-        {{ errorMsg }}
-      </v-alert>
-      <!-- </div> -->
     </v-card>
     <div
       class="py-8 white--text text-center"
@@ -168,7 +173,7 @@ export default {
             this.alertShow = true;
             this.loginWord = "";
             this.confirmPassword = "";
-            this.errorMsg = "不能與現在密碼一樣";
+            this.errorMsg = "不能與前三次的密碼一樣";
           } else if (response.data.code === 201 || response.data.code === 501) {
             this.globalSystemTool.removeLocalStorage();
           } else {

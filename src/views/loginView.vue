@@ -83,7 +83,12 @@
                 </v-btn>
               </v-col>
             </v-row>
-            <v-alert v-show="alertShow" outlined type="warning" prominent>
+            <v-alert
+              v-show="alertShow"
+              variant="outlined"
+              type="warning"
+              prominent
+            >
               {{ errorMsg }}
             </v-alert>
             <v-alert
