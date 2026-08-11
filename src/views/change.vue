@@ -30,10 +30,14 @@
         <v-card-text>
           <v-container>
             <v-row style="display: flex; justify-content: center">
-              <v-col cols="12" sm="6" md="6">
+              <v-col cols="12" sm="8" md="8">
                 <span style="font-weight: bold">重設密碼：</span>
+              </v-col>
+            </v-row>
+            <v-row style="display: flex; justify-content: center">
+              <v-col cols="12" sm="8" md="8">
                 <v-text-field
-                  style="margin-top: 3%"
+                  style="margin-top: -10%"
                   dense
                   outlined
                   v-model="loginWord"
@@ -47,10 +51,14 @@
               </v-col>
             </v-row>
             <v-row style="display: flex; justify-content: center">
-              <v-col cols="12" sm="6" md="6">
+              <v-col cols="12" sm="8" md="8">
                 <span style="font-weight: bold">確認密碼：</span>
+              </v-col>
+            </v-row>
+            <v-row style="display: flex; justify-content: center">
+              <v-col cols="12" sm="8" md="8">
                 <v-text-field
-                  style="margin-top: 3%"
+                  style="margin-top: -10%"
                   dense
                   outlined
                   v-model="confirmPassword"
@@ -64,7 +72,7 @@
               </v-col>
             </v-row>
             <v-row style="display: flex; justify-content: center">
-              <v-col cols="12" sm="6" md="6">
+              <v-col cols="12" sm="8" md="8">
                 <span style="font-weight: bold; color: red"
                   >* 注意！！新密碼不能與前三次相同。</span
                 >
