@@ -1,14 +1,22 @@
 <template>
   <v-main
-    :style="{
-      'background-image': 'url(/images/loginBackground.png)',
-      'background-size': '100% 100%',
-      'background-repeat': 'no-repeat',
-      height: '100%',
-    }"
+    :style="
+      !editor
+        ? {
+            'background-image': 'url(/images/loginBackground.png)',
+            'background-size': '100% 100%',
+            'background-repeat': 'no-repeat',
+            height: '100%',
+          }
+        : {}
+    "
   >
     <v-card
-      style="position: relative; top: 7%; left: 25%"
+      :style="
+        !editor
+          ? { position: 'relative', top: '7%', left: '25%' }
+          : { position: 'relative', top: '7%', left: '10%' }
+      "
       :max-width="device === 'PC' ? '50%' : '80%'"
     >
       <v-card-title
@@ -113,6 +121,7 @@ export default {
       alertShow: false,
       errorMsg: "",
       valid: true,
+      editor: false,
       device: "PC",
       PWDRules: [
         (v) => !!v || "密碼不能為空",
@@ -174,6 +183,11 @@ export default {
             this.loginWord = "";
             this.confirmPassword = "";
             this.errorMsg = "不能與前三次的密碼一樣";
+          } else if (response.data.code === 219) {
+            this.alertShow = true;
+            this.loginWord = "";
+            this.confirmPassword = "";
+            this.errorMsg = "24小時內不能重複修改密碼";
           } else if (response.data.code === 201 || response.data.code === 501) {
             this.globalSystemTool.removeLocalStorage();
           } else {
@@ -187,8 +201,12 @@ export default {
   },
 
   async mounted() {
+    const currentUrl = window.location.pathname;
     await this.tokenService.renewLT();
-    // console.log(this.system)
+
+    if (currentUrl.includes("/manage/infoEditorP")) {
+      this.editor = true;
+    }
 
     if (window.innerWidth <= 500) {
       this.device = "phone";

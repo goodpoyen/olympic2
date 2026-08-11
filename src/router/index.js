@@ -87,6 +87,11 @@ const routes = [
     component: () => import("../views/manageView.vue"),
     children: [
       {
+        path: "infoEditorP",
+        name: "infoEditorP",
+        component: () => import("../views/change.vue"),
+      },
+      {
         path: "optionMenu",
         name: "optionMenu",
         component: () => import("../components/optionMenu.vue"),
