@@ -83,7 +83,12 @@
                 </v-btn>
               </v-col>
             </v-row>
-            <v-alert v-show="alertShow" outlined type="warning" prominent>
+            <v-alert
+              v-show="alertShow"
+              variant="outlined"
+              type="warning"
+              prominent
+            >
               {{ errorMsg }}
             </v-alert>
             <v-alert
@@ -307,6 +312,10 @@ export default {
               this.tokenService.store("Lcount", this.loginCount + 1, "900000");
             }
             this.makeCode();
+          } else if (response.data.code === 218) {
+            this.alertShow = true;
+            this.errorMsg = "登入失敗多次，請稍後再登入";
+            this.verifycode = "";
           } else {
             this.globalSystemTool.removeLocalStorage();
           }

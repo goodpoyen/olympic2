@@ -53,9 +53,26 @@
         {{ systemWord }}{{ titleName }}
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon @click="logout">
-        <v-icon>mdi-export</v-icon>
-      </v-btn>
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn v-bind="props" append-icon="mdi-cog" size="large"></v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item link>
+            <v-list-item-title @click="iconClick('修改密碼')"
+              ><v-icon icon="mdi-lastpass" class="me-2"></v-icon
+              >修改密碼</v-list-item-title
+            >
+          </v-list-item>
+          <v-list-item link>
+            <v-list-item-title @click="logout">
+              <v-icon icon="mdi-export" class="me-2"></v-icon>
+              系統登出</v-list-item-title
+            >
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
     <router-view> </router-view>
   </div>
@@ -128,6 +145,8 @@ export default {
         location.href = "/manage/optionMenu";
       } else if (title === "聯絡人管理") {
         location.href = "/manage/schoolUser";
+      } else if (title === "修改密碼") {
+        location.href = "/manage/infoEditorP";
       }
     },
   },
