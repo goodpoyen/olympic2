@@ -31,12 +31,10 @@ export function tokenService() {
         } else {
           if (systemENV.MOD === "dev") {
             location.href = "/science/scilogin";
-            // location.href = '/login'
           } else if (location.hostname === systemENV.SCIDOMAIN) {
             location.href = "/science/scilogin";
           }
         }
-        // location.href = '/login'
       } else {
         store("ret", itemObj.value, "1800000");
         return true;
@@ -143,7 +141,6 @@ export function tokenService() {
           } else {
             if (systemENV.MOD === "dev") {
               location.href = "/science/scilogin";
-              // location.href = '/login'
             } else if (location.hostname === systemENV.SCIDOMAIN) {
               location.href = "/science/scilogin";
             }
