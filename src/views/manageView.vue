@@ -121,7 +121,19 @@ export default {
   },
 
   methods: {
-    logout() {
+    async logout() {
+      const data = {};
+      data.t = localStorage.getItem("ret");
+
+      await this.axios
+        .post(this.systemENV.APISERVERURL + "/logOut", data)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          // console.log(error);
+        });
+
       this.globalSystemTool.removeLocalStorage(this.globalSystemValue.system);
     },
 
