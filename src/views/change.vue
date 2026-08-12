@@ -161,11 +161,6 @@ export default {
           // console.log(response.data);
           if (response.data.code === 200) {
             this.tokenService.store(
-              "act",
-              response.data.resultData.act,
-              "1800000",
-            );
-            this.tokenService.store(
               "ret",
               response.data.resultData.ret,
               "1800000",

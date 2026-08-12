@@ -228,11 +228,6 @@ export default {
           if (response.data.code === 200) {
             localStorage.removeItem("Lcount");
             this.tokenService.store(
-              "act",
-              response.data.resultData.act,
-              "1800000",
-            );
-            this.tokenService.store(
               "ret",
               response.data.resultData.ret,
               "1800000",
@@ -269,11 +264,6 @@ export default {
             }
             this.refreshCode();
           } else if (response.data.code === 206) {
-            this.tokenService.store(
-              "act",
-              response.data.resultData.act,
-              "1800000",
-            );
             this.tokenService.store(
               "ret",
               response.data.resultData.ret,
