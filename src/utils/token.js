@@ -19,9 +19,8 @@ export function tokenService() {
 
   function renewLT() {
     const item = localStorage.getItem("ret");
-    const item2 = localStorage.getItem("act");
 
-    if (item && item2) {
+    if (item) {
       const itemObj = JSON.parse(item);
 
       if (new Date().getTime() - itemObj.time >= itemObj.expire) {
@@ -41,16 +40,14 @@ export function tokenService() {
       }
     } else {
       localStorage.removeItem("ret");
-      localStorage.removeItem("act");
       return false;
     }
   }
 
   async function checkLogin() {
     const item = localStorage.getItem("ret");
-    const item2 = localStorage.getItem("act");
 
-    if (item && item2) {
+    if (item) {
       const itemObj = JSON.parse(item);
 
       if (new Date().getTime() - itemObj.time >= itemObj.expire) {
@@ -83,14 +80,6 @@ export function tokenService() {
           status = true;
         } else if (response.data.code === 400) {
           status = false;
-        } else if (response.data.code === 401) {
-          store("ret", response.data.resultData.ret, "1800000");
-          store("level", response.data.resultData.level, "1800000");
-          store("olympic", response.data.resultData.olympic, "1800000");
-          store("system", response.data.resultData.system, "1800000");
-          store("act", response.data.resultData.act, "1800000");
-
-          status = true;
         }
       })
       .catch((err) => {
