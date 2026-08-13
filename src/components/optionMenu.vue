@@ -188,9 +188,9 @@
               <router-link
                 v-if="item.type === 5"
                 :to="
-                  item.examStart !== '' &&
-                  item.examEnd !== '' &&
-                  '/manage/optionScienceExam/' + item.olyId
+                  item.examStart !== '' && item.examEnd !== ''
+                    ? '/manage/optionScienceExam/' + item.olyId
+                    : ''
                 "
                 style="
                   font-size: 13px;
@@ -1104,7 +1104,7 @@
     </v-dialog>
     <v-dialog v-model="dialogDelete" max-width="500px">
       <v-card>
-        <v-card-title style="background-color: red; height: 57px">
+        <v-card-title style="background-color: red; height: 47px">
           <v-icon
             large
             style="
@@ -1314,16 +1314,14 @@
     </v-dialog>
     <v-dialog v-model="warning" max-width="500px">
       <v-card>
-        <v-card-title style="background-color: #900d16; height: 57px">
+        <v-card-title style="background-color: #900d16; height: 47px">
           <span
             class=""
             style="font-size: 18px !important; font-weight: bold; color: white"
             >甄選考試起訖時間未填寫</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <div>甄選考試起訖時間需填寫，才能操作功能！</div>
         </v-card-text>
         <v-card-actions>
@@ -1645,13 +1643,15 @@ export default {
       await this.tokenService.renewLT();
       var column;
 
-      if (item.rules !== "") {
-        this.tempRules = JSON.parse(item.rules);
-        column = JSON.parse(item.rules);
-      } else {
-        this.tempRules = JSON.parse(JSON.stringify(this.defaultRules));
-        column = JSON.parse(JSON.stringify(this.defaultRules));
-      }
+      this.tempRules = JSON.parse(JSON.stringify(this.defaultRules));
+      column = JSON.parse(JSON.stringify(this.defaultRules));
+      // if (item.rules !== "") {
+      //   this.tempRules = JSON.parse(item.rules);
+      //   column = JSON.parse(item.rules);
+      // } else {
+      //   this.tempRules = JSON.parse(JSON.stringify(this.defaultRules));
+      //   column = JSON.parse(JSON.stringify(this.defaultRules));
+      // }
 
       const that = this;
       column.forEach(function (data) {

@@ -1039,8 +1039,17 @@
         :id="id"
         :scheduleType="scheduleType"
         @closeDownlodpup="closeDownlodpup"
+        @openScoreForm="openScoreForm"
       >
       </downloadfile-Dialog>
+    </v-dialog>
+    <v-dialog v-model="downloadScorePup" width="40%">
+      <downloadscore-Dialog
+        :id="id"
+        :scheduleType="scheduleType"
+        @closeDownlodScorepup="closeDownlodScorepup"
+      >
+      </downloadscore-Dialog>
     </v-dialog>
     <v-dialog v-model="importPup" width="35%">
       <importfile-dialog
@@ -1068,6 +1077,7 @@ import SendmailDialog from "./contestantsComponts/sendmailDialog.vue";
 import SnedtypeDialog from "./contestantsComponts/snedtypeDialog.vue";
 import SetemailDialog from "./contestantsComponts/setemailDialog.vue";
 import DownloadfileDialog from "./contestantsComponts/downloadfileDialog.vue";
+import DownloadscoreDialog from "./contestantsComponts/downloadscoreDialog.vue";
 import ImportfileDialog from "./contestantsComponts/importfileDialog.vue";
 import ImportcontestantsDialog from "./contestantsComponts/importcontestantsDialog.vue";
 import ImportexamtranscripDialog from "./contestantsComponts/importexamtranscripDialog.vue";
@@ -1081,6 +1091,7 @@ export default {
     deletepup: false,
     editorScorePup: false,
     downloadPup: false,
+    downloadScorePup: false,
     snedTypePup: false,
     importDataErrorPup: false,
     scoreStatus: true,
@@ -1182,6 +1193,7 @@ export default {
     SnedtypeDialog,
     SetemailDialog,
     DownloadfileDialog,
+    DownloadscoreDialog,
     ImportfileDialog,
     ImportcontestantsDialog,
     ImportexamtranscripDialog,
@@ -2062,6 +2074,14 @@ export default {
 
     closeDownlodpup(value) {
       this.downloadPup = value;
+    },
+
+    openScoreForm(value) {
+      this.downloadScorePup = value;
+    },
+
+    closeDownlodScorepup(value) {
+      this.downloadScorePup = value;
     },
 
     uploadFile(value) {
