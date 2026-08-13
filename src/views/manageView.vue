@@ -128,7 +128,7 @@ export default {
       await this.axios
         .post(this.systemENV.APISERVERURL + "/logOut", data)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch(function (error) {
           // console.log(error);

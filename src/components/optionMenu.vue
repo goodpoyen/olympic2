@@ -1643,13 +1643,15 @@ export default {
       await this.tokenService.renewLT();
       var column;
 
-      if (item.rules !== "") {
-        this.tempRules = JSON.parse(item.rules);
-        column = JSON.parse(item.rules);
-      } else {
-        this.tempRules = JSON.parse(JSON.stringify(this.defaultRules));
-        column = JSON.parse(JSON.stringify(this.defaultRules));
-      }
+      this.tempRules = JSON.parse(JSON.stringify(this.defaultRules));
+      column = JSON.parse(JSON.stringify(this.defaultRules));
+      // if (item.rules !== "") {
+      //   this.tempRules = JSON.parse(item.rules);
+      //   column = JSON.parse(item.rules);
+      // } else {
+      //   this.tempRules = JSON.parse(JSON.stringify(this.defaultRules));
+      //   column = JSON.parse(JSON.stringify(this.defaultRules));
+      // }
 
       const that = this;
       column.forEach(function (data) {
