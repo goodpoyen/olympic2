@@ -88,11 +88,25 @@ export default {
     },
 
     async downloadScores() {
-      // console.log(this.selectedSchools);
-      if (this.selectedSchools.length > 2) {
+      if (this.selectedSchools.length > 10) {
         this.alertShow = true;
       } else {
-        this.loadShow = true;
+        // this.loadShow = true;
+
+        const data = {};
+        data.AT = await this.tokenService.getFastAT();
+        data.olyId = this.id;
+        data.olympic = this.globalSystemValue.olympic;
+        data.schoolList = this.selectedSchools.join(",");
+
+        await this.axios
+          .post(this.systemENV.APISERVERURL + "/downloadScorePDF", data)
+          .then((response) => {
+            // console.log(response.data);
+          })
+          .catch(function (error) {
+            // console.log(error);
+          });
       }
     },
 
