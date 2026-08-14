@@ -486,21 +486,18 @@
       <v-card>
         <v-card-title
           dark
-          class="text-h5 grey lighten-2 white--text"
           style="background-color: #2d5bff !important"
+          class="text-h5 grey lighten-2 white--text"
         >
           <v-icon
             large
-            style="
-              font-size: 23px;
-              font-weight: bold;
-              color: white;
-              margin-right: 7px;
-            "
+            style="font-size: 23px; font-weight: bold; color: white"
           >
             mdi-seal-variant
           </v-icon>
-          <div style="font-size: 18px; font-weight: bold">成績管理編輯</div>
+          <span style="font-size: 18px; font-weight: bold; color: white">
+            成績管理編輯
+          </span>
         </v-card-title>
         <v-card-text>
           <v-row>
@@ -513,9 +510,9 @@
             </v-col>
             <v-col
               class="d-flex justify-center"
-              cols="3"
-              sm="3"
-              md="3"
+              cols="6"
+              sm="6"
+              md="6"
               style="
                 margin-top: 16px;
                 font-weight: bold;
@@ -536,9 +533,9 @@
             </v-col>
             <v-col
               class="d-flex justify-center"
-              cols="3"
-              sm="3"
-              md="3"
+              cols="6"
+              sm="6"
+              md="6"
               style="font-weight: bold; border-bottom: 1px solid; height: 40px"
             >
               {{ editedItem.examCode }}
@@ -546,7 +543,7 @@
           </v-row>
           <v-row>
             <v-col
-              cols="3"
+              cols=""
               sm="3"
               md="3"
               style="font-size: 16px; font-weight: bold"
@@ -554,9 +551,9 @@
             </v-col>
             <v-col
               class="d-flex justify-center"
-              cols="3"
-              sm="3"
-              md="3"
+              cols="6"
+              sm="6"
+              md="6"
               style="
                 font-size: 16px;
                 font-weight: bold;
@@ -580,15 +577,13 @@
               "
             >
               <v-icon dense left> mdi-account-remove </v-icon>
-              <p style="font-size: 16px; margin-top: 16px">缺考</p>
+              <p style="font-size: 16px; margin-top: -3px">缺考</p>
             </v-btn>
           </v-row>
           <v-form ref="form" v-model="scoreStatus">
             <v-card v-if="scheduleType === 5" style="margin-top: 30px">
               <v-card-title style="background-color: #e0eafb; height: 40px">
-                <div
-                  style="margin-top: -10px; font-size: 16px; font-weight: bold"
-                >
+                <div style="font-size: 16px; font-weight: bold">
                   語文能力成績
                 </div>
               </v-card-title>
@@ -611,9 +606,13 @@
                       </div>
                     </v-col>
                     <v-col cols="12" sm="5" md="5" style="padding: 5px">
-                      <div v-if="subject.dataType !== 'boolean'">
+                      <div
+                        v-if="subject.dataType !== 'boolean'"
+                        style="margin-top: 15px"
+                      >
                         <v-text-field
                           v-if="userScore[subject.slId] === '9999'"
+                          density="comfortable"
                           value="缺考"
                           :disabled="true"
                           class="centered-input"
@@ -622,6 +621,7 @@
                         <v-text-field
                           v-else
                           v-model="userScore[subject.slId]"
+                          density="comfortable"
                           class="centered-input"
                           @click="getsubjetData(subject)"
                           :maxlength="subject.valueLength"
@@ -646,9 +646,7 @@
             </v-card>
             <v-card style="margin-top: 20px">
               <v-card-title style="background-color: #e0eafb; height: 40px">
-                <div
-                  style="margin-top: -10px; font-size: 16px; font-weight: bold"
-                >
+                <div style="font-size: 16px; font-weight: bold">
                   自然科學能力成績
                 </div>
               </v-card-title>
@@ -671,9 +669,13 @@
                       </div>
                     </v-col>
                     <v-col cols="12" sm="5" md="5" style="padding: 5px">
-                      <div v-if="subject.dataType !== 'boolean'">
+                      <div
+                        v-if="subject.dataType !== 'boolean'"
+                        style="margin-top: 15px"
+                      >
                         <v-text-field
                           v-if="userScore[subject.slId] === '9999'"
+                          density="comfortable"
                           value="缺考"
                           :disabled="true"
                           class="centered-input"
@@ -681,6 +683,7 @@
                         ></v-text-field>
                         <v-text-field
                           v-else
+                          density="comfortable"
                           v-model="userScore[subject.slId]"
                           class="centered-input"
                           @click="getsubjetData(subject)"
@@ -707,9 +710,7 @@
             </v-card>
             <v-card style="margin-top: 20px">
               <v-card-title style="background-color: #e0eafb; height: 40px">
-                <div
-                  style="margin-top: -10px; font-size: 16px; font-weight: bold"
-                >
+                <div style="font-size: 16px; font-weight: bold">
                   <div v-if="scheduleType === 5">科學能力檢定成績</div>
                   <div v-else>實驗實作檢定成績</div>
                 </div>
@@ -742,13 +743,17 @@
                       </div>
                     </v-col>
                     <v-col cols="12" sm="5" md="5" style="padding: 5px">
-                      <div v-if="subject.dataType !== 'boolean'">
+                      <div
+                        v-if="subject.dataType !== 'boolean'"
+                        style="margin-top: 15px"
+                      >
                         <v-text-field
                           v-if="
                             subject.pattern !== 'textArea' &&
                             userScore[subject.slId] !== '9999'
                           "
                           v-model="userScore[subject.slId]"
+                          density="comfortable"
                           class="centered-input"
                           @click="getsubjetData(subject)"
                           :maxlength="subject.valueLength"
@@ -760,6 +765,7 @@
                             subject.pattern !== 'textArea' &&
                             userScore[subject.slId] === '9999'
                           "
+                          density="comfortable"
                           class="centered-input"
                           value="缺考"
                           :disabled="true"
@@ -771,6 +777,7 @@
                             userScore[subject.slId] !== '缺考'
                           "
                           v-model="userScore[subject.slId]"
+                          width="172"
                           class="mx-2"
                           rows="1"
                           :rules="textRules"
@@ -780,6 +787,7 @@
                             subject.pattern === 'textArea' &&
                             userScore[subject.slId] === '缺考'
                           "
+                          density="comfortable"
                           class="centered-input"
                           value="缺考"
                           :disabled="true"
@@ -802,7 +810,7 @@
                   <v-col cols="12" sm="12" md="12">
                     <div
                       style="
-                        margin-top: 22px;
+                        margin-top: 25px;
                         font-size: 16px;
                         font-weight: bold;
                       "
@@ -853,14 +861,13 @@
     </v-dialog>
     <v-dialog v-model="absentPup" width="40%">
       <v-card>
-        <v-card-title
-          class="white--text"
-          style="background-color: rgb(87 76 76) !important"
-        >
-          <v-icon class="white--text"> mdi-account-remove-outline </v-icon>
-          <div style="margin-left: 5px">
+        <v-card-title dark style="background-color: rgb(87 76 76) !important">
+          <v-icon small style="color: white; margin-top: -4px">
+            mdi-account-remove-outline
+          </v-icon>
+          <span style="margin-left: 5px; color: white">
             {{ editedItem.chineseName }} - 缺考
-          </div>
+          </span>
         </v-card-title>
 
         <v-card-text style="font-size: 12px; font-weight: bold; color: #2d5bff">
@@ -875,120 +882,104 @@
               value="10"
               @click="changeAbsentScore(editedItem, '10')"
             ></v-radio>
-            <div v-if="absentType === '10'" style="margin-left: 10px">
-              <v-row>
-                <v-col cols="12" sm="6" md="6" style="padding: 5px">
-                  <v-card style="margin-top: 10px; margin-bottom: 10px">
-                    <v-card-title
-                      style="background-color: #ededf3; height: 40px"
-                    >
-                      <div
-                        style="
-                          margin-top: -10px;
-                          font-size: 16px;
-                          font-weight: bold;
-                        "
-                      >
-                        語文能力科目
-                      </div>
-                    </v-card-title>
-
-                    <v-card-text>
-                      <div v-for="subject in subjectConfig" :key="subject.slId">
-                        <div
-                          v-if="
-                            subject.subjectGroup === 'language' &&
-                            subject.subjectName !== '【備註】'
-                          "
-                          style="
-                            margin-left: 10px;
-                            font-size: 16px;
-                            font-weight: bold;
-                          "
-                        >
-                          <div v-if="subject.editorSubjectName !== ''">
-                            <v-checkbox
-                              v-model="absnetItem"
-                              :label="subject.editorSubjectName"
-                              :value="subject.slId"
-                              style="margin-bottom: -20px"
-                              @click="setSomeAbsent(subject.slId)"
-                            ></v-checkbox>
-                          </div>
-                          <div v-else>
-                            <v-checkbox
-                              v-model="absnetItem"
-                              :label="subject.subjectName"
-                              :value="subject.slId"
-                              style="margin-bottom: -20px"
-                              @click="setSomeAbsent(subject.slId)"
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                      </div>
-                    </v-card-text>
-                  </v-card>
-                </v-col>
-                <v-col cols="12" sm="6" md="6" style="padding: 5px">
-                  <v-card style="margin-top: 10px; margin-bottom: 10px">
-                    <v-card-title
-                      style="background-color: #ededf3; height: 40px"
-                    >
-                      <div
-                        style="
-                          margin-top: -10px;
-                          font-size: 16px;
-                          font-weight: bold;
-                        "
-                      >
-                        自然科學能力科目
-                      </div>
-                    </v-card-title>
-
-                    <v-card-text>
-                      <div v-for="subject in subjectConfig" :key="subject.slId">
-                        <div
-                          v-if="
-                            subject.subjectGroup === 'scienceExam' &&
-                            subject.subjectName !== '【備註】'
-                          "
-                          style="
-                            margin-left: 10px;
-                            font-size: 16px;
-                            font-weight: bold;
-                          "
-                        >
-                          <div v-if="subject.editorSubjectName !== ''">
-                            <v-checkbox
-                              v-model="absnetItem"
-                              :label="subject.editorSubjectName"
-                              :value="subject.slId"
-                              style="margin-bottom: -20px"
-                              @click="setSomeAbsent(subject.slId)"
-                            ></v-checkbox>
-                          </div>
-                          <div v-else>
-                            <v-checkbox
-                              v-model="absnetItem"
-                              :label="subject.subjectName"
-                              :value="subject.slId"
-                              style="margin-bottom: -20px"
-                              @click="setSomeAbsent(subject.slId)"
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                      </div>
-                    </v-card-text>
-                  </v-card>
-                </v-col>
-              </v-row>
-            </div>
             <v-radio
               label="無缺考"
               value="0"
               @click="changeAbsentScore(editedItem, '0')"
             ></v-radio>
           </v-radio-group>
+          <div v-if="absentType === '10'" style="margin-left: 10px">
+            <v-row>
+              <v-col cols="12" sm="6" md="6" style="padding: 5px">
+                <v-card style="margin-top: 10px; margin-bottom: 10px">
+                  <v-card-title style="background-color: #ededf3; height: 40px">
+                    <div style="font-size: 16px; font-weight: bold">
+                      語文能力科目
+                    </div>
+                  </v-card-title>
+
+                  <v-card-text>
+                    <div v-for="subject in subjectConfig" :key="subject.slId">
+                      <div
+                        v-if="
+                          subject.subjectGroup === 'language' &&
+                          subject.subjectName !== '【備註】'
+                        "
+                        style="
+                          margin-left: 10px;
+                          font-size: 16px;
+                          font-weight: bold;
+                        "
+                      >
+                        <div v-if="subject.editorSubjectName !== ''">
+                          <v-checkbox
+                            v-model="absnetItem"
+                            :label="subject.editorSubjectName"
+                            :value="subject.slId"
+                            style="margin-bottom: -20px"
+                            @click.stop="setSomeAbsent(subject.slId)"
+                          ></v-checkbox>
+                        </div>
+                        <div v-else>
+                          <v-checkbox
+                            v-model="absnetItem"
+                            :label="subject.subjectName"
+                            :value="subject.slId"
+                            style="margin-bottom: -20px"
+                            @click.stop="setSomeAbsent(subject.slId)"
+                          ></v-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" style="padding: 5px">
+                <v-card style="margin-top: 10px; margin-bottom: 10px">
+                  <v-card-title style="background-color: #ededf3; height: 40px">
+                    <div style="font-size: 16px; font-weight: bold">
+                      自然科學能力科目
+                    </div>
+                  </v-card-title>
+
+                  <v-card-text>
+                    <div v-for="subject in subjectConfig" :key="subject.slId">
+                      <div
+                        v-if="
+                          subject.subjectGroup === 'scienceExam' &&
+                          subject.subjectName !== '【備註】'
+                        "
+                        style="
+                          margin-left: 10px;
+                          font-size: 16px;
+                          font-weight: bold;
+                        "
+                      >
+                        <div v-if="subject.editorSubjectName !== ''">
+                          <v-checkbox
+                            v-model="absnetItem"
+                            :label="subject.editorSubjectName"
+                            :value="subject.slId"
+                            style="margin-bottom: -20px"
+                            @click="setSomeAbsent(subject.slId)"
+                          ></v-checkbox>
+                        </div>
+                        <div v-else>
+                          <v-checkbox
+                            v-model="absnetItem"
+                            :label="subject.subjectName"
+                            :value="subject.slId"
+                            style="margin-bottom: -20px"
+                            @click="setSomeAbsent(subject.slId)"
+                          ></v-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+          </div>
         </v-card-text>
         <v-card-actions style="margin-top: 3px">
           <v-spacer></v-spacer>
@@ -1001,7 +992,6 @@
             取消
           </v-btn>
           <v-btn
-            v-if="absentTypeTemp !== '10'"
             text
             color="darken-1"
             :disabled="
@@ -1010,19 +1000,6 @@
                 absentType === '10' &&
                 Object.keys(someAbsent).length === 0)
             "
-            style="color: #2d5bff; font-weight: bold; font-size: 17px"
-            @click="
-              saveExamScore('editorAbsent');
-              absentPup = false;
-            "
-          >
-            確定
-          </v-btn>
-          <v-btn
-            v-if="absentTypeTemp === '10'"
-            text
-            color="darken-1"
-            :disabled="Object.keys(someAbsent).length === 0"
             style="color: #2d5bff; font-weight: bold; font-size: 17px"
             @click="
               saveExamScore('editorAbsent');
@@ -1522,6 +1499,8 @@ export default {
     },
 
     async editorScore(item) {
+      this.loadShow = true;
+
       this.absentType = "0";
 
       this.scoreEditedItem(item);
@@ -1540,6 +1519,8 @@ export default {
         .post(this.systemENV.APISERVERURL + "/getExamScore", data)
         .then((response) => {
           // console.log(response.data);
+          this.loadShow = false;
+
           if (response.data.code === 200) {
             this.subjectConfig = response.data.subjectConfig;
 
@@ -1622,7 +1603,6 @@ export default {
 
     async setSomeAbsent(slId) {
       this.userScore[slId] = this.userScore[slId] === "9999" ? "0" : "9999";
-
       if (this.userScore[slId] === "9999") {
         this.someAbsent[slId] = "9999";
       } else {
@@ -1631,11 +1611,33 @@ export default {
     },
 
     async changeAbsentScore(item, value) {
-      if (this.absentType === this.absentTypeTemp) {
-        return false;
+      if (value === this.absentTypeTemp) {
+        if (value === "0") {
+          await this.changeScoreData(item, "10");
+        } else {
+          return false;
+        }
+      } else {
+        if (this.absentTypeTemp === "10") {
+          await this.changeScoreData(item, "10");
+        } else {
+          await this.changeScoreData(item, value);
+        }
       }
 
-      this.labsentTypeTemp = value;
+      if (value === "9999") {
+        this.absentType = "20";
+        this.editedItem.pass = "缺考";
+      } else if (value === "10") {
+        this.absentType = "10";
+      } else {
+        this.absentType = "0";
+        this.editedItem.pass = "未晉級";
+      }
+    },
+
+    async changeScoreData(item, value) {
+      this.loadShow = true;
 
       const data = {};
       data.AT = await this.tokenService.getFastAT();
@@ -1647,6 +1649,8 @@ export default {
         .post(this.systemENV.APISERVERURL + "/getExamScore", data)
         .then((response) => {
           // console.log(response.data);
+          this.loadShow = false;
+
           if (response.data.code === 200) {
             let info = JSON.parse(response.data.resultData.scoreInfo);
             for (let i = 0; i < this.subjectConfig.length; i++) {

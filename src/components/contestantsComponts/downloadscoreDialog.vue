@@ -75,6 +75,7 @@ export default {
       const data = {};
       data.AT = await this.tokenService.getFastAT();
       data.id = this.id;
+      data.olympic = this.globalSystemValue.olympic;
 
       await this.axios
         .post(this.systemENV.APISERVERURL + "/getSignupSchool", data)
@@ -91,7 +92,7 @@ export default {
       if (this.selectedSchools.length > 10) {
         this.alertShow = true;
       } else {
-        // this.loadShow = true;
+        this.loadShow = true;
 
         const data = {};
         data.AT = await this.tokenService.getFastAT();
@@ -100,9 +101,35 @@ export default {
         data.schoolList = this.selectedSchools.join(",");
 
         await this.axios
-          .post(this.systemENV.APISERVERURL + "/downloadScorePDF", data)
+          .post(this.systemENV.APISERVERURL + "/downloadScorePDF", data, {
+            responseType: "blob",
+          })
           .then((response) => {
             // console.log(response.data);
+            this.loadShow = false;
+
+            const d = new Date();
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, "0");
+            const day = String(d.getDate()).padStart(2, "0");
+            const hours = String(d.getHours()).padStart(2, "0");
+            const minutes = String(d.getMinutes()).padStart(2, "0");
+            const seconds = String(d.getSeconds()).padStart(2, "0");
+
+            const timeString = `${year}${month}${day}${hours}${minutes}${seconds}`;
+
+            const link = document.createElement("a");
+            const blob = new Blob([response.data], { type: "application/zip" });
+            link.style.display = "none";
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute(
+              "download",
+              "甄選生成績單PDF檔案" + timeString + ".zip",
+            );
+            document.body.appendChild(link);
+            link.click();
+
+            this.closeDialog();
           })
           .catch(function (error) {
             // console.log(error);
