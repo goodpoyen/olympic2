@@ -486,21 +486,18 @@
       <v-card>
         <v-card-title
           dark
-          class="text-h5 grey lighten-2 white--text"
           style="background-color: #2d5bff !important"
+          class="text-h5 grey lighten-2 white--text"
         >
           <v-icon
             large
-            style="
-              font-size: 23px;
-              font-weight: bold;
-              color: white;
-              margin-right: 7px;
-            "
+            style="font-size: 23px; font-weight: bold; color: white"
           >
             mdi-seal-variant
           </v-icon>
-          <div style="font-size: 18px; font-weight: bold">成績管理編輯</div>
+          <span style="font-size: 18px; font-weight: bold; color: white">
+            成績管理編輯
+          </span>
         </v-card-title>
         <v-card-text>
           <v-row>
@@ -580,15 +577,13 @@
               "
             >
               <v-icon dense left> mdi-account-remove </v-icon>
-              <p style="font-size: 16px; margin-top: 16px">缺考</p>
+              <p style="font-size: 16px; margin-top: -3px">缺考</p>
             </v-btn>
           </v-row>
           <v-form ref="form" v-model="scoreStatus">
             <v-card v-if="scheduleType === 5" style="margin-top: 30px">
               <v-card-title style="background-color: #e0eafb; height: 40px">
-                <div
-                  style="margin-top: -10px; font-size: 16px; font-weight: bold"
-                >
+                <div style="font-size: 16px; font-weight: bold">
                   語文能力成績
                 </div>
               </v-card-title>
@@ -611,9 +606,13 @@
                       </div>
                     </v-col>
                     <v-col cols="12" sm="5" md="5" style="padding: 5px">
-                      <div v-if="subject.dataType !== 'boolean'">
+                      <div
+                        v-if="subject.dataType !== 'boolean'"
+                        style="margin-top: 15px"
+                      >
                         <v-text-field
                           v-if="userScore[subject.slId] === '9999'"
+                          density="comfortable"
                           value="缺考"
                           :disabled="true"
                           class="centered-input"
@@ -622,6 +621,7 @@
                         <v-text-field
                           v-else
                           v-model="userScore[subject.slId]"
+                          density="comfortable"
                           class="centered-input"
                           @click="getsubjetData(subject)"
                           :maxlength="subject.valueLength"
@@ -646,9 +646,7 @@
             </v-card>
             <v-card style="margin-top: 20px">
               <v-card-title style="background-color: #e0eafb; height: 40px">
-                <div
-                  style="margin-top: -10px; font-size: 16px; font-weight: bold"
-                >
+                <div style="font-size: 16px; font-weight: bold">
                   自然科學能力成績
                 </div>
               </v-card-title>
@@ -671,9 +669,13 @@
                       </div>
                     </v-col>
                     <v-col cols="12" sm="5" md="5" style="padding: 5px">
-                      <div v-if="subject.dataType !== 'boolean'">
+                      <div
+                        v-if="subject.dataType !== 'boolean'"
+                        style="margin-top: 15px"
+                      >
                         <v-text-field
                           v-if="userScore[subject.slId] === '9999'"
+                          density="comfortable"
                           value="缺考"
                           :disabled="true"
                           class="centered-input"
@@ -681,6 +683,7 @@
                         ></v-text-field>
                         <v-text-field
                           v-else
+                          density="comfortable"
                           v-model="userScore[subject.slId]"
                           class="centered-input"
                           @click="getsubjetData(subject)"
@@ -707,9 +710,7 @@
             </v-card>
             <v-card style="margin-top: 20px">
               <v-card-title style="background-color: #e0eafb; height: 40px">
-                <div
-                  style="margin-top: -10px; font-size: 16px; font-weight: bold"
-                >
+                <div style="font-size: 16px; font-weight: bold">
                   <div v-if="scheduleType === 5">科學能力檢定成績</div>
                   <div v-else>實驗實作檢定成績</div>
                 </div>
@@ -742,13 +743,17 @@
                       </div>
                     </v-col>
                     <v-col cols="12" sm="5" md="5" style="padding: 5px">
-                      <div v-if="subject.dataType !== 'boolean'">
+                      <div
+                        v-if="subject.dataType !== 'boolean'"
+                        style="margin-top: 15px"
+                      >
                         <v-text-field
                           v-if="
                             subject.pattern !== 'textArea' &&
                             userScore[subject.slId] !== '9999'
                           "
                           v-model="userScore[subject.slId]"
+                          density="comfortable"
                           class="centered-input"
                           @click="getsubjetData(subject)"
                           :maxlength="subject.valueLength"
@@ -760,6 +765,7 @@
                             subject.pattern !== 'textArea' &&
                             userScore[subject.slId] === '9999'
                           "
+                          density="comfortable"
                           class="centered-input"
                           value="缺考"
                           :disabled="true"
@@ -771,6 +777,7 @@
                             userScore[subject.slId] !== '缺考'
                           "
                           v-model="userScore[subject.slId]"
+                          width="172"
                           class="mx-2"
                           rows="1"
                           :rules="textRules"
@@ -780,6 +787,7 @@
                             subject.pattern === 'textArea' &&
                             userScore[subject.slId] === '缺考'
                           "
+                          density="comfortable"
                           class="centered-input"
                           value="缺考"
                           :disabled="true"
@@ -802,7 +810,7 @@
                   <v-col cols="12" sm="12" md="12">
                     <div
                       style="
-                        margin-top: 22px;
+                        margin-top: 25px;
                         font-size: 16px;
                         font-weight: bold;
                       "
