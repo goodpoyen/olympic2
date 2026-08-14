@@ -118,8 +118,7 @@ export default {
       this.sendResult = false;
 
       if (!this.confirmTestmailStatus) {
-        this.confirmTestmailStatus = false;
-        this.snedmailWordingBTN = "寄送抽測信";
+        this.$emit("changConfirmTestmailStatus", false);
       }
 
       clearInterval(this.reciprocal);

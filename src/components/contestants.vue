@@ -443,7 +443,7 @@
       >
       </upgrade-dialog>
     </v-dialog>
-    <v-dialog v-model="snedTypePup" width="39%">
+    <v-dialog v-model="snedTypePup" width="30%">
       <snedtype-dialog
         :id="id"
         :reviewMod="reviewMod"
@@ -469,6 +469,7 @@
       <setemail-dialog
         :confirmTestmailStatus="confirmTestmailStatus"
         @closeSetMailpup="closeSetMailpup"
+        @changConfirmTestmailStatus="changConfirmTestmailStatus"
         @sendTestMail="sendTestMail"
         @confirmTestMail="confirmTestMail"
       ></setemail-dialog>
@@ -2073,6 +2074,10 @@ export default {
     },
 
     closeSetMailpup(value) {
+      this.setEmailpup = value;
+    },
+
+    changConfirmTestmailStatus(value) {
       this.setEmailpup = value;
     },
 
