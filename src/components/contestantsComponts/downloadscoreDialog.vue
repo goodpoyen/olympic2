@@ -75,6 +75,7 @@ export default {
       const data = {};
       data.AT = await this.tokenService.getFastAT();
       data.id = this.id;
+      data.olympic = this.globalSystemValue.olympic;
 
       await this.axios
         .post(this.systemENV.APISERVERURL + "/getSignupSchool", data)
