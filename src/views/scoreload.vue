@@ -560,39 +560,45 @@ export default {
     },
 
     async getPdf(selector) {
-      let PDF = new JsPDF("", "pt", "a4");
-      var title = this.htmlTitle;
-      await html2Canvas(document.querySelector(selector), {
-        scale: 2,
-        useCORS: true,
-      }).then((canvas) => {
-        const contentWidth = canvas.width;
-        const contentHeight = canvas.height;
+      try {
+        let PDF = new JsPDF("", "pt", "a4");
+        var title = this.htmlTitle;
+        await html2Canvas(document.querySelector(selector), {
+          scale: 2,
+          useCORS: true,
+        }).then((canvas) => {
+          const contentWidth = canvas.width;
+          const contentHeight = canvas.height;
 
-        const pageHeight = (contentWidth / 592.28) * 841.89;
-        let leftHeight = contentHeight;
-        let position = 0;
-        const imgWidth = 595.28;
-        const imgHeight = (592.28 / contentWidth) * contentHeight;
+          const pageHeight = (contentWidth / 592.28) * 841.89;
+          let leftHeight = contentHeight;
+          let position = 0;
+          const imgWidth = 595.28;
+          const imgHeight = (592.28 / contentWidth) * contentHeight;
 
-        const pageData = canvas.toDataURL("image/jpeg", 1.0);
+          const pageData = canvas.toDataURL("image/jpeg", 1.0);
 
-        if (leftHeight < pageHeight) {
-          PDF.addImage(pageData, "JPEG", 0, 0, imgWidth, imgHeight);
-        } else {
-          while (leftHeight > 0) {
-            PDF.addImage(pageData, "JPEG", 0, position, imgWidth, imgHeight);
-            leftHeight -= pageHeight;
-            position -= 841.89;
+          if (leftHeight < pageHeight) {
+            PDF.addImage(pageData, "JPEG", 0, 0, imgWidth, imgHeight);
+          } else {
+            while (leftHeight > 0) {
+              PDF.addImage(pageData, "JPEG", 0, position, imgWidth, imgHeight);
+              leftHeight -= pageHeight;
+              position -= 841.89;
 
-            if (leftHeight > 0) {
-              PDF.addPage();
+              if (leftHeight > 0) {
+                PDF.addPage();
+              }
             }
           }
-        }
-      });
+        });
 
-      PDF.save(title + ".pdf");
+        PDF.save(title + ".pdf");
+
+        return true;
+      } catch (error) {
+        return false;
+      }
     },
 
     async getTitle(unitCode) {

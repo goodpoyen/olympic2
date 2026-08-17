@@ -237,6 +237,11 @@ export default {
         });
     },
 
+    updateDesserts(value) {
+      this.desserts = value;
+      this.dessertsTemp = value;
+    },
+
     updateFilter(value) {
       this.desserts = value;
     },
