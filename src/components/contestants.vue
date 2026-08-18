@@ -354,9 +354,9 @@
       </template>
       <template v-slot:item.score="{ item }">
         <v-text-field
-          dense
+          density="compact"
           v-model="item.score"
-          style="width: 90px; padding: 9px"
+          style="width: 80px; margin-top: 20px"
           variant="outlined"
           @keyup="scoreInput(item)"
         >
@@ -364,9 +364,9 @@
       </template>
       <template v-slot:item.pr="{ item }">
         <v-text-field
-          dense
+          density="compact"
           v-model="item.pr"
-          style="width: 90px; padding: 9px"
+          style="width: 80px; margin-top: 20px"
           variant="outlined"
           @keyup="PRInput(item)"
         >
@@ -1031,6 +1031,7 @@
     </v-dialog>
     <v-dialog v-model="importPup" width="35%">
       <importfile-dialog
+        :scheduleType="scheduleType"
         @uploadFile="uploadFile"
         @closeImportpup="closeImportpup"
       >
@@ -2240,7 +2241,7 @@ export default {
       this.itemKey = "stId";
       this.headers = [
         {
-          title: "選訓編號",
+          title: "選訓號碼",
           value: "stId",
           filterName: "stId",
           type: "text",
