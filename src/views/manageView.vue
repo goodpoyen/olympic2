@@ -17,8 +17,10 @@
           :value="item"
           :prepend-icon="item.icon"
           :title="item.text"
-          color="primary"
           @click="iconClick(item.text)"
+          :style="{
+            backgroundColor: $store.state.title === item.text ? '#d6e3f0' : '',
+          }"
         >
         </v-list-item>
         <v-list-group
@@ -42,6 +44,10 @@
             :title="group.text"
             :value="group.text"
             @click="groupClick(group)"
+            :style="{
+              backgroundColor:
+                $store.state.title === item.subItem[0].text ? '#d6e3f0' : '',
+            }"
           ></v-list-item>
         </v-list-group>
       </v-list>
