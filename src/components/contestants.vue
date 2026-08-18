@@ -1031,6 +1031,7 @@
     </v-dialog>
     <v-dialog v-model="importPup" width="35%">
       <importfile-dialog
+        :scheduleType="scheduleType"
         @uploadFile="uploadFile"
         @closeImportpup="closeImportpup"
       >
@@ -2240,7 +2241,7 @@ export default {
       this.itemKey = "stId";
       this.headers = [
         {
-          title: "選訓編號",
+          title: "選訓號碼",
           value: "stId",
           filterName: "stId",
           type: "text",

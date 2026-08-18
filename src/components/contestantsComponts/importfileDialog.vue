@@ -17,10 +17,16 @@
           value="contestantsList"
         ></v-radio>
         <div
-          v-if="globalSystemValue.system !== 'science'"
+          v-if="globalSystemValue.system !== 'science' && scheduleType === 1"
           style="margin-left: 30px; color: red; font-size: 13px"
         >
           (請上傳 應試號碼 中文姓名 考區名稱 考場 座號 成績 PR值 欄位)
+        </div>
+        <div
+          v-if="globalSystemValue.system !== 'science' && scheduleType === 2"
+          style="margin-left: 30px; color: red; font-size: 13px"
+        >
+          (請上傳 選訓號碼 中文姓名 成績 PR值 欄位)
         </div>
         <v-radio
           v-if="globalSystemValue.system === 'science'"
@@ -56,7 +62,7 @@
 export default {
   data: () => ({ selectImportTyep: "" }),
 
-  props: {},
+  props: { scheduleType: "" },
 
   watch: {},
 
