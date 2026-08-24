@@ -815,7 +815,7 @@
                   <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
                     v-model="editedItem.signupStart"
-                    :label="timeWording + '開始時間8'"
+                    :label="timeWording + '開始時間'"
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
@@ -836,7 +836,7 @@
                   <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
                     v-model="editedItem.signupEnd"
-                    :label="timeWording + '結束時間7'"
+                    :label="timeWording + '結束時間'"
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
@@ -861,7 +861,7 @@
                 >
                   <v-text-field
                     v-model="editedItem.examStart"
-                    :label="timeWording2 + '開始時間8'"
+                    :label="timeWording2 + '開始時間'"
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
@@ -886,7 +886,7 @@
                 >
                   <v-text-field
                     v-model="editedItem.examEnd"
-                    :label="timeWording2 + '結束時間9'"
+                    :label="timeWording2 + '結束時間'"
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
