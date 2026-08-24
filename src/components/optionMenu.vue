@@ -815,7 +815,7 @@
                   <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
                     v-model="editedItem.signupStart"
-                    :label="timeWording + '開始時間'"
+                    :label="timeWording + '開始時間8'"
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
@@ -836,7 +836,7 @@
                   <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
                     v-model="editedItem.signupEnd"
-                    :label="timeWording + '結束時間'"
+                    :label="timeWording + '結束時間7'"
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
@@ -861,7 +861,7 @@
                 >
                   <v-text-field
                     v-model="editedItem.examStart"
-                    :label="timeWording2 + '開始時間'"
+                    :label="timeWording2 + '開始時間8'"
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
@@ -886,7 +886,7 @@
                 >
                   <v-text-field
                     v-model="editedItem.examEnd"
-                    :label="timeWording2 + '結束時間'"
+                    :label="timeWording2 + '結束時間9'"
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
@@ -1337,7 +1337,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="dateTimeFace" width="auto">
+    <v-dialog v-model="dateTimeFace" width="auto" persistent>
       <v-card color="surface" elevation="24">
         <v-tabs v-model="tab" grow bg-color="primary">
           <v-tab value="date"><v-icon start>mdi-calendar</v-icon>日期</v-tab>
@@ -1358,7 +1358,16 @@
         </v-window>
 
         <v-card-actions class="justify-end pa-4">
-          <v-btn variant="text" @click="dateTimeFace = false">取消</v-btn>
+          <v-btn
+            variant="text"
+            @click="
+              dateTimeFace = false;
+              dateVal = new Date();
+              timeVal = '12:00';
+              tab = 'date';
+            "
+            >取消</v-btn
+          >
           <v-btn color="primary" variant="flat" @click="setDateTime"
             >確定</v-btn
           >
