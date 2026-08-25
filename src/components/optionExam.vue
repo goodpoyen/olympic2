@@ -43,6 +43,7 @@
               :nopassCount="nopassCount"
               :failCount="failCount"
               @updateFilter="updateFilter"
+              @countSignupStatus="countSignupStatus"
             ></personnel-info>
           </v-container>
           <v-container v-if="n == 2" fluid>
@@ -415,6 +416,27 @@ export default {
 
     updateFilter(value) {
       this.desserts = value;
+    },
+
+    async countSignupStatus(value) {
+      console.log(8989);
+      this.passCount = 0;
+      this.nopassCount = 0;
+      this.failCount = 0;
+      const that = this;
+      this.desserts.forEach(function (data) {
+        if (data.signupStatus === "3") {
+          that.passCount++;
+        }
+
+        if (data.signupStatus === "1") {
+          that.nopassCount++;
+        }
+
+        if (data.signupStatus === "2") {
+          that.failCount++;
+        }
+      });
     },
   },
 

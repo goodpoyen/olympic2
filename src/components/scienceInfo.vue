@@ -2090,6 +2090,7 @@
               </v-row>
               <v-btn
                 v-if="editedItem.paymentStatus !== '13'"
+                prepend-icon="mdi-email-arrow-right-outline"
                 @click="alertURLMailPop()"
                 style="
                   background-color: white;
@@ -2098,8 +2099,7 @@
                   font-weight: bold;
                 "
               >
-                <v-icon> mdi-email-arrow-right-outline </v-icon>
-                <span>補寄送修改報名資料連結</span>
+                補寄送修改報名資料連結
               </v-btn>
             </v-container>
           </v-card-text>
