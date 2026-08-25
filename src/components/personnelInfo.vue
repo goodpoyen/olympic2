@@ -1660,14 +1660,14 @@ export default {
           .replace("_c", "")
           .replace("_jc", "")
           .replace("_I", "");
-      }
 
-      if (item.type === "e") {
-        item.schoolNumber = item.schoolNumber + "_e";
-      } else if (item.type === "j") {
-        item.schoolNumber = item.schoolNumber + "_j";
-      } else {
-        item.schoolNumber = item.schoolNumber + "_s";
+        if (item.type === "e") {
+          item.schoolNumber = item.schoolNumber + "_e";
+        } else if (item.type === "j") {
+          item.schoolNumber = item.schoolNumber + "_j";
+        } else {
+          item.schoolNumber = item.schoolNumber + "_s";
+        }
       }
 
       const that = this;
