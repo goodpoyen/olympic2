@@ -1,14 +1,10 @@
 <template>
   <div>
     <v-card>
-      <v-card-title style="background-color: #ededf3; height: 41px">
+      <v-card-title style="background-color: #ededf3">
         <span
           v-if="Object.keys(studentExamCode).length !== 0"
-          style="
-            font-size: 15px !important;
-            font-weight: bold;
-            margin-top: -8px;
-          "
+          style="font-size: 15px !important; font-weight: bold"
         >
           <span v-if="globalSystemValue.system === 'olympic'"
             >應試號碼 ： {{ studentExamCode.examCode }}</span
@@ -37,23 +33,48 @@
           <v-col
             v-if="Object.keys(studentExamCode).length !== 0"
             cols="12"
-            sm="8"
-            md="8"
+            sm="7"
+            md="7"
           >
-            <div style="margin-top: 10px">
+            <div
+              style="margin-top: 10px"
+              v-if="globalSystemValue.system === 'science'"
+            >
               學生代碼 ： {{ studentExamCode.examCode.split("_")[0] }}
             </div>
-            <div>考區名稱 ： {{ studentExamCode.areaName }}</div>
+            <div
+              :style="
+                globalSystemValue.system === 'olympic'
+                  ? { marginTop: '10px' }
+                  : ''
+              "
+            >
+              考區名稱 ： {{ studentExamCode.areaName }}
+            </div>
             <div>考場名稱 ： {{ studentExamCode.roomName }}</div>
             <div>座位號碼 ： {{ studentExamCode.seatNumber }}</div>
           </v-col>
           <v-col
             v-if="Object.keys(studentExamCode).length === 0"
             cols="12"
-            sm="8"
-            md="8"
+            sm="7"
+            md="7"
           >
-            <div style="margin-top: 10px">考區名稱 ： 尚未分配</div>
+            <div
+              style="margin-top: 10px"
+              v-if="globalSystemValue.system === 'science'"
+            >
+              學生代碼 ： 尚未分配
+            </div>
+            <div
+              :style="
+                globalSystemValue.system === 'olympic'
+                  ? { marginTop: '10px' }
+                  : ''
+              "
+            >
+              考區名稱 ： 尚未分配
+            </div>
             <div>考場名稱 ： 尚未分配</div>
             <div>座位號碼 ： 尚未分配</div>
           </v-col>
@@ -62,18 +83,23 @@
             role="separator"
             aria-orientation="vertical"
             class="v-divider v-divider--inset v-divider--vertical theme--light"
-            style="min-height: 73px; margin-top: 21px; margin-right: 10px"
+            style="min-height: 73px; margin-top: 21px"
           />
-          <v-col cols="6" sm="3" md="3">
+          <v-col
+            cols="12"
+            sm="5"
+            md="5"
+            class="d-flex justify-center align-center flex-wrap"
+          >
             <v-btn
               small
               color="#54b5b5"
               class="mb-2"
               style="margin-top: 10px; color: #ededf3"
+              prepend-icon="mdi-auto-mode"
               @click="getEnoughArea()"
             >
-              <v-icon small left> mdi-auto-mode </v-icon>
-              <p style="margin-left: 4px; font-size: 13px">自動分配</p>
+              自動分配
             </v-btn>
             <v-btn
               small
@@ -81,9 +107,9 @@
               class="mb-2"
               @click="getArea()"
               style="margin-top: 10px; color: #ededf3"
+              prepend-icon="mdi-swap-horizontal"
             >
-              <v-icon small left> mdi-swap-horizontal </v-icon>
-              <p style="margin-left: 4px; font-size: 13px">指定分配</p>
+              指定分配
             </v-btn>
             <span
               v-show="studentExamCode.sendExamNotice"

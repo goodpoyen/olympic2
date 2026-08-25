@@ -881,7 +881,9 @@
                     建立者：{{ editedItem.createRole }} -
                     {{ editedItem.adminName }}
                   </div>
-                  <div>建立時間：{{ editedItem.createTime }}</div>
+                  <div>
+                    建立時間：{{ editedItem.createTime.replace(".0", "") }}
+                  </div>
                 </v-col>
                 <v-col cols="12" sm="6" md="12" style="margin-top: -22px">
                   <div>帳號狀態：</div>
