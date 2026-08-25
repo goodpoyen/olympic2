@@ -764,7 +764,7 @@
                     label="校名"
                     variant="underlined"
                     :rules="[(v) => !!v || '校名不能為空']"
-                    @change="checkSchoolType()"
+                    @update:model-value="checkSchoolType()"
                   ></v-select>
                 </v-col>
                 <v-col
@@ -877,11 +877,11 @@
                     margin-bottom: 10px;
                   "
                 >
-                  <div>
+                  <div v-if="editedIndex != -1">
                     建立者：{{ editedItem.createRole }} -
                     {{ editedItem.adminName }}
                   </div>
-                  <div>
+                  <div v-if="editedIndex != -1">
                     建立時間：{{ editedItem.createTime.replace(".0", "") }}
                   </div>
                 </v-col>
@@ -1166,11 +1166,6 @@ export default {
           v,
         ) || "信箱格式不對",
     ],
-    // idCartRules: [
-    //   (v) => !!v || "識別碼不能為空",
-    //   (v) => v.length === 5 || "識別碼只能5碼",
-    //   (v) => /^[A-Za-z][1-2]\d{3}$/.test(v) || "識別碼格式不對",
-    // ],
     defaultStatus: "2",
     editedIndex: -1,
     studentExamCode: {},
@@ -1296,10 +1291,10 @@ export default {
     },
 
     checkSchoolType() {
-      if (this.editedItem.schoolNumber.school_number.includes("s")) {
+      if (this.editedItem.schoolNumber.includes("s")) {
         this.editedItem.type = "s";
         this.checkGrade("");
-      } else if (this.editedItem.schoolNumber.school_number.includes("j")) {
+      } else if (this.editedItem.schoolNumber.includes("j")) {
         this.editedItem.type = "j";
         this.checkGrade("");
       } else {
@@ -1616,11 +1611,6 @@ export default {
     },
 
     updateTable(filterData) {
-      // console.log(123);
-      // console.log(filterData);
-      // this.desserts = JSON.parse(JSON.stringify(filterData));
-      // this.desserts = Object.assign({}, filterData);
-      // this.desserts = filterData;
       this.$emit("updateFilter", filterData);
     },
 
@@ -1660,6 +1650,14 @@ export default {
       await this.getSelectAreaList();
       await this.getExamCode(item);
 
+      item.schoolNumber = item.schoolNumber
+        .replace("_e", "")
+        .replace("_j", "")
+        .replace("_s", "")
+        .replace("_c", "")
+        .replace("_jc", "")
+        .replace("_I", "");
+
       if (item.schoolNumber === undefined) {
         item.schoolNumber = "";
       } else if (item.type === "e") {
@@ -1679,7 +1677,6 @@ export default {
           that.defaultItemIsNull[data.filterName] = data.isNull;
         }
       });
-
       this.editedItem.signupStatus = "";
       this.defaultItem.signupStatus = "";
       this.editedItem.emailContent = "";
@@ -1701,7 +1698,6 @@ export default {
         }
         item.idCard = item.idCard.substr(0, 5);
         item.birthday = item.birthday.replace("/", "-");
-
         this.editedItem = Object.assign({}, item);
       }
       this.dialog = true;
@@ -1729,10 +1725,8 @@ export default {
         }
       }
       this.sendMail = Object.assign({}, this.defaultSendMail);
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
+      this.editedItem = {};
+      this.editedIndex = -1;
     },
 
     async sentSignupFail(item) {
@@ -1849,7 +1843,7 @@ export default {
               this.desserts.unshift(this.changeData(data));
             }
 
-            this.countSignupStatus();
+            this.$emit("countSignupStatus", true);
             this.close();
           } else if (response.data.code === 405) {
             this.cleanPupData();
@@ -2063,26 +2057,6 @@ export default {
         .catch(function (error) {
           // console.log(error);
         });
-    },
-
-    async countSignupStatus() {
-      this.passCount = 0;
-      this.nopassCount = 0;
-      this.failCount = 0;
-      const that = this;
-      this.desserts.forEach(function (data) {
-        if (data.signupStatus === "3") {
-          that.passCount++;
-        }
-
-        if (data.signupStatus === "1") {
-          that.nopassCount++;
-        }
-
-        if (data.signupStatus === "2") {
-          that.failCount++;
-        }
-      });
     },
   },
 
