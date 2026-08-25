@@ -1650,17 +1650,19 @@ export default {
       await this.getSelectAreaList();
       await this.getExamCode(item);
 
-      item.schoolNumber = item.schoolNumber
-        .replace("_e", "")
-        .replace("_j", "")
-        .replace("_s", "")
-        .replace("_c", "")
-        .replace("_jc", "")
-        .replace("_I", "");
-
       if (item.schoolNumber === undefined) {
         item.schoolNumber = "";
-      } else if (item.type === "e") {
+      } else {
+        item.schoolNumber = item.schoolNumber
+          .replace("_e", "")
+          .replace("_j", "")
+          .replace("_s", "")
+          .replace("_c", "")
+          .replace("_jc", "")
+          .replace("_I", "");
+      }
+
+      if (item.type === "e") {
         item.schoolNumber = item.schoolNumber + "_e";
       } else if (item.type === "j") {
         item.schoolNumber = item.schoolNumber + "_j";
