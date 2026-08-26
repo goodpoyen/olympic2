@@ -75,6 +75,7 @@
               :sendExamNotice="sendExamNotice"
               :sendExamScoreNoice="sendExamScoreNoice"
               @updateFilter="updateFilter"
+              @updateDesserts="updateDesserts"
             ></contestants>
           </v-container>
         </v-tabs-window-item>
@@ -419,7 +420,6 @@ export default {
     },
 
     async countSignupStatus(value) {
-      console.log(8989);
       this.passCount = 0;
       this.nopassCount = 0;
       this.failCount = 0;
