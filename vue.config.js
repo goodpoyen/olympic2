@@ -39,11 +39,10 @@ module.exports = defineConfig({
   lintOnSave: false,
 
   configureWebpack: (config) => {
-    // 1. 檔案命名與快取控制（加入時間戳記防止瀏覽器快取舊代碼）
     config.output.filename = `js/[name].${timestamp}.js`;
     config.output.chunkFilename = `js/[name].${timestamp}.js`;
 
-    // 2. 任何環境都適用的外掛（如：漂亮的打包進度條）
+    // 任何環境都適用的外掛（如：漂亮的打包進度條）
     config.plugins.push(
       new ProgressBarPlugin({
         format: `  打包進度 [:bar] ${chalk.green.bold(
@@ -53,23 +52,23 @@ module.exports = defineConfig({
       }),
     );
 
-    // 3. 僅在生產環境（Production）生效的進階優化
-    // 3a. 啟用 Gzip 壓縮（大幅縮減 JS/CSS 傳輸體積，需後端 Nginx/CDN 配合開啟 gzip_static）
+    // 僅在生產環境（Production）生效的進階優化
+    // 啟用 Gzip 壓縮（大幅縮減 JS/CSS 傳輸體積，需後端 Nginx/CDN 配合開啟 gzip_static）
     config.plugins.push(
       new CompressionWebpackPlugin({
         algorithm: "gzip",
-        test: /\.(js|css|html|svg)$/, // 壓縮這些類型的檔案
+        test: /\.(js|css|html|svg)$/,
         threshold: 10240, // 超過 10KB 的檔案才壓縮
         minRatio: 0.8, // 壓縮率小於 0.8 才壓縮
       }),
     );
 
-    // 3b. 效能分析工具（可選：執行 `npm run build --report` 時才啟動分析）
+    // 效能分析工具（可選：執行 `npm run build --report` 時才啟動分析）
     if (process.env.npm_config_report) {
       config.plugins.push(new BundleAnalyzerPlugin());
     }
 
-    // 3c. 修改 Webpack 5 內建的 Terser（移除 console/debugger）
+    // 修改 Webpack 5 內建的 Terser（移除 console/debugger）
     const TerserPlugin = config.optimization.minimizer.find(
       (p) => p.constructor.name === "TerserPlugin",
     );
@@ -103,7 +102,7 @@ module.exports = defineConfig({
       return args;
     });
 
-    // 4. 利用 Webpack 5 的持久化快取 (Persistent Cache) 提升二次打包與開發啟動速度
+    // 利用 Webpack 5 的持久化快取 (Persistent Cache) 提升二次打包與開發啟動速度
     config.cache({
       type: "filesystem",
       buildDependencies: {
@@ -111,7 +110,7 @@ module.exports = defineConfig({
       },
     });
 
-    // 5. 強化版分包策略
+    // 強化版分包策略
     config.optimization.minimize(true);
     config.optimization.splitChunks({
       chunks: "all",
