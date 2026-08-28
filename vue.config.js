@@ -54,7 +54,6 @@ module.exports = defineConfig({
     );
 
     // 3. 僅在生產環境（Production）生效的進階優化
-    // if (isProd) {
     // 3a. 啟用 Gzip 壓縮（大幅縮減 JS/CSS 傳輸體積，需後端 Nginx/CDN 配合開啟 gzip_static）
     config.plugins.push(
       new CompressionWebpackPlugin({
@@ -112,7 +111,6 @@ module.exports = defineConfig({
       },
     });
 
-    // if (isProd) {
     // 5. 強化版分包策略
     config.optimization.minimize(true);
     config.optimization.splitChunks({
