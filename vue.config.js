@@ -93,7 +93,6 @@ module.exports = defineConfig({
         output: { comments: false },
       };
     }
-    // }
   },
 
   chainWebpack: (config) => {
@@ -149,7 +148,6 @@ module.exports = defineConfig({
         },
       },
     });
-    // }
   },
 
   pluginOptions: {
