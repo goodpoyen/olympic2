@@ -1,6 +1,6 @@
 {
   "name": "olympic2",
-  "version": "4.6.5",
+  "version": "4.7.5",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --mode local",
