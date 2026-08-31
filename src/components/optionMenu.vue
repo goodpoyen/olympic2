@@ -1184,7 +1184,7 @@
                 false-value="不使用"
                 :label="`${item.required}`"
                 style="margin-top: -5px"
-                @click="setSignupColumn(item, 'required')"
+                @change="setSignupColumn(item, 'required')"
               ></v-switch>
             </template>
             <template v-slot:item.isNull="{ item }">
@@ -1199,7 +1199,7 @@
                 false-value="非必填"
                 :label="`${item.isNull}`"
                 style="margin-top: -5px"
-                @click="setSignupColumn(item, 'isNull')"
+                @change="setSignupColumn(item, 'isNull')"
               ></v-switch>
             </template>
           </v-data-table>
@@ -1652,15 +1652,23 @@ export default {
       await this.tokenService.renewLT();
       var column;
 
-      this.tempRules = JSON.parse(JSON.stringify(this.defaultRules));
-      column = JSON.parse(JSON.stringify(this.defaultRules));
-      // if (item.rules !== "") {
-      //   this.tempRules = JSON.parse(item.rules);
-      //   column = JSON.parse(item.rules);
-      // } else {
-      //   this.tempRules = JSON.parse(JSON.stringify(this.defaultRules));
-      //   column = JSON.parse(JSON.stringify(this.defaultRules));
-      // }
+      const data = {};
+      data.AT = await this.tokenService.getFastAT();
+      data.id = item.olyId;
+      data.olympic = this.globalSystemValue.olympic;
+      this.loadShow = true;
+
+      await this.axios
+        .post(this.systemENV.APISERVERURL + "/getScheduleRules", data)
+        .then((response) => {
+          // console.log(response.data);
+          this.tempRules = JSON.parse(JSON.stringify(response.data.resultData));
+          column = JSON.parse(JSON.stringify(response.data.resultData));
+          this.loadShow = false;
+        })
+        .catch(function (error) {
+          // console.log(error);
+        });
 
       const that = this;
       column.forEach(function (data) {
