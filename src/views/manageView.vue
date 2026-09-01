@@ -13,24 +13,38 @@
       <v-list v-model:opened="open">
         <v-list-item
           v-for="(item, i) in items"
+          v-show="
+            (item.system === globalSystemValue.system &&
+              item.level.includes(globalSystemValue.level)) ||
+            (item.system === 'all' &&
+              item.level.includes(globalSystemValue.level))
+          "
+          slim
           :key="i"
           :value="item"
           :prepend-icon="item.icon"
           :title="item.text"
-          @click="iconClick(item.text)"
+          :href="item.url"
           :style="{
             backgroundColor: $store.state.title === item.text ? '#d6e3f0' : '',
           }"
         >
         </v-list-item>
         <v-list-group
-          value="setting"
           v-for="(item, i) in groupItems"
+          v-show="
+            (item.system === globalSystemValue.system &&
+              item.level.includes(globalSystemValue.level)) ||
+            (item.system === 'all' &&
+              item.level.includes(globalSystemValue.level))
+          "
           :key="i"
           :value="item"
+          value="setting"
         >
           <template v-slot:activator="{ props }">
             <v-list-item
+              slim
               v-bind="props"
               :prepend-icon="item.icon"
               :title="item.text"
@@ -39,14 +53,16 @@
 
           <v-list-item
             v-for="(group, i) in item.subItem"
+            slim
             :key="i"
             :prepend-icon="group.icon"
             :title="group.text"
             :value="group.text"
-            @click="groupClick(group)"
+            :href="group.url"
             :style="{
               backgroundColor:
                 $store.state.title === item.subItem[0].text ? '#d6e3f0' : '',
+              '--indent-padding': '20px',
             }"
           ></v-list-item>
         </v-list-group>
@@ -65,8 +81,8 @@
         </template>
 
         <v-list>
-          <v-list-item link>
-            <v-list-item-title @click="iconClick('修改密碼')"
+          <v-list-item to="/manage/infoEditorP">
+            <v-list-item-title
               ><v-icon icon="mdi-lastpass" class="me-2"></v-icon
               >修改密碼</v-list-item-title
             >
@@ -142,31 +158,6 @@ export default {
 
       this.globalSystemTool.removeLocalStorage(this.globalSystemValue.system);
     },
-
-    groupClick(item) {
-      console.log(item);
-      if (item.text === "成績單設定") {
-        location.href = "/manage/defaultscore/0";
-      }
-      if (item.text === "專案設定") {
-        location.href = "/manage/setting";
-      }
-    },
-
-    iconClick(title) {
-      if (title === "帳號管理") {
-        this.accountColor = "blue";
-        location.href = "/manage/account";
-      } else if (title === "選拔管理") {
-        location.href = "/manage/optionMenu";
-      } else if (title === "甄選管理") {
-        location.href = "/manage/optionMenu";
-      } else if (title === "聯絡人管理") {
-        location.href = "/manage/schoolUser";
-      } else if (title === "修改密碼") {
-        location.href = "/manage/infoEditorP";
-      }
-    },
   },
 
   async mounted() {
@@ -185,111 +176,54 @@ export default {
       link.href = "/images/fav.png";
     }
 
-    if (this.globalSystemValue.level === "1") {
-      if (this.globalSystemValue.system === "olympic") {
-        this.items = [
-          {
-            text: "帳號管理",
-            icon: "mdi-shield-account-outline",
-          },
-          {
-            text: "選拔管理",
-            icon: "mdi-calendar-text-outline",
-          },
-          {
-            text: "聯絡人管理",
-            icon: "mdi-briefcase-account-outline",
-          },
-        ];
-      } else {
-        this.items = [
-          {
-            text: "帳號管理",
-            icon: "mdi-shield-account-outline",
-          },
-          {
-            text: "甄選管理",
-            icon: "mdi-calendar-text-outline",
-          },
-        ];
+    this.items = [
+      {
+        text: "帳號管理",
+        icon: "mdi-shield-account-outline",
+        url: "/manage/account",
+        system: "all",
+        level: "1,3",
+      },
+      {
+        text: "選拔管理",
+        icon: "mdi-calendar-text-outline",
+        url: "/manage/optionMenu",
+        system: "olympic",
+        level: "1,2",
+      },
+      {
+        text: "甄選管理",
+        icon: "mdi-calendar-text-outline",
+        url: "/manage/optionMenu",
+        system: "science",
+        level: "1,3,4",
+      },
+      {
+        text: "聯絡人管理",
+        icon: "mdi-briefcase-account-outline",
+        url: "/manage/schoolUser",
+        system: "olympic",
+        level: "1,2",
+      },
+    ];
 
-        this.groupItems = [
+    this.groupItems = [
+      {
+        text: "系統管理",
+        icon: "mdi-cog-outline",
+        system: "science",
+        level: "1,2,3,4",
+        subItem: [
           {
-            text: "系統管理",
-            icon: "mdi-cog-outline",
-            subItem: [
-              {
-                text: "成績單設定",
-                icon: "mdi-license",
-              },
-            ],
+            text: "成績單設定",
+            icon: "mdi-license",
+            url: "/manage/defaultscore/0",
+            system: "science",
+            level: "1,3,4",
           },
-        ];
-      }
-    } else if (
-      this.globalSystemValue.level === "2" ||
-      (this.globalSystemValue.level === "99" &&
-        this.globalSystemValue.system === "olympic")
-    ) {
-      this.items = [
-        {
-          text: "選拔管理",
-          icon: "mdi-calendar-text-outline",
-        },
-        {
-          text: "聯絡人管理",
-          icon: "mdi-briefcase-account-outline",
-        },
-      ];
-    } else if (this.globalSystemValue.level === "3") {
-      this.items = [
-        {
-          text: "帳號管理",
-          icon: "mdi-shield-account-outline",
-        },
-        {
-          text: "甄選管理",
-          icon: "mdi-calendar-text-outline",
-        },
-      ];
-
-      this.groupItems = [
-        {
-          text: "系統管理",
-          icon: "mdi-cog-outline",
-          subItem: [
-            {
-              text: "成績單設定",
-              icon: "mdi-license",
-            },
-          ],
-        },
-      ];
-    } else if (
-      this.globalSystemValue.level === "4" ||
-      (this.globalSystemValue.level === "99" &&
-        this.globalSystemValue.system === "science")
-    ) {
-      this.items = [
-        {
-          text: "甄選管理",
-          icon: "mdi-calendar-text-outline",
-        },
-      ];
-
-      this.groupItems = [
-        {
-          text: "系統管理",
-          icon: "mdi-cog-outline",
-          subItem: [
-            {
-              text: "成績單設定",
-              icon: "mdi-license",
-            },
-          ],
-        },
-      ];
-    }
+        ],
+      },
+    ];
 
     if (window.location.pathname === "/manage/account") {
       this.selectedItem = 0;
