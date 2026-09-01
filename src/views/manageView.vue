@@ -216,7 +216,7 @@ export default {
       {
         text: "系統管理",
         icon: "mdi-cog-outline",
-        system: "science",
+        system: "all",
         level: "1,2,3,4",
         subItem: [
           {
@@ -228,8 +228,8 @@ export default {
           },
           {
             text: "考生通知檔設定",
-            icon: "mdi-license",
-            url: "/manage/defaultscore/0",
+            icon: "mdi mdi-file-pdf-box",
+            url: "/manage/setExamNoticeFile",
             system: "olympic",
             level: "1,2,3,4",
           },
