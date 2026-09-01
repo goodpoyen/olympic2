@@ -154,20 +154,15 @@ const routes = [
         name: "schoolUser",
         component: () => import("../components/schoolUser.vue"),
       },
-      // {
-      //   path: "upload",
-      //   name: "upload",
-      //   component: () => import("../components/upload.vue"),
-      // },
-      // {
-      //   path: "setting",
-      //   name: "setting",
-      //   component: () => import("../components/setting.vue"),
-      // },
       {
         path: "defaultscore/:olyid",
         name: "defaultscore",
         component: () => import("../components/defaultscore.vue"),
+      },
+      {
+        path: "setExamNoticeFile",
+        name: "setExamNoticeFile",
+        component: () => import("../components/setExamNoticeFile.vue"),
       },
     ],
   },
