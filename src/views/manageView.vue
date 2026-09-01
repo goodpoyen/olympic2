@@ -50,9 +50,14 @@
               :title="item.text"
             ></v-list-item>
           </template>
-
           <v-list-item
             v-for="(group, i) in item.subItem"
+            v-show="
+              (group.system === globalSystemValue.system &&
+                group.level.includes(globalSystemValue.level)) ||
+              (group.system === 'all' &&
+                group.level.includes(globalSystemValue.level))
+            "
             slim
             :key="i"
             :prepend-icon="group.icon"
@@ -220,6 +225,13 @@ export default {
             url: "/manage/defaultscore/0",
             system: "science",
             level: "1,3,4",
+          },
+          {
+            text: "考生通知檔設定",
+            icon: "mdi-license",
+            url: "/manage/defaultscore/0",
+            system: "olympic",
+            level: "1,2,3,4",
           },
         ],
       },
