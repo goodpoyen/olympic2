@@ -975,6 +975,8 @@ export default {
               this.desserts.unshift(data);
             }
 
+            this.$store.dispatch("areaExist", true);
+
             this.close();
           } else if (response.data.code === 500) {
             this.cleanPupData();
