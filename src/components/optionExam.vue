@@ -12,8 +12,11 @@
           :value="2"
           style="color: black; font-weight: bolder"
           @click="getExamAreaInfo"
-          >考區資料</v-tab
-        >
+          >考區資料
+          <v-icon v-if="!areaExist" color="red" class="ms-1" size="large"
+            >mdi-alert-octagram-outline</v-icon
+          >
+        </v-tab>
         <v-tab
           :value="3"
           style="color: black; font-weight: bolder"
@@ -125,6 +128,10 @@ export default {
     id() {
       return this.$route.params.id;
     },
+
+    areaExist() {
+      return this.$store.state.areaExist;
+    },
   },
 
   methods: {
@@ -146,12 +153,19 @@ export default {
       await this.axios
         .post(this.systemENV.APISERVERURL + "/getExamArea", data)
         .then((response) => {
-          // console.log(response.data)
+          // console.log(response.data);
           if (response.data.code === 200) {
             response.data.resultData.forEach(function (data) {
               data.defaultNumber = parseInt(data.defaultNumber);
               data.totalSignup = parseInt(data.totalSignup);
             });
+
+            if (response.data.resultData.length <= 0) {
+              this.$store.dispatch("areaExist", false);
+            } else {
+              this.$store.dispatch("areaExist", true);
+            }
+
             this.desserts = response.data.resultData;
             this.dessertsTemp = response.data.resultData;
             this.loadList = false;
@@ -263,6 +277,7 @@ export default {
             this.signupName = response.data.signupName;
             this.menuType = response.data.menuType;
             this.examCodeExist = response.data.examCodeExist;
+            this.$store.dispatch("areaExist", response.data.areaExist);
 
             this.passCount = 0;
             this.nopassCount = 0;
