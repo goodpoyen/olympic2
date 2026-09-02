@@ -249,13 +249,11 @@
         </v-icon>
         <v-btn
           v-if="selectOlyId !== 0 && item.signupStatusName === '報名失敗'"
-          class="ma-2"
-          color="blue"
           :disabled="item.signupKey === '新增資料'"
           title="已了解"
+          color="blue"
+          size="x-small"
           @click="isRead(item)"
-          dark
-          x-small
         >
           <v-icon dark small> mdi-check-all </v-icon>
         </v-btn>
@@ -1655,7 +1653,7 @@ export default {
             signupTotal_M: "",
             signupTotal_C: "",
           },
-          { text: "功能", value: "actions", width: "13%" },
+          { text: "功能", value: "actions", width: "15%" },
         ];
 
         const data = {};
