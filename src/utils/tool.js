@@ -452,6 +452,80 @@ export function globalTool() {
     }
   }
 
+  function checkSetTime(data) {
+    const msg = {};
+
+    msg.status = false;
+    msg.errorMsg = "";
+
+    if (data.type === 1 || data.type === 5 || data.type === 6) {
+      if (data.queryScore === "1") {
+        if (
+          data.signupStart >= data.signupEnd ||
+          data.signupStart >= data.examStart ||
+          data.signupStart >= data.examEnd ||
+          data.signupEnd >= data.examStart ||
+          data.signupEnd >= data.examEnd ||
+          data.signupStart >= data.queryStart ||
+          data.signupStart >= data.queryEnd ||
+          data.signupEnd >= data.querytart ||
+          data.signupEnd >= data.queryEnd
+        ) {
+          msg.errorMsg += "報名時間設定有誤<br>";
+        }
+
+        if (
+          data.examStart >= data.examEnd ||
+          data.examStart >= data.queryStart ||
+          data.examStart >= data.queryEnd ||
+          data.examEnd >= data.queryStart ||
+          data.examEnd >= data.queryEnd
+        ) {
+          msg.errorMsg += "測驗時間設定有誤<br>";
+        }
+
+        if (data.queryStart >= data.queryEnd) {
+          msg.errorMsg += "成績查詢時間設定有誤<br>";
+        }
+      } else {
+        if (
+          data.signupStart >= data.signupEnd ||
+          data.signupStart >= data.examStart ||
+          data.signupStart >= data.examEnd ||
+          data.signupEnd >= data.examStart ||
+          data.signupEnd >= data.examEnd
+        ) {
+          msg.errorMsg += "報名時間設定有誤<br>";
+        }
+
+        if (data.examStart >= data.examEnd) {
+          msg.errorMsg += "測驗時間設定有誤<br>";
+        }
+      }
+
+      if (msg.errorMsg === "") {
+        msg.status = true;
+      }
+    } else if (data.type === 2) {
+      if (data.examStart >= data.examEnd) {
+        msg.errorMsg += "測驗時間設定有誤<br>";
+      } else {
+        msg.status = true;
+      }
+    } else if (data.type === 3) {
+      if (data.signupStart >= data.signupEnd) {
+        msg.errorMsg += "報名時間設定有誤<br>";
+      } else {
+        msg.status = true;
+      }
+    } else {
+      msg.status = true;
+      return msg;
+    }
+
+    return msg;
+  }
+
   return {
     getNowDataTime,
     getNowDataTimeByString,
@@ -464,5 +538,6 @@ export function globalTool() {
     getScienceAllName,
     getSysLogo,
     changeSubtitleMsg,
+    checkSetTime,
   };
 }
