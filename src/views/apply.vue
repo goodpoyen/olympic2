@@ -340,11 +340,11 @@ export default {
 
   mounted() {
     this.identifyCode = "";
-    const currentUrl = window.location.pathname;
+    const currentUrl = window.location.pathname.toLowerCase();
 
-    if (currentUrl.includes("/applySignup")) {
+    if (currentUrl.includes("/applysignup")) {
       this.page = "signup";
-    } else {
+    } else if(currentUrl.includes("/applyscore"))  {
       this.page = "score";
     }
 

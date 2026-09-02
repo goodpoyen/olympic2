@@ -67,8 +67,8 @@ export default {
       currentUrl.includes("/science/signup/") ||
       currentUrl.includes("/science/scoreload/") ||
       currentUrl.includes("/science/signup") ||
-      currentUrl.includes("/applySignup") ||
-      currentUrl.includes("/applyScore")
+      currentUrl.toLowerCase().includes("/applysignup") ||
+      currentUrl.toLowerCase().includes("/applyscore")
     ) {
       this.loginShow = true;
 
