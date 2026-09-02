@@ -1236,7 +1236,7 @@
       <v-card>
         <v-card-title
           v-if="pupTitleShow === '1'"
-          style="background-color: #2d5bff; height: 57px"
+          style="background-color: #2d5bff"
         >
           <v-icon
             large
@@ -1257,7 +1257,7 @@
         </v-card-title>
         <v-card-title
           v-if="pupTitleShow === '2'"
-          style="background-color: #900d16; height: 57px"
+          style="background-color: #900d16"
         >
           <v-icon
             large
@@ -1276,9 +1276,7 @@
             >{{ pupTitle }}</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <div v-html="pupText"></div>
         </v-card-text>
         <v-card-actions>
@@ -1998,6 +1996,17 @@ export default {
         this.editedItem.queryEnd = null;
       }
 
+      let setTimeStatus = this.globalSystemTool.checkSetTime(this.editedItem);
+
+      if (!setTimeStatus.status) {
+        this.alertPup = true;
+        this.pupTitle = "活動時間設定錯誤";
+        this.pupTitleShow = "2";
+        this.pupTitleIcon = "mdi-alert-outline";
+        this.pupText = setTimeStatus.errorMsg;
+        this.pupType = "create";
+      }
+
       if (
         this.editedItem.type === 7 &&
         this.editedItem.partnerGroup.length >= 5
@@ -2074,6 +2083,18 @@ export default {
   },
 
   async mounted() {
+    console.log("2022-08-08 12:30:00" > "2026-08-08 12:30:00"); // false
+    console.log("2027-08-08 12:30:00" > "2026-08-08 12:30:00"); // true
+    console.log("2026-08-07 12:30:00" > "2026-08-08 12:30:00"); // false
+    console.log("2026-08-09 12:30:00" > "2026-08-08 12:30:00"); // true
+    console.log("2026-08-08 11:30:00" > "2026-08-08 12:30:00"); // false
+    console.log("2026-08-08 13:30:00" > "2026-08-08 12:30:00"); // true
+    console.log("2026-08-08 12:25:00" > "2026-08-08 12:30:00"); // false
+    console.log("2026-08-08 12:35:00" > "2026-08-08 12:30:00"); // true
+    console.log("2026-08-08 12:30:20" > "2026-08-08 12:30:30"); // false
+    console.log("2026-08-08 12:30:20" > "2026-08-08 12:30:10"); // true
+    console.log("-----------------------------------------");
+    console.log("2026-08-08 12:30:10" > "2026-08-08 12:30:10"); // true
     this.reloadTitle();
     if (this.globalSystemValue.level === "1") {
       this.levelStatus = false;
