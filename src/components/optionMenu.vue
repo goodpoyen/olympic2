@@ -1353,7 +1353,11 @@
             ></v-date-picker>
           </v-window-item>
           <v-window-item value="time">
-            <v-time-picker v-model="timeVal" format="24hr"></v-time-picker>
+            <v-time-picker
+              v-model="timeVal"
+              format="24hr"
+              @update:model-value="isChange = false"
+            ></v-time-picker>
           </v-window-item>
         </v-window>
 
@@ -1365,10 +1369,15 @@
               dateVal = new Date();
               timeVal = '12:00';
               tab = 'date';
+              isChange = true;
             "
             >取消</v-btn
           >
-          <v-btn color="primary" variant="flat" @click="setDateTime"
+          <v-btn
+            color="primary"
+            variant="flat"
+            :disabled="isChange"
+            @click="setDateTime"
             >確定</v-btn
           >
         </v-card-actions>
@@ -1392,6 +1401,7 @@ export default {
     warning: false,
     warningOpen: true,
     setColumnPop: false,
+    isChange: true,
     headers: [],
     rulesHeaders: [],
     rulesList: [],
