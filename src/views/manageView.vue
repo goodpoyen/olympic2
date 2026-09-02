@@ -216,7 +216,7 @@ export default {
       {
         text: "系統管理",
         icon: "mdi-cog-outline",
-        system: "all",
+        system: "science",
         level: "1,2,3,4",
         subItem: [
           {
