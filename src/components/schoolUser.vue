@@ -475,21 +475,17 @@
           dark
           style="font-weight: bold; background-color: #0046fe !important"
         >
-          <v-icon
-            large
-            class="mr-2 white--text"
-            style="font-size: 24px; color: white"
-          >
+          <v-icon size="25" class="mr-2 white--text" style="color: white">
             mdi-book-open-blank-variant
           </v-icon>
-          <span v-if="mailStatus === 1" style="color: white"
+          <span v-if="mailStatus === 1" style="font-size: 17px; color: white"
             >信件內容-報名完成</span
           >
-          <span v-if="mailStatus === 2" style="color: white"
+          <span v-if="mailStatus === 2" style="font-size: 17px; color: white"
             >信件內容-報名失敗</span
           >
-          <span v-if="mailStatus === 3" style="color: white"
-            >信件內容-報名失敗(已了解)</span
+          <span v-if="mailStatus === 3" style="font-size: 17px; color: white"
+            >信件內容-報名失敗 (已了解)</span
           >
         </v-card-title>
 
@@ -501,13 +497,12 @@
         </v-card-text>
         <v-card-text
           v-if="mailStatus === 2 || mailStatus === 3"
-          style="font-weight: bold; font-size: 17px; color: red; margin-top: 3%"
+          style="font-weight: bold; font-size: 17px; color: red"
           v-html="mailContact"
         >
         </v-card-text>
 
-        <v-card-actions style="margin-top: 3px">
-          <v-spacer></v-spacer>
+        <v-card-actions>
           <v-btn
             color="black darken-1"
             text
