@@ -12,13 +12,13 @@ const routes = [
     component: () => import("../views/loginView.vue"),
   },
   {
-    path: "/applySignup",
-    name: "applySignup",
+    path: "/applysignup",
+    name: "applysignup",
     component: () => import("../views/apply.vue"),
   },
   {
-    path: "/applyScore",
-    name: "applyScore",
+    path: "/applyscore",
+    name: "applyscore",
     component: () => import("../views/apply.vue"),
   },
   {
