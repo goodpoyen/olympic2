@@ -9,7 +9,10 @@
           :value="2"
           style="color: black; font-weight: bolder"
           @click="getExamAreaInfo"
-          >考區資料</v-tab
+          >考區資料
+          <v-icon v-if="!areaExist" color="red" class="ms-1" size="large"
+            >mdi-alert-octagram-outline</v-icon
+          ></v-tab
         >
         <v-tab
           :value="3"
