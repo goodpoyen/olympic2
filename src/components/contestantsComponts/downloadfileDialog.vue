@@ -17,11 +17,11 @@
           label="成績總表"
           value="scoreList"
         ></v-radio>
-        <!-- <v-radio
+        <v-radio
           v-if="globalSystemValue.system === 'science'"
           label="各學校實體成績單下載"
           value="scoreForm"
-        ></v-radio> -->
+        ></v-radio>
       </v-radio-group>
     </v-card-text>
     <v-card-actions style="margin-top: 3px">
