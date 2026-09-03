@@ -175,10 +175,10 @@ export default {
 
     if (this.globalSystemValue.system === "science") {
       document.title = "高級中等學校科學班";
-      link.href = "/images/scienceFav.png";
+      link.href = require("@/assets/images/scienceFav.png");
     } else {
       document.title = "臺灣奧林匹亞";
-      link.href = "/images/fav.png";
+      link.href = require("@/assets/images/fav.png");
     }
 
     this.items = [

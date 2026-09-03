@@ -81,7 +81,7 @@
               <v-img
                 max-height="15"
                 max-width="15"
-                src="/images/logoJGHS.png"
+                src="@/assets/images/logoJGHS.png"
                 style="display: inline-flex"
               ></v-img>
               <div style="display: inline; font-size: 14px; margin-left: 10px">
@@ -95,7 +95,7 @@
               <v-img
                 max-height="15"
                 max-width="15"
-                src="/images/logoTFGHS.png"
+                src="@/assets/images/logoTFGHS.png"
                 style="display: inline-flex"
               ></v-img>
               <div style="display: inline; font-size: 14px; margin-left: 10px">
@@ -110,7 +110,7 @@
               <v-img
                 max-height="15"
                 max-width="15"
-                src="/images/logoHSNU.png"
+                src="@/assets/images/logoHSNU.png"
                 style="display: inline-flex"
               ></v-img>
               <div style="display: inline; font-size: 14px; margin-left: 10px">
@@ -125,7 +125,7 @@
               <v-img
                 max-height="15"
                 max-width="15"
-                src="/images/logoWLSH.png"
+                src="@/assets/images/logoWLSH.png"
                 style="display: inline-flex"
               ></v-img>
               <div style="display: inline; font-size: 14px; margin-left: 10px">
@@ -140,7 +140,7 @@
               <v-img
                 max-height="15"
                 max-width="15"
-                src="/images/logoNEHS.png"
+                src="@/assets/images/logoNEHS.png"
                 style="display: inline-flex"
               ></v-img>
               <div style="display: inline; font-size: 14px; margin-left: 10px">
@@ -154,7 +154,7 @@
               <v-img
                 max-height="15"
                 max-width="15"
-                src="/images/logoTCFSH.png"
+                src="@/assets/images/logoTCFSH.png"
                 style="display: inline-flex"
               ></v-img>
               <div style="display: inline; font-size: 14px; margin-left: 10px">
@@ -168,7 +168,7 @@
               <v-img
                 max-height="15"
                 max-width="15"
-                src="/images/logoCHSH.png"
+                src="@/assets/images/logoCHSH.png"
                 style="display: inline-flex"
               ></v-img>
               <div style="display: inline; font-size: 14px; margin-left: 10px">
@@ -182,7 +182,7 @@
               <v-img
                 max-height="15"
                 max-width="15"
-                src="/images/logoCYSH.png"
+                src="@/assets/images/logoCYSH.png"
                 style="display: inline-flex"
               ></v-img>
               <div style="display: inline; font-size: 14px; margin-left: 10px">
@@ -196,7 +196,7 @@
               <v-img
                 max-height="15"
                 max-width="15"
-                src="/images/logoTNFSH.png"
+                src="@/assets/images/logoTNFSH.png"
                 style="display: inline-flex"
               ></v-img>
               <div style="display: inline; font-size: 14px; margin-left: 10px">
@@ -210,7 +210,7 @@
               <v-img
                 max-height="15"
                 max-width="15"
-                src="/images/logoKSHS.png"
+                src="@/assets/images/logoKSHS.png"
                 style="display: inline-flex"
               ></v-img>
               <div style="display: inline; font-size: 14px; margin-left: 10px">
