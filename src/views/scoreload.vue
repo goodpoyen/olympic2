@@ -8,6 +8,7 @@
           background-color: #2d5bff !important;
           width: 60%;
           margin: 20px auto;
+          color: white;
         "
       >
         <div style="margin-bottom: 10px">
