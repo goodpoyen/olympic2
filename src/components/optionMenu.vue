@@ -2027,6 +2027,8 @@ export default {
         this.pupTitleIcon = "mdi-alert-outline";
         this.pupText = setTimeStatus.errorMsg;
         this.pupType = "create";
+
+        return false;
       }
 
       if (
