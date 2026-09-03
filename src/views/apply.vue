@@ -1,7 +1,7 @@
 <template>
   <v-main
     :style="{
-      'background-image': 'url(/images/loginBackground.png)',
+      'background-image': `url(${require('@/assets/images/loginBackground.png')})`,
       'background-size': '100% 100%',
       'background-repeat': 'no-repeat',
       height: '100%',

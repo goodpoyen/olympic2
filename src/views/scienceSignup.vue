@@ -65,7 +65,7 @@
                 <v-img
                   max-height="80"
                   max-width="80"
-                  src="/images/logoJGHS.png"
+                  src="@/assets/images/logoJGHS.png"
                   style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
@@ -92,7 +92,7 @@
                 <v-img
                   max-height="80"
                   max-width="80"
-                  src="/images/logoHSNU.png"
+                  src="@/assets/images/logoHSNU.png"
                   style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
@@ -119,7 +119,7 @@
                 <v-img
                   max-height="80"
                   max-width="80"
-                  src="/images/logoTFGHS.png"
+                  src="@/assets/images/logoTFGHS.png"
                   style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
@@ -146,7 +146,7 @@
                 <v-img
                   max-height="80"
                   max-width="80"
-                  src="/images/logoWLSH.png"
+                  src="@/assets/images/logoWLSH.png"
                   style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
@@ -173,7 +173,7 @@
                 <v-img
                   max-height="80"
                   max-width="80"
-                  src="/images/logoNEHS.png"
+                  src="@/assets/images/logoNEHS.png"
                   style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
@@ -200,7 +200,7 @@
                 <v-img
                   max-height="80"
                   max-width="80"
-                  src="/images/logoTCFSH.png"
+                  src="@/assets/images/logoTCFSH.png"
                   style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
@@ -227,7 +227,7 @@
                 <v-img
                   max-height="80"
                   max-width="80"
-                  src="/images/logoCHSH.png"
+                  src="@/assets/images/logoCHSH.png"
                   style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
@@ -254,7 +254,7 @@
                 <v-img
                   max-height="80"
                   max-width="80"
-                  src="/images/logoCYSH.png"
+                  src="@/assets/images/logoCYSH.png"
                   style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
@@ -281,7 +281,7 @@
                 <v-img
                   max-height="80"
                   max-width="80"
-                  src="/images/logoTNFSH.png"
+                  src="@/assets/images/logoTNFSH.png"
                   style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
@@ -308,7 +308,7 @@
                 <v-img
                   max-height="80"
                   max-width="80"
-                  src="/images/logoKSHS.png"
+                  src="@/assets/images/logoKSHS.png"
                   style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
