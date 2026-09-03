@@ -486,7 +486,7 @@ export default {
                 this.userInfo.name;
             }
 
-            this.stampURL = this.userInfo.stamp;
+            this.stampURL = require("@/assets" + this.userInfo.stamp);
 
             const that = this;
             this.subjectConfig.forEach(function (data) {

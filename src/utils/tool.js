@@ -357,76 +357,31 @@ export function globalTool() {
   }
 
   function getSysLogo(word) {
-    if (word === "TMO") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
+    const logoMaps = {
+      TMO: require("@/assets/images/logoTMO.png"),
+      IPHO: require("@/assets/images/logoIPHO.png"),
+      TWICHO: require("@/assets/images/logoTWICHO.png"),
+      IBO: require("@/assets/images/logoIBO.png"),
+      IESO: require("@/assets/images/logoIESO.png"),
+      IJSO: require("@/assets/images/logoIJSO.png"),
+      TOI: require("@/assets/images/logoTOI.png"),
+      TOIREG: require("@/assets/images/logoTOI.png"),
+      TESTREG: require("@/assets/images/logoTOI.png"),
+      JGHS: require("@/assets/images/logoJGHS.png"),
+      TFGHS: require("@/assets/images/logoTFGHS.png"),
+      HSNU: require("@/assets/images/logoHSNU.png"),
+      WLSH: require("@/assets/images/logoWLSH.png"),
+      TCFSH: require("@/assets/images/logoTCFSH.png"),
+      CHSH: require("@/assets/images/logoCHSH.png"),
+      TNFSH: require("@/assets/images/logoTNFSH.png"),
+      CYSH: require("@/assets/images/logoCYSH.png"),
+      KSHS: require("@/assets/images/logoKSHS.png"),
+      NEHS: require("@/assets/images/logoNEHS.png"),
+      TESTNTNU: require("@/assets/images/logoTCFSH.png"),
+    };
 
-    if (word === "IPHO") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "TWICHO") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "IBO") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "IESO") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "IJSO") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "TOI" || word === "TOIREG" || word === "TESTREG") {
-      return require("@/assets/images/logo" + "TOI.png");
-    }
-
-    if (word === "JGHS") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "TFGHS") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "HSNU") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "WLSH") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "TCFSH") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "CHSH") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "TNFSH") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "KSHS") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "CYSH") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "NEHS") {
-      return require("@/assets/images/logo" + word + ".png");
-    }
-
-    if (word === "TESTNTNU") {
-      return require("@/assets/images/logo" + word + ".png");
+    if (logoMaps[word]) {
+      return logoMaps[word];
     }
   }
 
