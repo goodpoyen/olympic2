@@ -315,10 +315,8 @@
             >{{ pupTitle }}</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
-          {{ pupText }}
+        <v-card-text style="font-size: 20px; font-weight: bold">
+          <div v-html="pupText"></div>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -1310,6 +1308,30 @@ export default {
       await this.tokenService.renewLT();
 
       this.editedItem.olympic = this.globalSystemValue.olympic;
+
+      if (this.editedItem.status === "2") {
+        const filteredData = this.desserts.filter((item) => {
+          if (item.uId != this.editedItem.uId) {
+            const matchStatus = item.status && item.status === "2";
+            const matchEmail =
+              item.email && item.email === this.editedItem.email;
+
+            return matchStatus && matchEmail;
+          }
+        });
+
+        if (filteredData.length > 0) {
+          this.cleanPupData();
+          this.alertPup = true;
+          this.pupTitle = "無法儲存資料";
+          this.pupTitleShow = "2";
+          this.pupTitleIcon = "mdi-alert-outline";
+          this.pupText =
+            "該資料的email已被啟用中！<br>請確認任：<br>1. 「一個email只能被一所學校啟用」<br>2. 「同所學校不能有相同email被啟用」";
+
+          return false;
+        }
+      }
 
       let data = this.globalSystemTool.equestData(this.editedItem);
       data.AT = await this.tokenService.getFastAT();
