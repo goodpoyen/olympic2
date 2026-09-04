@@ -1998,6 +1998,7 @@ export default {
 
       const data = this.globalSystemTool.equestData(this.editedItem);
       data.AT = await this.tokenService.getFastAT();
+      data.saveMod = type;
       if (this.editedIndex === -1) {
         data.maintain = "0";
       }
