@@ -2133,13 +2133,19 @@
       </v-progress-circular>
     </v-overlay>
     <v-snackbar v-model="snackMail" :timeout="snackbarTimeout">
-      {{ copyName }}：{{ copyValue }}
-      <v-btn color="red" variant="text" @click="copyText(copyValue)">
-        複製
-      </v-btn>
-      <v-btn color="blue" variant="text" @click="snackMail = false">
-        關閉
-      </v-btn>
+      <span class="text-truncate d-inline-block">
+        {{ copyName }}：{{ copyValue }}
+      </span>
+      <template #actions>
+        <div class="d-flex flex-nowrap">
+          <v-btn color="red" variant="text" @click="copyText(copyValue)">
+            複製
+          </v-btn>
+          <v-btn color="blue" variant="text" @click="snackMail = false">
+            關閉
+          </v-btn>
+        </div>
+      </template>
     </v-snackbar>
   </div>
 </template>
