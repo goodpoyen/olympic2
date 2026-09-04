@@ -971,6 +971,11 @@
                     @click="editorSignupColumn(editedItem)"
                     >設定報名欄位</v-btn
                   >
+                  <span
+                    v-if="columnSet"
+                    class="d-block w-100 text-caption text-red mt-1"
+                    >※ 報名欄位設定已存儲</span
+                  >
                 </v-col>
               </v-row>
             </v-container>
@@ -1402,6 +1407,7 @@ export default {
     warningOpen: true,
     setColumnPop: false,
     isChange: true,
+    columnSet: false,
     headers: [],
     rulesHeaders: [],
     rulesList: [],
@@ -1652,6 +1658,7 @@ export default {
 
       if (this.editedIndex !== -1) {
         await this.saveMenu("Column");
+        this.columnSet = true;
       }
 
       this.tempRules = [];
@@ -1933,6 +1940,7 @@ export default {
       this.checkS = false;
       this.checkJ = false;
       this.checkE = false;
+      this.columnSet = false;
 
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
@@ -1949,6 +1957,7 @@ export default {
     closeDelete() {
       this.warningOpen = true;
       this.dialogDelete = false;
+      this.columnSet = false;
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
