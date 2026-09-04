@@ -645,15 +645,19 @@
       </v-progress-circular>
     </v-overlay>
     <v-snackbar v-model="snackMail" :timeout="snackbarTimeout">
-      聯絡信箱：{{ copyMail }}
-      <v-btn
-        color="red"
-        variant="text"
-        @click="copyText(copyMail)"
-        style="margin-left: 15px"
-      >
-        複製
-      </v-btn>
+      <span class="text-truncate d-inline-block">
+        聯絡信箱：{{ copyMail }}
+      </span>
+      <template #actions>
+        <div class="d-flex flex-nowrap">
+          <v-btn color="red" variant="text" @click="copyText(copyValue)">
+            複製
+          </v-btn>
+          <v-btn color="blue" variant="text" @click="snackMail = false">
+            關閉
+          </v-btn>
+        </div>
+      </template>
     </v-snackbar>
   </div>
 </template>
