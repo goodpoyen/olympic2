@@ -34,6 +34,22 @@
           >{{ scoreSend }} / {{ desserts.length - admissionCount }}</span
         >
       </div>
+      <div style="display: inline; margin-left: 20px">
+        寄送老師信件狀況:
+        <v-icon
+          :title="'寄送' + titleExam"
+          medium
+          style="margin-left: 20px; color: #2bcd2b"
+        >
+          mdi-card-account-details-outline
+        </v-icon>
+        <span
+          v-if="globalSystemValue.system === 'olympic'"
+          style="margin-left: 10px"
+        >
+          {{ teacherNotice.notice }} / {{ teacherNotice.total }}
+        </span>
+      </div>
     </div>
     <v-data-table
       v-model="selected"
@@ -1121,6 +1137,7 @@ export default {
     scoreRemark: "",
     subjectConfig: [],
     mailTypeHeader: [],
+    teacherNotice: {},
     textRules: [(v) => !!v || "不能為空"],
     editedItem: {
       contestantsId: "",
@@ -1162,6 +1179,10 @@ export default {
     handicappedCount: 0,
     sendExamNotice: false,
     sendExamScoreNoice: false,
+    teacherNotice: {
+      type: Object,
+      default: () => {},
+    },
   },
 
   components: {
@@ -2178,6 +2199,7 @@ export default {
           // console.log(response.data);
           if (response.data.code === 200) {
             this.desserts = response.data.resultData;
+            this.teacherNotice = response.data.teacherNotice;
 
             const that = this;
             this.desserts.forEach(function (data) {

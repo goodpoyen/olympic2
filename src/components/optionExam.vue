@@ -74,6 +74,7 @@
               :scoreSend="scoreSend"
               :sendExamNotice="sendExamNotice"
               :sendExamScoreNoice="sendExamScoreNoice"
+              :teacherNotice="teacherNotice"
               @updateFilter="updateFilter"
               @updateDesserts="updateDesserts"
             ></contestants>
@@ -112,6 +113,7 @@ export default {
     sendExamScoreNoice: false,
     fixCodeName: true,
     tab: null,
+    teacherNotice: {},
   }),
 
   components: {
@@ -212,6 +214,7 @@ export default {
           if (response.data.code === 200) {
             this.desserts = response.data.resultData;
             this.dessertsTemp = response.data.resultData;
+            this.teacherNotice = response.data.teacherNotice;
             this.loadList = false;
 
             this.examSend = 0;
