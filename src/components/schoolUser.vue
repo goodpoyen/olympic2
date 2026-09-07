@@ -171,15 +171,16 @@
           mdi-key
         </v-icon>
       </template>
-      <template v-slot:item.updateTime="{ item }">
+      <template v-slot:item.statusTime="{ item }">
         <v-icon
           medium
           :disabled="item.status === '1' || item.status === '3'"
-          :title="item.updateTime"
+          :title="item.statusTime"
           @click="
             snackMail = snackMail && item.uId === copyUId ? false : true;
-            copyName = '啟用時間';
-            copyValue = item.updateTime;
+            copyName = '審核時間';
+            copyValue =
+              item.statusTime === '' ? item.updateTime : item.statusTime;
             copyUId = item.uId;
           "
           style="color: rgb(24, 216, 168)"
@@ -985,7 +986,7 @@ export default {
       await this.axios
         .post(this.systemENV.APISERVERURL + "/getSchoolAddressList", data)
         .then((response) => {
-          // console.log(response.data)
+          // console.log(response.data);
           if (response.data.code === 200) {
             this.cityList = response.data.resultData.cityList;
             this.areaList = response.data.resultData.areaList;
@@ -1361,7 +1362,9 @@ export default {
             data.suoId = response.data.resultData.suoId;
             data.signupKey = response.data.resultData.signupKey;
             data.schoolType = response.data.resultData.schoolType;
+            data.schoolNameAll = response.data.resultData.schoolNameAll;
             data = this.changeData(data);
+
             if (this.editedIndex > -1) {
               Object.assign(this.desserts[this.editedIndex], data);
             } else {
@@ -1587,11 +1590,11 @@ export default {
           },
           {
             title: "審核時間",
-            value: "updateTime",
-            filterName: "updateTime",
+            value: "statusTime",
+            filterName: "statusTime",
             type: "text",
-            updateTime_M: "",
-            updateTime_C: "",
+            statusTime_M: "",
+            statusTime_C: "",
             width: "3%",
           },
           { title: "功能", value: "actions", width: "10%" },
@@ -1836,11 +1839,11 @@ export default {
         },
         {
           title: "審核時間",
-          value: "updateTime",
-          filterName: "updateTime",
+          value: "statusTime",
+          filterName: "statusTime",
           type: "text",
-          updateTime_M: "",
-          updateTime_C: "",
+          statusTime_M: "",
+          statusTime_C: "",
           width: "8%",
         },
         { title: "功能", value: "actions", width: "10%" },
@@ -2003,11 +2006,11 @@ export default {
           },
           {
             title: "審核時間",
-            value: "updateTime",
-            filterName: "updateTime",
+            value: "statusTime",
+            filterName: "statusTime",
             type: "text",
-            updateTime_M: "",
-            updateTime_C: "",
+            statusTime_M: "",
+            statusTime_C: "",
             width: "5%",
           },
           { title: "功能", value: "actions", width: "15%" },
