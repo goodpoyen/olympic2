@@ -116,7 +116,7 @@
             block
             depressed
             color="#2D5BFF"
-            :disabled="load"
+            :disabled="load || role === '' || email === '' || verifycode === ''"
             @click="applySignup()"
             autocomplete
             >送出</v-btn
@@ -127,7 +127,7 @@
             block
             depressed
             color="#2D5BFF"
-            :disabled="load"
+            :disabled="load || role === '' || email === '' || verifycode === ''"
             @click="applyScore()"
             autocomplete
             >送出</v-btn
