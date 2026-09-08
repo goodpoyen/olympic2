@@ -127,7 +127,7 @@
             block
             depressed
             color="#2D5BFF"
-            :disabled="load || role === '' || email === '' || verifycode === ''"
+            :disabled="load || email === '' || verifycode === ''"
             @click="applyScore()"
             autocomplete
             >送出</v-btn
