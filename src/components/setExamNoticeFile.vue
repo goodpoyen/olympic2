@@ -66,7 +66,7 @@ import {
 import "vuetify-pro-tiptap/style.css";
 import { Node } from "@tiptap/core";
 
-// 自訂防呆 Chip 節點 (維持您原本的設定，確保編輯器內呈現底色)
+// ✨ 修正後的自訂 Chip 節點，使其支援外部 CSS 與動態變數更改
 const VariableChip = Node.create({
   name: "variableChip",
   group: "inline",
@@ -103,10 +103,10 @@ const VariableChip = Node.create({
       "custom-variable-tag",
       {
         ...HTMLAttributes,
-        style:
-          "background-color: rgb(232, 245, 233); color: rgb(46, 125, 50); padding: 2px 6px; border-radius: 4px; display: inline-block; margin: 0px 2px; font-weight: 500;",
+        // 💡 重點：移除 style 屬性，改賦予 class 名稱，讓外部 CSS 可以影響它
+        class: "custom-variable-chip",
       },
-      node.attrs.customLabel,
+      node.attrs.customLabel, // 這裡會動態放入帶入的變數中文標籤（如：{{自動帶入-客戶名稱}}）
     ];
   },
 });
@@ -133,6 +133,7 @@ export default {
           defaultAlignment: "left",
         }),
       ],
+      // 📝 變數清單
       variables: [
         {
           title: "客戶名稱",
@@ -173,27 +174,31 @@ export default {
       });
     },
 
-    // 🔥 儲存並進行字串轉換方法
+    // 儲存並進行字串轉換方法
     saveContent() {
-      // 1. 取得目前編輯器內的原始 HTML
       const rawHtml = this.content;
 
-      // 2. 使用正則表達式，精準匹配整個 <custom-variable-tag> 標籤並擷取 data-my-custom-id 的值
-      // 這裡使用了 ([^"]+) 來捕獲 id，並透過 $1 代表捕獲到的內容
+      // 正則表達式匹配更新（加入了 class 的匹配相容性）
       const convertedHtml = rawHtml.replace(
         /<custom-variable-tag[^>]*data-my-custom-id="([^"]+)"[^>]*>[\s\S]*?<\/custom-variable-tag>/g,
-        "$1", // 👈 這裡直接用抓到的 id (例如 order_id) 替換掉整段標籤
+        "$1",
       );
 
-      // 3. 列印轉換結果
       console.log("【轉換前】原本 HTML：", rawHtml);
       console.log("【轉換後】自訂字串：", convertedHtml);
-
-      // 4. 將轉換後的 convertedHtml 送至 API 儲存至資料庫
-      // this.api.save(convertedHtml);
     },
   },
 };
 </script>
+
+custom-variable-tag.custom-variable-chip { background-color: #f5f5f5 !important;
+/* 淺灰色底色 */ color: #424242 !important; /* 深灰色文字，確保清晰易讀 */
+border: 1px solid #e0e0e0 !important; /* 微調：加一層淡淡的邊框讓 Chip 更明顯 */
+padding: 2px 6px !important; border-radius: 4px !important; display:
+inline-block !important; margin: 0px 2px !important; font-weight: 500
+!important; user-select: none; /* 防止使用者誤選取或破壞標籤文字 */ } /*
+額外加分：當滑鼠游標移過去時，稍微加深灰色，提升互動感 */
+custom-variable-tag.custom-variable-chip:hover { background-color: #eeeeee
+!important; border-color: #bdbdbd !important; cursor: pointer; }
 
 <style src="../assets/editor-custom-style.css"></style>
