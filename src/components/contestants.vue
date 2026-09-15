@@ -44,7 +44,7 @@
           mdi-card-account-details-outline
         </v-icon>
         <span
-          v-if="globalSystemValue.system === 'olympic'"
+          v-if="globalSystemValue.system === 'olympic' && scheduleType === 1"
           style="margin-left: 10px"
         >
           {{ teacherNotice.notice }} / {{ teacherNotice.total }}
