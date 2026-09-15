@@ -34,7 +34,10 @@
           >{{ scoreSend }} / {{ desserts.length - admissionCount }}</span
         >
       </div>
-      <div style="display: inline; margin-left: 20px">
+      <div
+        v-if="globalSystemValue.system === 'olympic' && scheduleType === 1"
+        style="display: inline; margin-left: 20px"
+      >
         寄送老師信件狀況:
         <v-icon
           :title="'寄送' + titleExam"
@@ -43,10 +46,7 @@
         >
           mdi-card-account-details-outline
         </v-icon>
-        <span
-          v-if="globalSystemValue.system === 'olympic' && scheduleType === 1"
-          style="margin-left: 10px"
-        >
+        <span style="margin-left: 10px">
           {{ teacherNotice.notice }} / {{ teacherNotice.total }}
         </span>
       </div>
