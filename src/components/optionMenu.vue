@@ -65,11 +65,7 @@
             <v-col cols="12" sm="9" md="9">
               <router-link
                 v-if="item.type === 1"
-                :to="
-                  item.signupWarning
-                    ? '/manage/schoolUser?olyId=' + item.olyId
-                    : '/manage/optionExam/' + item.olyId
-                "
+                :to="'/manage/optionExam/' + item.olyId"
                 style="
                   font-size: 13px;
                   font-weight: bold;
@@ -80,21 +76,25 @@
                 <v-row>
                   <v-col cols="12" sm="2" md="2">
                     <div v-if="item.signupWarning">
-                      <v-badge
-                        bordered
-                        color="error"
-                        icon="mdi-account-alert"
-                        floating
-                        offset-x="20"
-                        offset-y="25"
+                      <router-link
+                        :to="'/manage/schoolUser?olyId=' + item.olyId"
                       >
-                        <v-btn
-                          color="#e9f8ff"
-                          icon="mdi-notebook-edit-outline"
-                          size="x-large"
-                          style="margin-left: 20px; margin-top: 7px"
-                        ></v-btn>
-                      </v-badge>
+                        <v-badge
+                          bordered
+                          color="error"
+                          icon="mdi-account-alert"
+                          floating
+                          offset-x="20"
+                          offset-y="25"
+                        >
+                          <v-btn
+                            color="#e9f8ff"
+                            icon="mdi-notebook-edit-outline"
+                            size="x-large"
+                            style="margin-left: 20px; margin-top: 7px"
+                          ></v-btn>
+                        </v-badge>
+                      </router-link>
                     </div>
                     <div v-else>
                       <v-btn
