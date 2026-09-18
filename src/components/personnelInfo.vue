@@ -703,6 +703,7 @@
                     item-value="codeName"
                     label="考區"
                     variant="underlined"
+                    return-object
                     :rules="[(v) => !!v || '考區不能為空']"
                   ></v-select>
                 </v-col>
@@ -763,6 +764,7 @@
                     item-value="school_number"
                     label="校名"
                     variant="underlined"
+                    return-object
                     :rules="[(v) => !!v || '校名不能為空']"
                     @update:model-value="checkSchoolType()"
                   ></v-select>
@@ -1297,10 +1299,10 @@ export default {
     },
 
     checkSchoolType() {
-      if (this.editedItem.schoolNumber.includes("s")) {
+      if (this.editedItem.schoolNumber.school_number.includes("s")) {
         this.editedItem.type = "s";
         this.checkGrade("");
-      } else if (this.editedItem.schoolNumber.includes("j")) {
+      } else if (this.editedItem.schoolNumber.school_number.includes("j")) {
         this.editedItem.type = "j";
         this.checkGrade("");
       } else {
@@ -1659,21 +1661,10 @@ export default {
       if (item.schoolNumber === undefined) {
         item.schoolNumber = "";
       } else {
-        item.schoolNumber = item.schoolNumber
-          .replace("_e", "")
-          .replace("_j", "")
-          .replace("_s", "")
-          .replace("_c", "")
-          .replace("_jc", "")
-          .replace("_I", "");
-
-        if (item.type === "e") {
-          item.schoolNumber = item.schoolNumber + "_e";
-        } else if (item.type === "j") {
-          item.schoolNumber = item.schoolNumber + "_j";
-        } else {
-          item.schoolNumber = item.schoolNumber + "_s";
-        }
+        const data = {};
+        data.school_name = item.schoolName;
+        data.school_number = item.schoolNumber;
+        item.schoolNumber = data;
       }
 
       const that = this;
@@ -1718,7 +1709,7 @@ export default {
       if (this.editedIndex !== -1) {
         this.desserts[this.editedIndex].schoolNumber = this.desserts[
           this.editedIndex
-        ].schoolNumber
+        ].schoolNumber.school_number
           .replace("_e", "")
           .replace("_j", "")
           .replace("_s", "")
@@ -1731,6 +1722,10 @@ export default {
             "*****" +
             this.desserts[this.editedIndex].idCard.slice(2, 5);
         }
+
+        this.desserts[this.editedIndex].birthday = this.desserts[
+          this.editedIndex
+        ].birthday.replace("-", "/");
       }
       this.sendMail = Object.assign({}, this.defaultSendMail);
       this.editedItem = {};
@@ -1830,7 +1825,7 @@ export default {
         .post(this.systemENV.APISERVERURL + "/savePersonnel", data)
         .then((response) => {
           this.loadShow = false;
-          // console.log(response.data)
+          // console.log(response.data);
           if (response.data.code === 200) {
             data.stId = response.data.resultData;
 
