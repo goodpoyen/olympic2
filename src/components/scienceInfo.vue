@@ -2069,6 +2069,7 @@
                     item-value="school_number"
                     label="校名"
                     variant="underlined"
+                    return-object
                     :rules="[(v) => !!v || '校名不能為空']"
                     required
                   ></v-select>
@@ -2848,6 +2849,11 @@ export default {
         await this.getStudentInfo(item);
 
         this.updateInfo.birthday = item.birthday.replace("/", "-");
+
+        const data = {};
+        data.school_name = item.schoolNameAll;
+        data.school_number = item.schoolNumber;
+        this.updateInfo.schoolNumber = data;
 
         Object.assign(this.desserts[this.editedIndex], this.updateInfo);
       }
