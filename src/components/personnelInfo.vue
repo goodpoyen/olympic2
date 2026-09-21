@@ -92,6 +92,14 @@
           mdi-circle-small
         </v-icon>
         {{ failCount }}人
+        <v-icon
+          title="放棄報名"
+          size="x-large"
+          style="margin-left: 7px; color: #a020f0"
+        >
+          mdi-circle-small
+        </v-icon>
+        {{ quitCount }}人
         <hr
           role="separator"
           aria-orientation="vertical"
@@ -289,6 +297,13 @@
           v-if="item.statusName == '不通過'"
           size="x-large"
           style="margin-left: 7px; color: #6b6b6b"
+        >
+          mdi-circle-small
+        </v-icon>
+        <v-icon
+          v-if="item.statusName == '放棄報名'"
+          size="x-large"
+          style="margin-left: 7px; color: #a020f0"
         >
           mdi-circle-small
         </v-icon>
@@ -938,6 +953,20 @@
                         >
                       </template>
                     </v-radio>
+                    <v-radio
+                      :value="'4'"
+                      style="width: 35%"
+                      @click="sendMail.signupStatus = '4'"
+                    >
+                      <template v-slot:label>
+                        <v-icon large style="margin-left: 7px; color: #a020f0">
+                          mdi-circle-small
+                        </v-icon>
+                        <span style="font-weight: bold; color: #a020f0"
+                          >放棄報名</span
+                        >
+                      </template>
+                    </v-radio>
                   </v-radio-group>
                 </v-col>
                 <v-col
@@ -1213,6 +1242,7 @@ export default {
     passCount: 0,
     nopassCount: 0,
     failCount: 0,
+    quitCount: 0,
   },
 
   components: {
@@ -1707,15 +1737,27 @@ export default {
       this.valid = true;
       this.studentExamCode = {};
       if (this.editedIndex !== -1) {
-        this.desserts[this.editedIndex].schoolNumber = this.desserts[
-          this.editedIndex
-        ].schoolNumber.school_number
-          .replace("_e", "")
-          .replace("_j", "")
-          .replace("_s", "")
-          .replace("_c", "")
-          .replace("_jc", "")
-          .replace("_I", "");
+        if (typeof this.desserts[this.editedIndex].schoolNumber === "object") {
+          this.desserts[this.editedIndex].schoolNumber = this.desserts[
+            this.editedIndex
+          ].schoolNumber.school_number
+            .replace("_e", "")
+            .replace("_j", "")
+            .replace("_s", "")
+            .replace("_c", "")
+            .replace("_jc", "")
+            .replace("_I", "");
+        } else {
+          this.desserts[this.editedIndex].schoolNumber = this.desserts[
+            this.editedIndex
+          ].schoolNumber
+            .replace("_e", "")
+            .replace("_j", "")
+            .replace("_s", "")
+            .replace("_c", "")
+            .replace("_jc", "")
+            .replace("_I", "");
+        }
         if (!this.desserts[this.editedIndex].idCard.includes("*****")) {
           this.desserts[this.editedIndex].idCard =
             this.desserts[this.editedIndex].idCard.slice(0, 2) +
@@ -1881,8 +1923,8 @@ export default {
       if (data.signupStatus === "2") {
         data.statusName = "不通過";
       }
-      if (data.signupStatus === "1") {
-        data.statusName = "待審核";
+      if (data.signupStatus === "4") {
+        data.statusName = "放棄報名";
       }
 
       if (data.createRole === "S") {

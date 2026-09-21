@@ -42,6 +42,7 @@
               :passCount="passCount"
               :nopassCount="nopassCount"
               :failCount="failCount"
+              :quitCount="quitCount"
               @updateFilter="updateFilter"
               @countSignupStatus="countSignupStatus"
             ></personnel-info>
@@ -107,6 +108,7 @@ export default {
     passCount: 0,
     nopassCount: 0,
     failCount: 0,
+    quitCount: 0,
     examSend: 0,
     scoreSend: 0,
     sendExamNotice: false,
@@ -287,6 +289,10 @@ export default {
               if (data.signupStatus === "2") {
                 that.failCount++;
               }
+
+              if (data.signupStatus === "4") {
+                that.quitCount++;
+              }
             });
 
             this.headers.forEach(function (data) {
@@ -357,8 +363,8 @@ export default {
       if (data.signupStatus === "2") {
         data.statusName = "不通過";
       }
-      if (data.signupStatus === "1") {
-        data.statusName = "待審核";
+      if (data.signupStatus === "4") {
+        data.statusName = "放棄報名";
       }
 
       if (data.createRole === "S") {
@@ -426,6 +432,7 @@ export default {
       this.passCount = 0;
       this.nopassCount = 0;
       this.failCount = 0;
+      this.quitCount = 0;
       const that = this;
       this.desserts.forEach(function (data) {
         if (data.signupStatus === "3") {
@@ -438,6 +445,10 @@ export default {
 
         if (data.signupStatus === "2") {
           that.failCount++;
+        }
+
+        if (data.signupStatus === "4") {
+          that.quitCount++;
         }
       });
     },
