@@ -13,7 +13,7 @@
       label="請選擇"
       style="margin-left: 13px; width: 249px"
       variant="underlined"
-      @change="filteredDesserts('', header)"
+      @update:model-value="filteredDesserts('', header)"
     ></v-select>
     <v-text-field
       v-if="header.type === 'text'"
@@ -119,6 +119,7 @@ export default {
                 return dessert[headerData.filterName];
               }
             } else {
+              console.log(888);
               return dessert[headerData.filterName]
                 .toString()
                 .toLowerCase()
