@@ -1137,7 +1137,6 @@ export default {
     scoreRemark: "",
     subjectConfig: [],
     mailTypeHeader: [],
-    teacherNotice: {},
     textRules: [(v) => !!v || "不能為空"],
     editedItem: {
       contestantsId: "",
@@ -1845,6 +1844,7 @@ export default {
             this.mailTypeHeader[1].show = false;
             this.mailTypeHeader[2].testMail = true;
           } else {
+            console.log(this.confirmScoreTest);
             if (this.confirmScoreTest === "") {
               this.confirmTestmailStatus = false;
             } else {
@@ -2198,8 +2198,8 @@ export default {
         .then((response) => {
           // console.log(response.data);
           if (response.data.code === 200) {
+            this.$emit("updateDesserts", response.data.resultData);
             this.desserts = response.data.resultData;
-            this.teacherNotice = response.data.teacherNotice;
 
             const that = this;
             this.desserts.forEach(function (data) {
