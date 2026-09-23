@@ -131,13 +131,8 @@ export default {
     },
 
     sendTestMail() {
-      let result = this.$emit("sendTestMail", this.testMail);
-
-      // if (result.testMail === "") {
-      //   this.testMailCheck = true;
-      // } else {
-      //   this.testMailCheck = false;
-      // }
+      this.$emit("sendTestMail", this.testMail);
+      this.testMailCheck = false;
     },
 
     sendTimeDownStart() {
