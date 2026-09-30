@@ -8,7 +8,11 @@
     }"
   >
     <v-card
-      style="position: relative; top: 7%; left: 25%"
+      :style="{
+        position: 'relative',
+        top: '7%',
+        left: device === 'PC' ? '25%' : '10%',
+      }"
       :max-width="device === 'PC' ? '50%' : '80%'"
     >
       <v-card-title

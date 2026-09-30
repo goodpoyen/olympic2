@@ -8,7 +8,11 @@
     }"
   >
     <v-card
-      style="position: relative; top: 7%; left: 25%""
+      :style="{
+        position: 'relative',
+        top: '7%',
+        left: device === 'PC' ? '25%' : '10%',
+      }"
       :loading="load"
       :max-width="device === 'PC' ? '50%' : '80%'"
     >
@@ -344,7 +348,7 @@ export default {
 
     if (currentUrl.includes("/applysignup")) {
       this.page = "signup";
-    } else if(currentUrl.includes("/applyscore"))  {
+    } else if (currentUrl.includes("/applyscore")) {
       this.page = "score";
     }
 
