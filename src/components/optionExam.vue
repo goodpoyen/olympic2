@@ -272,6 +272,7 @@ export default {
             this.passCount = 0;
             this.nopassCount = 0;
             this.failCount = 0;
+            this.quitCount = 0;
 
             const that = this;
             this.desserts.forEach(function (data) {
