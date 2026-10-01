@@ -8,6 +8,7 @@
           background-color: #2d5bff !important;
           width: 60%;
           margin: 20px auto;
+          color: white;
         "
       >
         <div style="margin-bottom: 10px">
@@ -486,7 +487,7 @@ export default {
                 this.userInfo.name;
             }
 
-            this.stampURL = this.userInfo.stamp;
+            this.stampURL = require("@/assets" + this.userInfo.stamp);
 
             const that = this;
             this.subjectConfig.forEach(function (data) {

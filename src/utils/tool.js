@@ -357,76 +357,31 @@ export function globalTool() {
   }
 
   function getSysLogo(word) {
-    if (word === "TMO") {
-      return "/images/logo" + word + ".png";
-    }
+    const logoMaps = {
+      TMO: require("@/assets/images/logoTMO.png"),
+      IPHO: require("@/assets/images/logoIPHO.png"),
+      TWICHO: require("@/assets/images/logoTWICHO.png"),
+      IBO: require("@/assets/images/logoIBO.png"),
+      IESO: require("@/assets/images/logoIESO.png"),
+      IJSO: require("@/assets/images/logoIJSO.png"),
+      TOI: require("@/assets/images/logoTOI.png"),
+      TOIREG: require("@/assets/images/logoTOI.png"),
+      TESTREG: require("@/assets/images/logoTOI.png"),
+      JGHS: require("@/assets/images/logoJGHS.png"),
+      TFGHS: require("@/assets/images/logoTFGHS.png"),
+      HSNU: require("@/assets/images/logoHSNU.png"),
+      WLSH: require("@/assets/images/logoWLSH.png"),
+      TCFSH: require("@/assets/images/logoTCFSH.png"),
+      CHSH: require("@/assets/images/logoCHSH.png"),
+      TNFSH: require("@/assets/images/logoTNFSH.png"),
+      CYSH: require("@/assets/images/logoCYSH.png"),
+      KSHS: require("@/assets/images/logoKSHS.png"),
+      NEHS: require("@/assets/images/logoNEHS.png"),
+      TESTNTNU: require("@/assets/images/logoTCFSH.png"),
+    };
 
-    if (word === "IPHO") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "TWICHO") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "IBO") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "IESO") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "IJSO") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "TOI" || word === "TOIREG" || word === "TESTREG") {
-      return "/images/logo" + "TOI.png";
-    }
-
-    if (word === "JGHS") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "TFGHS") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "HSNU") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "WLSH") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "TCFSH") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "CHSH") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "TNFSH") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "KSHS") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "CYSH") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "NEHS") {
-      return "/images/logo" + word + ".png";
-    }
-
-    if (word === "TESTNTNU") {
-      return "/images/logo" + "NEHS" + ".png";
+    if (logoMaps[word]) {
+      return logoMaps[word];
     }
   }
 
@@ -452,6 +407,80 @@ export function globalTool() {
     }
   }
 
+  function checkSetTime(data) {
+    const msg = {};
+
+    msg.status = false;
+    msg.errorMsg = "";
+
+    if (data.type === 1 || data.type === 5 || data.type === 6) {
+      if (data.queryScore === "1") {
+        if (
+          data.signupStart >= data.signupEnd ||
+          data.signupStart >= data.examStart ||
+          data.signupStart >= data.examEnd ||
+          data.signupEnd >= data.examStart ||
+          data.signupEnd >= data.examEnd ||
+          data.signupStart >= data.queryStart ||
+          data.signupStart >= data.queryEnd ||
+          data.signupEnd >= data.querytart ||
+          data.signupEnd >= data.queryEnd
+        ) {
+          msg.errorMsg += "報名時間設定有誤<br>";
+        }
+
+        if (
+          data.examStart >= data.examEnd ||
+          data.examStart >= data.queryStart ||
+          data.examStart >= data.queryEnd ||
+          data.examEnd >= data.queryStart ||
+          data.examEnd >= data.queryEnd
+        ) {
+          msg.errorMsg += "測驗時間設定有誤<br>";
+        }
+
+        if (data.queryStart >= data.queryEnd) {
+          msg.errorMsg += "成績查詢時間設定有誤<br>";
+        }
+      } else {
+        if (
+          data.signupStart >= data.signupEnd ||
+          data.signupStart >= data.examStart ||
+          data.signupStart >= data.examEnd ||
+          data.signupEnd >= data.examStart ||
+          data.signupEnd >= data.examEnd
+        ) {
+          msg.errorMsg += "報名時間設定有誤<br>";
+        }
+
+        if (data.examStart >= data.examEnd) {
+          msg.errorMsg += "測驗時間設定有誤<br>";
+        }
+      }
+
+      if (msg.errorMsg === "") {
+        msg.status = true;
+      }
+    } else if (data.type === 2) {
+      if (data.examStart >= data.examEnd) {
+        msg.errorMsg += "測驗時間設定有誤<br>";
+      } else {
+        msg.status = true;
+      }
+    } else if (data.type === 3) {
+      if (data.signupStart >= data.signupEnd) {
+        msg.errorMsg += "報名時間設定有誤<br>";
+      } else {
+        msg.status = true;
+      }
+    } else {
+      msg.status = true;
+      return msg;
+    }
+
+    return msg;
+  }
+
   return {
     getNowDataTime,
     getNowDataTimeByString,
@@ -464,5 +493,6 @@ export function globalTool() {
     getScienceAllName,
     getSysLogo,
     changeSubtitleMsg,
+    checkSetTime,
   };
 }

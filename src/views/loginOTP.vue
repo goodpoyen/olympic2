@@ -1,7 +1,7 @@
 <template>
   <div
     :style="{
-      'background-image': 'url(/images/loginOTPBackgroud.png)',
+      'background-image': `url(${require('@/assets/images/loginOTPBackgroud.png')})`,
       'background-repeat': 'no-repeat',
       'background-position': '50% 100%',
       height: '100%',

@@ -1258,7 +1258,7 @@
       <v-card>
         <v-card-title
           v-if="pupTitleShow === '1'"
-          style="background-color: #2d5bff; height: 57px"
+          style="background-color: #2d5bff"
         >
           <v-icon
             large
@@ -1279,7 +1279,7 @@
         </v-card-title>
         <v-card-title
           v-if="pupTitleShow === '2'"
-          style="background-color: #900d16; height: 57px"
+          style="background-color: #900d16"
         >
           <v-icon
             large
@@ -1298,9 +1298,7 @@
             >{{ pupTitle }}</span
           >
         </v-card-title>
-        <v-card-text
-          style="font-size: 20px; margin-top: 19px; font-weight: bold"
-        >
+        <v-card-text style="font-size: 20px; font-weight: bold">
           <div v-html="pupText"></div>
         </v-card-text>
         <v-card-actions>
@@ -2018,6 +2016,19 @@ export default {
 
         this.editedItem.queryStart = null;
         this.editedItem.queryEnd = null;
+      }
+
+      let setTimeStatus = this.globalSystemTool.checkSetTime(this.editedItem);
+
+      if (!setTimeStatus.status) {
+        this.alertPup = true;
+        this.pupTitle = "活動時間設定錯誤";
+        this.pupTitleShow = "2";
+        this.pupTitleIcon = "mdi-alert-outline";
+        this.pupText = setTimeStatus.errorMsg;
+        this.pupType = "create";
+
+        return false;
       }
 
       if (
