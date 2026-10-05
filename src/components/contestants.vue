@@ -459,7 +459,7 @@
       >
       </upgrade-dialog>
     </v-dialog>
-    <v-dialog v-model="snedTypePup" width="30%">
+    <v-dialog v-model="snedTypePup" width="35%">
       <snedtype-dialog
         :id="id"
         :reviewMod="reviewMod"

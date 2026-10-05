@@ -30,12 +30,12 @@
             bntLoad = true;
             sendTimeDownStart();
             sendTestMail();
-            sendResult = true;
+            testMail !== '' ? (sendResult = true) : (sendResult = false);
           "
         >
           <div>{{ snedmailWordingBTN }}</div>
         </v-btn>
-        <v-btn v-if="lock" elevation="1" small block>
+        <v-btn v-if="lock" elevation="1" color="#114acc" small block>
           <div>{{ sendTime }}秒 再次抽測</div>
         </v-btn>
       </div>
@@ -131,8 +131,10 @@ export default {
     },
 
     sendTestMail() {
-      this.$emit("sendTestMail", this.testMail);
-      this.testMailCheck = false;
+      if (this.testMail !== "") {
+        this.$emit("sendTestMail", this.testMail);
+        this.testMailCheck = false;
+      }
     },
 
     sendTimeDownStart() {
