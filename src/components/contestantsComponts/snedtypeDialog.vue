@@ -76,8 +76,8 @@
             style="
               color: #114acc;
               font-size: 12px;
-              margin-left: 5%;
-              margin-top: -2px;
+              margin-left: 6%;
+              margin-top: 5px;
             "
           >
             首次寄送成績證明前，請先完成抽測確認，以確保資料與成績正確。
@@ -96,11 +96,12 @@
           </div>
           <div v-show="testMailOpen">
             <v-text-field
-              style="width: 50%; margin-left: 27px"
+              style="width: 60%; margin-left: 27px"
               v-model="testMail"
+              variant="underlined"
               label="成績證明（抽測確認）將寄送至："
             ></v-text-field>
-            <div style="margin-left: 309px; margin-top: -51px">
+            <div style="margin-left: 330px; margin-top: -60px">
               <v-btn
                 v-if="!lock"
                 elevation="1"
@@ -112,12 +113,18 @@
                   bntLoad = true;
                   sendTimeDownStart();
                   sendTestMail();
-                  sendResult = true;
+                  testMail !== '' ? (sendResult = true) : (sendResult = false);
                 "
               >
                 <div>{{ snedmailWordingBTN }}</div>
               </v-btn>
-              <v-btn v-if="lock" elevation="1" small block>
+              <v-btn
+                v-if="lock"
+                elevation="1"
+                small
+                color="#114acc"
+                class="flex-grow-1"
+              >
                 <div>{{ sendTime }}秒 再次抽測</div>
               </v-btn>
             </div>
@@ -208,7 +215,7 @@ export default {
     snedmailWordingBTN: "寄送抽測信",
     sendResult: false,
     bntLoad: false,
-    sendTime: 61,
+    sendTime: 3,
     lock: false,
   }),
 
@@ -418,11 +425,8 @@ export default {
     },
 
     sendTestMail() {
-      let result = this.$emit("sendTestMail", this.testMail);
-
-      if (result.testMail === "") {
-        this.testMailCheck = true;
-      } else {
+      if (this.testMail !== "") {
+        this.$emit("sendTestMail", this.testMail);
         this.testMailCheck = false;
       }
     },
