@@ -317,6 +317,7 @@
             copyName = '識別碼';
             copyValue = item.idCard;
             copyStId = item.stId;
+            copyClick = false;
           "
           color="black"
         >
@@ -332,6 +333,7 @@
             copyName = '信箱';
             copyValue = item.email;
             copyStId = item.stId;
+            copyClick = false;
           "
           color="black"
         >
@@ -347,6 +349,7 @@
             copyName = '英文姓名';
             copyValue = item.englishName;
             copyStId = item.stId;
+            copyClick = false;
           "
           color="black"
           style="margin-left: 8px"
@@ -363,6 +366,7 @@
             copyName = '指導老師';
             copyValue = item.teacher;
             copyStId = item.stId;
+            copyClick = false;
           "
           color="black"
           style="margin-left: 8px"
@@ -1120,16 +1124,42 @@
       <v-progress-circular indeterminate color="primary" :size="60">
       </v-progress-circular>
     </v-overlay>
-    <v-snackbar v-model="snackMail" :timeout="snackbarTimeout">
+    <v-snackbar
+      v-model="snackMail"
+      :timeout="snackbarTimeout"
+      @update:modelValue="
+        (val) => {
+          if (!val) copyClick = false;
+        }
+      "
+    >
       <span class="text-truncate d-inline-block">
         {{ copyName }}：{{ copyValue }}
+        <v-icon v-show="copyClick" x-small color="green">
+          mdi-check-all
+        </v-icon>
       </span>
+
       <template #actions>
         <div class="d-flex flex-nowrap">
-          <v-btn color="red" variant="text" @click="copyText(copyValue)">
+          <v-btn
+            color="red"
+            variant="text"
+            @click="
+              copyText(copyValue);
+              copyClick = true;
+            "
+          >
             複製
           </v-btn>
-          <v-btn color="blue" variant="text" @click="snackMail = false">
+          <v-btn
+            color="blue"
+            variant="text"
+            @click="
+              snackMail = false;
+              copyClick = false;
+            "
+          >
             關閉
           </v-btn>
         </div>
@@ -1158,6 +1188,7 @@ export default {
     importPup: false,
     createExamCodePup: false,
     snackMail: false,
+    copyClick: false,
     snackbarTimeout: 10000,
     copyValue: "",
     copyName: "",

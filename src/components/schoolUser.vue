@@ -134,6 +134,7 @@
             copyName = '頭銜';
             copyValue = item.title;
             copyUId = item.uId;
+            copyClick = false;
           "
           color="black"
         >
@@ -149,6 +150,7 @@
             copyName = '信箱';
             copyValue = item.email;
             copyUId = item.uId;
+            copyClick = false;
           "
           color="black"
         >
@@ -165,6 +167,7 @@
             copyName = '代碼';
             copyValue = item.signupKey;
             copyUId = item.uId;
+            copyClick = false;
           "
           color="black"
         >
@@ -182,6 +185,7 @@
             copyValue =
               item.statusTime === '' ? item.updateTime : item.statusTime;
             copyUId = item.uId;
+            copyClick = false;
           "
           style="color: rgb(24, 216, 168)"
         >
@@ -843,16 +847,42 @@
       <v-progress-circular indeterminate color="primary" :size="60">
       </v-progress-circular>
     </v-overlay>
-    <v-snackbar v-model="snackMail" :timeout="snackbarTimeout">
+    <v-snackbar
+      v-model="snackMail"
+      :timeout="snackbarTimeout"
+      @update:modelValue="
+        (val) => {
+          if (!val) copyClick = false;
+        }
+      "
+    >
       <span class="text-truncate d-inline-block">
         {{ copyName }}：{{ copyValue }}
+        <v-icon v-show="copyClick" x-small color="green">
+          mdi-check-all
+        </v-icon>
       </span>
+
       <template #actions>
         <div class="d-flex flex-nowrap">
-          <v-btn color="red" variant="text" @click="copyText(copyValue)">
+          <v-btn
+            color="red"
+            variant="text"
+            @click="
+              copyText(copyValue);
+              copyClick = true;
+            "
+          >
             複製
           </v-btn>
-          <v-btn color="blue" variant="text" @click="snackMail = false">
+          <v-btn
+            color="blue"
+            variant="text"
+            @click="
+              snackMail = false;
+              copyClick = false;
+            "
+          >
             關閉
           </v-btn>
         </div>
@@ -867,6 +897,7 @@ import TableFilter from "./utilsComponets/tableFilter.vue";
 export default {
   data: () => ({
     snackMail: false,
+    copyClick: false,
     snackbarTimeout: 10000,
     copyValue: "",
     copyName: "",
