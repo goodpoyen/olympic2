@@ -212,6 +212,7 @@
                   @click="
                     snackMail = true;
                     copyMail = item.mailingAddress;
+                    copyClick = false;
                   "
                 >
                   mdi-email-fast
@@ -644,31 +645,24 @@
       <v-progress-circular indeterminate color="primary" :size="60">
       </v-progress-circular>
     </v-overlay>
-    <v-snackbar v-model="snackMail" :timeout="snackbarTimeout">
-      <span class="text-truncate d-inline-block">
-        聯絡信箱：{{ copyMail }}
-      </span>
-      <template #actions>
-        <div class="d-flex flex-nowrap">
-          <v-btn color="red" variant="text" @click="copyText(copyValue)">
-            複製
-          </v-btn>
-          <v-btn color="blue" variant="text" @click="snackMail = false">
-            關閉
-          </v-btn>
-        </div>
-      </template>
-    </v-snackbar>
+    <copy-snackbar
+      v-model="snackMail"
+      :copyMail="copyMail"
+      :snackType="snackType"
+      @closeSnackbar="closeSnackbar"
+    >
+    </copy-snackbar>
   </div>
 </template>
 
 <script>
 import TableFilter from "./utilsComponets/tableFilter.vue";
+import CopySnackbar from "./utilsComponets/copySnackbar.vue";
 
 export default {
   data: () => ({
     snackMail: false,
-    snackbarTimeout: 5000,
+    snackType: "email",
     copyMail: "",
     alertPup: false,
     pupTitle: "",
@@ -721,6 +715,7 @@ export default {
 
   components: {
     TableFilter,
+    CopySnackbar,
   },
 
   computed: {
@@ -739,8 +734,9 @@ export default {
   },
 
   methods: {
-    copyText(text) {
-      navigator.clipboard.writeText(text).then(() => {});
+    closeSnackbar(value) {
+      this.snackMail = value;
+      this.copyMail = "";
     },
 
     updateTable(filterData) {
