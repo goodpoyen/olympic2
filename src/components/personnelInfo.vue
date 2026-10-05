@@ -1124,53 +1124,22 @@
       <v-progress-circular indeterminate color="primary" :size="60">
       </v-progress-circular>
     </v-overlay>
-    <v-snackbar
+    <copy-snackbar
       v-model="snackMail"
-      :timeout="snackbarTimeout"
-      @update:modelValue="
-        (val) => {
-          if (!val) copyClick = false;
-        }
-      "
+      :copyValue="copyValue"
+      :copyName="copyName"
+      :snackType="snackType"
+      @closeSnackbar="closeSnackbar"
     >
-      <span class="text-truncate d-inline-block">
-        {{ copyName }}：{{ copyValue }}
-        <v-icon v-show="copyClick" x-small color="green">
-          mdi-check-all
-        </v-icon>
-      </span>
-
-      <template #actions>
-        <div class="d-flex flex-nowrap">
-          <v-btn
-            color="red"
-            variant="text"
-            @click="
-              copyText(copyValue);
-              copyClick = true;
-            "
-          >
-            複製
-          </v-btn>
-          <v-btn
-            color="blue"
-            variant="text"
-            @click="
-              snackMail = false;
-              copyClick = false;
-            "
-          >
-            關閉
-          </v-btn>
-        </div>
-      </template>
-    </v-snackbar>
+    </copy-snackbar>
   </div>
 </template>
 
 <script>
 import TableFilter from "./utilsComponets/tableFilter.vue";
 import DistributionSeat from "./utilsComponets/distributionSeat.vue";
+import CopySnackbar from "./utilsComponets/copySnackbar.vue";
+
 export default {
   data: () => ({
     viewMode: "months",
@@ -1188,8 +1157,7 @@ export default {
     importPup: false,
     createExamCodePup: false,
     snackMail: false,
-    copyClick: false,
-    snackbarTimeout: 10000,
+    snackType: "all",
     copyValue: "",
     copyName: "",
     copyStId: 0,
@@ -1279,6 +1247,7 @@ export default {
   components: {
     TableFilter,
     DistributionSeat,
+    CopySnackbar,
   },
 
   computed: {
@@ -1315,8 +1284,11 @@ export default {
   },
 
   methods: {
-    copyText(text) {
-      navigator.clipboard.writeText(text).then(() => {});
+    closeSnackbar(value) {
+      this.snackMail = value;
+      this.copyValue = "";
+      this.copyName = "";
+      this.copyStId = 0;
     },
 
     async onYearSelect(year) {
