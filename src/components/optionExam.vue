@@ -240,6 +240,8 @@ export default {
             this.desserts.forEach(function (data) {
               data.emailContent = "";
 
+              data.gradeStatus = true;
+
               if (data.sendExamNotice) {
                 that.sendExamNotice = true;
                 that.examSend++;
