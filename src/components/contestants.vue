@@ -2203,6 +2203,8 @@ export default {
 
             const that = this;
             this.desserts.forEach(function (data) {
+              data.gradeStatus = true;
+
               if (data.pass === 30) {
                 data.pass = that.scheduleType === 5 ? "未晉級" : "未錄取";
               } else if (data.pass === 10) {
