@@ -2186,6 +2186,8 @@ export default {
     },
 
     async getContestantsInfo() {
+      this.$emit("getTeacherNotice", this.id);
+
       await this.tokenService.renewLT();
 
       const data = {};
