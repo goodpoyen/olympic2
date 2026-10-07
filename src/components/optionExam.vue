@@ -81,6 +81,7 @@
               :teacherNotice="teacherNotice"
               @updateFilter="updateFilter"
               @updateDesserts="updateDesserts"
+              @getTeacherNotice="getTeacherNotice"
             ></contestants>
           </v-container>
         </v-tabs-window-item>
@@ -215,6 +216,8 @@ export default {
     },
 
     async getContestantsInfo() {
+      this.getTeacherNotice(this.id);
+
       await this.tokenService.renewLT();
 
       const data = {};
@@ -230,7 +233,6 @@ export default {
           if (response.data.code === 200) {
             this.desserts = response.data.resultData;
             this.dessertsTemp = response.data.resultData;
-            this.teacherNotice = response.data.teacherNotice;
             this.loadList = false;
 
             this.examSend = 0;
@@ -255,6 +257,22 @@ export default {
           } else {
             this.globalSystemTool.removeLocalStorage();
           }
+        })
+        .catch(function (error) {
+          // console.log(error);
+        });
+    },
+
+    async getTeacherNotice(olyId) {
+      const data = {};
+      data.AT = await this.tokenService.getFastAT();
+      data.id = olyId;
+
+      await this.axios
+        .post(this.systemENV.APISERVERURL + "/getTeacherNotice", data)
+        .then((response) => {
+          // console.log(response.data);
+          this.teacherNotice = response.data.resultData;
         })
         .catch(function (error) {
           // console.log(error);
