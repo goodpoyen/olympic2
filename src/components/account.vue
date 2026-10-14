@@ -649,7 +649,9 @@
       v-model="snackMail"
       :copyMail="copyMail"
       :snackType="snackType"
+      :copyClick="copyClick"
       @closeSnackbar="closeSnackbar"
+      @setCopyClick="setCopyClick"
     >
     </copy-snackbar>
   </div>
@@ -662,6 +664,7 @@ import CopySnackbar from "./utilsComponets/copySnackbar.vue";
 export default {
   data: () => ({
     snackMail: false,
+    copyClick: false,
     snackType: "email",
     copyMail: "",
     alertPup: false,
@@ -737,6 +740,10 @@ export default {
     closeSnackbar(value) {
       this.snackMail = value;
       this.copyMail = "";
+    },
+
+    setCopyClick(val) {
+      this.copyClick = val;
     },
 
     updateTable(filterData) {

@@ -852,7 +852,9 @@
       :copyValue="copyValue"
       :copyName="copyName"
       :snackType="snackType"
+      :copyClick="copyClick"
       @closeSnackbar="closeSnackbar"
+      @setCopyClick="setCopyClick"
     >
     </copy-snackbar>
   </div>
@@ -865,8 +867,7 @@ import CopySnackbar from "./utilsComponets/copySnackbar.vue";
 export default {
   data: () => ({
     snackMail: false,
-    // copyClick: false,
-    // snackbarTimeout: 10000,
+    copyClick: false,
     copyValue: "",
     copyName: "",
     copyUId: 0,
@@ -977,6 +978,10 @@ export default {
       this.copyValue = "";
       this.copyName = "";
       this.copyStId = 0;
+    },
+
+    setCopyClick(val) {
+      this.copyClick = val;
     },
 
     async getSchoolAddressList() {

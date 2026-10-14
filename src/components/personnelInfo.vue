@@ -1129,7 +1129,9 @@
       :copyValue="copyValue"
       :copyName="copyName"
       :snackType="snackType"
+      :copyClick="copyClick"
       @closeSnackbar="closeSnackbar"
+      @setCopyClick="setCopyClick"
     >
     </copy-snackbar>
   </div>
@@ -1157,6 +1159,7 @@ export default {
     importPup: false,
     createExamCodePup: false,
     snackMail: false,
+    copyClick: false,
     snackType: "all",
     copyValue: "",
     copyName: "",
@@ -1289,6 +1292,10 @@ export default {
       this.copyValue = "";
       this.copyName = "";
       this.copyStId = 0;
+    },
+
+    setCopyClick(val) {
+      this.copyClick = val;
     },
 
     async onYearSelect(year) {
