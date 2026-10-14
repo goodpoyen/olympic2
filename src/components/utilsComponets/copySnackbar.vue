@@ -1,6 +1,5 @@
 <template>
   <v-snackbar
-    v-model="snackMail"
     :timeout="snackbarTimeout"
     @update:modelValue="
       (val) => {
@@ -25,7 +24,7 @@
           variant="text"
           @click="
             copyText(copyValue);
-            copyClick = true;
+            setCopyClick();
           "
         >
           複製
@@ -35,7 +34,7 @@
           variant="text"
           @click="
             closeSnackbar(false);
-            copyClick = false;
+            setCopyClick();
           "
         >
           關閉
@@ -47,7 +46,6 @@
 <script>
 export default {
   data: () => ({
-    copyClick: false,
     snackbarTimeout: 10000,
   }),
 
@@ -68,14 +66,23 @@ export default {
       type: String,
       default: "",
     },
+    copyClick: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   methods: {
     closeSnackbar(value) {
       this.$emit("closeSnackbar", value);
     },
+
     copyText(text) {
       navigator.clipboard.writeText(text).then(() => {});
+    },
+
+    setCopyClick() {
+      this.$emit("setCopyClick", true);
     },
   },
 };

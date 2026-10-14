@@ -105,6 +105,7 @@
               small
               color="#2d5bff"
               class="mb-2"
+              :disabled="Object.keys(studentExamCode).length === 0"
               @click="getArea()"
               style="margin-top: 10px; color: #ededf3"
               prepend-icon="mdi-swap-horizontal"
@@ -579,7 +580,6 @@ export default {
         .then((response) => {
           // console.log(response.data);
           if (response.data.code === 200) {
-            this.studentExamCode = response.data.resultData;
             this.examPup = false;
             this.examAreaId = 0;
             this.examRoomId = 0;
@@ -587,7 +587,7 @@ export default {
             this.examArea = [];
             this.choice = [];
             this.roomInfoData = [];
-            this.$emit("updateStudentExamCode", this.studentExamCode);
+            this.$emit("updateStudentExamCode", response.data.resultData);
           } else {
             this.globalSystemTool.removeLocalStorage();
           }
@@ -693,7 +693,7 @@ export default {
 
     async getRoomByArea() {
       await this.tokenService.renewLT();
-
+      console.log(44444);
       const data = {};
       data.AT = await this.tokenService.getFastAT();
       data.id = this.id;

@@ -314,6 +314,8 @@ export default {
               data = that.changeData(data);
               data.emailContent = "";
 
+              data.gradeStatus = true;
+
               if (data.signupStatus === "3") {
                 that.passCount++;
               }
