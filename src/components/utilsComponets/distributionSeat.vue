@@ -577,9 +577,7 @@ export default {
       await this.axios
         .post(this.systemENV.APISERVERURL + "/changeExamCode", data)
         .then((response) => {
-          // console.log(response.data);
           if (response.data.code === 200) {
-            this.studentExamCode = response.data.resultData;
             this.examPup = false;
             this.examAreaId = 0;
             this.examRoomId = 0;
@@ -587,7 +585,7 @@ export default {
             this.examArea = [];
             this.choice = [];
             this.roomInfoData = [];
-            this.$emit("updateStudentExamCode", this.studentExamCode);
+            this.$emit("updateStudentExamCode", response.data.resultData);
           } else {
             this.globalSystemTool.removeLocalStorage();
           }
