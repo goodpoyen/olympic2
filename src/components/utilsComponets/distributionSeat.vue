@@ -105,6 +105,7 @@
               small
               color="#2d5bff"
               class="mb-2"
+              :disabled="Object.keys(studentExamCode).length === 0"
               @click="getArea()"
               style="margin-top: 10px; color: #ededf3"
               prepend-icon="mdi-swap-horizontal"
@@ -577,6 +578,7 @@ export default {
       await this.axios
         .post(this.systemENV.APISERVERURL + "/changeExamCode", data)
         .then((response) => {
+          // console.log(response.data);
           if (response.data.code === 200) {
             this.examPup = false;
             this.examAreaId = 0;
@@ -691,7 +693,7 @@ export default {
 
     async getRoomByArea() {
       await this.tokenService.renewLT();
-
+      console.log(44444);
       const data = {};
       data.AT = await this.tokenService.getFastAT();
       data.id = this.id;
