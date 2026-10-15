@@ -40,6 +40,7 @@
               :desserts="desserts"
               :dessertsTemp="dessertsTemp"
               @updateFilter="updateFilter"
+              @getExamAreaInfo="getExamAreaInfo"
             ></exam-area>
           </v-container>
           <v-container v-if="n == 3" fluid>
@@ -48,6 +49,7 @@
               :dessertsTemp="dessertsTemp"
               :loadList="loadList"
               @updateFilter="updateFilter"
+              @getClassRoomInfo="getClassRoomInfo"
             >
             </class-room>
           </v-container>
