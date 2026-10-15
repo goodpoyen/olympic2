@@ -66,6 +66,7 @@
               :loadList="loadList"
               :fixCodeName="fixCodeName"
               @updateFilter="updateFilter"
+              @getClassRoomInfo="getClassRoomInfo"
             >
             </class-room>
           </v-container>
