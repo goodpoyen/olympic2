@@ -794,43 +794,9 @@ export default {
           .catch(function (error) {
             // console.log(error);
           });
-        this.getExamAreaInfo();
+        this.$emit("getExamAreaInfo");
         this.areaChangePup = false;
       }
-    },
-
-    async getExamAreaInfo() {
-      await this.tokenService.renewLT();
-
-      this.desserts = [];
-      this.dessertsTemp = [];
-
-      const data = {};
-      data.AT = await this.tokenService.getFastAT();
-      data.id = this.id;
-      data.mod = this.globalSystemValue.system;
-      data.olympic = this.globalSystemValue.olympic;
-
-      this.loadList = true;
-      await this.axios
-        .post(this.systemENV.APISERVERURL + "/getExamArea", data)
-        .then((response) => {
-          // console.log(response.data);
-          if (response.data.code === 200) {
-            response.data.resultData.forEach(function (data) {
-              data.defaultNumber = parseInt(data.defaultNumber);
-              data.totalSignup = parseInt(data.totalSignup);
-            });
-            this.desserts = response.data.resultData;
-            this.dessertsTemp = response.data.resultData;
-            this.loadList = false;
-          } else {
-            this.globalSystemTool.removeLocalStorage();
-          }
-        })
-        .catch(function (error) {
-          // console.log(error);
-        });
     },
 
     updateTable(filterData) {

@@ -57,6 +57,7 @@
               :dessertsTemp="dessertsTemp"
               :fixCodeName="fixCodeName"
               @updateFilter="updateFilter"
+              @getExamAreaInfo="getExamAreaInfo"
             ></exam-area>
           </v-container>
           <v-container v-if="n == 3" fluid>
