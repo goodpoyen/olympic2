@@ -231,7 +231,9 @@
                 v-model="schoolNum"
                 :items="
                   institutionNum !== ''
-                    ? schoolList[cityNum][institutionNum]
+                    ? schoolList[cityNum]?.[institutionNum] !== undefined
+                      ? schoolList[cityNum][institutionNum]
+                      : []
                     : []
                 "
                 item-title="school_name"
