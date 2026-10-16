@@ -401,7 +401,14 @@ export default {
   watch: {
     choice(item) {
       if (item.length > 0) {
-        this.distributionData = Object.assign({}, this.roomInfoData[item - 1]);
+        const that = this;
+        this.roomInfoData.forEach(function (data) {
+          if (item[0] === data.seatNumber) {
+            that.distributionData = Object.assign({}, data);
+
+            return true;
+          }
+        });
         this.distritionPup = true;
       } else {
         this.distritionPup = false;
@@ -693,7 +700,7 @@ export default {
 
     async getRoomByArea() {
       await this.tokenService.renewLT();
-      console.log(44444);
+
       const data = {};
       data.AT = await this.tokenService.getFastAT();
       data.id = this.id;
