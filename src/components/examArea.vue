@@ -705,6 +705,7 @@ export default {
       const data = {};
       data.AT = await this.tokenService.getFastAT();
       data.id = this.id;
+      data.areaId = this.areaInfo.areaId;
       data.studentExamCode = JSON.stringify(this.editedItem);
 
       await this.axios
