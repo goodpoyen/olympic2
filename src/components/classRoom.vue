@@ -76,16 +76,15 @@
         <v-icon title="下載考場資料" class="mr-2" @click="downloadsItem(item)">
           mdi-download-box-outline
         </v-icon>
-        <v-icon
+        <!-- <v-icon
           v-if="globalSystemValue.system === 'olympic'"
-          :style="item.chagneStatus === '1' ? { color: 'blue' } : { color: '' }"
           :disabled="fixCodeName"
           title="重新分配考場"
           class="mr-2"
           @click="showClassChangePup(item)"
         >
           mdi-gesture-swipe
-        </v-icon>
+        </v-icon> -->
         <v-icon title="編輯考場資料" class="mr-2" @click="editItem(item)">
           mdi-text-box-edit-outline
         </v-icon>
