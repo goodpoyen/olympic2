@@ -644,7 +644,7 @@ export default {
           // console.log(response.data);
           this.distritionPup = false;
           if (response.data.code === 200) {
-            this.$emit("updateStudentExamCode", response.data.resultData);
+            this.$emit("getExamCode", JSON.stringify(this.editedItem));
             this.examPup = false;
             this.examAreaId = 0;
             this.examRoomId = 0;
