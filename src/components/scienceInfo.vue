@@ -2085,6 +2085,7 @@
                     @updateTable="updateTable"
                     @updateEditedItem="updateEditedItem"
                     @updateStudentExamCode="updateStudentExamCode"
+                    @getExamCode="getExamCode"
                   >
                   </distribution-seat>
                 </v-col>

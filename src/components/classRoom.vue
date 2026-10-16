@@ -76,16 +76,15 @@
         <v-icon title="下載考場資料" class="mr-2" @click="downloadsItem(item)">
           mdi-download-box-outline
         </v-icon>
-        <v-icon
+        <!-- <v-icon
           v-if="globalSystemValue.system === 'olympic'"
-          :style="item.chagneStatus === '1' ? { color: 'blue' } : { color: '' }"
           :disabled="fixCodeName"
           title="重新分配考場"
           class="mr-2"
           @click="showClassChangePup(item)"
         >
           mdi-gesture-swipe
-        </v-icon>
+        </v-icon> -->
         <v-icon title="編輯考場資料" class="mr-2" @click="editItem(item)">
           mdi-text-box-edit-outline
         </v-icon>
@@ -799,7 +798,7 @@ export default {
             if (response.data.code === 200) {
               this.loadShow = false;
               this.classChangePup = false;
-              this.getClassRoomInfo();
+              this.$emit("getClassRoomInfo");
             } else {
               this.globalSystemTool.removeLocalStorage();
             }
@@ -947,36 +946,6 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
-    },
-
-    async getClassRoomInfo() {
-      await this.tokenService.renewLT();
-
-      this.desserts = [];
-      this.dessertsTemp = [];
-
-      const data = {};
-      data.AT = await this.tokenService.getFastAT();
-      data.id = this.id;
-      data.olympic = this.globalSystemValue.olympic;
-
-      this.loadList = true;
-      await this.axios
-        .post(this.systemENV.APISERVERURL + "/getClassRoom", data)
-        .then((response) => {
-          this.loadList = false;
-          // console.log(response.data)
-          if (response.data.code === 200) {
-            this.desserts = response.data.resultData;
-            this.dessertsTemp = response.data.resultData;
-            this.loadList = false;
-          } else {
-            this.globalSystemTool.removeLocalStorage();
-          }
-        })
-        .catch(function (error) {
-          // console.log(error);
-        });
     },
 
     async saveClassRoom() {
