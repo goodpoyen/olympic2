@@ -165,7 +165,6 @@
             <template v-slot:top>
               <v-toolbar flat style="background-color: white">
                 <v-btn
-                  v-if="globalSystemValue.level === '1'"
                   small
                   color="#635BFF"
                   variant="flat"
