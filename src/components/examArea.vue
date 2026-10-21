@@ -717,10 +717,10 @@ export default {
           } else if (response.data.code === 201) {
             this.cleanPupData();
             this.alertPup = true;
-            this.pupTitle = "無法重新分配考場";
+            this.pupTitle = "無法重新分配考區";
             this.pupTitleShow = "2";
             this.pupTitleIcon = "mdi-alert-outline";
-            this.pupText = "目前此考區所有考場都已額滿";
+            this.pupText = "目前此考區無法重新分配";
           } else {
             this.globalSystemTool.removeLocalStorage();
           }
