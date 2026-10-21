@@ -720,7 +720,7 @@ export default {
             this.pupTitle = "無法重新分配考區";
             this.pupTitleShow = "2";
             this.pupTitleIcon = "mdi-alert-outline";
-            this.pupText = "目前此考區無法重新分配";
+            this.pupText = "目前所有考區皆無空位";
           } else {
             this.globalSystemTool.removeLocalStorage();
           }
