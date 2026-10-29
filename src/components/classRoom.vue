@@ -373,6 +373,43 @@
                     required
                   ></v-text-field>
                 </v-col>
+                <!-- <v-col
+                  cols="12"
+                  sm="2"
+                  md="6"
+                  style="margin-top: -21px; margin-left: -20px"
+                >
+                  <v-radio-group
+                    v-model="editedItem.isCopyMultiple"
+                    label="是否複製多筆"
+                    inline
+                    class="ms-0 ps-0"
+                  >
+                    <v-radio label="是" value="Y"></v-radio>
+                    <v-radio label="否" value="N"></v-radio>
+                  </v-radio-group>
+                </v-col>
+                <v-col cols="12" sm="2" md="12" style="margin-top: -50px">
+                  <v-text-field
+                    v-model="editedItem.copyCount"
+                    :disabled="editedItem.isCopyMultiple !== 'Y'"
+                    label="複製筆數"
+                    variant="underlined"
+                    type="number"
+                    min="2"
+                    :rules="
+                      editedItem.isCopyMultiple === 'Y'
+                        ? [
+                            (v) => !!v || '複製筆數不能為空',
+                            (v) => Number(v) >= 2 || '複製筆數最低不能小於2',
+                          ]
+                        : []
+                    "
+                  ></v-text-field>
+                  <div class="text-caption text-error mb-2">
+                    * 複製資料的「考場代碼」與「考場名稱」數字部分會累加
+                  </div>
+                </v-col> -->
               </v-row>
             </v-container>
           </v-card-text>
@@ -611,6 +648,8 @@ export default {
       roomId: "",
       defaultNumber: "",
       total: "",
+      // isCopyMultiple: "N",
+      // copyCount: 2,
     },
     downloadIndex: -1,
     downloadItem: {
