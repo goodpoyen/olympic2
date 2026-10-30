@@ -643,7 +643,7 @@
               <div class="v-messages__wrapper">
                 <div
                   class="v-messages__message"
-                  style="font-size: 13px; font-weight: bold"
+                  style="font-size: 13px; font-weight: bold; color: red"
                 >
                   {{ postWord }}
                 </div>
@@ -686,7 +686,7 @@
             <div class="v-messages__wrapper">
               <div
                 class="v-messages__message"
-                style="font-size: 13px; font-weight: bold"
+                style="font-size: 13px; font-weight: bold; color: red"
               >
                 {{ postWord }}
               </div>
@@ -699,8 +699,16 @@
             style="color: rgba(0, 0, 0, 0.6)"
           >
             預選繳費方式：
-            <v-radio label="信用卡繳費" value="1"></v-radio>
-            <v-radio label="超商繳費" value="2"></v-radio>
+            <v-radio
+              label="信用卡繳費"
+              value="1"
+              style="margin-top: -9px"
+            ></v-radio>
+            <v-radio
+              label="超商繳費"
+              value="2"
+              style="margin-top: -9px"
+            ></v-radio>
             <div
               class="v-messages theme--light error--text"
               role="alert"
@@ -769,7 +777,7 @@
               <div class="v-messages__wrapper">
                 <div
                   class="v-messages__message"
-                  style="font-size: 13px; font-weight: bold"
+                  style="font-size: 13px; font-weight: bold; color: red"
                 >
                   {{ postWord }}
                 </div>
@@ -788,7 +796,7 @@
               <div class="v-messages__wrapper">
                 <div
                   class="v-messages__message"
-                  style="font-size: 13px; font-weight: bold"
+                  style="font-size: 13px; font-weight: bold; color: red"
                 >
                   {{ postWord }}
                 </div>
@@ -818,12 +826,12 @@
             v-if="studentData.admission === '2'"
             class="v-messages theme--light error--text"
             role="alert"
-            style="margin-left: 20%; margin-top: -2%"
+            style="margin-left: 17%; margin-top: -2%"
           >
             <div class="v-messages__wrapper">
               <div
                 class="v-messages__message"
-                style="font-size: 13px; font-weight: bold"
+                style="font-size: 13px; font-weight: bold; color: red"
               >
                 {{ postWord }}
               </div>
@@ -1463,11 +1471,9 @@ export default {
         this.studentData.birthday =
           (parseInt(this.selectedYear) - 1911).toString() + "-" + month;
       } else {
-        this.selectedMonth = new Date().getMonth();
-        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
-
+        let [year, month] = this.displayDate.split("-");
         this.studentData.birthday =
-          (parseInt(this.selectedYear) - 1911).toString() + "-" + monthStr;
+          (parseInt(this.selectedYear) - 1911).toString() + "-" + month;
       }
 
       setTimeout(() => {
@@ -1484,11 +1490,9 @@ export default {
 
         this.studentData.birthday = parseInt(year) + "-" + monthStr;
       } else {
-        this.selectedYear = new Date().getFullYear();
+        let [year, month] = this.displayDate.split("-");
         let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
-
-        this.studentData.birthday =
-          (parseInt(this.selectedYear) - 1911).toString() + "-" + monthStr;
+        this.studentData.birthday = parseInt(year) + "-" + monthStr;
       }
 
       this.menu = false;
@@ -1892,7 +1896,7 @@ export default {
       data.num2 = this.num2;
       data.checkNum = this.checkNum;
 
-      const dateArray = data.birthday.split("/");
+      const dateArray = data.birthday.split("-");
       const ROCyear = parseInt(dateArray[0]) + 1911;
       const ROCmonth = dateArray[1];
       data.birthday = ROCyear + "/" + ROCmonth;
@@ -1906,7 +1910,7 @@ export default {
       await this.axios
         .post(this.systemENV.APISERVERURL + "/setSignupScience", data)
         .then((response) => {
-          // console.log(response.data)
+          // console.log(response.data);
           this.signupProcess = false;
           if (response.data.code === 200) {
             if (response.data.resultData.payStatus === "2") {
