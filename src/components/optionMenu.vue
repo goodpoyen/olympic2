@@ -304,7 +304,7 @@
               <div style="margin-left: 50%; margin-top: 20px">
                 <v-row>
                   <v-col cols="12" sm="3" md="3">
-                    <div style="margin-left: -10px; margin-top: -3px">
+                    <div style="margin-left: -10px">
                       <v-icon
                         v-if="
                           item.type === 5 && (level === '3' || level === '1')
