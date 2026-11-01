@@ -21,7 +21,7 @@
               }}</span
               >」，請留意以下訊息：
             </div>
-            <ol style="margin-top: 10px">
+            <ol style="margin-top: 10px; margin-left: 35px">
               <li style="color: black; font-weight: bolder; margin-top: 10px">
                 信用卡繳費者，完成線上繳費後，您報名所填的電子信箱會收到系統通知信「報名繳費成功」。
               </li>
@@ -58,7 +58,7 @@
               您已完成<span style="color: blue">{{ schoolName }}</span
               >科學班報名作業，請留意以下訊息：
             </div>
-            <ol style="margin-top: 10px">
+            <ol style="margin-top: 10px; margin-left: 35px">
               <li style="color: black; font-weight: bolder; margin-top: 10px">
                 您勾選免繳費，請於{{ postYear }}年{{ postMonth }}月{{
                   postDate
@@ -78,28 +78,33 @@
           <div style="color: black; font-weight: bolder; margin-top: 10px">
             <div>各校聯絡資訊：</div>
             <div style="margin-top: 10px">
-              <v-img
-                max-height="15"
-                max-width="15"
-                src="@/assets/images/logoJGHS.png"
-                style="display: inline-flex"
-              ></v-img>
-              <div style="display: inline; font-size: 14px; margin-left: 10px">
-                臺北市立建國高級中學
+              <div style="margin-top: 10px; display: flex; align-items: center">
+                <v-img
+                  max-height="15"
+                  max-width="15"
+                  src="@/assets/images/logoJGHS.png"
+                ></v-img>
+                <div style="font-size: 14px; margin-left: 10px">
+                  臺北市立建國高級中學
+                </div>
               </div>
-              <div style="font-size: 14px; margin-left: 29px">
+              <div style="font-size: 14px; margin-left: 25px">
                 電子信箱：acad41@gl.ck.tp.edu.tw ｜ 電話：02-23034381分機209
               </div>
             </div>
             <div style="margin-top: 10px">
-              <v-img
-                max-height="15"
-                max-width="15"
-                src="@/assets/images/logoTFGHS.png"
-                style="display: inline-flex"
-              ></v-img>
-              <div style="display: inline; font-size: 14px; margin-left: 10px">
-                臺北市立第一女子高級中學
+              <div style="margin-top: 10px; display: flex; align-items: center">
+                <v-img
+                  max-height="15"
+                  max-width="15"
+                  src="@/assets/images/logoTFGHS.png"
+                  style="display: inline-flex"
+                ></v-img>
+                <div
+                  style="display: inline; font-size: 14px; margin-left: 10px"
+                >
+                  臺北市立第一女子高級中學
+                </div>
               </div>
               <div style="font-size: 14px; margin-left: 29px">
                 電子信箱：science@gapps.fg.tp.edu.tw ｜
@@ -107,14 +112,18 @@
               </div>
             </div>
             <div style="margin-top: 10px">
-              <v-img
-                max-height="15"
-                max-width="15"
-                src="@/assets/images/logoHSNU.png"
-                style="display: inline-flex"
-              ></v-img>
-              <div style="display: inline; font-size: 14px; margin-left: 10px">
-                國立臺灣師範大學附屬高級中學
+              <div style="margin-top: 10px; display: flex; align-items: center">
+                <v-img
+                  max-height="15"
+                  max-width="15"
+                  src="@/assets/images/logoHSNU.png"
+                  style="display: inline-flex"
+                ></v-img>
+                <div
+                  style="display: inline; font-size: 14px; margin-left: 10px"
+                >
+                  國立臺灣師範大學附屬高級中學
+                </div>
               </div>
               <div style="font-size: 14px; margin-left: 29px">
                 電子信箱：t-science@gs.hs.ntnu.edu.tw ｜
@@ -122,14 +131,18 @@
               </div>
             </div>
             <div style="margin-top: 10px">
-              <v-img
-                max-height="15"
-                max-width="15"
-                src="@/assets/images/logoWLSH.png"
-                style="display: inline-flex"
-              ></v-img>
-              <div style="display: inline; font-size: 14px; margin-left: 10px">
-                桃園市立武陵高級中等學校
+              <div style="margin-top: 10px; display: flex; align-items: center">
+                <v-img
+                  max-height="15"
+                  max-width="15"
+                  src="@/assets/images/logoWLSH.png"
+                  style="display: inline-flex"
+                ></v-img>
+                <div
+                  style="display: inline; font-size: 14px; margin-left: 10px"
+                >
+                  桃園市立武陵高級中等學校
+                </div>
               </div>
               <div style="font-size: 14px; margin-left: 29px">
                 電子信箱：wlsh202@email.wlsh.tyc.edu.tw ｜
@@ -137,84 +150,108 @@
               </div>
             </div>
             <div style="margin-top: 10px">
-              <v-img
-                max-height="15"
-                max-width="15"
-                src="@/assets/images/logoNEHS.png"
-                style="display: inline-flex"
-              ></v-img>
-              <div style="display: inline; font-size: 14px; margin-left: 10px">
-                國立新竹科學園區實驗高級中等學校
+              <div style="margin-top: 10px; display: flex; align-items: center">
+                <v-img
+                  max-height="15"
+                  max-width="15"
+                  src="@/assets/images/logoNEHS.png"
+                  style="display: inline-flex"
+                ></v-img>
+                <div
+                  style="display: inline; font-size: 14px; margin-left: 10px"
+                >
+                  國立新竹科學園區實驗高級中等學校
+                </div>
               </div>
               <div style="font-size: 14px; margin-left: 29px">
                 電子信箱：nehs346@nehs.hc.edu.tw ｜ 電話：03-5777011分機2170
               </div>
             </div>
             <div style="margin-top: 10px">
-              <v-img
-                max-height="15"
-                max-width="15"
-                src="@/assets/images/logoTCFSH.png"
-                style="display: inline-flex"
-              ></v-img>
-              <div style="display: inline; font-size: 14px; margin-left: 10px">
-                臺中市立臺中第一高級中等學校
+              <div style="margin-top: 10px; display: flex; align-items: center">
+                <v-img
+                  max-height="15"
+                  max-width="15"
+                  src="@/assets/images/logoTCFSH.png"
+                  style="display: inline-flex"
+                ></v-img>
+                <div
+                  style="display: inline; font-size: 14px; margin-left: 10px"
+                >
+                  臺中市立臺中第一高級中等學校
+                </div>
               </div>
               <div style="font-size: 14px; margin-left: 29px">
                 電子信箱：t2052@tcfsh.tc.edu.tw ｜ 電話：04-22226081分機262、270
               </div>
             </div>
             <div style="margin-top: 10px">
-              <v-img
-                max-height="15"
-                max-width="15"
-                src="@/assets/images/logoCHSH.png"
-                style="display: inline-flex"
-              ></v-img>
-              <div style="display: inline; font-size: 14px; margin-left: 10px">
-                國立彰化高級中學
+              <div style="margin-top: 10px; display: flex; align-items: center">
+                <v-img
+                  max-height="15"
+                  max-width="15"
+                  src="@/assets/images/logoCHSH.png"
+                  style="display: inline-flex"
+                ></v-img>
+                <div
+                  style="display: inline; font-size: 14px; margin-left: 10px"
+                >
+                  國立彰化高級中學
+                </div>
               </div>
               <div style="font-size: 14px; margin-left: 29px">
                 電子信箱：science@chsh.chc.edu.tw ｜ 電話：04-7222121分機31602
               </div>
             </div>
             <div style="margin-top: 10px">
-              <v-img
-                max-height="15"
-                max-width="15"
-                src="@/assets/images/logoCYSH.png"
-                style="display: inline-flex"
-              ></v-img>
-              <div style="display: inline; font-size: 14px; margin-left: 10px">
-                國立嘉義高級中學
+              <div style="margin-top: 10px; display: flex; align-items: center">
+                <v-img
+                  max-height="15"
+                  max-width="15"
+                  src="@/assets/images/logoCYSH.png"
+                  style="display: inline-flex"
+                ></v-img>
+                <div
+                  style="display: inline; font-size: 14px; margin-left: 10px"
+                >
+                  國立嘉義高級中學
+                </div>
               </div>
               <div style="font-size: 14px; margin-left: 29px">
                 電子信箱：sci18@cysh.cy.edu.tw ｜ 電話：05-2762804分機204、205
               </div>
             </div>
             <div style="margin-top: 10px">
-              <v-img
-                max-height="15"
-                max-width="15"
-                src="@/assets/images/logoTNFSH.png"
-                style="display: inline-flex"
-              ></v-img>
-              <div style="display: inline; font-size: 14px; margin-left: 10px">
-                國立臺南第一高級中學
+              <div style="margin-top: 10px; display: flex; align-items: center">
+                <v-img
+                  max-height="15"
+                  max-width="15"
+                  src="@/assets/images/logoTNFSH.png"
+                  style="display: inline-flex"
+                ></v-img>
+                <div
+                  style="display: inline; font-size: 14px; margin-left: 10px"
+                >
+                  國立臺南第一高級中學
+                </div>
               </div>
               <div style="font-size: 14px; margin-left: 29px">
                 電子信箱：sec@gm.tnfsh.tn.edu.tw ｜ 電話：06-2371206分機271
               </div>
             </div>
             <div style="margin-top: 10px">
-              <v-img
-                max-height="15"
-                max-width="15"
-                src="@/assets/images/logoKSHS.png"
-                style="display: inline-flex"
-              ></v-img>
-              <div style="display: inline; font-size: 14px; margin-left: 10px">
-                高雄市立高雄高級中學
+              <div style="margin-top: 10px; display: flex; align-items: center">
+                <v-img
+                  max-height="15"
+                  max-width="15"
+                  src="@/assets/images/logoKSHS.png"
+                  style="display: inline-flex"
+                ></v-img>
+                <div
+                  style="display: inline; font-size: 14px; margin-left: 10px"
+                >
+                  高雄市立高雄高級中學
+                </div>
               </div>
               <div style="font-size: 14px; margin-left: 29px">
                 電子信箱：jalong@mail.kshs.kh.edu.tw ｜ 電話：07-2862550分機1182
