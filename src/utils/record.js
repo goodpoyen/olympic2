@@ -130,7 +130,7 @@ export function recordService() {
       logInfo.type = type;
       logInfo.contact = processEditorRecord(oldInfo, newInfo);
       data.infoData = JSON.stringify(logInfo);
-      console.log(data.infoData);
+      // console.log(data.infoData);
     } else {
       logInfo.time = globalSystemTool.getNowDataTime("all");
       logInfo.type = "mail";

@@ -468,7 +468,7 @@
               <v-checkbox
                 v-model="editedItem.agePassStatus"
                 :label="'已確認 (生日： ' + editedItem.birthday + ')'"
-                @click="
+                @update:model-value="
                   editedItem.agePass = editedItem.agePassStatus === true ? 3 : 0
                 "
                 style="font-size: 18px; font-weight: bold; color: black"
@@ -2372,7 +2372,6 @@ export default {
     },
 
     selectAllToggle(props) {
-      console.log(4444);
       if (props.items.length > 0 && props.value) {
         const self = this;
         props.items.forEach((item) => {
