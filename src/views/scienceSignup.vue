@@ -1483,15 +1483,6 @@ export default {
 
       this.studentData.birthday = year + "-" + monthStr;
 
-      // if (this.studentData.birthday) {
-      //   let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
-
-      //   this.studentData.birthday = parseInt(year) - 1911 + "-" + monthStr;
-      // } else {
-      //   let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
-      //   this.studentData.birthday = parseInt(year) - 1911 + "-" + monthStr;
-      // }
-
       this.menu = false;
 
       setTimeout(() => {
