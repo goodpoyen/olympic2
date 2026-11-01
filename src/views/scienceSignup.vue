@@ -912,7 +912,7 @@
         <v-card-actions>
           <v-btn
             v-if="confirmStatus"
-            color="#FFC75F"
+            :color="lock || confirmBtnlock ? '#CCCCCC99' : '#FFC75F'"
             style="margin: 10px auto; font-weight: bold; width: 20%"
             rounded
             variant="flat"
@@ -1325,7 +1325,6 @@ export default {
     selectedMonth: new Date().getMonth(),
     menu: false,
     videoId: "https://www.youtube.com/embed/oo5YfX-j_i4?si=DKZx6qqxXju2ClZR",
-    birthdyPickerValue: "",
     teachVideoColor: "grey",
     teachBookColor: "white",
     OTPBtnlock: false,
@@ -1436,20 +1435,14 @@ export default {
     },
 
     displayDate() {
-      if (this.studentData.birthday) {
-        let [year, month] = this.studentData.birthday.split("-");
-        this.selectedYear = parseInt(year);
-        this.selectedMonth = parseInt(month);
+      this.selectedYear = new Date().getFullYear();
+      this.selectedMonth = new Date().getMonth();
+      let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
 
-        return `${this.selectedYear + 1911}-${this.selectedMonth}`;
+      if (this.systemENV.MOD === "prod") {
+        return parseInt(this.selectedYear - 16) + "-" + monthStr;
       } else {
-        // this.selectedYear = new Date().getFullYear();
-        // this.selectedMonth = new Date().getMonth();
-
-        // let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
-
-        // return `${this.selectedYear - 1911}-${monthStr}`;
-        return this.birthdyPickerValue;
+        return parseInt(this.selectedYear - 16 + 1) + "-" + monthStr;
       }
     },
   },
@@ -1463,18 +1456,12 @@ export default {
   },
 
   methods: {
-    async onYearSelect(year) {
-      this.selectedYear = year;
+    async onYearSelect(yearData) {
+      let month = this.displayDate.split("-")[1];
+      this.selectedYear = yearData;
 
-      if (this.studentData.birthday) {
-        let [year, month] = this.studentData.birthday.split("-");
-        this.studentData.birthday =
-          (parseInt(this.selectedYear) - 1911).toString() + "-" + month;
-      } else {
-        let [year, month] = this.displayDate.split("-");
-        this.studentData.birthday =
-          (parseInt(this.selectedYear) - 1911).toString() + "-" + month;
-      }
+      this.studentData.birthday =
+        (parseInt(this.selectedYear) - 1911).toString() + "-" + month;
 
       setTimeout(() => {
         this.viewMode = "months";
@@ -1484,16 +1471,26 @@ export default {
     async onMonthSelect(date) {
       this.selectedMonth = date;
 
-      if (this.studentData.birthday) {
-        let [year, month] = this.studentData.birthday.split("-");
-        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+      let year = "";
 
-        this.studentData.birthday = parseInt(year) + "-" + monthStr;
+      if (this.studentData.birthday) {
+        year = this.studentData.birthday.split("-")[0];
       } else {
-        let [year, month] = this.displayDate.split("-");
-        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
-        this.studentData.birthday = parseInt(year) + "-" + monthStr;
+        year = parseInt(this.displayDate.split("-")[0]) - 1911;
       }
+
+      let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+      this.studentData.birthday = year + "-" + monthStr;
+
+      // if (this.studentData.birthday) {
+      //   let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+      //   this.studentData.birthday = parseInt(year) - 1911 + "-" + monthStr;
+      // } else {
+      //   let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+      //   this.studentData.birthday = parseInt(year) - 1911 + "-" + monthStr;
+      // }
 
       this.menu = false;
 
@@ -1617,18 +1614,6 @@ export default {
       } else {
         this.editorProcess = false;
       }
-    },
-
-    parseDate(date) {
-      if (!date) return null;
-
-      const [year, month] = date.split("-");
-      return `${year}/${month.padStart(2, "0")}`;
-    },
-
-    inputBirthdayValue() {
-      this.studentData.birthday = this.parseDate(this.birthdyPickerValue);
-      this.birthdayPicker = false;
     },
 
     async getSchoolAddressList() {
@@ -2313,13 +2298,6 @@ export default {
       this.confirmTime = 2;
     } else {
       this.confirmTime = 30;
-    }
-
-    let year = new Date().getFullYear();
-    if (this.systemENV.MOD === "prod") {
-      this.birthdyPickerValue = parseInt(year - 16 - 1911) + "-01";
-    } else {
-      this.birthdyPickerValue = parseInt(year - 16 - 1911 + 1) + "-01";
     }
 
     await this.checkMaintain();
