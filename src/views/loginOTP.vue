@@ -99,7 +99,7 @@
                       OTPBtnlock = true;
                     "
                   >
-                    <v-icon medium left style="color: black">
+                    <v-icon medium left style="color: black; margin-top: 3px">
                       mdi-email-arrow-right-outline
                     </v-icon>
                     寄送驗證碼
