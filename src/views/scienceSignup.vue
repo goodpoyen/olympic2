@@ -12,9 +12,10 @@
         class="mx-auto"
         :max-width="device === 'PC' ? '60%' : '100%'"
         style="margin: 10px"
+        elevation="4"
       >
         <v-card-title
-          style="background-color: #ededf3; height: 49px; line-height: 0rem"
+          style="background-color: #dcdce6; height: 49px; line-height: 0rem"
         >
           <v-icon>mdi-school</v-icon>
           <div style="margin: -14px 35px; font-weight: bold; font-size: 16px">
@@ -58,22 +59,19 @@
                   height: 50%;
                   width: 17%;
                 "
+                class="d-flex flex-column align-center justify-center py-4"
+                elevation="4"
               >
-                <v-card-title style="margin-right: -8px">
-                  <v-radio value="JGHS" style="margin: -2px 30px"></v-radio>
-                </v-card-title>
+                <v-radio value="JGHS" class="ma-0 pa-0"></v-radio>
                 <v-img
                   max-height="80"
                   max-width="80"
+                  width="100%"
                   src="@/assets/images/logoJGHS.png"
-                  style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
-                  style="
-                    font-size: 16px;
-                    font-weight: bolder;
-                    margin: -2px 20px;
-                  "
+                  style="font-size: 16px; font-weight: bolder"
+                  class="pa-0 mt-2 text-center"
                 >
                   建國高中
                 </v-card-title>
@@ -85,22 +83,19 @@
                   height: 50%;
                   width: 17%;
                 "
+                class="d-flex flex-column align-center justify-center py-4"
+                elevation="4"
               >
-                <v-card-title style="margin-right: -8px">
-                  <v-radio value="HSNU" style="margin: -2px 30px"></v-radio>
-                </v-card-title>
+                <v-radio value="HSNU" class="ma-0 pa-0"></v-radio>
                 <v-img
                   max-height="80"
                   max-width="80"
+                  width="100%"
                   src="@/assets/images/logoHSNU.png"
-                  style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
-                  style="
-                    font-size: 16px;
-                    font-weight: bolder;
-                    margin: -2px 20px;
-                  "
+                  style="font-size: 16px; font-weight: bolder"
+                  class="pa-0 mt-2 text-center"
                 >
                   師大附中
                 </v-card-title>
@@ -112,22 +107,19 @@
                   height: 50%;
                   width: 17%;
                 "
+                class="d-flex flex-column align-center justify-center py-4"
+                elevation="4"
               >
-                <v-card-title style="margin-right: -8px">
-                  <v-radio value="TFGHS" style="margin: -2px 30px"></v-radio>
-                </v-card-title>
+                <v-radio value="TFGHS" class="ma-0 pa-0"></v-radio>
                 <v-img
                   max-height="80"
                   max-width="80"
+                  width="100%"
                   src="@/assets/images/logoTFGHS.png"
-                  style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
-                  style="
-                    font-size: 16px;
-                    font-weight: bolder;
-                    margin: -2px 20px;
-                  "
+                  style="font-size: 16px; font-weight: bolder"
+                  class="pa-0 mt-2 text-center"
                 >
                   北一女中
                 </v-card-title>
@@ -139,22 +131,19 @@
                   height: 50%;
                   width: 17%;
                 "
+                class="d-flex flex-column align-center justify-center py-4"
+                elevation="4"
               >
-                <v-card-title style="margin-right: -8px">
-                  <v-radio value="WLSH" style="margin: -2px 30px"></v-radio>
-                </v-card-title>
+                <v-radio value="WLSH" class="ma-0 pa-0"></v-radio>
                 <v-img
                   max-height="80"
                   max-width="80"
+                  width="100%"
                   src="@/assets/images/logoWLSH.png"
-                  style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
-                  style="
-                    font-size: 16px;
-                    font-weight: bolder;
-                    margin: -2px 20px;
-                  "
+                  style="font-size: 16px; font-weight: bolder"
+                  class="pa-0 mt-2 text-center"
                 >
                   武陵高中
                 </v-card-title>
@@ -166,22 +155,19 @@
                   height: 50%;
                   width: 17%;
                 "
+                class="d-flex flex-column align-center justify-center py-4"
+                elevation="4"
               >
-                <v-card-title style="margin-right: -8px">
-                  <v-radio value="NEHS" style="margin: -2px 30px"></v-radio>
-                </v-card-title>
+                <v-radio value="NEHS" class="ma-0 pa-0"></v-radio>
                 <v-img
                   max-height="80"
                   max-width="80"
+                  width="100%"
                   src="@/assets/images/logoNEHS.png"
-                  style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
-                  style="
-                    font-size: 16px;
-                    font-weight: bolder;
-                    margin: -2px 20px;
-                  "
+                  style="font-size: 16px; font-weight: bolder"
+                  class="pa-0 mt-2 text-center"
                 >
                   竹科實中
                 </v-card-title>
@@ -193,22 +179,19 @@
                   height: 50%;
                   width: 17%;
                 "
+                class="d-flex flex-column align-center justify-center py-4"
+                elevation="4"
               >
-                <v-card-title style="margin-right: -8px">
-                  <v-radio value="TCFSH" style="margin: -2px 30px"></v-radio>
-                </v-card-title>
+                <v-radio value="TCFSH" class="ma-0 pa-0"></v-radio>
                 <v-img
                   max-height="80"
                   max-width="80"
+                  width="100%"
                   src="@/assets/images/logoTCFSH.png"
-                  style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
-                  style="
-                    font-size: 16px;
-                    font-weight: bolder;
-                    margin: -2px 20px;
-                  "
+                  style="font-size: 16px; font-weight: bolder"
+                  class="pa-0 mt-2 text-center"
                 >
                   臺中一中
                 </v-card-title>
@@ -220,22 +203,19 @@
                   height: 50%;
                   width: 17%;
                 "
+                class="d-flex flex-column align-center justify-center py-4"
+                elevation="4"
               >
-                <v-card-title style="margin-right: -8px">
-                  <v-radio value="CHSH" style="margin: -2px 30px"></v-radio>
-                </v-card-title>
+                <v-radio value="CHSH" class="ma-0 pa-0"></v-radio>
                 <v-img
                   max-height="80"
                   max-width="80"
+                  width="100%"
                   src="@/assets/images/logoCHSH.png"
-                  style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
-                  style="
-                    font-size: 16px;
-                    font-weight: bolder;
-                    margin: -2px 20px;
-                  "
+                  style="font-size: 16px; font-weight: bolder"
+                  class="pa-0 mt-2 text-center"
                 >
                   彰化高中
                 </v-card-title>
@@ -247,22 +227,19 @@
                   height: 50%;
                   width: 17%;
                 "
+                class="d-flex flex-column align-center justify-center py-4"
+                elevation="4"
               >
-                <v-card-title style="margin-right: -8px">
-                  <v-radio value="CYSH" style="margin: -2px 30px"></v-radio>
-                </v-card-title>
+                <v-radio value="CYSH" class="ma-0 pa-0"></v-radio>
                 <v-img
                   max-height="80"
                   max-width="80"
+                  width="100%"
                   src="@/assets/images/logoCYSH.png"
-                  style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
-                  style="
-                    font-size: 16px;
-                    font-weight: bolder;
-                    margin: -2px 20px;
-                  "
+                  style="font-size: 16px; font-weight: bolder"
+                  class="pa-0 mt-2 text-center"
                 >
                   嘉義高中
                 </v-card-title>
@@ -274,22 +251,19 @@
                   height: 50%;
                   width: 17%;
                 "
+                class="d-flex flex-column align-center justify-center py-4"
+                elevation="4"
               >
-                <v-card-title style="margin-right: -8px">
-                  <v-radio value="TNFSH" style="margin: -2px 30px"></v-radio>
-                </v-card-title>
+                <v-radio value="TNFSH" class="ma-0 pa-0"></v-radio>
                 <v-img
                   max-height="80"
                   max-width="80"
+                  width="100%"
                   src="@/assets/images/logoTNFSH.png"
-                  style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
-                  style="
-                    font-size: 16px;
-                    font-weight: bolder;
-                    margin: -2px 20px;
-                  "
+                  style="font-size: 16px; font-weight: bolder"
+                  class="pa-0 mt-2 text-center"
                 >
                   臺南一中
                 </v-card-title>
@@ -301,22 +275,19 @@
                   height: 50%;
                   width: 17%;
                 "
+                class="d-flex flex-column align-center justify-center py-4"
+                elevation="4"
               >
-                <v-card-title style="margin-right: -8px">
-                  <v-radio value="KSHS" style="margin: -2px 30px"></v-radio>
-                </v-card-title>
+                <v-radio value="KSHS" class="ma-0 pa-0"></v-radio>
                 <v-img
                   max-height="80"
                   max-width="80"
+                  width="100%"
                   src="@/assets/images/logoKSHS.png"
-                  style="margin: -2px 25px"
                 ></v-img>
                 <v-card-title
-                  style="
-                    font-size: 16px;
-                    font-weight: bolder;
-                    margin: -2px 20px;
-                  "
+                  style="font-size: 16px; font-weight: bolder"
+                  class="pa-0 mt-2 text-center"
                 >
                   高雄高中
                 </v-card-title>
@@ -325,7 +296,7 @@
           </v-container>
         </v-card-text>
         <v-card-title
-          style="background-color: #ededf3; height: 49px; line-height: 0rem"
+          style="background-color: #dcdce6; height: 49px; line-height: 0rem"
         >
           <v-icon>mdi-account-school</v-icon>
           <div style="margin: -14px 35px; font-weight: bold; font-size: 16px">
@@ -398,7 +369,14 @@
                     variant="underlined"
                     :rules="emailRules"
                     required
-                  ></v-text-field>
+                  >
+                    <!-- <template #details>
+                      <span class="text-error text-caption"
+                        >避免使用 outlook hotmail msn icloud yahoo
+                        信箱，以免收不到信。</span
+                      >
+                    </template> -->
+                  </v-text-field>
                 </v-col>
                 <v-col
                   cols="12"
@@ -616,7 +594,7 @@
           </v-card-text>
         </v-form>
         <v-card-title
-          style="background-color: #ededf3; height: 49px; line-height: 0rem"
+          style="background-color: #dcdce6; height: 49px; line-height: 0rem"
         >
           <v-icon>mdi-account-circle-outline</v-icon>
           <div style="margin: -14px 35px; font-weight: bold; font-size: 16px">
@@ -652,7 +630,7 @@
           </v-radio-group>
         </v-card-text>
         <v-card-title
-          style="background-color: #ededf3; height: 49px; line-height: 0rem"
+          style="background-color: #dcdce6; height: 49px; line-height: 0rem"
         >
           <v-icon>mdi-currency-usd</v-icon>
           <div style="margin: -14px 35px; font-weight: bold; font-size: 16px">
@@ -731,7 +709,7 @@
         </v-card-text>
         <v-card-title
           style="
-            background-color: #ededf3;
+            background-color: #dcdce6;
             height: 49px;
             line-height: 0rem;
             flex-wrap: nowrap;
@@ -805,7 +783,7 @@
           </v-radio-group>
         </v-card-text>
         <v-card-title
-          style="background-color: #ededf3; height: 49px; line-height: 0rem"
+          style="background-color: #dcdce6; height: 49px; line-height: 0rem"
         >
           <v-icon>mdi-card-account-details-outline</v-icon>
           <div style="margin: -14px 35px; font-weight: bold; font-size: 16px">
@@ -840,7 +818,7 @@
         </v-card-text>
         <v-card-title
           style="
-            background-color: #ededf3;
+            background-color: #dcdce6;
             height: 49px;
             line-height: 0rem;
             flex-wrap: nowrap;
@@ -886,7 +864,7 @@
           </div>
         </v-card-text>
         <v-card-title
-          style="background-color: #ededf3; height: 49px; line-height: 0rem"
+          style="background-color: #dcdce6; height: 49px; line-height: 0rem"
         >
           <v-icon>mdi-alert-circle-outline</v-icon>
           <div style="margin: -14px 35px; font-weight: bold; font-size: 16px">
@@ -975,7 +953,7 @@
         style="margin: 10px"
       >
         <v-card-title
-          style="background-color: #ededf3; height: 49px; line-height: 0rem"
+          style="background-color: #dcdce6; height: 49px; line-height: 0rem"
         >
           <div style="margin: 15px 40%; font-weight: bold; font-size: 20px">
             {{ colseWord }}
@@ -989,7 +967,7 @@
         style="margin: 10px"
       >
         <v-card-title
-          style="background-color: #ededf3; height: 49px; line-height: 0rem"
+          style="background-color: #dcdce6; height: 49px; line-height: 0rem"
         >
           <div style="margin: 15px 28%; font-weight: bold; font-size: 20px">
             系統例行維護中<span v-show="maintainTime">(凌晨12:00~01:00)</span>
