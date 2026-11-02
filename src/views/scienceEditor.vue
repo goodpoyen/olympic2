@@ -88,21 +88,23 @@
                       >
                         <template v-slot:activator="{ props }">
                           <v-text-field
-                            prepend-icon="mdi-calendar"
                             v-model="selectedSchool.birthday"
                             label="出生年月(民國/月)"
+                            prepend-icon="mdi-calendar"
                             readonly
                             variant="underlined"
                             v-bind="props"
-                            :rules="[(v) => !!v || '出生年月不能為空']"
-                            required
                             :disabled="lock"
                           ></v-text-field>
                         </template>
+
                         <v-date-picker
-                          v-model="birthdyPickerValue"
-                          view-mode="months"
-                          @click=""
+                          v-model:view-mode="viewMode"
+                          v-model="displayDate"
+                          @update:month="onMonthSelect"
+                          @update:year="onYearSelect"
+                          hide-header
+                          color="primary"
                         ></v-date-picker>
                       </v-menu>
                     </v-col>
@@ -1291,6 +1293,7 @@
 <script>
 export default {
   data: () => ({
+    viewMode: "months",
     desserts: [],
     cityList: [],
     schoolList: [],
@@ -1300,7 +1303,6 @@ export default {
     ],
     selectedSchool: {},
     selectedSchoolTemp: {},
-    birthdyPickerValue: "",
     alertText: "",
     birthdayPicker: false,
     idCartRules: [
@@ -1363,16 +1365,7 @@ export default {
     titleFontSize: "23px",
   }),
 
-  watch: {
-    birthdyPickerValue(val) {
-      if (val.length === undefined) {
-        this.selectedSchool.birthday = this.parseDate(
-          val.toISOString().substring(1, 7),
-        );
-      }
-      this.menu = false; // 選擇後自動關閉
-    },
-  },
+  watch: {},
 
   computed: {
     key() {
@@ -1382,9 +1375,69 @@ export default {
     pass() {
       return this.$route.params.editorKey;
     },
+
+    displayDate() {
+      if (this.selectedSchool.birthday) {
+        let [year, month] = this.selectedSchool.birthday.split("/");
+        this.selectedYear = parseInt(year);
+        this.selectedMonth = parseInt(month);
+
+        return `${this.selectedYear + 1911}/${this.selectedMonth}`;
+      } else {
+        this.selectedYear = new Date().getFullYear();
+        this.selectedMonth = new Date().getMonth();
+
+        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+        return `${this.selectedYear + 1911}/${monthStr}`;
+      }
+    },
   },
 
   methods: {
+    async onYearSelect(yearData) {
+      this.selectedYear = yearData;
+
+      if (this.selectedSchool.birthday) {
+        let [year, month] = this.selectedSchool.birthday.split("/");
+        this.selectedSchool.birthday =
+          (parseInt(this.selectedYear) - 1911).toString() + "/" + month;
+      } else {
+        this.selectedMonth = new Date().getMonth();
+        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+        this.selectedSchool.birthday =
+          (parseInt(this.selectedYear) - 1911).toString() + "/" + monthStr;
+      }
+
+      setTimeout(() => {
+        this.viewMode = "months";
+      }, 1);
+    },
+
+    async onMonthSelect(date) {
+      this.selectedMonth = date;
+
+      if (this.selectedSchool.birthday) {
+        let [year, month] = this.selectedSchool.birthday.split("/");
+        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+        this.selectedSchool.birthday = parseInt(year) + "/" + monthStr;
+      } else {
+        this.selectedYear = new Date().getFullYear();
+        let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+
+        this.selectedSchool.birthday =
+          (parseInt(this.selectedYear) - 1911).toString() + "/ " + monthStr;
+      }
+
+      this.menu = false;
+
+      setTimeout(() => {
+        this.viewMode = "months";
+      }, 1);
+    },
+
     parseDate(date) {
       if (!date) return null;
 
@@ -1408,13 +1461,6 @@ export default {
       } else {
         return date;
       }
-    },
-
-    inputBirthdayValue() {
-      this.selectedSchool.birthday = this.parseDate(
-        this.birthdyPickerValue.replace("-", "/"),
-      );
-      this.birthdayPicker = false;
     },
 
     barCdoePrint() {
@@ -1553,6 +1599,8 @@ export default {
           this.pupText = this.alertText;
           this.alertText = "";
 
+          this.editorProcess = false;
+
           return false;
         }
       }
@@ -1601,6 +1649,7 @@ export default {
           // console.log(response.data);
           this.editorAlert = false;
           this.parentsEditor = true;
+          this.editorProcess = false;
           this.editorType = "";
           if (response.data.code === 200) {
             let recordType = "";
@@ -1619,7 +1668,6 @@ export default {
               recordType,
             );
 
-            this.editorProcess = false;
             this.reviewLock = false;
             this.lock = true;
 
@@ -1677,7 +1725,7 @@ export default {
       await this.axios
         .post(this.systemENV.APISERVERURL + "/getEditorInfo", data)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data.code === 200) {
             this.desserts = response.data.resultData;
 
@@ -1724,11 +1772,6 @@ export default {
             this.selectedSchoolTemp.buttonChoose = true;
             this.selectedSchoolTemp.parentsName = "";
             this.selectedSchoolTemp.parentsPhone = "";
-
-            this.birthdyPickerValue = this.selectedSchool.birthday.replace(
-              "/",
-              "-",
-            );
           } else {
             location.href = "/science/signup/";
           }
@@ -2084,7 +2127,7 @@ export default {
       } else {
         let birthday = this.selectedSchool.birthday.split("/");
 
-        if (parseInt(birthday[0]) <= 94 || parseInt(birthday[0]) >= 101) {
+        if (parseInt(birthday[0]) <= 94 || parseInt(birthday[0]) >= 110) {
           this.alertText += "您的年齡不符合報名資料 請與報名學校確認 <br>";
         }
       }
@@ -2188,13 +2231,6 @@ export default {
       await this.getSchoolAddressList();
     } else {
       location.href = "/science/signup/";
-    }
-
-    let year = new Date().getFullYear();
-    if (this.systemENV.MOD === "prod") {
-      this.birthdyPickerValue = parseInt(year - 16 - 1911) + "-01";
-    } else {
-      this.birthdyPickerValue = parseInt(year - 16 - 1911 + 1) + "-01";
     }
 
     this.editorProcess = false;
