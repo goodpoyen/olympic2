@@ -944,7 +944,11 @@ export default {
               this.desserts.unshift(data);
             }
 
-            this.$store.dispatch("areaExist", true);
+            if (this.globalSystemValue.system === "olympic") {
+              this.$store.dispatch("areaExist", true);
+            } else {
+              this.$emit("updateArea", response.data.areaExist);
+            }
 
             this.close();
           } else if (response.data.code === 500) {
