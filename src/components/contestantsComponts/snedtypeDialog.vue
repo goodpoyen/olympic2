@@ -183,13 +183,7 @@
         取消
       </v-btn>
       <v-btn
-        :disabled="
-          mailType === '' ||
-          mailType === null ||
-          ((scheduleType === 5 || scheduleType === 6) &&
-            mailType === 'score' &&
-            scoreSubject === '')
-        "
+        :disabled="mailType === '' || mailType === null"
         color="darken-1"
         text
         style="color: #2d5bff; font-weight: bold; font-size: 17px"
