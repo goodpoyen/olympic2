@@ -155,6 +155,7 @@
               "
             ></v-divider>
             <v-btn
+              v-if="globalSystemValue.system === 'olympic'"
               icon="mdi-email-check-outline"
               size="small"
               @click="
@@ -167,7 +168,10 @@
             ></v-btn>
             <v-btn
               v-if="globalSystemValue.system === 'olympic'"
-              :disabled="confirmScoreTest === ''"
+              :disabled="
+                confirmScoreTest === '' &&
+                globalSystemValue.system === 'olympic'
+              "
               icon="mdi-license"
               size="small"
               @click="checkAlert('multi', 'score', {})"

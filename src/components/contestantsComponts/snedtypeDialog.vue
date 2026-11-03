@@ -49,7 +49,11 @@
             row
           >
             <v-radio label="應試學生" value="student"></v-radio>
-            <v-radio label="學校聯絡人" value="teacher"></v-radio>
+            <v-radio
+              v-if="globalSystemValue.system === 'olympic'"
+              label="學校聯絡人"
+              value="teacher"
+            ></v-radio>
           </v-radio-group>
         </div>
         <div
