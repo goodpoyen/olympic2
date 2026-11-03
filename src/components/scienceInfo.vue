@@ -3381,6 +3381,7 @@ export default {
             this.menuType = response.data.menuType;
             this.examCodeExist = response.data.examCodeExist;
             this.actionTest = response.data.testTime;
+            this.$emit("updateArea", response.data.areaExist);
 
             const that = this;
             this.headers.forEach(function (data, index, object) {

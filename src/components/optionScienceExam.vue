@@ -32,7 +32,7 @@
       <v-tabs-window v-model="tab">
         <v-tabs-window-item v-for="n in 4" :key="n" :value="n">
           <v-container v-if="n == 1" fluid>
-            <science-info></science-info>
+            <science-info @updateArea="updateArea"></science-info>
           </v-container>
           <v-container v-if="n == 2" fluid>
             <exam-area
@@ -41,6 +41,7 @@
               :dessertsTemp="dessertsTemp"
               @updateFilter="updateFilter"
               @getExamAreaInfo="getExamAreaInfo"
+              @updateArea="updateArea"
             ></exam-area>
           </v-container>
           <v-container v-if="n == 3" fluid>
@@ -98,6 +99,7 @@ export default {
     examSend: 0,
     scoreSend: 0,
     tab: null,
+    areaExist: false,
   }),
 
   components: {
@@ -249,6 +251,10 @@ export default {
 
     updateFilter(value) {
       this.desserts = value;
+    },
+
+    updateArea(value) {
+      this.areaExist = value;
     },
   },
 
