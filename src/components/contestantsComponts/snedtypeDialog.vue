@@ -162,10 +162,15 @@
           </div>
         </div>
         <div v-if="header.subTitle">
-          <div v-if="sendMailtype === 'score'">
+          <div
+            v-if="
+              globalSystemValue.system !== 'olympic' && mailType === 'score'
+            "
+          >
             <v-text-field
               v-model="scoreSubject"
               label="請填寫信件主旨： "
+              variant="underlined"
               style="width: 80%; margin-left: 6%"
             ></v-text-field>
           </div>
