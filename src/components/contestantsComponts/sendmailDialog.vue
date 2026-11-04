@@ -32,6 +32,8 @@
         <v-text-field
           v-model="scoreSubject"
           label="請填寫信件主旨： "
+          variant="underlined"
+          style="width: 80%"
         ></v-text-field>
       </div>
     </v-card-text>
