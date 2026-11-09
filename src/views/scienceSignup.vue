@@ -501,7 +501,7 @@
                         style="
                           font-size: 13px;
                           font-weight: bold;
-                          color: rgb(61, 170, 61);
+                          color: rgb(7 117 7);
                         "
                       >
                         緊急聯絡人資料僅供學校緊急聯絡，非報名資料一部分。等同
@@ -581,7 +581,7 @@
                       <div class="v-messages__wrapper">
                         <div
                           class="v-messages__message"
-                          style="font-size: 13px; font-weight: bold"
+                          style="font-size: 13px; font-weight: bold; color: red"
                         >
                           {{ postWord }}
                         </div>
@@ -698,7 +698,7 @@
                   style="
                     font-size: 13px;
                     font-weight: bold;
-                    color: rgb(61, 170, 61);
+                    color: rgb(7 117 7);
                   "
                 >
                   請擇一預選繳費方式，於實際登入金流仍可修改繳費方式，系統則以實際登入金流所選繳費方式擷取繳費資訊
@@ -851,12 +851,12 @@
             v-if="studentData.handicapped === '1'"
             class="v-messages theme--light error--text"
             role="alert"
-            style="margin-left: 13%; margin-top: -2%"
+            style="margin-left: 11%; margin-top: -2%"
           >
             <div class="v-messages__wrapper">
               <div
                 class="v-messages__message"
-                style="font-size: 13px; font-weight: bold"
+                style="font-size: 13px; font-weight: bold; color: red"
               >
                 {{ handicappedWord }}
               </div>
@@ -1299,8 +1299,8 @@
 export default {
   data: () => ({
     viewMode: "months",
-    selectedYear: new Date().getFullYear(),
-    selectedMonth: new Date().getMonth(),
+    selectedYear: "",
+    selectedMonth: "",
     menu: false,
     videoId: "https://www.youtube.com/embed/oo5YfX-j_i4?si=DKZx6qqxXju2ClZR",
     teachVideoColor: "grey",
@@ -1436,10 +1436,9 @@ export default {
   methods: {
     async onYearSelect(yearData) {
       let month = this.displayDate.split("-")[1];
-      this.selectedYear = yearData;
 
       this.studentData.birthday =
-        (parseInt(this.selectedYear) - 1911).toString() + "-" + month;
+        (parseInt(yearData) - 1911).toString() + "-" + month;
 
       setTimeout(() => {
         this.viewMode = "months";
@@ -1447,8 +1446,6 @@ export default {
     },
 
     async onMonthSelect(date) {
-      this.selectedMonth = date;
-
       let year = "";
 
       if (this.studentData.birthday) {
@@ -1457,7 +1454,7 @@ export default {
         year = parseInt(this.displayDate.split("-")[0]) - 1911;
       }
 
-      let monthStr = String(this.selectedMonth + 1).padStart(2, "0");
+      let monthStr = String(date + 1).padStart(2, "0");
 
       this.studentData.birthday = year + "-" + monthStr;
 
