@@ -947,7 +947,7 @@ export default {
             if (this.globalSystemValue.system === "olympic") {
               this.$store.dispatch("areaExist", true);
             } else {
-              this.$emit("updateArea", response.data.areaExist);
+              this.$emit("updateArea", true);
             }
 
             this.close();
