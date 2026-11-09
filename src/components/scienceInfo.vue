@@ -2074,7 +2074,15 @@
                     required
                   ></v-select>
                 </v-col>
-                <v-col cols="12" sm="12" md="12" style="margin-top: -31px">
+                <v-col
+                  v-if="
+                    editedItem.admission !== '2' && editedItem.checkType !== '4'
+                  "
+                  cols="12"
+                  sm="12"
+                  md="12"
+                  style="margin-top: -31px"
+                >
                   <distribution-seat
                     :id="id"
                     :examCodeExist="examCodeExist"
