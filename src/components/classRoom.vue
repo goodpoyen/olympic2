@@ -364,7 +364,6 @@
                   ></v-text-field>
                   <v-text-field
                     v-else
-                    :key="editedItem.roomId"
                     :disabled="fixCodeName && editedIndex !== -1"
                     v-model="editedItem.defaultNumber"
                     label="總座數"
@@ -372,6 +371,50 @@
                     :rules="[(v) => !!v || '總座數不能為空']"
                     required
                   ></v-text-field>
+                </v-col>
+                <v-col
+                  v-if="editedIndex === -1"
+                  cols="12"
+                  sm="2"
+                  md="6"
+                  style="margin-top: -21px; margin-left: -20px"
+                >
+                  <v-radio-group
+                    v-model="editedItem.isCopyMultiple"
+                    label="是否複製多筆"
+                    inline
+                    class="ms-0 ps-0"
+                  >
+                    <v-radio label="是" value="Y"></v-radio>
+                    <v-radio label="否" value="N"></v-radio>
+                  </v-radio-group>
+                </v-col>
+                <v-col
+                  v-if="editedIndex === -1"
+                  cols="12"
+                  sm="2"
+                  md="12"
+                  style="margin-top: -50px"
+                >
+                  <v-text-field
+                    v-model="editedItem.copyCount"
+                    :disabled="editedItem.isCopyMultiple !== 'Y'"
+                    label="複製筆數"
+                    variant="underlined"
+                    type="number"
+                    min="2"
+                    :rules="
+                      editedItem.isCopyMultiple === 'Y'
+                        ? [
+                            (v) => !!v || '複製筆數不能為空',
+                            (v) => Number(v) >= 2 || '複製筆數最低不能小於2',
+                          ]
+                        : []
+                    "
+                  ></v-text-field>
+                  <div class="text-caption text-error mb-2">
+                    * 複製資料的「考場代碼」與「考場名稱」數字部分會累加
+                  </div>
                 </v-col>
               </v-row>
             </v-container>
@@ -611,6 +654,8 @@ export default {
       roomId: "",
       defaultNumber: "",
       total: "",
+      isCopyMultiple: "N",
+      copyCount: 2,
     },
     downloadIndex: -1,
     downloadItem: {
@@ -631,6 +676,8 @@ export default {
       roomId: "",
       defaultNumber: "",
       total: "",
+      isCopyMultiple: "N",
+      copyCount: 2,
     },
   }),
 
@@ -955,6 +1002,8 @@ export default {
       data.AT = await this.tokenService.getFastAT();
       data.id = this.id;
       data.olympic = this.globalSystemValue.olympic;
+      data.isCopyMultiple = this.editedItem.isCopyMultiple;
+      data.copyCount = this.editedItem.copyCount;
 
       if (typeof data.areaId === "object") {
         data.areaName = data.areaId.areaName;
@@ -977,17 +1026,7 @@ export default {
           this.loadShow = false;
           // console.log(response.data);
           if (response.data.code === 200) {
-            data.roomId = response.data.resultData;
-            data.defaultNumber =
-              parseInt(data.rowNumber, 10) * parseInt(data.columnNumber, 10) +
-              parseInt(data.defaultNumber, 10);
-            if (this.editedIndex > -1) {
-              Object.assign(this.desserts[this.editedIndex], data);
-            } else {
-              data.total = 0;
-              this.desserts.unshift(data);
-            }
-
+            this.$emit("getClassRoomInfo");
             this.close();
           } else if (response.data.code === 500) {
             this.alertPup = true;
