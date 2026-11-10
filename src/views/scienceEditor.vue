@@ -46,7 +46,7 @@
           v-if="selectedSchool.scheduleType !== 6"
           style="margin-top: 20px"
         >
-          <v-card-title style="background-color: #ededf3; height: 50px">
+          <v-card-title style="background-color: #dcdce6; height: 50px">
             <v-icon style="margin-top: -2px"> mdi-face-man </v-icon>
             <span
               style="
@@ -142,8 +142,10 @@
                         :disabled="lock"
                         @click="
                           idCardEditor = false;
+                          globalSystemTool.verificationIdCard(
+                            selectedSchool.idCard,
+                          );
                           selectedSchool.idCard = '';
-                          verificationIdCard(selectedSchool.idCard);
                         "
                         >修改身分證</v-btn
                       >
@@ -303,7 +305,7 @@
           </v-card-actions>
         </v-card>
         <v-card style="margin-top: 20px">
-          <v-card-title style="background-color: #ededf3; height: 50px">
+          <v-card-title style="background-color: #dcdce6; height: 50px">
             <v-icon style="margin-top: -2px"> mdi-currency-usd </v-icon>
             <span
               style="
@@ -436,7 +438,7 @@
           v-if="selectedSchool.scheduleType !== 6"
           style="margin-top: 20px"
         >
-          <v-card-title style="background-color: #ededf3; height: 50px">
+          <v-card-title style="background-color: #dcdce6; height: 50px">
             <v-btn
               x-small
               outlined
@@ -446,7 +448,7 @@
                 height: 30px;
                 width: 30px;
                 color: black !important;
-                background-color: #ededf3;
+                background-color: #dcdce6;
               "
               :disabled="
                 (desserts[selectedSchool.index].studentStatusPass === '1' &&
@@ -566,7 +568,7 @@
           v-if="selectedSchool.scheduleType !== 6"
           style="margin-top: 20px"
         >
-          <v-card-title style="background-color: #ededf3; height: 50px">
+          <v-card-title style="background-color: #dcdce6; height: 50px">
             <v-btn
               x-small
               outlined
@@ -576,7 +578,7 @@
                 height: 30px;
                 width: 30px;
                 color: black !important;
-                background-color: #ededf3;
+                background-color: #dcdce6;
               "
               :disabled="
                 desserts[selectedSchool.index].rewardPass === '1' ||
@@ -679,7 +681,7 @@
           v-if="selectedSchool.scheduleType !== 6"
           style="margin-top: 20px"
         >
-          <v-card-title style="background-color: #ededf3; height: 50px">
+          <v-card-title style="background-color: #dcdce6; height: 50px">
             <v-btn
               x-small
               outlined
@@ -689,7 +691,7 @@
                 height: 30px;
                 width: 30px;
                 color: black !important;
-                background-color: #ededf3;
+                background-color: #dcdce6;
               "
               :disabled="
                 desserts[selectedSchool.index].admissionPass === '1' ||
@@ -772,7 +774,7 @@
         >
           <v-card-title
             v-if="device === 'PC'"
-            style="background-color: #ededf3; height: 50px"
+            style="background-color: #dcdce6; height: 50px"
           >
             <v-btn
               x-small
@@ -783,7 +785,7 @@
                 height: 30px;
                 width: 30px;
                 color: black !important;
-                background-color: #ededf3;
+                background-color: #dcdce6;
               "
               :disabled="
                 desserts[selectedSchool.index].handicappedPass === '1' ||
@@ -809,7 +811,7 @@
           <v-card-title
             v-else
             style="
-              background-color: #ededf3;
+              background-color: #dcdce6;
               height: 49px;
               line-height: 0rem;
               flex-wrap: nowrap;
@@ -824,7 +826,7 @@
                 height: 30px;
                 width: 30px;
                 color: black !important;
-                background-color: #ededf3;
+                background-color: #dcdce6;
               "
               :disabled="
                 desserts[selectedSchool.index].handicappedPass === '1' ||

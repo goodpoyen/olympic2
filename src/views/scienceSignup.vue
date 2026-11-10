@@ -348,12 +348,15 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="4" style="margin-top: -31px">
                   <v-text-field
-                    v-model="maskIdCard"
-                    type="email"
+                    :model-value="displayedIdCard"
+                    @update:model-value="updateIdCard"
+                    :type="showFullId ? 'text' : 'text'"
                     label="身分證統一編號"
                     variant="underlined"
                     :rules="[checkIdcard]"
                     required
+                    :append-inner-icon="showFullId ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append-inner="showFullId = !showFullId"
                   ></v-text-field>
                 </v-col>
                 <v-col
@@ -1298,6 +1301,7 @@
 <script>
 export default {
   data: () => ({
+    showFullId: false,
     viewMode: "months",
     selectedYear: "",
     selectedMonth: "",
@@ -1423,6 +1427,20 @@ export default {
         return parseInt(this.selectedYear - 16 + 1) + "-" + monthStr;
       }
     },
+
+    displayedIdCard() {
+      const raw = this.maskIdCard;
+      if (this.showFullId || !raw) return raw;
+
+      if (raw.length > 3) {
+        const visibleStart = raw.substring(0, 3);
+        const maskLength = Math.min(raw.length - 3, 4);
+        const masked = "*".repeat(maskLength);
+        const visibleEnd = raw.substring(7);
+        return visibleStart + masked + visibleEnd;
+      }
+      return raw;
+    },
   },
 
   watch: {},
@@ -1465,76 +1483,36 @@ export default {
       }, 1);
     },
 
-    checkIdcard(value) {
-      let input = value.split("");
-      let tempId = this.studentData.idCard;
+    updateIdCard(val) {
+      const uppercaseVal = val.toUpperCase();
 
-      if (value.length === 0) {
-        this.maskTemp = [];
-        this.studentData.idCard = "";
-        return "不能為空值";
-      } else if (!value.includes("*")) {
-        this.maskTemp = [];
-        this.studentData.idCard = "";
+      if (this.showFullId || !uppercaseVal.includes("*")) {
+        this.maskIdCard = uppercaseVal.slice(0, 10);
+        this.studentData.idCard = this.maskIdCard;
+        return;
       }
 
-      this.studentData.idCard = "";
-      this.maskIdCard = "";
+      const currentLength = uppercaseVal.length;
+      const previousLength = this.maskIdCard.length;
 
-      for (let i = 0; i < input.length; i++) {
-        if (i >= 3 && i <= 6) {
-          if (input[i] !== "*") {
-            if (value.includes("****") && value.length >= 7) {
-              if (tempId.length > value.length) {
-                this.maskTemp.push(input[i]);
-              } else {
-                input.splice(7, 0, this.maskTemp.pop());
-                this.maskTemp.unshift(input[i]);
-              }
-            }
-
-            this.maskIdCard += "*";
-            this.studentData.idCard += input[i];
-            let startValue = i - 3;
-            let temp = this.maskTemp[startValue];
-            if (this.maskTemp[i - 3] != null) {
-              this.studentData.idCard += input[i];
-            }
-            this.maskTemp[i - 3] = input[i];
-          } else {
-            if (!value.includes("****") && value.length >= 8) {
-              this.maskIdCard = "";
-              this.studentData.idCard = "";
-              break;
-            } else {
-              this.studentData.idCard += this.maskTemp[i - 3];
-            }
-            this.maskIdCard += "*";
-          }
-        } else {
-          if (input[i] !== "*") {
-            this.maskIdCard += input[i];
-            this.studentData.idCard += input[i];
-          } else {
-            if (i < 3) {
-              this.studentData.idCard += this.maskTemp[i - 2];
-              this.maskIdCard += this.maskTemp[i - 2];
-              this.maskTemp.shift();
-            }
-
-            if (i > 6) {
-              this.studentData.idCard += input[i];
-            }
-          }
+      if (currentLength > previousLength) {
+        const nextChar = uppercaseVal.charAt(currentLength - 1);
+        if (this.maskIdCard.length < 10) {
+          this.maskIdCard += nextChar;
+          this.studentData.idCard = this.maskIdCard;
         }
+      } else if (currentLength < previousLength) {
+        this.maskIdCard = this.maskIdCard.slice(0, -1);
+        this.studentData.idCard = this.maskIdCard;
       }
+    },
 
-      if (
-        !/^[A-Za-z][1-2]\d{8}$/.test(this.studentData.idCard) &&
-        !/^[A-Za-z][8-9]\d{8}$/.test(this.studentData.idCard)
-      ) {
-        return "身分證或居留證 統一編碼格式不對";
-      }
+    checkIdcard(val) {
+      const actualValue = this.maskIdCard;
+      if (!actualValue) return "此欄位為必填";
+
+      const regex = /^[A-Z][1289]\d{8}$/;
+      if (!regex.test(actualValue)) return "身分證字號格式錯誤";
 
       return true;
     },
