@@ -96,6 +96,7 @@
               color="#54b5b5"
               class="mb-2"
               style="margin-top: 10px; color: #ededf3"
+              :disabled="Object.keys(studentExamCode).length === 0"
               prepend-icon="mdi-auto-mode"
               @click="getEnoughArea()"
             >
