@@ -63,6 +63,7 @@
               :scoreSend="scoreSend"
               :admissionCount="admissionCount"
               :handicappedCount="handicappedCount"
+              @updateDesserts="updateDesserts"
               @updateFilter="updateFilter"
             ></contestants>
           </v-container>
