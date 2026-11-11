@@ -627,7 +627,7 @@
                   <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
                     v-model="editedItem.signupName"
-                    label="選拔名稱"
+                    label="選拔正式名稱"
                     :counter="30"
                     :rules="[
                       (v) => !!v || '選拔名稱不能為空',
@@ -635,6 +635,24 @@
                     ]"
                     variant="underlined"
                     required
+                  ></v-text-field>
+                  <v-text-field
+                    v-if="system !== 'science'"
+                    v-model="editedItem.mpName"
+                    label="信件報名主旨"
+                    :prefix="
+                      '[' +
+                      globalSystemValue.olympic +
+                      ']' +
+                      '奧林匹亞' +
+                      editedItem.year
+                    "
+                    persistent-placeholder
+                    variant="underlined"
+                    :rules="[
+                      (v) => !!v || '信件報名主旨不能為空',
+                      (v) => v.length <= 30 || '超過規定字數',
+                    ]"
                   ></v-text-field>
                 </v-col>
                 <v-col v-if="editedItem.type == 7" cols="12" sm="6" md="6">
@@ -832,7 +850,7 @@
                   cols="12"
                   sm="2"
                   md="6"
-                  style="margin-top: -31px"
+                  style="margin-top: -11px"
                 >
                   <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
@@ -853,7 +871,7 @@
                   cols="12"
                   sm="2"
                   md="6"
-                  style="margin-top: -31px"
+                  style="margin-top: -11px"
                 >
                   <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
@@ -940,19 +958,14 @@
                     <v-radio label="是" value="1"></v-radio>
                   </v-radio-group>
                 </v-col>
-                <v-col
-                  v-show="editedItem.queryScore === '1'"
-                  cols="12"
-                  sm="2"
-                  md="6"
-                  style="margin-top: -31px"
-                >
+                <v-col cols="12" sm="2" md="6" style="margin-top: -31px">
                   <v-text-field
                     v-model="editedItem.queryStart"
                     label="成績查詢開始時間"
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
+                    disabled="editedItem.queryScore === 0"
                     style="width: 250px"
                     @click="
                       dateTimeType = 'queryStart';
@@ -960,19 +973,14 @@
                     "
                   ></v-text-field>
                 </v-col>
-                <v-col
-                  v-show="editedItem.queryScore === '1'"
-                  cols="12"
-                  sm="2"
-                  md="6"
-                  style="margin-top: -31px"
-                >
+                <v-col cols="12" sm="2" md="6" style="margin-top: -31px">
                   <v-text-field
                     v-model="editedItem.queryEnd"
                     label="成績查詢結束時間"
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
+                    disabled="editedItem.queryScore === 0"
                     style="width: 250px"
                     @click="
                       dateTimeType = 'queryEnd';
@@ -1482,6 +1490,7 @@ export default {
       paymentType: "",
       type: "",
       codeName: "",
+      mpName: "",
       year: "",
       pathExam: "",
       pathExamScore: "",
