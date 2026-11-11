@@ -2204,7 +2204,6 @@ export default {
         .then((response) => {
           // console.log(response.data);
           if (response.data.code === 200) {
-            this.$emit("updateDesserts", response.data.resultData);
             this.desserts = response.data.resultData;
 
             const that = this;
@@ -2222,6 +2221,7 @@ export default {
               }
             });
             this.dessertsTemp = response.data.resultData;
+            this.$emit("updateDesserts", response.data.resultData);
           } else {
             this.globalSystemTool.removeLocalStorage();
           }
