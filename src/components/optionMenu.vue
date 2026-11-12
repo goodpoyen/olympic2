@@ -626,7 +626,7 @@
                 <v-col cols="12" sm="6" md="12" style="margin-top: -31px">
                   <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
-                    v-model="editedItem.signupName"
+                    v-model="editedItem.officialName"
                     label="選拔正式名稱"
                     :counter="30"
                     :rules="[
@@ -638,7 +638,7 @@
                   ></v-text-field>
                   <v-text-field
                     v-if="system !== 'science'"
-                    v-model="editedItem.mpName"
+                    v-model="editedItem.signupName"
                     label="信件報名主旨"
                     :prefix="
                       '[' +
@@ -1490,7 +1490,7 @@ export default {
       paymentType: "",
       type: "",
       codeName: "",
-      mpName: "",
+      officialName: "",
       year: "",
       pathExam: "",
       pathExamScore: "",
