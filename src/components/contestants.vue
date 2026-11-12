@@ -2204,24 +2204,7 @@ export default {
         .then((response) => {
           // console.log(response.data);
           if (response.data.code === 200) {
-            this.$emit("updateDesserts", response.data.resultData);
-            this.desserts = response.data.resultData;
-
-            const that = this;
-            this.desserts.forEach(function (data) {
-              data.gradeStatus = true;
-
-              if (data.pass === 30) {
-                data.pass = that.scheduleType === 5 ? "未晉級" : "未錄取";
-              } else if (data.pass === 10) {
-                data.pass = that.scheduleType === 5 ? "晉級" : "錄取";
-              } else if (data.pass === 20) {
-                data.pass = "缺考";
-              } else {
-                data.pass = "";
-              }
-            });
-            this.dessertsTemp = response.data.resultData;
+            this.$emit("getContestantsInfo");
           } else {
             this.globalSystemTool.removeLocalStorage();
           }

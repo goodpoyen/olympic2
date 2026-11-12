@@ -63,6 +63,7 @@
               :scoreSend="scoreSend"
               :admissionCount="admissionCount"
               :handicappedCount="handicappedCount"
+              @getContestantsInfo="getContestantsInfo"
               @updateDesserts="updateDesserts"
               @updateFilter="updateFilter"
             ></contestants>
