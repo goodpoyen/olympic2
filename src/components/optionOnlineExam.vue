@@ -25,7 +25,7 @@
               :headers="headers"
               :examCodeExist="examCodeExist"
               :menuType="menuType"
-              :signupName="signupName"
+              :officeName="officeName"
               :passCount="passCount"
               :nopassCount="nopassCount"
               :failCount="failCount"
@@ -58,7 +58,7 @@ export default {
     headers: [],
     examCodeExist: false,
     menuType: 0,
-    signupName: "",
+    officeName: "",
     passCount: 0,
     nopassCount: 0,
     failCount: 0,
@@ -101,7 +101,7 @@ export default {
             this.headers = response.data.headers;
             this.desserts = response.data.resultData;
             this.dessertsTemp = response.data.resultData;
-            this.signupName = response.data.signupName;
+            this.officeName = response.data.officeName;
             this.menuType = response.data.menuType;
             this.examCodeExist = response.data.examCodeExist;
 
