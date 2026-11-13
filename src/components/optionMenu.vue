@@ -971,7 +971,7 @@
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
-                    :disabled="editedItem.queryScore === 0"
+                    :disabled="editedItem.queryScore === '0'"
                     style="width: 250px"
                     @click="
                       dateTimeType = 'queryStart';
@@ -992,7 +992,7 @@
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
-                    :disabled="editedItem.queryScore === 0"
+                    :disabled="editedItem.queryScore === '0'"
                     style="width: 250px"
                     @click="
                       dateTimeType = 'queryEnd';
