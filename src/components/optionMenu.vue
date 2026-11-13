@@ -107,7 +107,7 @@
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
-                      <span>{{ item.signupName }}</span>
+                      <span>{{ item.officeName }}</span>
                     </v-card-text>
                     <v-card-text
                       style="margin-top: -23px; font-size: 13px; color: #7a7d88"
@@ -145,7 +145,7 @@
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
-                      <span>{{ item.signupName }}</span>
+                      <span>{{ item.officeName }}</span>
                     </v-card-text>
                     <v-card-text
                       style="margin-top: -23px; font-size: 13px; color: #7a7d88"
@@ -194,7 +194,7 @@
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
-                      <span>{{ item.signupName }}</span>
+                      <span>{{ item.officeName }}</span>
                     </v-card-text>
                     <v-card-text
                       style="margin-top: -23px; font-size: 13px; color: #7a7d88"
@@ -233,7 +233,7 @@
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
-                      <span>{{ item.signupName }}</span>
+                      <span>{{ item.officeName }}</span>
                     </v-card-text>
                     <v-card-text
                       style="margin-top: -23px; font-size: 13px; color: #7a7d88"
@@ -283,7 +283,7 @@
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
-                      <span>{{ item.signupName }}</span>
+                      <span>{{ item.officeName }}</span>
                     </v-card-text>
                     <v-card-text
                       style="margin-top: -23px; font-size: 13px; color: #7a7d88"
@@ -626,7 +626,7 @@
                 <v-col cols="12" sm="6" md="12" style="margin-top: -31px">
                   <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
-                    v-model="editedItem.officialName"
+                    v-model="editedItem.officeName"
                     label="選拔正式名稱"
                     :counter="30"
                     :rules="[
@@ -958,7 +958,13 @@
                     <v-radio label="是" value="1"></v-radio>
                   </v-radio-group>
                 </v-col>
-                <v-col cols="12" sm="2" md="6" style="margin-top: -31px">
+                <v-col
+                  cols="12"
+                  sm="2"
+                  md="6"
+                  style="margin-top: -31px"
+                  v-show="editedItem.type === 1"
+                >
                   <v-text-field
                     v-model="editedItem.queryStart"
                     label="成績查詢開始時間"
@@ -973,7 +979,13 @@
                     "
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="2" md="6" style="margin-top: -31px">
+                <v-col
+                  cols="12"
+                  sm="2"
+                  md="6"
+                  style="margin-top: -31px"
+                  v-show="editedItem.type === 1"
+                >
                   <v-text-field
                     v-model="editedItem.queryEnd"
                     label="成績查詢結束時間"
@@ -1490,7 +1502,7 @@ export default {
       paymentType: "",
       type: "",
       codeName: "",
-      officialName: "",
+      officeName: "",
       year: "",
       pathExam: "",
       pathExamScore: "",
