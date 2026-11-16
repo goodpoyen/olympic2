@@ -235,7 +235,7 @@
                             style="
                               font-size: 13px;
                               font-weight: bold;
-                              color: rgb(61, 170, 61);
+                              color: rgb(7 117 7);
                             "
                           >
                             緊急聯絡人資料僅供學校緊急聯絡，非報名資料一部分。等同
