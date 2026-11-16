@@ -470,98 +470,112 @@
             >
           </v-card-title>
           <v-card-text
-            style="font-size: 20px; margin-top: 19px; font-weight: bold"
+            style="font-size: 20px; margin-top: 15px; font-weight: bold"
           >
-            <div
-              v-if="selectedSchool.studentStatus === '1'"
-              style="font-size: 15px; font-weight: bold"
+            <v-row>
+              <v-col
+                cols="12"
+                sm="6"
+                md="6"
+                v-if="selectedSchool.studentStatus === '1'"
+                ><div style="font-size: 15px; font-weight: bold">
+                  國三應屆畢業生
+                </div></v-col
+              ></v-row
             >
-              國三應屆畢業生
-            </div>
-            <div
-              v-if="selectedSchool.studentStatus === '2'"
-              style="font-size: 15px; font-weight: bold"
-            >
-              <v-row>
-                <v-col cols="12" sm="6" md="6"
-                  >特殊教育國中生
-                  <div
-                    class="v-messages theme--light error--text"
-                    role="alert"
-                    s
-                    style="margin-top: 5px"
-                  >
-                    <div class="v-messages__wrapper">
-                      <div
-                        class="v-messages__message"
-                        style="font-size: 13px; font-weight: bold"
-                      >
-                        {{ postWord }}
-                      </div>
-                    </div>
-                  </div></v-col
+            <v-row>
+              <v-col
+                cols="12"
+                sm="6"
+                md="6"
+                v-if="selectedSchool.studentStatus === '2'"
+                style="font-size: 15px; font-weight: bold"
+                >特殊教育國中生
+                <div
+                  class="v-messages theme--light error--text"
+                  role="alert"
+                  s
+                  style="margin-top: 5px"
                 >
-                <v-col cols="12" sm="6" md="6" style="text-align: center">
-                  <v-chip
-                    v-if="
-                      desserts[selectedSchool.index].studentStatusPass === '1'
-                    "
-                    style="background-color: #e3ffe5 !important"
-                    color="#8CE38E"
-                    outlined
-                  >
-                    <span style="margin-left: 7px; color: #2bcd2b">已審查</span>
-                    <v-icon small style="margin-left: 7px; color: #2bcd2b">
-                      mdi-check
-                    </v-icon>
-                  </v-chip>
-                </v-col>
-              </v-row>
-            </div>
-            <div
-              v-if="selectedSchool.identity === '1'"
-              style="font-size: 15px; font-weight: bold"
-            >
-              一般生
-            </div>
-            <div
-              v-if="selectedSchool.identity === '2'"
-              style="font-size: 15px; font-weight: bold; margin-top: 10px"
-            >
-              <v-row>
-                <v-col cols="12" sm="6" md="6"
-                  >特殊身分
-                  <div
-                    class="v-messages theme--light error--text"
-                    role="alert"
-                    s
-                    style="margin-top: 5px"
-                  >
-                    <div class="v-messages__wrapper">
-                      <div
-                        class="v-messages__message"
-                        style="font-size: 13px; font-weight: bold"
-                      >
-                        {{ postWord }}
-                      </div>
+                  <div class="v-messages__wrapper">
+                    <div
+                      class="v-messages__message"
+                      style="font-size: 13px; font-weight: bold"
+                    >
+                      {{ postWord }}
                     </div>
-                  </div></v-col
+                  </div>
+                </div></v-col
+              >
+              <v-col cols="12" sm="6" md="6" style="text-align: center">
+                <v-chip
+                  v-if="
+                    desserts[selectedSchool.index].studentStatusPass === '1'
+                  "
+                  style="
+                    background-color: #e3ffe5 !important;
+                    margin-top: -15px;
+                  "
+                  color="#8CE38E"
+                  outlined
                 >
-                <v-col cols="12" sm="6" md="6" style="text-align: center">
-                  <v-chip
-                    v-if="desserts[selectedSchool.index].identityPass === '1'"
-                    style="background-color: #e3ffe5 !important"
-                    color="#8CE38E"
-                    outlined
-                  >
-                    <span style="margin-left: 7px; color: #2bcd2b">已審查</span>
-                    <v-icon small style="margin-left: 7px; color: #2bcd2b">
-                      mdi-check
-                    </v-icon>
-                  </v-chip>
-                </v-col>
-              </v-row>
-            </div>
+                  <span style="margin-left: 7px; color: #2bcd2b">已審查</span>
+                  <v-icon small style="margin-left: 7px; color: #2bcd2b">
+                    mdi-check
+                  </v-icon>
+                </v-chip>
+              </v-col>
+            </v-row>
+            <v-row style="margin-top: -30px">
+              <v-col
+                cols="12"
+                sm="6"
+                md="6"
+                v-if="selectedSchool.identity === '1'"
+              >
+                <div style="font-size: 15px; font-weight: bold">一般生</div>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col
+                cols="12"
+                sm="6"
+                md="6"
+                v-if="selectedSchool.identity === '2'"
+                style="font-size: 15px; font-weight: bold"
+                >特殊身分
+                <div
+                  class="v-messages theme--light error--text"
+                  role="alert"
+                  style="margin-top: 5px"
+                >
+                  <div class="v-messages__wrapper">
+                    <div
+                      class="v-messages__message"
+                      style="font-size: 13px; font-weight: bold"
+                    >
+                      {{ postWord }}
+                    </div>
+                  </div>
+                </div></v-col
+              >
+              <v-col cols="12" sm="6" md="6" style="text-align: center">
+                <v-chip
+                  v-if="desserts[selectedSchool.index].identityPass === '1'"
+                  style="
+                    background-color: #e3ffe5 !important;
+                    margin-top: -15px;
+                  "
+                  color="#8CE38E"
+                  outlined
+                >
+                  <span style="margin-left: 7px; color: #2bcd2b">已審查</span>
+                  <v-icon small style="margin-left: 7px; color: #2bcd2b">
+                    mdi-check
+                  </v-icon>
+                </v-chip>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
         <v-card
