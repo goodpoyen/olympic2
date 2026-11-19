@@ -667,6 +667,44 @@
                     ]"
                   ></v-text-field>
                 </v-col>
+                <v-col
+                  v-if="
+                    system === 'science' &&
+                    editedItem.type === 5 &&
+                    level === '1'
+                  "
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-file-input
+                    v-model="editedItem.signupFile"
+                    label="上傳教學檔案"
+                    variant="underlined"
+                    prepend-icon="mdi-paperclip"
+                    accept=".pdf"
+                    :rules="fileRules"
+                    :loading="isUploading"
+                    :disabled="isUploading"
+                    :messages="fileDisplayMessage"
+                    :error-messages="uploadErrorMsg"
+                    clearable
+                    @update:modelValue="handleFileChange"
+                  >
+                    <template v-slot:message="{ message }">
+                      <span
+                        :class="
+                          fileDisplayMessage
+                            ? 'text-success font-weight-medium'
+                            : ''
+                        "
+                      >
+                        {{ message }}
+                      </span>
+                    </template>
+                  </v-file-input>
+                </v-col>
                 <v-col v-if="editedItem.type == 7" cols="12" sm="6" md="6">
                   <span style="color: black; font-weight: bold">
                     參加者身理性別：
@@ -1463,6 +1501,9 @@ export default {
     headers: [],
     rulesHeaders: [],
     rulesList: [],
+    isUploading: false,
+    uploadSuccessMsg: "",
+    uploadErrorMsg: "",
     rulesColumn: [
       "類別",
       "中文姓名",
@@ -1509,6 +1550,8 @@ export default {
       queryEnd: "",
       price: "",
       web: "",
+      ytURL: "",
+      signupFile: [],
       partnerGender: "",
       partnerGroup: "",
       paymentType: "",
@@ -1534,6 +1577,8 @@ export default {
       queryEnd: "",
       price: "",
       web: "",
+      ytURL: "",
+      signupFile: [],
       partnerGender: "",
       partnerGroup: "",
       paymentType: "",
@@ -1581,6 +1626,13 @@ export default {
     level: "",
     olympic: "",
     selectOlympic: "",
+    fileRules: [
+      (value) => {
+        if (!value || !value.length) return true;
+        if (value.size > 10 * 1024 * 1024) return "檔案大小不能超過 10MB";
+        return true;
+      },
+    ],
   }),
 
   computed: {
@@ -1594,6 +1646,29 @@ export default {
 
     id() {
       return this.$route.params.id;
+    },
+
+    fileDisplayMessage() {
+      if (this.uploadSuccessMsg) {
+        return this.uploadSuccessMsg;
+      }
+
+      const file = this.editedItem.signupFile;
+
+      if (!file || (Array.isArray(file) && file.length === 0)) {
+        return "";
+      }
+
+      let fileName = "";
+      if (typeof file === "string") {
+        fileName = file;
+      } else if (Array.isArray(file)) {
+        fileName = file[0]?.name || file[0];
+      } else if (file instanceof File) {
+        fileName = file.name;
+      }
+
+      return fileName ? `已上傳檔案 ${fileName}` : "";
     },
   },
 
@@ -1616,6 +1691,7 @@ export default {
       this.dateVal = new Date(arr[0]);
       this.timeVal = arr[1];
     },
+
     setDateTime() {
       let dateStr = dayjs(this.dateVal).format("YYYY-MM-DD");
 
@@ -2136,6 +2212,64 @@ export default {
         .catch(function (error) {
           // console.log(error);
         });
+    },
+
+    async handleFileChange(files) {
+      this.uploadSuccessMsg = "";
+      this.uploadErrorMsg = "";
+
+      if (!files || files.length === 0) {
+        return;
+      }
+
+      const file = files;
+
+      if (file.type !== "application/pdf") {
+        this.uploadErrorMsg = "上傳失敗：請選擇 PDF 檔案";
+        this.editedItem.signupFile = [];
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        this.uploadErrorMsg = "上傳失敗：檔案大小不能超過 10MB";
+        this.editedItem.signupFile = [];
+        return;
+      }
+
+      await this.uploadFile(file);
+    },
+
+    async uploadFile(file) {
+      const formData = new FormData();
+
+      const header = { "Content-type": "multipart/form-data" };
+
+      formData.append("AT", await this.tokenService.getFastAT());
+      formData.append("olyId", this.editedItem.olyId);
+      formData.append("file", file);
+      formData.append("fileName", encodeURIComponent(file.name));
+
+      this.isUploading = true;
+
+      await this.axios
+        .post(this.systemENV.APISERVERURL + "/importSignupFile", formData, {
+          headers: header,
+        })
+        .then((response) => {
+          // console.log(response.data);
+          if (response.data.code === 200) {
+            this.uploadSuccessMsg = "上傳成功";
+          } else {
+            this.uploadErrorMsg = "上傳失敗";
+            this.editedItem.signupFile = [];
+          }
+        })
+        .catch((error) => {
+          this.uploadErrorMsg = "上傳失敗";
+          this.editedItem.signupFile = [];
+        });
+
+      this.isUploading = false;
     },
   },
 
