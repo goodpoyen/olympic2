@@ -2079,7 +2079,12 @@ export default {
                 this.changeDate(response.data.resultData.signupEnd);
               }
 
-              this.videoId = response.data.resultData.ytURL;
+              if (response.data.resultData.ytURL === "") {
+                this.videoId =
+                  "https://www.youtube.com/embed/oo5YfX-j_i4?si=DKZx6qqxXju2ClZR";
+              } else {
+                this.videoId = response.data.resultData.ytURL;
+              }
             }
           } else if (response.data.code === 201) {
             this.openStatus = false;

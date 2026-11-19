@@ -645,12 +645,8 @@
                     v-model="editedItem.ytURL"
                     label="教學影片youtube網址"
                     :counter="200"
-                    :rules="[
-                      (v) => !!v || '教學影片youtube網址不能為空',
-                      (v) => v.length <= 200 || '超過規定字數',
-                    ]"
+                    :rules="[(v) => v.length <= 200 || '超過規定字數']"
                     variant="underlined"
-                    required
                   ></v-text-field>
                   <v-text-field
                     v-if="system !== 'science'"
