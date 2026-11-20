@@ -72,6 +72,9 @@
                                 size="x-small"
                                 icon="mdi-filter"
                                 variant="text"
+                                :color="
+                                  column[column.filterName + '_C'] || 'grey'
+                                "
                                 v-bind="props"
                               ></v-btn>
                             </template>
@@ -79,6 +82,7 @@
                               :desserts="desserts"
                               :dessertsTemp="dessertsTemp"
                               :header="column"
+                              :headers="columns"
                               @updateTable="updateTable"
                             >
                             </table-filter>
