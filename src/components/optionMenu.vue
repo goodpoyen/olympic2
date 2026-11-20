@@ -1653,7 +1653,7 @@ export default {
         return this.uploadSuccessMsg;
       }
 
-      const file = this.editedItem.signupFile;
+      const file = this.editedItem.fileName;
 
       if (!file || (Array.isArray(file) && file.length === 0)) {
         return "";
@@ -2203,6 +2203,12 @@ export default {
         .then((response) => {
           // console.log(response.data);
           if (response.data.code === 200) {
+            const that = this;
+            response.data.resultData.forEach(function (data) {
+              data.fileName = data.signupFile;
+              data.signupFile = [];
+            });
+
             this.desserts = response.data.resultData;
             this.defaultRules = response.data.defaultRules;
           } else {
