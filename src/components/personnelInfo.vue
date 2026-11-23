@@ -63,7 +63,7 @@
       <div style="display: inline; margin: 52px">
         選拔名稱:
         <div class="single-line" style="display: inline; margin: 13px">
-          {{ signupName }}
+          {{ officeName }}
         </div>
       </div>
       <div style="display: inline">
@@ -154,6 +154,7 @@
                         size="x-small"
                         icon="mdi-filter"
                         variant="text"
+                        :color="column[column.filterName + '_C'] || 'grey'"
                         v-bind="props"
                       ></v-btn>
                     </template>
@@ -161,6 +162,7 @@
                       :desserts="desserts"
                       :dessertsTemp="dessertsTemp"
                       :header="column"
+                      :headers="columns"
                       @updateTable="updateTable"
                     >
                     </table-filter>
@@ -1226,7 +1228,7 @@ export default {
   }),
 
   props: {
-    signupName: "",
+    officeName: "",
     menuType: 0,
     examCodeExist: false,
     loadList: true,
@@ -1632,7 +1634,7 @@ export default {
       data.fileName =
         this.globalSystemValue.olympic +
         "_" +
-        this.signupName +
+        this.officeName +
         this.globalSystemTool.getNowDataTimeByString();
       data.olympic = this.globalSystemValue.olympic;
 

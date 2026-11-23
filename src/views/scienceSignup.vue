@@ -1306,7 +1306,7 @@ export default {
     selectedYear: "",
     selectedMonth: "",
     menu: false,
-    videoId: "https://www.youtube.com/embed/oo5YfX-j_i4?si=DKZx6qqxXju2ClZR",
+    videoId: "",
     teachVideoColor: "grey",
     teachBookColor: "white",
     OTPBtnlock: false,
@@ -2077,6 +2077,13 @@ export default {
                 this.openStatus = true;
                 this.olyId = response.data.resultData.olyId;
                 this.changeDate(response.data.resultData.signupEnd);
+              }
+
+              if (response.data.resultData.ytURL === "") {
+                this.videoId =
+                  "https://www.youtube.com/embed/oo5YfX-j_i4?si=DKZx6qqxXju2ClZR";
+              } else {
+                this.videoId = response.data.resultData.ytURL;
               }
             }
           } else if (response.data.code === 201) {

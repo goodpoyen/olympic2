@@ -107,7 +107,7 @@
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
-                      <span>{{ item.signupName }}</span>
+                      <span>{{ item.officeName }}</span>
                     </v-card-text>
                     <v-card-text
                       style="margin-top: -23px; font-size: 13px; color: #7a7d88"
@@ -145,7 +145,7 @@
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
-                      <span>{{ item.signupName }}</span>
+                      <span>{{ item.officeName }}</span>
                     </v-card-text>
                     <v-card-text
                       style="margin-top: -23px; font-size: 13px; color: #7a7d88"
@@ -194,7 +194,7 @@
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
-                      <span>{{ item.signupName }}</span>
+                      <span>{{ item.officeName }}</span>
                     </v-card-text>
                     <v-card-text
                       style="margin-top: -23px; font-size: 13px; color: #7a7d88"
@@ -233,7 +233,7 @@
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
-                      <span>{{ item.signupName }}</span>
+                      <span>{{ item.officeName }}</span>
                     </v-card-text>
                     <v-card-text
                       style="margin-top: -23px; font-size: 13px; color: #7a7d88"
@@ -283,7 +283,7 @@
                   </v-col>
                   <v-col cols="12" sm="10" md="10">
                     <v-card-text style="font-weight: bold; font-size: 18px">
-                      <span>{{ item.signupName }}</span>
+                      <span>{{ item.officeName }}</span>
                     </v-card-text>
                     <v-card-text
                       style="margin-top: -23px; font-size: 13px; color: #7a7d88"
@@ -626,8 +626,8 @@
                 <v-col cols="12" sm="6" md="12" style="margin-top: -31px">
                   <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
-                    v-model="editedItem.signupName"
-                    label="選拔名稱"
+                    v-model="editedItem.officeName"
+                    label="選拔正式名稱"
                     :counter="30"
                     :rules="[
                       (v) => !!v || '選拔名稱不能為空',
@@ -636,6 +636,74 @@
                     variant="underlined"
                     required
                   ></v-text-field>
+                  <v-text-field
+                    v-if="
+                      system === 'science' &&
+                      editedItem.type === 5 &&
+                      level === '1'
+                    "
+                    v-model="editedItem.ytURL"
+                    label="教學影片youtube網址"
+                    :counter="200"
+                    :rules="[(v) => v.length <= 200 || '超過規定字數']"
+                    variant="underlined"
+                  ></v-text-field>
+                  <v-text-field
+                    v-if="system !== 'science'"
+                    v-model="editedItem.signupName"
+                    label="信件報名主旨"
+                    :prefix="
+                      '[' +
+                      globalSystemValue.olympic +
+                      ']' +
+                      '奧林匹亞' +
+                      editedItem.year
+                    "
+                    persistent-placeholder
+                    variant="underlined"
+                    :rules="[
+                      (v) => !!v || '信件報名主旨不能為空',
+                      (v) => v.length <= 30 || '超過規定字數',
+                    ]"
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  v-if="
+                    system === 'science' &&
+                    editedItem.type === 5 &&
+                    level === '1'
+                  "
+                  cols="12"
+                  sm="6"
+                  md="12"
+                  style="margin-top: -31px"
+                >
+                  <v-file-input
+                    v-model="editedItem.signupFile"
+                    label="上傳教學檔案"
+                    variant="underlined"
+                    prepend-icon="mdi-paperclip"
+                    accept=".pdf"
+                    :rules="fileRules"
+                    :loading="isUploading"
+                    :disabled="isUploading"
+                    :messages="fileDisplayMessage"
+                    :error-messages="uploadErrorMsg"
+                    clearable
+                    @update:modelValue="handleFileChange"
+                  >
+                    <template v-slot:message="{ message }">
+                      <span
+                        :class="
+                          fileDisplayMessage
+                            ? 'text-success font-weight-medium'
+                            : ''
+                        "
+                      >
+                        {{ message }}
+                      </span>
+                    </template>
+                  </v-file-input>
                 </v-col>
                 <v-col v-if="editedItem.type == 7" cols="12" sm="6" md="6">
                   <span style="color: black; font-weight: bold">
@@ -832,7 +900,7 @@
                   cols="12"
                   sm="2"
                   md="6"
-                  style="margin-top: -31px"
+                  style="margin-top: -11px"
                 >
                   <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
@@ -853,7 +921,7 @@
                   cols="12"
                   sm="2"
                   md="6"
-                  style="margin-top: -31px"
+                  style="margin-top: -11px"
                 >
                   <v-text-field
                     :disabled="editedItem.type === 5 && level === '4'"
@@ -941,11 +1009,11 @@
                   </v-radio-group>
                 </v-col>
                 <v-col
-                  v-show="editedItem.queryScore === '1'"
                   cols="12"
                   sm="2"
                   md="6"
                   style="margin-top: -31px"
+                  v-show="editedItem.type === 1"
                 >
                   <v-text-field
                     v-model="editedItem.queryStart"
@@ -953,6 +1021,7 @@
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
+                    :disabled="editedItem.queryScore === '0'"
                     style="width: 250px"
                     @click="
                       dateTimeType = 'queryStart';
@@ -961,11 +1030,11 @@
                   ></v-text-field>
                 </v-col>
                 <v-col
-                  v-show="editedItem.queryScore === '1'"
                   cols="12"
                   sm="2"
                   md="6"
                   style="margin-top: -31px"
+                  v-show="editedItem.type === 1"
                 >
                   <v-text-field
                     v-model="editedItem.queryEnd"
@@ -973,6 +1042,7 @@
                     prepend-inner-icon="mdi-calendar-clock"
                     readonly
                     variant="outlined"
+                    :disabled="editedItem.queryScore === '0'"
                     style="width: 250px"
                     @click="
                       dateTimeType = 'queryEnd';
@@ -1431,6 +1501,9 @@ export default {
     headers: [],
     rulesHeaders: [],
     rulesList: [],
+    isUploading: false,
+    uploadSuccessMsg: "",
+    uploadErrorMsg: "",
     rulesColumn: [
       "類別",
       "中文姓名",
@@ -1477,11 +1550,14 @@ export default {
       queryEnd: "",
       price: "",
       web: "",
+      ytURL: "",
+      signupFile: [],
       partnerGender: "",
       partnerGroup: "",
       paymentType: "",
       type: "",
       codeName: "",
+      officeName: "",
       year: "",
       pathExam: "",
       pathExamScore: "",
@@ -1501,6 +1577,8 @@ export default {
       queryEnd: "",
       price: "",
       web: "",
+      ytURL: "",
+      signupFile: [],
       partnerGender: "",
       partnerGroup: "",
       paymentType: "",
@@ -1548,6 +1626,13 @@ export default {
     level: "",
     olympic: "",
     selectOlympic: "",
+    fileRules: [
+      (value) => {
+        if (!value || !value.length) return true;
+        if (value.size > 10 * 1024 * 1024) return "檔案大小不能超過 10MB";
+        return true;
+      },
+    ],
   }),
 
   computed: {
@@ -1561,6 +1646,29 @@ export default {
 
     id() {
       return this.$route.params.id;
+    },
+
+    fileDisplayMessage() {
+      if (this.uploadSuccessMsg) {
+        return this.uploadSuccessMsg;
+      }
+
+      const file = this.editedItem.fileName;
+
+      if (!file || (Array.isArray(file) && file.length === 0)) {
+        return "";
+      }
+
+      let fileName = "";
+      if (typeof file === "string") {
+        fileName = file;
+      } else if (Array.isArray(file)) {
+        fileName = file[0]?.name || file[0];
+      } else if (file instanceof File) {
+        fileName = file.name;
+      }
+
+      return fileName ? `已上傳檔案 ${fileName}` : "";
     },
   },
 
@@ -1583,6 +1691,7 @@ export default {
       this.dateVal = new Date(arr[0]);
       this.timeVal = arr[1];
     },
+
     setDateTime() {
       let dateStr = dayjs(this.dateVal).format("YYYY-MM-DD");
 
@@ -2094,6 +2203,12 @@ export default {
         .then((response) => {
           // console.log(response.data);
           if (response.data.code === 200) {
+            const that = this;
+            response.data.resultData.forEach(function (data) {
+              data.fileName = data.signupFile;
+              data.signupFile = [];
+            });
+
             this.desserts = response.data.resultData;
             this.defaultRules = response.data.defaultRules;
           } else {
@@ -2103,6 +2218,64 @@ export default {
         .catch(function (error) {
           // console.log(error);
         });
+    },
+
+    async handleFileChange(files) {
+      this.uploadSuccessMsg = "";
+      this.uploadErrorMsg = "";
+
+      if (!files || files.length === 0) {
+        return;
+      }
+
+      const file = files;
+
+      if (file.type !== "application/pdf") {
+        this.uploadErrorMsg = "上傳失敗：請選擇 PDF 檔案";
+        this.editedItem.signupFile = [];
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        this.uploadErrorMsg = "上傳失敗：檔案大小不能超過 10MB";
+        this.editedItem.signupFile = [];
+        return;
+      }
+
+      await this.uploadFile(file);
+    },
+
+    async uploadFile(file) {
+      const formData = new FormData();
+
+      const header = { "Content-type": "multipart/form-data" };
+
+      formData.append("AT", await this.tokenService.getFastAT());
+      formData.append("olyId", this.editedItem.olyId);
+      formData.append("file", file);
+      formData.append("fileName", encodeURIComponent(file.name));
+
+      this.isUploading = true;
+
+      await this.axios
+        .post(this.systemENV.APISERVERURL + "/importSignupFile", formData, {
+          headers: header,
+        })
+        .then((response) => {
+          // console.log(response.data);
+          if (response.data.code === 200) {
+            this.uploadSuccessMsg = "上傳成功";
+          } else {
+            this.uploadErrorMsg = "上傳失敗";
+            this.editedItem.signupFile = [];
+          }
+        })
+        .catch((error) => {
+          this.uploadErrorMsg = "上傳失敗";
+          this.editedItem.signupFile = [];
+        });
+
+      this.isUploading = false;
     },
   },
 

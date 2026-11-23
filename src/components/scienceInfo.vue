@@ -25,7 +25,7 @@
       <div style="display: inline; margin: 52px">
         甄選名稱:
         <div class="single-line" style="display: inline; margin: 13px">
-          {{ signupName }}
+          {{ officeName }}
         </div>
       </div>
       <div style="margin-top: 20px">
@@ -136,6 +136,7 @@
                         size="x-small"
                         icon="mdi-filter"
                         variant="text"
+                        :color="column[column.filterName + '_C'] || 'grey'"
                         v-bind="props"
                       ></v-btn>
                     </template>
@@ -143,6 +144,7 @@
                       :desserts="desserts"
                       :dessertsTemp="dessertsTemp"
                       :header="column"
+                      :headers="columns"
                       @updateTable="updateTable"
                     >
                     </table-filter>
@@ -2201,7 +2203,7 @@ export default {
     menuType: 0,
     modal: false,
     statusName: "",
-    signupName: "",
+    officeName: "",
     valid: true,
     levelStatus: true,
     dialog: false,
@@ -2741,14 +2743,14 @@ export default {
         data.fileName =
           this.globalSystemValue.olympic +
           "_" +
-          this.signupName +
+          this.officeName +
           this.globalSystemTool.getNowDataTimeByString();
       } else {
         data.fileName =
           this.globalSystemValue.olympic +
           "_對帳報表_" +
           "_" +
-          this.signupName +
+          this.officeName +
           this.globalSystemTool.getNowDataTimeByString();
       }
 
@@ -3385,7 +3387,7 @@ export default {
             this.headers = response.data.headers;
             this.desserts = response.data.resultData;
             this.dessertsTemp = response.data.resultData;
-            this.signupName = response.data.signupName;
+            this.officeName = response.data.officeName;
             this.menuType = response.data.menuType;
             this.examCodeExist = response.data.examCodeExist;
             this.actionTest = response.data.testTime;
