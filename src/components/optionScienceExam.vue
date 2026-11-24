@@ -61,6 +61,9 @@
               :loadList="loadList"
               :desserts="desserts"
               :dessertsTemp="dessertsTemp"
+              :headers="headers"
+              :scheduleType="scheduleType"
+              :itemKey="itemKey"
               :examSend="examSend"
               :scoreSend="scoreSend"
               :admissionCount="admissionCount"
@@ -104,6 +107,8 @@ export default {
     scoreSend: 0,
     tab: null,
     areaExist: false,
+    scheduleType: "",
+    itemKey: "",
   }),
 
   components: {
@@ -299,6 +304,10 @@ export default {
             this.desserts = response.data.resultData;
             this.dessertsTemp = response.data.resultData;
 
+            this.scheduleType = response.data.scheduleType;
+
+            this.getContestantsScheduleType();
+
             const that = this;
 
             this.desserts.forEach(function (data) {
@@ -336,6 +345,209 @@ export default {
         .catch(function (error) {
           // console.log(error);
         });
+    },
+
+    async getContestantsScheduleType() {
+      if (this.scheduleType === 2) {
+        this.itemKey = "stId";
+        this.headers = [
+          {
+            title: "選訓號碼",
+            value: "stId",
+            filterName: "stId",
+            type: "text",
+            stId_M: "",
+            stId_C: "",
+          },
+          {
+            title: "中文姓名",
+            value: "chineseName",
+            filterName: "chineseName",
+            type: "text",
+            chineseName_M: "",
+            chineseName_C: "",
+          },
+          {
+            title: "成績",
+            value: "score",
+            filterName: "score",
+            type: "text",
+            score_M: "",
+            score_C: "",
+          },
+          {
+            title: "PR值",
+            value: "pr",
+            filterName: "pr",
+            type: "text",
+            pr_M: "",
+            pr_C: "",
+          },
+          { title: "功能", value: "actions", width: "15%" },
+        ];
+      } else if (this.scheduleType === 5 || this.scheduleType === 6) {
+        this.itemKey = "stId";
+        this.headers = [
+          {
+            title: "學生代碼",
+            value: "examOnly",
+            filterName: "examOnly",
+            type: "text",
+            examOnly_M: "",
+            examOnly_C: "",
+            width: "7%",
+          },
+          {
+            title: "甄選號碼",
+            value: "examCode",
+            filterName: "examCode",
+            type: "text",
+            examCode_M: "",
+            examCode_C: "",
+            width: "8%",
+          },
+          {
+            title: "姓名",
+            value: "chineseName",
+            filterName: "chineseName",
+            type: "text",
+            chineseName_M: "",
+            chineseName_C: "",
+            width: "8%",
+          },
+          {
+            title: "畢業學校",
+            value: "schoolNameAll",
+            filterName: "schoolNameAll",
+            type: "text",
+            chineseName_M: "",
+            chineseName_C: "",
+            width: "14%",
+          },
+          {
+            title: "考區名稱",
+            value: "areaName",
+            filterName: "areaName",
+            type: "text",
+            areaName_M: "",
+            areaName_C: "",
+          },
+          {
+            title: "考場",
+            value: "roomName",
+            filterName: "roomName",
+            type: "text",
+            roomName_M: "",
+            roomName_C: "",
+          },
+          {
+            title: "座號",
+            value: "seatNumber",
+            filterName: "seatNumber",
+            type: "text",
+            seatNumber_M: "",
+            seatNumber_C: "",
+            width: "7%",
+          },
+        ];
+        if (this.scheduleType === 5) {
+          let temp = {
+            title: "晉級結果",
+            value: "pass",
+            filterName: "pass",
+            type: "text",
+            pass_M: "",
+            pass_C: "",
+            width: "8%",
+          };
+          this.headers.push(temp);
+          this.headers.push({ title: "功能", value: "actions", width: "17%" });
+        } else {
+          let temp = {
+            title: "甄選結果",
+            value: "pass",
+            filterName: "pass",
+            type: "text",
+            pass_M: "",
+            pass_C: "",
+            width: "8%",
+          };
+          this.headers.push(temp);
+          this.headers.push({ title: "功能", value: "actions", width: "17%" });
+        }
+      } else {
+        this.itemKey = "examCode";
+        this.headers = [
+          {
+            title: "應試號碼",
+            value: "examCode",
+            filterName: "examCode",
+            type: "text",
+            examCode_M: "",
+            examCode_C: "",
+          },
+          {
+            title: "中文姓名",
+            value: "chineseName",
+            filterName: "chineseName",
+            type: "text",
+            chineseName_M: "",
+            chineseName_C: "",
+            width: "10%",
+          },
+          {
+            title: "學校",
+            value: "schoolNameAll",
+            filterName: "schoolNameAll",
+            type: "text",
+            schoolNameAll_M: "",
+            schoolNameAll_C: "",
+            width: "15%",
+          },
+          {
+            title: "考區名稱",
+            value: "areaName",
+            filterName: "areaName",
+            type: "text",
+            areaName_M: "",
+            areaName_C: "",
+          },
+          {
+            title: "考場",
+            value: "roomName",
+            filterName: "roomName",
+            type: "text",
+            roomName_M: "",
+            roomName_C: "",
+          },
+          {
+            title: "座號",
+            value: "seatNumber",
+            filterName: "seatNumber",
+            type: "text",
+            seatNumber_M: "",
+            seatNumber_C: "",
+            width: "7%",
+          },
+          {
+            title: "成績",
+            value: "score",
+            filterName: "score",
+            type: "text",
+            score_M: "",
+            score_C: "",
+          },
+          {
+            title: "PR值",
+            value: "pr",
+            filterName: "pr",
+            type: "text",
+            pr_M: "",
+            pr_C: "",
+          },
+          { title: "功能", value: "actions", width: "15%" },
+        ];
+      }
     },
 
     updateDesserts(value) {
