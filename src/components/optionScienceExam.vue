@@ -39,6 +39,7 @@
               :loadList="loadList"
               :desserts="desserts"
               :dessertsTemp="dessertsTemp"
+              :headers="headers"
               @updateFilter="updateFilter"
               @getExamAreaInfo="getExamAreaInfo"
               @updateArea="updateArea"
@@ -48,6 +49,7 @@
             <class-room
               :desserts="desserts"
               :dessertsTemp="dessertsTemp"
+              :headers="headers"
               :loadList="loadList"
               @updateFilter="updateFilter"
               @getClassRoomInfo="getClassRoomInfo"
@@ -142,6 +144,51 @@ export default {
             });
             this.desserts = response.data.resultData;
             this.dessertsTemp = response.data.resultData;
+
+            this.headers = [
+              {
+                title: "考區代碼",
+                value: "codeName",
+                filterName: "codeName",
+                type: "text",
+                codeName_M: "",
+                codeName_C: "",
+              },
+              {
+                title: "考區名稱",
+                value: "areaName",
+                filterName: "areaName",
+                type: "text",
+                areaName_M: "",
+                areaName_C: "",
+              },
+              {
+                title: "地址",
+                value: "address",
+                filterName: "address",
+                type: "text",
+                address_M: "",
+                address_C: "",
+              },
+              {
+                title: "總座位數",
+                value: "defaultNumber",
+                filterName: "defaultNumber",
+                type: "text",
+                defaultNumber_M: "",
+                defaultNumber_C: "",
+              },
+              {
+                title: "報名人數",
+                value: "totalSignup",
+                filterName: "totalSignup",
+                type: "text",
+                totalSignup_M: "",
+                totalSignup_C: "",
+              },
+              { title: "功能", value: "actions" },
+            ];
+
             this.loadList = false;
           } else {
             this.globalSystemTool.removeLocalStorage();
@@ -172,6 +219,51 @@ export default {
           if (response.data.code === 200) {
             this.desserts = response.data.resultData;
             this.dessertsTemp = response.data.resultData;
+
+            this.headers = [
+              {
+                title: "考場代碼",
+                value: "codeName",
+                filterName: "codeName",
+                type: "text",
+                codeName_M: "",
+                codeName_C: "",
+              },
+              {
+                title: "考區名稱",
+                value: "areaName",
+                filterName: "areaName",
+                type: "text",
+                areaName_M: "",
+                areaName_C: "",
+              },
+              {
+                title: "考場名稱",
+                value: "roomName",
+                filterName: "roomName",
+                type: "text",
+                roomName_M: "",
+                roomName_C: "",
+              },
+              {
+                title: "考生總座數",
+                value: "defaultNumber",
+                filterName: "defaultNumber",
+                type: "text",
+                defaultNumber_M: "",
+                defaultNumber_C: "",
+              },
+              {
+                title: "已安排座位數量",
+                value: "total",
+                filterName: "total",
+                type: "text",
+                total_M: "",
+                total_C: "",
+              },
+              { title: "功能", value: "actions" },
+            ];
+
             this.loadList = false;
           } else {
             this.globalSystemTool.removeLocalStorage();
