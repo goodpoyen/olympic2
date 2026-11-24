@@ -2,7 +2,10 @@
   <div>
     <v-card>
       <v-tabs v-model="tab" color="blue accent-4" left>
-        <v-tab :value="1" style="color: black; font-weight: bolder"
+        <v-tab
+          :value="1"
+          style="color: black; font-weight: bolder"
+          @click="$refs.getScienceInfoRef?.[0]?.getScienceInfo()"
           >人員資料</v-tab
         >
         <v-tab
@@ -32,13 +35,17 @@
       <v-tabs-window v-model="tab">
         <v-tabs-window-item v-for="n in 4" :key="n" :value="n">
           <v-container v-if="n == 1" fluid>
-            <science-info @updateArea="updateArea"></science-info>
+            <science-info
+              ref="getScienceInfoRef"
+              @updateArea="updateArea"
+            ></science-info>
           </v-container>
           <v-container v-if="n == 2" fluid>
             <exam-area
               :loadList="loadList"
               :desserts="desserts"
               :dessertsTemp="dessertsTemp"
+              :headers="headers"
               @updateFilter="updateFilter"
               @getExamAreaInfo="getExamAreaInfo"
               @updateArea="updateArea"
@@ -48,6 +55,7 @@
             <class-room
               :desserts="desserts"
               :dessertsTemp="dessertsTemp"
+              :headers="headers"
               :loadList="loadList"
               @updateFilter="updateFilter"
               @getClassRoomInfo="getClassRoomInfo"
@@ -59,6 +67,9 @@
               :loadList="loadList"
               :desserts="desserts"
               :dessertsTemp="dessertsTemp"
+              :headers="headers"
+              :scheduleType="scheduleType"
+              :itemKey="itemKey"
               :examSend="examSend"
               :scoreSend="scoreSend"
               :admissionCount="admissionCount"
@@ -102,6 +113,8 @@ export default {
     scoreSend: 0,
     tab: null,
     areaExist: false,
+    scheduleType: "",
+    itemKey: "",
   }),
 
   components: {
@@ -142,6 +155,51 @@ export default {
             });
             this.desserts = response.data.resultData;
             this.dessertsTemp = response.data.resultData;
+
+            this.headers = [
+              {
+                title: "考區代碼",
+                value: "codeName",
+                filterName: "codeName",
+                type: "text",
+                codeName_M: "",
+                codeName_C: "",
+              },
+              {
+                title: "考區名稱",
+                value: "areaName",
+                filterName: "areaName",
+                type: "text",
+                areaName_M: "",
+                areaName_C: "",
+              },
+              {
+                title: "地址",
+                value: "address",
+                filterName: "address",
+                type: "text",
+                address_M: "",
+                address_C: "",
+              },
+              {
+                title: "總座位數",
+                value: "defaultNumber",
+                filterName: "defaultNumber",
+                type: "text",
+                defaultNumber_M: "",
+                defaultNumber_C: "",
+              },
+              {
+                title: "報名人數",
+                value: "totalSignup",
+                filterName: "totalSignup",
+                type: "text",
+                totalSignup_M: "",
+                totalSignup_C: "",
+              },
+              { title: "功能", value: "actions" },
+            ];
+
             this.loadList = false;
           } else {
             this.globalSystemTool.removeLocalStorage();
@@ -172,6 +230,51 @@ export default {
           if (response.data.code === 200) {
             this.desserts = response.data.resultData;
             this.dessertsTemp = response.data.resultData;
+
+            this.headers = [
+              {
+                title: "考場代碼",
+                value: "codeName",
+                filterName: "codeName",
+                type: "text",
+                codeName_M: "",
+                codeName_C: "",
+              },
+              {
+                title: "考區名稱",
+                value: "areaName",
+                filterName: "areaName",
+                type: "text",
+                areaName_M: "",
+                areaName_C: "",
+              },
+              {
+                title: "考場名稱",
+                value: "roomName",
+                filterName: "roomName",
+                type: "text",
+                roomName_M: "",
+                roomName_C: "",
+              },
+              {
+                title: "考生總座數",
+                value: "defaultNumber",
+                filterName: "defaultNumber",
+                type: "text",
+                defaultNumber_M: "",
+                defaultNumber_C: "",
+              },
+              {
+                title: "已安排座位數量",
+                value: "total",
+                filterName: "total",
+                type: "text",
+                total_M: "",
+                total_C: "",
+              },
+              { title: "功能", value: "actions" },
+            ];
+
             this.loadList = false;
           } else {
             this.globalSystemTool.removeLocalStorage();
@@ -206,6 +309,10 @@ export default {
           if (response.data.code === 200) {
             this.desserts = response.data.resultData;
             this.dessertsTemp = response.data.resultData;
+
+            this.scheduleType = response.data.scheduleType;
+
+            this.getContestantsScheduleType();
 
             const that = this;
 
@@ -244,6 +351,209 @@ export default {
         .catch(function (error) {
           // console.log(error);
         });
+    },
+
+    async getContestantsScheduleType() {
+      if (this.scheduleType === 2) {
+        this.itemKey = "stId";
+        this.headers = [
+          {
+            title: "選訓號碼",
+            value: "stId",
+            filterName: "stId",
+            type: "text",
+            stId_M: "",
+            stId_C: "",
+          },
+          {
+            title: "中文姓名",
+            value: "chineseName",
+            filterName: "chineseName",
+            type: "text",
+            chineseName_M: "",
+            chineseName_C: "",
+          },
+          {
+            title: "成績",
+            value: "score",
+            filterName: "score",
+            type: "text",
+            score_M: "",
+            score_C: "",
+          },
+          {
+            title: "PR值",
+            value: "pr",
+            filterName: "pr",
+            type: "text",
+            pr_M: "",
+            pr_C: "",
+          },
+          { title: "功能", value: "actions", width: "15%" },
+        ];
+      } else if (this.scheduleType === 5 || this.scheduleType === 6) {
+        this.itemKey = "stId";
+        this.headers = [
+          {
+            title: "學生代碼",
+            value: "examOnly",
+            filterName: "examOnly",
+            type: "text",
+            examOnly_M: "",
+            examOnly_C: "",
+            width: "7%",
+          },
+          {
+            title: "甄選號碼",
+            value: "examCode",
+            filterName: "examCode",
+            type: "text",
+            examCode_M: "",
+            examCode_C: "",
+            width: "8%",
+          },
+          {
+            title: "姓名",
+            value: "chineseName",
+            filterName: "chineseName",
+            type: "text",
+            chineseName_M: "",
+            chineseName_C: "",
+            width: "8%",
+          },
+          {
+            title: "畢業學校",
+            value: "schoolNameAll",
+            filterName: "schoolNameAll",
+            type: "text",
+            chineseName_M: "",
+            chineseName_C: "",
+            width: "14%",
+          },
+          {
+            title: "考區名稱",
+            value: "areaName",
+            filterName: "areaName",
+            type: "text",
+            areaName_M: "",
+            areaName_C: "",
+          },
+          {
+            title: "考場",
+            value: "roomName",
+            filterName: "roomName",
+            type: "text",
+            roomName_M: "",
+            roomName_C: "",
+          },
+          {
+            title: "座號",
+            value: "seatNumber",
+            filterName: "seatNumber",
+            type: "text",
+            seatNumber_M: "",
+            seatNumber_C: "",
+            width: "7%",
+          },
+        ];
+        if (this.scheduleType === 5) {
+          let temp = {
+            title: "晉級結果",
+            value: "pass",
+            filterName: "pass",
+            type: "text",
+            pass_M: "",
+            pass_C: "",
+            width: "8%",
+          };
+          this.headers.push(temp);
+          this.headers.push({ title: "功能", value: "actions", width: "17%" });
+        } else {
+          let temp = {
+            title: "甄選結果",
+            value: "pass",
+            filterName: "pass",
+            type: "text",
+            pass_M: "",
+            pass_C: "",
+            width: "8%",
+          };
+          this.headers.push(temp);
+          this.headers.push({ title: "功能", value: "actions", width: "17%" });
+        }
+      } else {
+        this.itemKey = "examCode";
+        this.headers = [
+          {
+            title: "應試號碼",
+            value: "examCode",
+            filterName: "examCode",
+            type: "text",
+            examCode_M: "",
+            examCode_C: "",
+          },
+          {
+            title: "中文姓名",
+            value: "chineseName",
+            filterName: "chineseName",
+            type: "text",
+            chineseName_M: "",
+            chineseName_C: "",
+            width: "10%",
+          },
+          {
+            title: "學校",
+            value: "schoolNameAll",
+            filterName: "schoolNameAll",
+            type: "text",
+            schoolNameAll_M: "",
+            schoolNameAll_C: "",
+            width: "15%",
+          },
+          {
+            title: "考區名稱",
+            value: "areaName",
+            filterName: "areaName",
+            type: "text",
+            areaName_M: "",
+            areaName_C: "",
+          },
+          {
+            title: "考場",
+            value: "roomName",
+            filterName: "roomName",
+            type: "text",
+            roomName_M: "",
+            roomName_C: "",
+          },
+          {
+            title: "座號",
+            value: "seatNumber",
+            filterName: "seatNumber",
+            type: "text",
+            seatNumber_M: "",
+            seatNumber_C: "",
+            width: "7%",
+          },
+          {
+            title: "成績",
+            value: "score",
+            filterName: "score",
+            type: "text",
+            score_M: "",
+            score_C: "",
+          },
+          {
+            title: "PR值",
+            value: "pr",
+            filterName: "pr",
+            type: "text",
+            pr_M: "",
+            pr_C: "",
+          },
+          { title: "功能", value: "actions", width: "15%" },
+        ];
+      }
     },
 
     updateDesserts(value) {
