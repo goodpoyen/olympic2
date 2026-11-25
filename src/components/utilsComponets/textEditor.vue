@@ -1,51 +1,10 @@
 <template>
-  <v-card
-    variant="outlined"
-    class="pa-0 editor-container mx-auto"
-    style="width: 90%; margin-top: 30px"
-  >
-    <div
-      class="custom-injected-toolbar d-flex align-center pa-2 border-b bg-grey-lighten-5"
-    >
-      <v-btn
-        v-if="enableReviewFile"
-        color="info"
-        size="default"
-        variant="flat"
-        prepend-icon="mdi-eye"
-        class="custom-toolbar-btn px-4 font-weight-bold"
-      >
-        預覽檔案
-      </v-btn>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        color="blue-grey-darken-1"
-        size="default"
-        variant="flat"
-        prepend-icon="mdi-undo"
-        class="custom-toolbar-btn px-4 font-weight-bold mr-2"
-      >
-        還原
-      </v-btn>
-
-      <v-btn
-        color="success"
-        size="default"
-        variant="flat"
-        prepend-icon="mdi-content-save"
-        class="custom-toolbar-btn"
-        @click="saveContent"
-      >
-        儲存
-      </v-btn>
-    </div>
-
+  <v-card variant="outlined" class="pa-0 editor-container w-100">
     <vuetify-tiptap
       ref="myEditor"
-      v-model="content"
+      v-model="internalContent"
       :extensions="customExtensions"
+      hide-bottom
       class="custom-tiptap-editor"
     >
     </vuetify-tiptap>
@@ -75,7 +34,6 @@ import {
   VListItemTitle,
 } from "vuetify/components";
 
-// ✨ 自訂變數節點 (Node) 保持外置（因為不依賴 prop，只負責 HTML 解析與渲染規則）
 const VariableChip = Node.create({
   name: "variableChip",
   group: "inline",
@@ -123,6 +81,10 @@ export default {
   name: "VuetifyProEditor",
   components: { VuetifyTiptap },
   props: {
+    modelValue: {
+      type: String,
+      default: "",
+    },
     enableVariableFeatures: { type: Boolean, default: false },
     variables: {
       type: Array,
@@ -131,16 +93,20 @@ export default {
     enableReviewFile: { type: Boolean, default: false },
   },
 
-  data() {
-    return {
-      content: "",
-    };
-  },
+  emits: ["update:modelValue", "saveEditorContent"],
 
   computed: {
-    // ✨ 關鍵修改：將 Toolbar 擴充套件移入 computed，使其能動態讀取 this.variables
+    internalContent: {
+      get() {
+        return this.modelValue;
+      },
+      set(val) {
+        this.$emit("update:modelValue", val);
+      },
+    },
+
     variableToolbarExtension() {
-      const currentVariables = this.variables; // 閉包引用最新的 prop 變數
+      const currentVariables = this.variables;
 
       return Extension.create({
         name: "variableToolbarExtension",
@@ -221,11 +187,11 @@ export default {
       });
     },
 
-    // ✨ 動態加載 Extensions
     customExtensions() {
       const extensions = [
         BaseKit.configure({
           placeholder: { placeholder: "請輸入內容..." },
+          characterCount: false,
           paragraph: {
             HTMLAttributes: {
               style: "font-size: 16px;",
@@ -247,7 +213,6 @@ export default {
 
       if (this.enableVariableFeatures) {
         extensions.push(VariableChip);
-        // 💡 這裡改為推入由 computed 動態產生的擴充套件
         extensions.push(this.variableToolbarExtension);
       }
 
@@ -255,15 +220,24 @@ export default {
     },
   },
 
-  created() {
-    this.convertIdToVariableChip();
+  watch: {
+    modelValue: {
+      immediate: true,
+      handler(newVal) {
+        if (
+          newVal &&
+          this.enableVariableFeatures &&
+          this.variables.length > 0
+        ) {
+          this.convertIdToVariableChip(newVal);
+        }
+      },
+    },
   },
 
   methods: {
-    convertIdToVariableChip() {
-      if (!this.content) return;
-
-      let updatedContent = this.content;
+    convertIdToVariableChip(rawHtml) {
+      let updatedContent = rawHtml;
 
       this.variables.forEach((variable) => {
         const regex = new RegExp(`\\b${variable.id}\\b`, "g");
@@ -273,11 +247,13 @@ export default {
         });
       });
 
-      this.content = updatedContent;
+      if (updatedContent !== rawHtml) {
+        this.$emit("update:modelValue", updatedContent);
+      }
     },
 
     saveContent() {
-      const rawHtml = this.content;
+      const rawHtml = this.internalContent;
 
       const convertedHtml = rawHtml.replace(
         /<custom-variable-tag[^>]*data-my-custom-id="([^"]+)"[^>]*>[\s\S]*?<\/custom-variable-tag>/g,

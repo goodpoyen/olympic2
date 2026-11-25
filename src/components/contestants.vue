@@ -1860,7 +1860,6 @@ export default {
             this.mailTypeHeader[1].show = false;
             this.mailTypeHeader[2].testMail = true;
           } else {
-            console.log(this.confirmScoreTest);
             if (this.confirmScoreTest === "") {
               this.confirmTestmailStatus = false;
             } else {

@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card v-show="mailTypePup">
     <v-card-title dark style="background-color: #0046fe !important">
       <v-icon large style="font-size: 24px; color: white; margin-top: -3px">
         mdi-email-arrow-right-outline
@@ -202,10 +202,17 @@
       </v-progress-circular>
     </v-overlay>
   </v-card>
+  <email-stepper
+    v-show="stepperPup"
+    @closeStepper="closeStepper"
+    @getEmailContent="getEmailContent"
+  ></email-stepper>
 </template>
 <style></style>
 
 <script>
+import emailStepper from "./emailStepper.vue";
+
 export default {
   data: () => ({
     loadShow: false,
@@ -220,6 +227,9 @@ export default {
     bntLoad: false,
     sendTime: 3,
     lock: false,
+    stepperPup: false,
+    mailTypePup: true,
+    emailPayload: { subject: "", content: "" },
   }),
 
   props: {
@@ -242,6 +252,8 @@ export default {
     sendType: "",
   },
 
+  components: { emailStepper },
+
   watch: {},
 
   beforeDestroy() {
@@ -257,7 +269,13 @@ export default {
       } else if (this.mailType === "exam") {
         await this.sendAllMail("exam");
       } else if (this.mailType === "score") {
-        await this.sendAllMail("score");
+        if (this.globalSystemValue.system === "olympic") {
+          this.stepperPup = true;
+          this.mailTypePup = false;
+        } else {
+          await this.sendAllMail("score");
+        }
+        // await this.sendAllMail("score");
       } else if (this.mailType === "testScore") {
         this.$emit("sendTestMail", "");
       }
@@ -343,7 +361,14 @@ export default {
       data.sendMailSelected = this.mailSelect;
       data.olympic = this.globalSystemValue.olympic;
       data.scheduleType = this.scheduleType;
-      data.subject = this.scoreSubject;
+
+      if (this.globalSystemValue.system === "science") {
+        data.subject = this.scoreSubject;
+      } else {
+        data.subject = this.emailPayload.subject;
+      }
+
+      data.emailContact = this.emailPayload.content;
 
       const that = this;
       this.selected.forEach((exam) => {
@@ -409,6 +434,11 @@ export default {
 
     updateReview() {
       this.$emit("updateReview", false);
+    },
+
+    getEmailContent(val) {
+      this.emailPayload = val;
+      this.sendAllMail(this.mailType);
     },
 
     chagneSendTypeContent(title, text, type) {
