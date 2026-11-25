@@ -1,5 +1,10 @@
 <template>
-  <v-card>
+  <v-card
+    v-show="
+      (sendMailtype !== 'score' && sendMailtype !== 'multiScore') ||
+      globalSystemValue.system === 'science'
+    "
+  >
     <v-card-title
       v-if="pupTitleShow === '1'"
       style="background-color: #2d5bff; height: 48px"
@@ -64,12 +69,22 @@
       </v-progress-circular>
     </v-overlay>
   </v-card>
+  <email-stepper
+    v-show="
+      (sendMailtype === 'score' || sendMailtype === 'multiScore') &&
+      globalSystemValue.system === 'olympic'
+    "
+    @getEmailContent="getEmailContent"
+  ></email-stepper>
 </template>
 <script>
+import emailStepper from "./emailStepper.vue";
+
 export default {
   data: () => ({
     sendShow: false,
     scoreSubject: "",
+    emailPayload: { subject: "", content: "" },
   }),
 
   props: {
@@ -93,6 +108,8 @@ export default {
       default: () => [],
     },
   },
+
+  components: { emailStepper },
 
   watch: {},
 
@@ -155,7 +172,14 @@ export default {
         data.stIdList.push(this.tempItem.stId);
         data.olympic = this.globalSystemValue.olympic;
         data.scheduleType = this.scheduleType;
-        data.subject = this.scoreSubject;
+
+        if (this.globalSystemValue.system === "science") {
+          data.subject = this.scoreSubject;
+        } else {
+          data.subject = this.emailPayload.subject;
+        }
+
+        data.emailContact = this.emailPayload.content;
 
         await this.axios.post(
           this.systemENV.APISERVERURL + "/sendScroeMail",
@@ -225,7 +249,14 @@ export default {
       data.olyId = this.id;
       data.scheduleType = this.scheduleType;
       data.stIdList = [];
-      data.subject = this.scoreSubject;
+
+      if (this.globalSystemValue.system === "science") {
+        data.subject = this.scoreSubject;
+      } else {
+        data.subject = this.emailPayload.subject;
+      }
+
+      data.emailContact = this.emailPayload.content;
 
       this.selected.forEach((item) => {
         if (this.scheduleType === 1) {
@@ -248,6 +279,17 @@ export default {
 
     setDesserts() {
       this.$emit("setDesserts", this.tempItem);
+    },
+
+    getEmailContent(val) {
+      this.emailPayload = val;
+
+      if (this.sendMailtype === "score") {
+        this.sendScroeMail();
+      } else {
+        this.sendMultiScroeMail();
+      }
+      // this.sendAllMail(this.mailType);
     },
 
     chagneSendMailContent(title, text, type) {

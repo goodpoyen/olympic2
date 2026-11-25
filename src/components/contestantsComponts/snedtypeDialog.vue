@@ -204,7 +204,6 @@
   </v-card>
   <email-stepper
     v-show="stepperPup"
-    @closeStepper="closeStepper"
     @getEmailContent="getEmailContent"
   ></email-stepper>
 </template>
