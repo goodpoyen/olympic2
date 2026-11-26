@@ -40,6 +40,7 @@
             font-weight: bold;
             color: black;
           "
+          @update:modelValue="mailSelect = mailType === 'exam' ? 'student' : ''"
         ></v-checkbox>
         <div v-if="header.targetGroup">
           <v-radio-group
@@ -69,6 +70,17 @@
             mdi-check-circle
           </v-icon>
           已完成抽測確認
+        </div>
+        <div v-if="header.targetGroup2 && header.testMailConfirm">
+          <v-radio-group
+            v-if="mailType === 'score'"
+            v-model="mailSelect"
+            style="margin-top: 22px; margin-left: 55px; margin-bottom: -16px"
+            row
+          >
+            <v-radio label="成績單 (成績複查使用)" value="query"></v-radio>
+            <v-radio label="參賽證明 (最終結果使用)" value="final"></v-radio>
+          </v-radio-group>
         </div>
         <div v-if="header.testMail">
           <div style="font-size: 17px">
@@ -171,7 +183,7 @@
         取消
       </v-btn>
       <v-btn
-        :disabled="mailType === '' || mailType === null"
+        :disabled="mailSelect === '' || mailSelect === null"
         color="darken-1"
         text
         style="color: #2d5bff; font-weight: bold; font-size: 17px"
@@ -255,7 +267,6 @@ export default {
         } else {
           await this.sendAllMail("score");
         }
-        // await this.sendAllMail("score");
       }
 
       // else if (this.mailType === "testScore") {
