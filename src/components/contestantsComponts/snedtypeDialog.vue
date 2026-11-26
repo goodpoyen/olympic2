@@ -205,10 +205,8 @@ export default {
     testMail: "",
     mailType: "",
     mailSelect: "student",
-    snedmailWordingBTN: "寄送抽測信",
     sendResult: false,
     bntLoad: false,
-    sendTime: 3,
     lock: false,
     stepperPup: false,
     mailTypePup: true,
@@ -380,19 +378,6 @@ export default {
       this.axios.post(this.systemENV.APISERVERURL + "/sendAllMail", data);
     },
 
-    sendTimedown() {
-      this.lock = true;
-      this.sendTime--;
-
-      if (this.sendTime === 0) {
-        this.sendTime = 61;
-        this.lock = false;
-        this.bntLoad = false;
-        this.sendResult = false;
-        this.snedmailWordingBTN = "再次抽測";
-      }
-    },
-
     closeDialog() {
       this.$emit("closeSendTypepup", false);
       this.testMailOpen = false;
@@ -400,14 +385,8 @@ export default {
 
       this.testMailCheck = true;
       this.lock = false;
-      this.sendTime = 3;
       this.bntLoad = false;
       this.sendResult = false;
-
-      if (!this.confirmTestmailStatus) {
-        // this.confirmTestmailStatus = false;
-        this.snedmailWordingBTN = "寄送抽測信";
-      }
     },
 
     updateReview() {

@@ -18,26 +18,11 @@
         variant="underlined"
         label="成績證明（抽測確認）將寄送至："
       ></v-text-field>
-      <div style="margin-left: 295px; margin-top: -59px">
-        <v-btn
-          v-if="!lock"
-          elevation="1"
-          small
-          color="#114acc"
-          dark
-          :loading="bntLoad"
-          @click="
-            bntLoad = true;
-            sendTimeDownStart();
-            sendTestMail();
-            testMail !== '' ? (sendResult = true) : (sendResult = false);
-          "
-        >
-          <div>{{ snedmailWordingBTN }}</div>
-        </v-btn>
-        <v-btn v-if="lock" elevation="1" color="#114acc" small block>
-          <div>{{ sendTime }}秒 再次抽測</div>
-        </v-btn>
+      <div style="margin-left: -16px">
+        <email-stepper
+          :stepperHeight="stepperHeight"
+          @getEmailContent="getEmailContent"
+        ></email-stepper>
       </div>
       <div
         v-show="sendResult"
@@ -88,23 +73,22 @@
 </template>
 <style></style>
 <script>
+import emailStepper from "./emailStepper.vue";
+
 export default {
   data: () => ({
     bntLoad: false,
     loadShow: false,
     testMail: "",
     testMailCheck: true,
-    snedmailWordingBTN: "寄送抽測信",
     sendResult: false,
-    sendTime: 3,
     lock: false,
+    stepperHeight: "100%",
   }),
 
   props: { confirmTestmailStatus: false },
 
-  beforeDestroy() {
-    clearInterval(this.reciprocal);
-  },
+  components: { emailStepper },
 
   watch: {},
 
@@ -113,54 +97,34 @@ export default {
       this.testMail = "";
       this.testMailCheck = true;
       this.lock = false;
-      this.sendTime = 3;
       this.bntLoad = false;
       this.sendResult = false;
 
       if (!this.confirmTestmailStatus) {
         this.$emit("changConfirmTestmailStatus", false);
       }
-
-      clearInterval(this.reciprocal);
       this.$emit("closeSetMailpup", false);
+    },
+
+    getEmailContent(val) {
+      this.emailPayload = val;
+
+      if (this.testMail !== "") {
+        this.testMail !== ""
+          ? (this.sendResult = true)
+          : (this.sendResult = false);
+
+        this.emailPayload.testMail = this.testMail;
+        this.$emit("sendTestMail", this.emailPayload);
+        this.testMailCheck = false;
+      }
     },
 
     confirmTestMail() {
       this.testMail = "";
       this.$emit("confirmTestMail", "setmail");
     },
-
-    sendTestMail() {
-      if (this.testMail !== "") {
-        this.$emit("sendTestMail", this.testMail);
-        this.testMailCheck = false;
-      }
-    },
-
-    sendTimeDownStart() {
-      this.reciprocal = setInterval(this.sendTimedown, 1000);
-    },
-
-    sendTimedown() {
-      this.lock = true;
-      this.sendTime--;
-
-      if (this.sendTime === 0) {
-        this.sendTime = 61;
-        this.lock = false;
-        this.bntLoad = false;
-        this.sendResult = false;
-        this.snedmailWordingBTN = "再次抽測";
-        clearInterval(this.reciprocal);
-      }
-    },
   },
-  async mounted() {
-    clearInterval(this.reciprocal);
-
-    if (this.confirmTestmailStatus) {
-      this.snedmailWordingBTN = "再次抽測";
-    }
-  },
+  async mounted() {},
 };
 </script>
