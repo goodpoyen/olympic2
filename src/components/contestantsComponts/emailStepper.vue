@@ -1,6 +1,6 @@
 <template>
   <v-container class="py-4">
-    <v-card class="d-flex flex-column" style="max-height: 85vh">
+    <v-card class="d-flex flex-column" :style="{ maxHeight: stepperHeight }">
       <v-card-title
         class="d-flex align-center bg-primary text-white py-3 flex-shrink-0"
       >
@@ -153,6 +153,18 @@
             確認寄出
           </v-btn>
         </template>
+
+        <!-- 寄出後顯示關閉按鈕 -->
+        <template v-else>
+          <v-btn
+            color="primary"
+            variant="flat"
+            prepend-icon="mdi-close"
+            @click="handleClose"
+          >
+            關閉
+          </v-btn>
+        </template>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -166,7 +178,8 @@ export default {
   components: {
     VuetifyProEditor,
   },
-  emits: ["getEmailContent"],
+
+  emits: ["getEmailContent", "close"],
   data() {
     return {
       step: 1,
@@ -182,6 +195,9 @@ export default {
       contentRules: [(v) => !this.isContentEmpty(v) || "請輸入信件內容"],
       assistantData: "",
     };
+  },
+  props: {
+    stepperHeight: "",
   },
   computed: {
     isNextDisabled() {
@@ -218,7 +234,6 @@ export default {
             this.formData.subject,
           content: this.formData.content,
         };
-
         this.$emit("getEmailContent", emailPayload);
         this.isSubmitted = true;
       } catch (error) {
@@ -228,15 +243,21 @@ export default {
       }
     },
 
+    handleClose() {
+      this.step = 1;
+      this.isSubmitted = false;
+      this.formData.subject = "";
+      this.formData.content = "";
+
+      this.$emit("close");
+    },
     async getAssistantData(value) {
       const data = {};
       data.AT = await this.tokenService.getFastAT();
       data.olympic = this.globalSystemValue.olympic;
-
       await this.axios
         .post(this.systemENV.APISERVERURL + "/getAssistantData", data)
         .then((response) => {
-          // console.log(response.data);
           if (response.data.code === 200) {
             this.assistantData = "<br><br><br>" + response.data.resultData;
           } else {
@@ -248,7 +269,6 @@ export default {
         });
     },
   },
-
   async mounted() {
     await this.getAssistantData();
   },

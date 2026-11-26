@@ -93,7 +93,11 @@
               small
               color="#114acc"
               dark
-              @click="testMailOpen = true"
+              @click="
+                testMailOpen = true;
+                stepperHeight = '100%';
+                mailType = 'testScore';
+              "
             >
               開始抽測
             </v-btn>
@@ -105,32 +109,11 @@
               variant="underlined"
               label="成績證明（抽測確認）將寄送至："
             ></v-text-field>
-            <div style="margin-left: 330px; margin-top: -60px">
-              <v-btn
-                v-if="!lock"
-                elevation="1"
-                small
-                color="#114acc"
-                dark
-                :loading="bntLoad"
-                @click="
-                  bntLoad = true;
-                  sendTimeDownStart();
-                  sendTestMail();
-                  testMail !== '' ? (sendResult = true) : (sendResult = false);
-                "
-              >
-                <div>{{ snedmailWordingBTN }}</div>
-              </v-btn>
-              <v-btn
-                v-if="lock"
-                elevation="1"
-                small
-                color="#114acc"
-                class="flex-grow-1"
-              >
-                <div>{{ sendTime }}秒 再次抽測</div>
-              </v-btn>
+            <div>
+              <email-stepper
+                :stepperHeight="stepperHeight"
+                @getEmailContent="getEmailContent"
+              ></email-stepper>
             </div>
             <div
               v-show="sendResult"
@@ -204,6 +187,7 @@
   </v-card>
   <email-stepper
     v-show="stepperPup"
+    :stepperHeight="stepperHeight"
     @getEmailContent="getEmailContent"
   ></email-stepper>
 </template>
@@ -229,6 +213,7 @@ export default {
     stepperPup: false,
     mailTypePup: true,
     emailPayload: { subject: "", content: "" },
+    stepperHeight: "85vh",
   }),
 
   props: {
@@ -255,9 +240,7 @@ export default {
 
   watch: {},
 
-  beforeDestroy() {
-    clearInterval(this.reciprocal);
-  },
+  beforeDestroy() {},
 
   methods: {
     async controllerSnedTypeConfirm() {
@@ -275,9 +258,11 @@ export default {
           await this.sendAllMail("score");
         }
         // await this.sendAllMail("score");
-      } else if (this.mailType === "testScore") {
-        this.$emit("sendTestMail", "");
       }
+
+      // else if (this.mailType === "testScore") {
+      //   this.$emit("sendTestMail", "");
+      // }
     },
 
     async reviewExam() {
@@ -395,10 +380,6 @@ export default {
       this.axios.post(this.systemENV.APISERVERURL + "/sendAllMail", data);
     },
 
-    sendTimeDownStart() {
-      this.reciprocal = setInterval(this.sendTimedown, 1000);
-    },
-
     sendTimedown() {
       this.lock = true;
       this.sendTime--;
@@ -409,7 +390,6 @@ export default {
         this.bntLoad = false;
         this.sendResult = false;
         this.snedmailWordingBTN = "再次抽測";
-        clearInterval(this.reciprocal);
       }
     },
 
@@ -428,7 +408,6 @@ export default {
         // this.confirmTestmailStatus = false;
         this.snedmailWordingBTN = "寄送抽測信";
       }
-      clearInterval(this.reciprocal);
     },
 
     updateReview() {
@@ -437,7 +416,20 @@ export default {
 
     getEmailContent(val) {
       this.emailPayload = val;
-      this.sendAllMail(this.mailType);
+
+      if (this.mailType === "score") {
+        this.sendAllMail(this.mailType);
+      } else if (this.mailType === "testScore") {
+        if (this.testMail !== "") {
+          this.testMail !== ""
+            ? (this.sendResult = true)
+            : (this.sendResult = false);
+
+          this.emailPayload.testMail = this.testMail;
+          this.$emit("sendTestMail", this.emailPayload);
+          this.testMailCheck = false;
+        }
+      }
     },
 
     chagneSendTypeContent(title, text, type) {
@@ -456,20 +448,11 @@ export default {
       this.$emit("updateSendAllMail", value);
     },
 
-    sendTestMail() {
-      if (this.testMail !== "") {
-        this.$emit("sendTestMail", this.testMail);
-        this.testMailCheck = false;
-      }
-    },
-
     confirmTestMail() {
       this.testMail = "";
       this.$emit("confirmTestMail", "sendtype");
     },
   },
-  async mounted() {
-    clearInterval(this.reciprocal);
-  },
+  async mounted() {},
 };
 </script>

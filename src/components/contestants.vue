@@ -1952,10 +1952,10 @@ export default {
       this.pupTitle = "您確定要發送信件？";
     },
 
-    async sendTestMail(testmail) {
+    async sendTestMail(emailPayload) {
       await this.tokenService.renewLT();
 
-      if (testmail === "") {
+      if (emailPayload.testMail === "") {
         alert("請輸入測試信箱");
         return false;
       }
@@ -1964,13 +1964,15 @@ export default {
       data.AT = await this.tokenService.getFastAT();
       data.olyId = this.id;
       data.olympic = this.globalSystemValue.olympic;
-      data.email = testmail;
+      data.email = emailPayload.testMail;
+      data.subject = emailPayload.subject;
+      data.emailContact = emailPayload.content;
 
       this.sendMailtype = "";
 
       this.axios.post(this.systemENV.APISERVERURL + "/randomTest", data);
 
-      return testmail;
+      return emailPayload.testMail;
     },
 
     async confirmTestMail(value) {
