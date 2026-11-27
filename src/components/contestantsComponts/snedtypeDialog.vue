@@ -71,11 +71,25 @@
           </v-icon>
           已完成抽測確認
         </div>
-        <div v-if="header.targetGroup2 && header.testMailConfirm">
+        <div
+          v-if="
+            header.targetGroup2 &&
+            (header.testMailConfirm || mailType === 'reviewScore')
+          "
+        >
           <v-radio-group
             v-if="mailType === 'score'"
             v-model="mailSelect"
             style="margin-top: 22px; margin-left: 55px; margin-bottom: -16px"
+            row
+          >
+            <v-radio label="成績單 (成績複查使用)" value="query"></v-radio>
+            <v-radio label="參賽證明 (最終結果使用)" value="final"></v-radio>
+          </v-radio-group>
+          <v-radio-group
+            v-if="mailType === 'reviewScore'"
+            v-model="mailSelect"
+            style="margin-top: -20px; margin-left: 55px; margin-bottom: -16px"
             row
           >
             <v-radio label="成績單 (成績複查使用)" value="query"></v-radio>
@@ -322,6 +336,7 @@ export default {
       data.fileName = this.globalSystemValue.olympic;
       +"_" + "檢視內容" + this.globalSystemTool.getNowDataTimeByString();
       data.olympic = this.globalSystemValue.olympic;
+      data.sendMailSelected = this.mailSelect;
 
       await this.axios
         .post(this.systemENV.APISERVERURL + "/reviewScoreFile", data, {
