@@ -487,7 +487,7 @@
       >
       </snedtype-dialog>
     </v-dialog>
-    <v-dialog v-model="setEmailpup" width="37%">
+    <v-dialog v-model="setEmailpup" width="55%">
       <setemail-dialog
         :confirmTestmailStatus="confirmTestmailStatus"
         @closeSetMailpup="closeSetMailpup"

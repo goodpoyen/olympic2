@@ -18,6 +18,32 @@
         variant="underlined"
         label="成績證明（抽測確認）將寄送至："
       ></v-text-field>
+      <div
+        style="width: 55%; margin-top: 20px"
+        class="text-subtitle-1 font-weight-bold text-grey-darken-3 mb-2"
+      >
+        發送資料選擇：
+      </div>
+
+      <v-sheet
+        style="width: 65%; margin-top: 20px"
+        color="grey-lighten-4"
+        rounded="md"
+        class="pa-3 mb-4 border"
+      >
+        <v-radio-group v-model="mailSelect" inline hide-details color="#0046fe">
+          <v-radio
+            label="成績單 (成績複查使用)"
+            value="query"
+            class="mr-6 font-weight-medium"
+          />
+          <v-radio
+            label="參賽證明 (最終結果使用)"
+            value="final"
+            class="font-weight-medium"
+          />
+        </v-radio-group>
+      </v-sheet>
       <div style="margin-left: -16px">
         <email-stepper
           :stepperHeight="stepperHeight"
@@ -84,6 +110,7 @@ export default {
     sendResult: false,
     lock: false,
     stepperHeight: "100%",
+    mailSelect: "",
   }),
 
   props: { confirmTestmailStatus: false },
@@ -115,6 +142,7 @@ export default {
           : (this.sendResult = false);
 
         this.emailPayload.testMail = this.testMail;
+        this.emailPayload.mailSelect = this.mailSelect;
         this.$emit("sendTestMail", this.emailPayload);
         this.testMailCheck = false;
       }
