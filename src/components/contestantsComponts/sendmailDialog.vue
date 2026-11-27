@@ -74,6 +74,7 @@
       (sendMailtype === 'score' || sendMailtype === 'multiScore') &&
       globalSystemValue.system === 'olympic'
     "
+    :stepperHeight="stepperHeight"
     @getEmailContent="getEmailContent"
   ></email-stepper>
 </template>
@@ -85,6 +86,7 @@ export default {
     sendShow: false,
     scoreSubject: "",
     emailPayload: { subject: "", content: "" },
+    stepperHeight: "85vh",
   }),
 
   props: {
