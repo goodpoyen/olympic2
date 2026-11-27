@@ -124,9 +124,10 @@
       <v-divider class="mb-5" />
 
       <email-stepper
-        :stepper-height="stepperHeight"
-        @get-email-content="getEmailContent"
-      />
+        :mailSelect="mailSelect"
+        :stepperHeight="stepperHeight"
+        @getEmailContent="getEmailContent"
+      ></email-stepper>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>

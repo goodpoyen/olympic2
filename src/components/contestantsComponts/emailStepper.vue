@@ -198,6 +198,27 @@ export default {
   },
   props: {
     stepperHeight: "",
+    mailSelect: "",
+  },
+  watch: {
+    mailSelect: {
+      immediate: true,
+      handler(newVal) {
+        let olympicTitle = this.globalSystemTool.getOlyAllName(
+          this.globalSystemValue.olympic,
+        );
+
+        if (newVal === "query") {
+          this.formData.subject = olympicTitle + "成績通知";
+          this.formData.content =
+            '<p style="font-size: 16px; text-align: left;">您好</p><p style="font-size: 16px; text-align: left;">附件檔案為您的成績通知</p>';
+        } else if (newVal === "final") {
+          this.formData.subject = olympicTitle + "參賽證明";
+          this.formData.content =
+            '<p style="font-size: 16px; text-align: left;">您好</p><p style="font-size: 16px; text-align: left;">附件檔案為您的參賽證明</p>';
+        }
+      },
+    },
   },
   computed: {
     isNextDisabled() {

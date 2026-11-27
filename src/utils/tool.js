@@ -310,6 +310,88 @@ export function globalTool() {
     }
   }
 
+  function getOlyAllName(word) {
+    if (word === "TMO") {
+      return "數學奧林匹亞";
+    }
+
+    if (word === "IPHO") {
+      return "物理奧林匹亞";
+    }
+
+    if (word === "TWICHO") {
+      return "化學奧林匹亞";
+    }
+
+    if (word === "IBO") {
+      return "生物奧林匹亞";
+    }
+
+    if (word === "IESO") {
+      return "地科奧林匹亞";
+    }
+
+    if (word === "IJSO") {
+      return "國中科學奧林匹亞";
+    }
+
+    if (word === "TOI") {
+      return "資訊奧林匹亞";
+    }
+
+    if (word === "TOIREG") {
+      return "資訊推廣";
+    }
+
+    if (word === "TESTREG") {
+      return "資訊測試";
+    }
+
+    if (word === "JGHS") {
+      return "建國中學科學班";
+    }
+
+    if (word === "TFGHS") {
+      return "北一女中科學班";
+    }
+
+    if (word === "HSNU") {
+      return "師大附中科學班";
+    }
+
+    if (word === "WLSH") {
+      return "武陵高中科學班";
+    }
+
+    if (word === "TCFSH") {
+      return "臺中一中科學班";
+    }
+
+    if (word === "CHSH") {
+      return "彰化高中科學班";
+    }
+
+    if (word === "TNFSH") {
+      return "臺南一中科學班";
+    }
+
+    if (word === "KSHS") {
+      return "高雄中學科學班";
+    }
+
+    if (word === "CYSH") {
+      return "嘉義高中科學班";
+    }
+
+    if (word === "NEHS") {
+      return "竹科實中科學班";
+    }
+
+    if (word === "TESTNTNU") {
+      return "測試科學班";
+    }
+  }
+
   function getScienceAllName(word) {
     if (word === "JGHS") {
       return "臺北市立建國高級中學";
@@ -490,6 +572,7 @@ export function globalTool() {
     removeLocalStorage,
     verificationIdCard,
     changeTitleData,
+    getOlyAllName,
     getScienceAllName,
     getSysLogo,
     changeSubtitleMsg,

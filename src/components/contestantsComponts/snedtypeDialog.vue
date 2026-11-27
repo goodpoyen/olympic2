@@ -168,6 +168,7 @@
             </v-sheet>
             <div>
               <email-stepper
+                :mailSelect="mailSelect"
                 :stepperHeight="stepperHeight"
                 @getEmailContent="getEmailContent"
               ></email-stepper>
@@ -244,6 +245,7 @@
   </v-card>
   <v-card v-show="stepperPup">
     <email-stepper
+      :mailSelect="mailSelect"
       :stepperHeight="stepperHeight"
       @getEmailContent="getEmailContent"
     ></email-stepper>
@@ -302,6 +304,17 @@ export default {
     target: "",
     sendType: "",
   },
+
+  emits: [
+    "getEmailContent",
+    "close",
+    "closeSendTypepup",
+    "updateReview",
+    "chagneSendTypeContent",
+    "updateSendAllMail",
+    "sendTestMail",
+    "confirmTestMail",
+  ],
 
   components: { emailStepper },
 

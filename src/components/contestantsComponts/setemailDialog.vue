@@ -46,6 +46,7 @@
       </v-sheet>
       <div style="margin-left: -16px">
         <email-stepper
+          :mailSelect="mailSelect"
           :stepperHeight="stepperHeight"
           @getEmailContent="getEmailContent"
         ></email-stepper>
