@@ -431,7 +431,7 @@
         @closeImporEexamTranscrip="closeImporEexamTranscrip"
       ></importexamtranscrip-dialog>
     </v-dialog>
-    <v-dialog v-model="sendMailpup" max-width="500px">
+    <v-dialog v-model="sendMailpup" max-width="45%">
       <sendmail-dialog
         :id="id"
         :sendMailpup="sendMailpup"

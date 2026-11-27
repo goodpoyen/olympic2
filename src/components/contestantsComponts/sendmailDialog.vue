@@ -1,6 +1,6 @@
 <template>
   <v-card
-    v-show="
+    v-if="
       (sendMailtype !== 'score' && sendMailtype !== 'multiScore') ||
       globalSystemValue.system === 'science'
     "
@@ -69,14 +69,66 @@
       </v-progress-circular>
     </v-overlay>
   </v-card>
-  <email-stepper
-    v-show="
+  <v-card
+    v-if="
       (sendMailtype === 'score' || sendMailtype === 'multiScore') &&
       globalSystemValue.system === 'olympic'
     "
-    :stepperHeight="stepperHeight"
-    @getEmailContent="getEmailContent"
-  ></email-stepper>
+    elevation="3"
+    rounded="lg"
+    max-height="80vh"
+    class="d-flex flex-column overflow-hidden"
+  >
+    <v-card-title
+      v-if="pupTitleShow === '1'"
+      style="background-color: #2d5bff; height: 48px"
+    >
+      <v-icon
+        large
+        style="
+          font-size: 23px;
+          font-weight: bold;
+          color: white;
+          margin-right: 7px;
+        "
+      >
+        {{ pupTitleIcon }}
+      </v-icon>
+      <span
+        class=""
+        style="font-size: 18px !important; font-weight: bold; color: white"
+        >{{ pupTitle }}</span
+      >
+    </v-card-title>
+
+    <v-card-text class="pa-6 overflow-y-auto custom-scrollbar">
+      <div class="text-subtitle-1 font-weight-bold text-grey-darken-3 mb-2">
+        發送資料選擇
+      </div>
+
+      <v-sheet color="grey-lighten-4" rounded="md" class="pa-3 mb-4 border">
+        <v-radio-group v-model="mailSelect" inline hide-details color="#0046fe">
+          <v-radio
+            label="成績單 (成績複查使用)"
+            value="query"
+            class="mr-6 font-weight-medium"
+          />
+          <v-radio
+            label="參賽證明 (最終結果使用)"
+            value="final"
+            class="font-weight-medium"
+          />
+        </v-radio-group>
+      </v-sheet>
+
+      <v-divider class="mb-5" />
+
+      <email-stepper
+        :stepper-height="stepperHeight"
+        @get-email-content="getEmailContent"
+      />
+    </v-card-text>
+  </v-card>
 </template>
 <script>
 import emailStepper from "./emailStepper.vue";
@@ -86,7 +138,8 @@ export default {
     sendShow: false,
     scoreSubject: "",
     emailPayload: { subject: "", content: "" },
-    stepperHeight: "85vh",
+    stepperHeight: "100%",
+    mailSelect: "",
   }),
 
   props: {
@@ -173,6 +226,7 @@ export default {
         data.stIdList = [];
         data.stIdList.push(this.tempItem.stId);
         data.olympic = this.globalSystemValue.olympic;
+        data.sendMailSelected = this.mailSelect;
         data.scheduleType = this.scheduleType;
 
         if (this.globalSystemValue.system === "science") {
@@ -250,6 +304,7 @@ export default {
       data.stId = this.selected[0].stId;
       data.olyId = this.id;
       data.scheduleType = this.scheduleType;
+      data.sendMailSelected = this.mailSelect;
       data.stIdList = [];
 
       if (this.globalSystemValue.system === "science") {
