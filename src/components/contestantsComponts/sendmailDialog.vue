@@ -128,6 +128,16 @@
         @get-email-content="getEmailContent"
       />
     </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn
+        color="darken-1"
+        text
+        @click="closeDialog()"
+        style="font-weight: bold; font-size: 17px"
+        >取消</v-btn
+      >
+    </v-card-actions>
   </v-card>
 </template>
 <script>

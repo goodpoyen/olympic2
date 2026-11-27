@@ -242,11 +242,23 @@
       </v-progress-circular>
     </v-overlay>
   </v-card>
-  <email-stepper
-    v-show="stepperPup"
-    :stepperHeight="stepperHeight"
-    @getEmailContent="getEmailContent"
-  ></email-stepper>
+  <v-card v-show="stepperPup">
+    <email-stepper
+      :stepperHeight="stepperHeight"
+      @getEmailContent="getEmailContent"
+    ></email-stepper>
+    <v-card-actions style="margin-top: 3px">
+      <v-spacer></v-spacer>
+      <v-btn
+        color="black darken-1"
+        text
+        style="font-weight: bold; font-size: 17px"
+        @click="closeDialog()"
+      >
+        取消
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 <style></style>
 
@@ -268,7 +280,7 @@ export default {
     stepperPup: false,
     mailTypePup: true,
     emailPayload: { subject: "", content: "" },
-    stepperHeight: "85vh",
+    stepperHeight: "100%",
   }),
 
   props: {
@@ -313,10 +325,6 @@ export default {
           await this.sendAllMail("score");
         }
       }
-
-      // else if (this.mailType === "testScore") {
-      //   this.$emit("sendTestMail", "");
-      // }
     },
 
     async reviewExam() {
