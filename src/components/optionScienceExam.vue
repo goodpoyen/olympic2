@@ -113,7 +113,7 @@ export default {
     scoreSend: 0,
     tab: null,
     areaExist: false,
-    scheduleType: "",
+    scheduleType: 0,
     itemKey: "",
   }),
 

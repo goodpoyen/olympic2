@@ -176,6 +176,13 @@ export default {
 
   components: { emailStepper },
 
+  emits: [
+    "closeSendMailpup",
+    "setDesserts",
+    "chagneSendMailContent",
+    "closeSendMultiMail",
+  ],
+
   watch: {},
 
   methods: {

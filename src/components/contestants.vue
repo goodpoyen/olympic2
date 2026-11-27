@@ -1085,7 +1085,7 @@ import ImportexamtranscripDialog from "./contestantsComponts/importexamtranscrip
 
 export default {
   data: () => ({
-    itemKey: "",
+    // itemKey: "",
     loadShow: false,
     alertPup: false,
     absentPup: false,
@@ -1180,8 +1180,8 @@ export default {
       default: () => [],
     },
     scheduleType: {
-      type: String,
-      default: "",
+      type: Number,
+      default: 0,
     },
     itemKey: {
       type: String,

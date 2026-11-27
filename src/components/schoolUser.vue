@@ -892,6 +892,7 @@ export default {
     cityList: [],
     areaList: [],
     schoolList: [],
+    snackType: "all",
     statusName: "",
     valid: true,
     levelStatus: true,

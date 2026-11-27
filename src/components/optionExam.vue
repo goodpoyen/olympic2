@@ -127,7 +127,7 @@ export default {
     fixCodeName: true,
     tab: null,
     teacherNotice: {},
-    scheduleType: "",
+    scheduleType: 0,
     itemKey: "",
   }),
 
