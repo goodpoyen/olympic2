@@ -106,13 +106,13 @@
             style="
               color: #114acc;
               font-size: 12px;
-              margin-left: 6%;
+              margin-left: 4%;
               margin-top: 5px;
             "
           >
             首次寄送成績證明前，請先完成抽測確認，以確保資料與成績正確。
           </div>
-          <div style="margin-left: 26px; margin-top: 5px">
+          <div style="margin-left: 30px; margin-top: 5px">
             <v-btn
               v-show="!testMailOpen"
               elevation="1"
@@ -135,6 +135,37 @@
               variant="underlined"
               label="成績證明（抽測確認）將寄送至："
             ></v-text-field>
+            <div
+              style="width: 60%; margin-left: 27px"
+              class="text-subtitle-1 font-weight-bold text-grey-darken-3 mb-2"
+            >
+              發送資料選擇：
+            </div>
+
+            <v-sheet
+              style="width: 70%; margin-left: 27px"
+              color="grey-lighten-4"
+              rounded="md"
+              class="pa-3 mb-4 border"
+            >
+              <v-radio-group
+                v-model="mailSelect"
+                inline
+                hide-details
+                color="#0046fe"
+              >
+                <v-radio
+                  label="成績單 (成績複查使用)"
+                  value="query"
+                  class="mr-6 font-weight-medium"
+                />
+                <v-radio
+                  label="參賽證明 (最終結果使用)"
+                  value="final"
+                  class="font-weight-medium"
+                />
+              </v-radio-group>
+            </v-sheet>
             <div>
               <email-stepper
                 :stepperHeight="stepperHeight"
@@ -431,6 +462,7 @@ export default {
             : (this.sendResult = false);
 
           this.emailPayload.testMail = this.testMail;
+          this.emailPayload.mailSelect = this.mailSelect;
           this.$emit("sendTestMail", this.emailPayload);
           this.testMailCheck = false;
         }

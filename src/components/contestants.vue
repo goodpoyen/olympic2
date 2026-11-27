@@ -465,7 +465,7 @@
       >
       </upgrade-dialog>
     </v-dialog>
-    <v-dialog v-model="snedTypePup" width="35%">
+    <v-dialog v-model="snedTypePup" width="55%">
       <snedtype-dialog
         :id="id"
         :reviewMod="reviewMod"
@@ -1972,6 +1972,7 @@ export default {
       data.email = emailPayload.testMail;
       data.subject = emailPayload.subject;
       data.emailContact = emailPayload.content;
+      data.sendMailSelected = emailPayload.mailSelect;
 
       this.sendMailtype = "";
 
